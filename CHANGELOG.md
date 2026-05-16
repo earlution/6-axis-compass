@@ -10,6 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Persistent footer:** Site-wide footer showing copyright, MIT licence link, and version number injected from `package.json` at build time.
+
+### Added
+- **Grouped actor comparison:** Actor toggle buttons are now arranged into labelled sets under Compare:
+  - 2024–2029 UK Parliament (7 actors)
+  - US Congress (current cycle) (2 actors)
+  - Thatcher / Reagan era (1 actor)
+  - World War II figures (6 actors)
+  - Economic thinkers (2 actors)
+  - Ideological anchors (9 actors)
+  - Custom actors appear in a separate "Custom actors" group.
+  - Ungrouped actors fall through to an "Other" group.
+  - `ACTOR_GROUPS` map added to `src/data.js`.
+
 ### Changed
 - **Radar chart spatial layout:** Reordered `AXES` so left-associated values appear on the left side of the radar chart and right-associated values on the right.
   - New order: Cultural, Economic, Military, Sovereignty, Class, Libertarian/Authoritarian.
