@@ -3,6 +3,7 @@ const path = require('path');
 
 const SRC = path.join(__dirname, '..', 'src');
 const DIST = path.join(__dirname, '..', 'dist');
+const ROOT = path.join(__dirname, '..');
 
 function read(file) {
   return fs.readFileSync(path.join(SRC, file), 'utf-8');
@@ -37,9 +38,17 @@ function inlineModules() {
     .concat(stripImports(moduleScript))
     .join('\n\n');
 
+  // Inject version from package.json
+  let version = '1.0.0';
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf-8'));
+    version = pkg.version || version;
+  } catch (_) {}
+
   const output = html
     .replace(/<style>[\s\S]*?<\/style>/, `<style>\n${css}\n</style>`)
-    .replace(/<script type="module">[\s\S]*?<\/script>/, `<script>\n${js}\n</script>`);
+    .replace(/<script type="module">[\s\S]*?<\/script>/, `<script>\n${js}\n</script>`)
+    .replace(/\{\{VERSION\}\}/g, version);
 
   fs.mkdirSync(DIST, { recursive: true });
   fs.writeFileSync(path.join(DIST, 'index.html'), output, 'utf-8');
