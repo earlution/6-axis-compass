@@ -5,7 +5,7 @@ import { t } from './i18n.js';
 export function renderIntro(container, onStart) {
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-intro">
+      <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
         <p class="eyebrow">${t('intro.eyebrow')}</p>
         <h1 class="intro-title">${t('intro.title')}</h1>
         <p class="intro-body">${t('intro.body')}</p>
@@ -21,14 +21,14 @@ export function renderIntro(container, onStart) {
 export function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-quiz">
+      <div class="screen active" id="s-quiz" role="region" aria-label="${t('quiz.back').replace('← ', '')}" tabindex="-1">
         <div class="progress-wrap">
           <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
           <span class="progress-label">${stepLabel}</span>
         </div>
         <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
         <p class="q-text">${question.text}</p>
-        <div class="responses" id="responses"></div>
+        <div class="responses" id="responses" role="radiogroup" aria-label="${t('response.stronglyAgree')} – ${t('response.stronglyDisagree')}"></div>
         <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
           <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
         </div>
@@ -44,12 +44,47 @@ export function renderQuiz(container, { question, progress, stepLabel, axis, onA
     t('response.disagree'),
     t('response.stronglyDisagree')
   ];
+  const buttons = [];
   labels.forEach((label, i) => {
     const btn = document.createElement('button');
     btn.className = 'response-btn';
+    btn.setAttribute('role', 'radio');
+    btn.setAttribute('aria-checked', 'false');
+    btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
     btn.textContent = label;
-    btn.addEventListener('click', () => onAnswer(4 - i));
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => {
+        b.setAttribute('aria-checked', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      btn.setAttribute('aria-checked', 'true');
+      btn.setAttribute('tabindex', '0');
+      onAnswer(4 - i);
+    });
     responsesEl.appendChild(btn);
+    buttons.push(btn);
+  });
+
+  responsesEl.addEventListener('keydown', (e) => {
+    const idx = buttons.findIndex(b => b.getAttribute('tabindex') === '0');
+    if (idx < 0) return;
+    let next = idx;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      next = (idx + 1) % buttons.length;
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      next = (idx - 1 + buttons.length) % buttons.length;
+    } else if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      buttons[idx].click();
+      return;
+    }
+    if (next !== idx) {
+      buttons[idx].setAttribute('tabindex', '-1');
+      buttons[next].setAttribute('tabindex', '0');
+      buttons[next].focus();
+    }
   });
 
   if (canGoBack) {
@@ -87,7 +122,7 @@ export function renderResults(container, {
 
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-results">
+      <div class="screen active" id="s-results" role="region" aria-label="${t('results.title')}" tabindex="-1">
         <p class="eyebrow">${t('results.eyebrow')}</p>
         <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
@@ -193,6 +228,7 @@ export function renderResults(container, {
   // Your map toggle
   const userBtn = document.createElement('button');
   userBtn.className = 'btn btn-sm';
+  userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
   userBtn.textContent = t('results.yourMap');
   if (showUser) {
     userBtn.style.borderColor = '#c8a84b';
@@ -206,6 +242,7 @@ export function renderResults(container, {
     const isCustom = customActors && customActors.some(c => c.name === actor.name);
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
+    btn.setAttribute('aria-pressed', selectedActors.has(actor.name) ? 'true' : 'false');
     btn.textContent = t('actor.' + actor.name);
     if (selectedActors.has(actor.name)) {
       btn.style.borderColor = actor.color;

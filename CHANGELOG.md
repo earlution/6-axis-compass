@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [1.9.0] - 2026-05-16
+
+### Added
+- Accessibility audit and WCAG 2.1 AA baseline improvements:
+  - Skip-to-content link for keyboard users.
+  - `aria-live="polite"` announcer region for screen-reader feedback on screen changes.
+  - `role="region"` and `aria-label` on intro, quiz, and results screens.
+  - Quiz response buttons use `role="radio"`, `aria-checked`, and keyboard arrow navigation within a `role="radiogroup"`.
+  - Actor toggle buttons expose `aria-pressed` state.
+  - Focus management: on screen change, focus moves to the active screen container.
+- Colour contrast fixes across dark and light themes:
+  - `--text3` adjusted to `#9a9690` (dark) and `#6a665e` (light) to meet 4.5:1.
+  - Replaced hardcoded `rgba()` values in configuration panel with theme-aware CSS variables.
+
 ## [1.8.0] - 2026-05-16
 
 ### Added

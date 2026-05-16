@@ -10,7 +10,9 @@
 </style>
 </head>
 <body>
-<div id="app"></div>
+<a href="#app" class="skip-link">Skip to main content</a>
+<div id="app" role="main"></div>
+<div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <script type="module">
 import { AXES } from './data.js';
 import { createQuiz } from './quiz.js';
@@ -60,10 +62,20 @@ loadCustomActors();
 loadTheme();
 document.documentElement.setAttribute('data-theme', theme);
 
+function announce(message) {
+  const el = document.getElementById('announcer');
+  if (el) el.textContent = message;
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(id);
-  if (el) el.classList.add('active');
+  if (el) {
+    el.classList.add('active');
+    el.focus();
+    const label = el.getAttribute('aria-label');
+    if (label) announce(label);
+  }
   window.scrollTo(0, 0);
 }
 

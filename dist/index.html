@@ -13,7 +13,7 @@
   --border2: rgba(255,255,255,0.15);
   --text: #e8e4da;
   --text2: #8a8680;
-  --text3: #5a5650;
+  --text3: #9a9690;
   --gold: #c8a84b;
   --gold-dim: rgba(200,168,75,0.12);
   --serif: Georgia, 'Times New Roman', serif;
@@ -393,7 +393,7 @@ body {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(232,228,218,0.3);
+  color: var(--text3);
   margin-bottom: 0.6rem;
 }
 
@@ -407,8 +407,8 @@ body {
 .config-btn {
   font-size: 12px;
   padding: 5px 12px;
-  border: 0.5px solid rgba(255,255,255,0.15);
-  color: rgba(232,228,218,0.5);
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
   background: none;
   cursor: pointer;
   font-family: inherit;
@@ -424,8 +424,8 @@ body {
 .config-file-label {
   font-size: 12px;
   padding: 5px 12px;
-  border: 0.5px solid rgba(255,255,255,0.15);
-  color: rgba(232,228,218,0.5);
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
   cursor: pointer;
   font-family: inherit;
   border-radius: 2px;
@@ -438,7 +438,7 @@ body {
 
 .config-note {
   font-size: 11px;
-  color: rgba(232,228,218,0.25);
+  color: var(--text3);
   margin-top: 0.5rem;
 }
 
@@ -453,10 +453,10 @@ body {
   align-items: center;
   gap: 10px;
   padding: 7px 10px;
-  border: 0.5px solid rgba(255,255,255,0.08);
+  border: 0.5px solid var(--border);
   border-radius: 2px;
   cursor: grab;
-  background: rgba(255,255,255,0.02);
+  background: var(--bg3);
   user-select: none;
 }
 
@@ -465,19 +465,19 @@ body {
 }
 
 .axis-grip {
-  color: rgba(232,228,218,0.25);
+  color: var(--text3);
   font-size: 14px;
   line-height: 1;
 }
 
 .axis-name {
   font-size: 13px;
-  color: rgba(232,228,218,0.65);
+  color: var(--text2);
 }
 
 .axis-position {
   font-size: 11px;
-  color: rgba(232,228,218,0.25);
+  color: var(--text3);
   margin-left: auto;
 }
 
@@ -488,12 +488,45 @@ body {
   --border2: rgba(0,0,0,0.15);
   --text: #1a1a1a;
   --text2: #5a5650;
-  --text3: #8a8680;
+  --text3: #6a665e;
   --gold: #8b6914;
   --gold-dim: rgba(139,105,20,0.12);
   --chart-grid: rgba(0,0,0,0.07);
   --chart-axis: rgba(0,0,0,0.1);
   --chart-label: rgba(26,26,26,0.55);
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--bg);
+  color: var(--text);
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.2s;
+  border: 1px solid var(--border2);
+  font-size: 13px;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
 }
 
 @media (max-width: 420px) {
@@ -508,7 +541,9 @@ body {
 </style>
 </head>
 <body>
-<div id="app"></div>
+<a href="#app" class="skip-link">Skip to main content</a>
+<div id="app" role="main"></div>
+<div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <script>
 const TRANSLATIONS = {
   en: {
@@ -958,7 +993,7 @@ function drawRadar(svg, {
 function renderIntro(container, onStart) {
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-intro">
+      <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
         <p class="eyebrow">${t('intro.eyebrow')}</p>
         <h1 class="intro-title">${t('intro.title')}</h1>
         <p class="intro-body">${t('intro.body')}</p>
@@ -973,14 +1008,14 @@ function renderIntro(container, onStart) {
 function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-quiz">
+      <div class="screen active" id="s-quiz" role="region" aria-label="${t('quiz.back').replace('← ', '')}" tabindex="-1">
         <div class="progress-wrap">
           <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
           <span class="progress-label">${stepLabel}</span>
         </div>
         <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
         <p class="q-text">${question.text}</p>
-        <div class="responses" id="responses"></div>
+        <div class="responses" id="responses" role="radiogroup" aria-label="${t('response.stronglyAgree')} – ${t('response.stronglyDisagree')}"></div>
         <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
           <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
         </div>
@@ -996,12 +1031,47 @@ function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, 
     t('response.disagree'),
     t('response.stronglyDisagree')
   ];
+  const buttons = [];
   labels.forEach((label, i) => {
     const btn = document.createElement('button');
     btn.className = 'response-btn';
+    btn.setAttribute('role', 'radio');
+    btn.setAttribute('aria-checked', 'false');
+    btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
     btn.textContent = label;
-    btn.addEventListener('click', () => onAnswer(4 - i));
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => {
+        b.setAttribute('aria-checked', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      btn.setAttribute('aria-checked', 'true');
+      btn.setAttribute('tabindex', '0');
+      onAnswer(4 - i);
+    });
     responsesEl.appendChild(btn);
+    buttons.push(btn);
+  });
+
+  responsesEl.addEventListener('keydown', (e) => {
+    const idx = buttons.findIndex(b => b.getAttribute('tabindex') === '0');
+    if (idx < 0) return;
+    let next = idx;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      next = (idx + 1) % buttons.length;
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      next = (idx - 1 + buttons.length) % buttons.length;
+    } else if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      buttons[idx].click();
+      return;
+    }
+    if (next !== idx) {
+      buttons[idx].setAttribute('tabindex', '-1');
+      buttons[next].setAttribute('tabindex', '0');
+      buttons[next].focus();
+    }
   });
 
   if (canGoBack) {
@@ -1038,7 +1108,7 @@ function renderResults(container, {
 
   container.innerHTML = `
     <div class="wrap">
-      <div class="screen active" id="s-results">
+      <div class="screen active" id="s-results" role="region" aria-label="${t('results.title')}" tabindex="-1">
         <p class="eyebrow">${t('results.eyebrow')}</p>
         <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
@@ -1144,6 +1214,7 @@ function renderResults(container, {
   // Your map toggle
   const userBtn = document.createElement('button');
   userBtn.className = 'btn btn-sm';
+  userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
   userBtn.textContent = t('results.yourMap');
   if (showUser) {
     userBtn.style.borderColor = '#c8a84b';
@@ -1157,6 +1228,7 @@ function renderResults(container, {
     const isCustom = customActors && customActors.some(c => c.name === actor.name);
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
+    btn.setAttribute('aria-pressed', selectedActors.has(actor.name) ? 'true' : 'false');
     btn.textContent = t('actor.' + actor.name);
     if (selectedActors.has(actor.name)) {
       btn.style.borderColor = actor.color;
@@ -1466,10 +1538,20 @@ loadCustomActors();
 loadTheme();
 document.documentElement.setAttribute('data-theme', theme);
 
+function announce(message) {
+  const el = document.getElementById('announcer');
+  if (el) el.textContent = message;
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(id);
-  if (el) el.classList.add('active');
+  if (el) {
+    el.classList.add('active');
+    el.focus();
+    const label = el.getAttribute('aria-label');
+    if (label) announce(label);
+  }
   window.scrollTo(0, 0);
 }
 
