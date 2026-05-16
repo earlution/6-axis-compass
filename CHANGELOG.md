@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [0.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.2.0
 
-[0.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.3.0
+[0.4.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.4.0
+
+## [0.4.0] - 2026-05-16
+
+### Added
+- Hexagonal SVG radar chart renderer in `src/chart.js`.
+- `drawRadar()` accepts options object for scores, axes, orientation, actors, uploaded map, and visibility.
+- Support for flat (edge-up) and pointy (vertex-up) hexagon orientations.
+- Grid polygons at levels 2, 4, 6, 8, 10 with original opacity values.
+- Actor overlays with party colours and translucent fills.
+- Uploaded map overlay with dashed purple stroke.
+- User profile polygon with gold stroke and dot markers.
+- Axis labels positioned outside the chart perimeter.
 
 ## [0.3.0] - 2026-05-16
 
