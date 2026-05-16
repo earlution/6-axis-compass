@@ -8,6 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [1.5.0] - 2026-05-16
+
+### Added
+- Paper artifact generation pipeline (`npm run generate-artifacts`) producing static, peer-reviewable outputs for the *A Common Enemy* academic paper.
+- New script `scripts/generate-paper-artifacts.mjs` renders SVG radar charts via jsdom, generates JSON data files, and emits LaTeX `\newcommand` definitions for every actor.
+- New `scripts/paper-config.json` defines comparison groups: UK parties, US parties, Brexit factions, economic historical figures, WWII figures, and UK–US cross-country.
+- 8 new historical actors added to `src/data.js`: John Maynard Keynes, Milton Friedman, Clement Attlee, Winston Churchill, Adolf Hitler, Franklin D. Roosevelt, Benito Mussolini, Joseph Stalin.
+- `paper-artifacts/` directory containing per-actor `.json`, `.svg`, `.tex` files and comparison-group charts.
+- `paper-artifacts/README.md` and `latex-example.tex` documenting how to include artifacts in a LaTeX paper.
+- `jsdom` added as a devDependency for server-side SVG generation.
+- CI workflow updated to validate artifact generation on every push.
+
+### Changed
+- `src/i18n.js` updated with translations for all new historical actors.
+
+## [1.4.0] - 2026-05-16
+
+### Added
+- i18n infrastructure with English as the default language (`src/i18n.js`, `src/translations/en.json`).
+- All user-facing strings are now rendered through a `t(key)` helper, enabling future localisation.
+- Language selector added to the results configuration panel (currently English only).
+- Axis names, actor names, response labels, and UI text are all translatable while preserving internal English keys for export portability.
+- `scripts/build.js` updated to inline `src/i18n.js` before dependent modules.
+
 ## [1.3.0] - 2026-05-16
 
 ### Changed

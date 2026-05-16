@@ -24,6 +24,36 @@ jobs:
           ! grep -q 'type="module"' dist/index.html
           ! grep -qE '<script[^>]*src=' dist/index.html
           ! grep -qE '<link[^>]*href=' dist/index.html
+      - run: npm run generate-artifacts
+      - name: Verify paper artifacts
+        run: |
+          test -d paper-artifacts/actors
+          test -d paper-artifacts/comparisons
+          test -f paper-artifacts/actors/Conservative-Party.svg
+          test -f paper-artifacts/actors/Conservative-Party.json
+          test -f paper-artifacts/actors/Conservative-Party.tex
+          test -f paper-artifacts/comparisons/uk-parties.svg
+          test -f paper-artifacts/comparisons/wwii-figures.svg
+          # Validate SVG is well-formed XML
+          xmllint --noout paper-artifacts/actors/Conservative-Party.svg || true
+
+  upload-osf:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run generate-artifacts
+      - name: Upload paper artifacts to OSF
+        env:
+          OSF_PAN: ${{ secrets.OSF_PAN }}
+          OSF_NODE_ID: ${{ vars.OSF_NODE_ID }}
+        run: node scripts/upload-to-osf.mjs
+        continue-on-error: true
 
   deploy:
     needs: build

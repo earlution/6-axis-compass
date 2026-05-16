@@ -1,0 +1,58 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "groupId": "uk-vs-us",
+  "title": "UK vs US Major Parties",
+  "actors": [
+    {
+      "name": "Conservative Party",
+      "color": "#1A75BB",
+      "axes": {
+        "Cultural": 7,
+        "Economic": 3,
+        "Military": 8,
+        "Sovereignty": 6,
+        "Liberty": 2,
+        "Class": 1
+      }
+    },
+    {
+      "name": "Labour Party",
+      "color": "#c0392b",
+      "axes": {
+        "Cultural": 5,
+        "Economic": 3,
+        "Military": 7,
+        "Sovereignty": 5,
+        "Liberty": 5,
+        "Class": 3
+      }
+    },
+    {
+      "name": "US Democrats",
+      "color": "#3C6EC9",
+      "axes": {
+        "Cultural": 3,
+        "Economic": 4,
+        "Military": 7,
+        "Sovereignty": 4,
+        "Liberty": 6,
+        "Class": 4
+      }
+    },
+    {
+      "name": "US Republicans",
+      "color": "#C0392B",
+      "axes": {
+        "Cultural": 8,
+        "Economic": 4,
+        "Military": 8,
+        "Sovereignty": 7,
+        "Liberty": 2,
+        "Class": 1
+      }
+    }
+  ]
+}

@@ -5,9 +5,20 @@
   "main": "dist/index.html",
   "scripts": {
     "build": "node scripts/build.js",
-    "dev": "node scripts/build.js --watch"
+    "dev": "node scripts/build.js --watch",
+    "generate-artifacts": "node scripts/generate-paper-artifacts.mjs",
+    "upload-osf": "node scripts/upload-to-osf.mjs"
   },
-  "keywords": ["political-compass", "politics", "quiz", "radar-chart", "svg"],
+  "keywords": [
+    "political-compass",
+    "politics",
+    "quiz",
+    "radar-chart",
+    "svg"
+  ],
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "jsdom": "^29.1.1"
+  }
 }

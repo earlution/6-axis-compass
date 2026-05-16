@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "Labour Party",
+  "color": "#c0392b",
+  "axes": {
+    "Cultural": 5,
+    "Economic": 3,
+    "Military": 7,
+    "Sovereignty": 5,
+    "Liberty": 5,
+    "Class": 3
+  }
+}

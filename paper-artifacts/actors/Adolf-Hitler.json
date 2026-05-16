@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "Adolf Hitler",
+  "color": "#212121",
+  "axes": {
+    "Cultural": 10,
+    "Economic": 8,
+    "Military": 10,
+    "Sovereignty": 10,
+    "Liberty": 1,
+    "Class": 7
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "groups": {
+    "uk-parties": {
+      "title": "UK Political Parties",
+      "actors": [
+        "Conservative Party",
+        "Labour Party",
+        "Reform UK",
+        "Liberal Democrats",
+        "Green Party",
+        "SNP",
+        "Plaid Cymru"
+      ]
+    },
+    "us-parties": {
+      "title": "US Political Parties",
+      "actors": [
+        "US Democrats",
+        "US Republicans"
+      ]
+    },
+    "economic-historical": {
+      "title": "Economic Historical Figures",
+      "actors": [
+        "John Maynard Keynes",
+        "Milton Friedman"
+      ]
+    },
+    "wwii-figures": {
+      "title": "World War II Political Figures",
+      "actors": [
+        "Clement Attlee",
+        "Winston Churchill",
+        "Adolf Hitler",
+        "Franklin D. Roosevelt",
+        "Benito Mussolini",
+        "Joseph Stalin"
+      ]
+    },
+    "uk-vs-us": {
+      "title": "UK vs US Major Parties",
+      "actors": [
+        "Conservative Party",
+        "Labour Party",
+        "US Democrats",
+        "US Republicans"
+      ]
+    }
+  }
+}

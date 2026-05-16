@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "SNP",
+  "color": "#FDF38E",
+  "axes": {
+    "Cultural": 6,
+    "Economic": 6,
+    "Military": 2,
+    "Sovereignty": 9,
+    "Liberty": 7,
+    "Class": 7
+  }
+}

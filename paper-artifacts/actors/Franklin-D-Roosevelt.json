@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "Franklin D. Roosevelt",
+  "color": "#1565C0",
+  "axes": {
+    "Cultural": 4,
+    "Economic": 7,
+    "Military": 8,
+    "Sovereignty": 5,
+    "Liberty": 4,
+    "Class": 5
+  }
+}

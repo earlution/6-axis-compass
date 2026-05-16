@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "Milton Friedman",
+  "color": "#8D6E63",
+  "axes": {
+    "Cultural": 3,
+    "Economic": 2,
+    "Military": 6,
+    "Sovereignty": 4,
+    "Liberty": 8,
+    "Class": 2
+  }
+}

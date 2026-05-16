@@ -1,0 +1,16 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
+  "generated": "2026-05-16T13:15:49.307Z",
+  "actor": "Joseph Stalin",
+  "color": "#B71C1C",
+  "axes": {
+    "Cultural": 7,
+    "Economic": 9,
+    "Military": 9,
+    "Sovereignty": 6,
+    "Liberty": 0,
+    "Class": 10
+  }
+}
