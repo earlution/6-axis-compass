@@ -58,7 +58,11 @@ export function renderResults(container, {
   selectedActors,
   uploadedMap,
   onToggleActor,
-  onRestart
+  onRestart,
+  onDownloadChart,
+  onDownloadData,
+  onUpload,
+  onClearUpload
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
 
@@ -76,6 +80,26 @@ export function renderResults(container, {
         </div>
         <div class="legend" id="legend"></div>
         <div class="score-bars" id="score-bars"></div>
+        <hr class="divider">
+        <div class="config-section">
+          <p class="config-heading">Download</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-dl-png">Image (PNG)</button>
+            <button class="config-btn" id="btn-dl-json">Data (JSON)</button>
+            <button class="config-btn" id="btn-dl-xml">Data (XML)</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Compare a saved map</p>
+          <div class="config-row">
+            <label class="config-file-label">
+              Upload JSON or XML
+              <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
+            </label>
+            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">Clear</button>
+          </div>
+          <p class="config-note">Only files exported from this tool are supported. No data is transmitted anywhere.</p>
+        </div>
         <hr class="divider">
         <p class="footer-note">This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.</p>
         <button class="btn" id="btn-restart">Retake</button>
@@ -151,4 +175,19 @@ export function renderResults(container, {
   });
 
   document.getElementById('btn-restart').addEventListener('click', onRestart);
+
+  if (onDownloadChart) {
+    document.getElementById('btn-dl-png').addEventListener('click', onDownloadChart);
+  }
+  if (onDownloadData) {
+    document.getElementById('btn-dl-json').addEventListener('click', () => onDownloadData('json'));
+    document.getElementById('btn-dl-xml').addEventListener('click', () => onDownloadData('xml'));
+  }
+  if (onUpload) {
+    document.getElementById('file-upload').addEventListener('change', onUpload);
+  }
+  if (onClearUpload) {
+    const clearBtn = document.getElementById('btn-clear-upload');
+    if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
+  }
 }

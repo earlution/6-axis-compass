@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[0.5.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.5.0
+[0.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.6.0
+
+## [0.6.0] - 2026-05-16
+
+### Added
+- `src/export.js` with PNG chart export, JSON/XML data export, and JSON/XML import.
+- `downloadChart()` clones the SVG, renders it to a canvas, and downloads as PNG with SVG fallback.
+- `downloadMapData()` exports scores as JSON or XML with metadata (source, version, timestamp).
+- `parseUpload()` reads exported JSON or XML files and returns scores; handles original v0.0.5 format.
+- Download buttons (PNG, JSON, XML) wired into the results screen.
+- Upload section with file input accepting `.json` and `.xml`; shows parsed map as dashed purple overlay.
+- Clear upload button to remove imported map.
 
 ## [0.5.0] - 2026-05-16
 
