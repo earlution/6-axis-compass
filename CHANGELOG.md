@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `src/url.js`, `src/i18n.js`, `src/translations/en.json`, `src/index.html`, `src/export.js` updated.
   - `data/actors/*.json` and regenerated `src/actors-generated.js`.
 
+### Changed
+- **Axis restructure (B2):** Rewrote the four Libertarian/Authoritarian quiz questions to measure consent-based democratic organisation vs. hierarchical/illiberal order.
+  - Two forward (authoritarian) and two reverse (libertarian), balanced.
+  - Old liberty questions (employer coercion, landlord power, taxation) retired.
+
 ### Added
 - Forkable, traceable actor data architecture:
   - `data/actors/*.json` — 27 canonical actor files with per-axis confidence, rationale, and cited sources.

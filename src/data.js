@@ -47,11 +47,11 @@ export const QUESTIONS = [
   { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
   { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
   { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
-  // Liberty
-  { axis: 'Libertarian/Authoritarian', text: 'Large employers hold coercive power over workers that the law needs to check.', reverse: false },
-  { axis: 'Libertarian/Authoritarian', text: 'Government regulation is the primary threat to individual freedom.', reverse: true },
-  { axis: 'Libertarian/Authoritarian', text: 'The power a landlord holds over a tenant is a form of coercion requiring political attention.', reverse: false },
-  { axis: 'Libertarian/Authoritarian', text: 'Reducing taxation is one of the most effective ways to increase personal freedom.', reverse: true },
+  // Libertarian/Authoritarian
+  { axis: 'Libertarian/Authoritarian', text: 'In times of serious crisis, the government should have the authority to suspend normal legal protections if doing so is necessary to protect national security or social order.', reverse: false },
+  { axis: 'Libertarian/Authoritarian', text: 'Individual freedom of expression should be protected by law even when the views expressed are offensive to the majority.', reverse: true },
+  { axis: 'Libertarian/Authoritarian', text: 'Social order and the preservation of traditional values are more important than protecting the rights of minority groups who challenge them.', reverse: false },
+  { axis: 'Libertarian/Authoritarian', text: 'Hierarchical structures in government and society should be continuously open to challenge and accountable to the people subject to them.', reverse: true },
   // Class
   { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
   { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
