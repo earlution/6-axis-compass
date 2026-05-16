@@ -23,7 +23,15 @@ function inlineModules() {
   const stripExports = code => code.replace(/^\s*export\s+/gm, '');
   const inline = code => stripExports(stripImports(code));
 
-  const js = [data, quiz, chart, ui, exp].map(inline).join('\n\n');
+  // Extract the inline module script content from src/index.html
+  const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
+  const moduleScript = moduleMatch ? moduleMatch[1] : '';
+
+  // Combine: modules first (with imports/exports stripped), then the inline script (imports stripped)
+  const js = [data, quiz, chart, ui, exp]
+    .map(inline)
+    .concat(stripImports(moduleScript))
+    .join('\n\n');
 
   const output = html
     .replace(/<style>[\s\S]*?<\/style>/, `<style>\n${css}\n</style>`)
