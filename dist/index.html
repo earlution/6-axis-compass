@@ -755,8 +755,8 @@ function renderResults(container, {
           <div class="actor-btns" id="actor-btns"></div>
         </div>
         <div class="legend" id="legend"></div>
-        <div class="score-bars" id="score-bars"></div>
-        <hr class="divider">
+        <div class="score-bars" id="score-bars" style="display:${showUser ? '' : 'none'}"></div>
+        <hr class="divider" style="display:${showUser ? '' : 'none'}">
         <div class="config-section">
           <p class="config-heading">Orientation</p>
           <div class="config-row">
