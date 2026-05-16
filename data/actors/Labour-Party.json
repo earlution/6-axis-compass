@@ -41,6 +41,11 @@
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
     },
-    "Libertarian/Authoritarian": 4
+    "Libertarian/Authoritarian": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
   }
 }

@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
-  "generated": "2026-05-16T14:24:26.060Z",
+  "gitCommit": "82ff68c6a582f9a326f1bcb27f3a377ac1bc8838",
+  "generated": "2026-05-16T16:37:36.763Z",
   "groupId": "wwii-figures",
   "title": "World War II Political Figures",
   "actors": [
@@ -16,20 +16,10 @@
         "Military": 7,
         "Economic": 7,
         "Class": 6,
-        "Liberty": 4
+        "Libertarian/Authoritarian": 4
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -39,12 +29,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -61,20 +61,10 @@
         "Military": 9,
         "Economic": 3,
         "Class": 2,
-        "Liberty": 3
+        "Libertarian/Authoritarian": 3
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -84,12 +74,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -106,20 +106,10 @@
         "Military": 10,
         "Economic": 8,
         "Class": 7,
-        "Liberty": 1
+        "Libertarian/Authoritarian": 1
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -129,12 +119,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -151,20 +151,10 @@
         "Military": 8,
         "Economic": 7,
         "Class": 5,
-        "Liberty": 4
+        "Libertarian/Authoritarian": 4
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -174,12 +164,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -196,20 +196,10 @@
         "Military": 9,
         "Economic": 7,
         "Class": 6,
-        "Liberty": 1
+        "Libertarian/Authoritarian": 1
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -219,12 +209,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -241,20 +241,10 @@
         "Military": 9,
         "Economic": 9,
         "Class": 10,
-        "Liberty": 0
+        "Libertarian/Authoritarian": 0
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -264,12 +254,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []

@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
-  "generated": "2026-05-16T14:24:26.060Z",
+  "gitCommit": "82ff68c6a582f9a326f1bcb27f3a377ac1bc8838",
+  "generated": "2026-05-16T16:37:36.763Z",
   "groupId": "uk-parties",
   "title": "UK Political Parties",
   "actors": [
@@ -15,8 +15,8 @@
         "Economic": 3,
         "Military": 8,
         "Sovereignty": 6,
-        "Liberty": 2,
-        "Class": 1
+        "Class": 1,
+        "Libertarian/Authoritarian": 5
       },
       "traceability": {
         "Cultural": {
@@ -49,25 +49,25 @@
             }
           ]
         },
-        "Sovereignty": {
+        "Economic": {
           "confidence": "high",
-          "rationale": "Brexit delivered under Conservative government, but ongoing engagement with international frameworks (CPTPP, NATO, UN).",
+          "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
           "sources": [
             {
-              "type": "legislation",
-              "title": "European Union (Withdrawal) Act 2018",
-              "date": "2018-06-26",
-              "url": "https://www.legislation.gov.uk/ukpga/2018/16",
-              "relevantText": "An Act to repeal the European Communities Act 1972 and make other provision in connection with the withdrawal of the United Kingdom from the EU.",
-              "citation": "European Union (Withdrawal) Act 2018, c. 16 (UK)"
+              "type": "policy",
+              "title": "UK-Australia Free Trade Agreement",
+              "date": "2021-12-17",
+              "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
+              "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
+              "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
             },
             {
-              "type": "policy",
-              "title": "Accession to Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)",
-              "date": "2023-07-16",
-              "url": "https://www.gov.uk/government/news/uk-joins-cptpp",
-              "relevantText": "The UK becomes the first new member of CPTPP since its founding, demonstrating commitment to multilateral trade.",
-              "citation": "Department for Business and Trade press release, 16 July 2023"
+              "type": "legislation",
+              "title": "Subsidy Control Act 2022",
+              "date": "2022-04-28",
+              "url": "https://www.legislation.gov.uk/ukpga/2022/23",
+              "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
+              "citation": "Subsidy Control Act 2022, c. 23 (UK)"
             }
           ]
         },
@@ -93,27 +93,32 @@
             }
           ]
         },
-        "Economic": {
+        "Sovereignty": {
           "confidence": "high",
-          "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
+          "rationale": "Brexit delivered under Conservative government, but ongoing engagement with international frameworks (CPTPP, NATO, UN).",
           "sources": [
             {
-              "type": "policy",
-              "title": "UK-Australia Free Trade Agreement",
-              "date": "2021-12-17",
-              "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
-              "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
-              "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
+              "type": "legislation",
+              "title": "European Union (Withdrawal) Act 2018",
+              "date": "2018-06-26",
+              "url": "https://www.legislation.gov.uk/ukpga/2018/16",
+              "relevantText": "An Act to repeal the European Communities Act 1972 and make other provision in connection with the withdrawal of the United Kingdom from the EU.",
+              "citation": "European Union (Withdrawal) Act 2018, c. 16 (UK)"
             },
             {
-              "type": "legislation",
-              "title": "Subsidy Control Act 2022",
-              "date": "2022-04-28",
-              "url": "https://www.legislation.gov.uk/ukpga/2022/23",
-              "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
-              "citation": "Subsidy Control Act 2022, c. 23 (UK)"
+              "type": "policy",
+              "title": "Accession to Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)",
+              "date": "2023-07-16",
+              "url": "https://www.gov.uk/government/news/uk-joins-cptpp",
+              "relevantText": "The UK becomes the first new member of CPTPP since its founding, demonstrating commitment to multilateral trade.",
+              "citation": "Department for Business and Trade press release, 16 July 2023"
             }
           ]
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
         },
         "Class": {
           "confidence": "high",
@@ -136,28 +141,6 @@
               "citation": "HC Deb 16 January 2023, col. 9012"
             }
           ]
-        },
-        "Liberty": {
-          "confidence": "medium",
-          "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
-          "sources": [
-            {
-              "type": "legislation",
-              "title": "Investigatory Powers Act 2016",
-              "date": "2016-11-29",
-              "url": "https://www.legislation.gov.uk/ukpga/2016/25",
-              "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
-              "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
-            },
-            {
-              "type": "policy",
-              "title": "Retained EU Law (Revocation and Reform) Act 2023",
-              "date": "2023-06-29",
-              "url": "https://www.legislation.gov.uk/ukpga/2023/28",
-              "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
-              "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
-            }
-          ]
         }
       }
     },
@@ -171,20 +154,10 @@
         "Military": 7,
         "Economic": 3,
         "Class": 3,
-        "Liberty": 5
+        "Libertarian/Authoritarian": 4
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -194,12 +167,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -216,20 +199,10 @@
         "Military": 5,
         "Economic": 5,
         "Class": 2,
-        "Liberty": 3
+        "Libertarian/Authoritarian": 5
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -239,12 +212,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -261,20 +244,10 @@
         "Military": 5,
         "Economic": 4,
         "Class": 4,
-        "Liberty": 6
+        "Libertarian/Authoritarian": 3
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -284,12 +257,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -306,20 +289,10 @@
         "Military": 2,
         "Economic": 7,
         "Class": 8,
-        "Liberty": 8
+        "Libertarian/Authoritarian": 2
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -329,12 +302,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -351,20 +334,10 @@
         "Military": 2,
         "Economic": 6,
         "Class": 7,
-        "Liberty": 7
+        "Libertarian/Authoritarian": 3
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -374,12 +347,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -396,20 +379,10 @@
         "Military": 2,
         "Economic": 6,
         "Class": 7,
-        "Liberty": 7
+        "Libertarian/Authoritarian": 3
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Sovereignty": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -419,12 +392,22 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Class": {
+        "Military": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Liberty": {
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Libertarian/Authoritarian": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []

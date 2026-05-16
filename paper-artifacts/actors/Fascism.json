@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
-  "generated": "2026-05-16T14:24:26.060Z",
+  "gitCommit": "82ff68c6a582f9a326f1bcb27f3a377ac1bc8838",
+  "generated": "2026-05-16T16:37:36.763Z",
   "actor": "Fascism",
   "slug": "Fascism",
   "category": "Political Ideology",
@@ -13,20 +13,10 @@
     "Military": 9,
     "Economic": 8,
     "Class": 10,
-    "Liberty": 10
+    "Libertarian/Authoritarian": 10
   },
   "traceability": {
     "Cultural": {
-      "confidence": "medium",
-      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-      "sources": []
-    },
-    "Sovereignty": {
-      "confidence": "medium",
-      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-      "sources": []
-    },
-    "Military": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
@@ -36,12 +26,22 @@
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
     },
-    "Class": {
+    "Military": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
     },
-    "Liberty": {
+    "Sovereignty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Libertarian/Authoritarian": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []

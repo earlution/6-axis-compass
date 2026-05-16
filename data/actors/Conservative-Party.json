@@ -137,6 +137,11 @@
         }
       ]
     },
-    "Libertarian/Authoritarian": 5
+    "Libertarian/Authoritarian": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
   }
 }

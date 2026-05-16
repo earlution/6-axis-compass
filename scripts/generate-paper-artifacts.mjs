@@ -95,7 +95,8 @@ const ACTORS = loadActors();
 
 // ── Ensure output directories ─────────────────────────────────────────
 
-rmSync(OUT, { recursive: true, force: true });
+rmSync(join(OUT, 'actors'), { recursive: true, force: true });
+rmSync(join(OUT, 'comparisons'), { recursive: true, force: true });
 mkdirSync(join(OUT, 'actors'), { recursive: true });
 mkdirSync(join(OUT, 'comparisons'), { recursive: true });
 
