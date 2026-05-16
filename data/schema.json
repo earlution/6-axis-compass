@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Six-Axis Political Compass — Actor Definition",
+  "description": "Forkable, traceable actor data for the Six-Axis Political Compass. Each file defines one political actor with evidence-backed scores.",
+  "type": "object",
+  "required": ["schemaVersion", "actor", "scores"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Schema version in SemVer. Current: 1.0.0",
+      "enum": ["1.0.0"]
+    },
+    "actor": {
+      "type": "object",
+      "required": ["name", "slug", "category", "color"],
+      "properties": {
+        "name": { "type": "string", "description": "Display name" },
+        "slug": { "type": "string", "description": "URL-safe identifier, kebab-case" },
+        "category": { "type": "string", "description": "e.g. 'UK Political Party', 'Historical Figure'" },
+        "activePeriod": { "type": "string", "description": "Optional date range" },
+        "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$", "description": "Hex colour for charts" },
+        "version": { "type": "string", "description": "Data file version" },
+        "lastUpdated": { "type": "string", "format": "date" },
+        "curator": { "type": "string" },
+        "contributors": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "description": "Map of axis name to Score object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value"],
+        "properties": {
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Score on this axis, 0–10"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "very-high"],
+            "description": "How confident the curator is in this score"
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Short explanation of why this score was assigned"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "title"],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["policy", "legislation", "vote", "speech", "manifesto", "book", "academic", "other"],
+                  "description": "Category of evidence"
+                },
+                "title": { "type": "string" },
+                "date": { "type": "string", "format": "date" },
+                "url": { "type": "string", "format": "uri" },
+                "relevantText": { "type": "string", "description": "Quoted excerpt supporting the score" },
+                "citation": { "type": "string", "description": "Full academic or parliamentary citation" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

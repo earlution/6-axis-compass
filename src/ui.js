@@ -240,6 +240,10 @@ export function renderResults(container, {
 
   allActors.forEach(actor => {
     const isCustom = customActors && customActors.some(c => c.name === actor.name);
+    const hasMeta = actor._scoreMeta && actor._actorMeta;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'actor-btn-wrap';
+
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
     btn.setAttribute('aria-pressed', selectedActors.has(actor.name) ? 'true' : 'false');
@@ -250,32 +254,32 @@ export function renderResults(container, {
       btn.style.background = actor.color + '1a';
     }
     btn.addEventListener('click', () => onToggleActor(actor.name));
+    wrapper.appendChild(btn);
+
+    if (hasMeta) {
+      const info = document.createElement('button');
+      info.className = 'actor-info-btn';
+      info.setAttribute('aria-label', t('actor.browseData') + ': ' + t('actor.' + actor.name));
+      info.textContent = 'i';
+      info.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openActorModal(actor);
+      });
+      wrapper.appendChild(info);
+    }
 
     if (isCustom && onDeleteCustomActor) {
-      const wrapper = document.createElement('div');
-      wrapper.style.display = 'flex';
-      wrapper.style.alignItems = 'center';
-      wrapper.style.gap = '3px';
-      wrapper.appendChild(btn);
-
       const del = document.createElement('button');
       del.textContent = '×';
-      del.style.background = 'none';
-      del.style.border = 'none';
-      del.style.color = 'rgba(232,228,218,0.3)';
-      del.style.fontSize = '15px';
-      del.style.cursor = 'pointer';
-      del.style.padding = '0 2px';
-      del.style.lineHeight = '1';
+      del.className = 'actor-del-btn';
       del.addEventListener('click', (e) => {
         e.stopPropagation();
         onDeleteCustomActor(actor.name);
       });
       wrapper.appendChild(del);
-      abtn.appendChild(wrapper);
-    } else {
-      abtn.appendChild(btn);
     }
+
+    abtn.appendChild(wrapper);
   });
 
   // Legend
@@ -423,4 +427,96 @@ export function renderResults(container, {
       });
     });
   }
+}
+
+function openActorModal(actor) {
+  const existing = document.getElementById('actor-modal');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'actor-modal';
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', t('actor.browseData'));
+
+  const meta = actor._actorMeta || {};
+  const scoreMeta = actor._scoreMeta || {};
+
+  const sourceTypeLabel = type => t('actor.source.type.' + type) || type;
+
+  const axesHtml = AXES.map(ax => {
+    const sm = scoreMeta[ax] || {};
+    const confidence = sm.confidence || 'low';
+    const rationale = sm.rationale || '';
+    const sources = sm.sources || [];
+    const score = (actor.scores[ax] ?? 0).toFixed(1);
+
+    const sourcesHtml = sources.length === 0
+      ? `<p class="modal-no-sources">${t('actor.noSources')}</p>`
+      : sources.map(s => `
+        <div class="modal-source">
+          <div class="source-header">
+            <span class="source-type">${sourceTypeLabel(s.type)}</span>
+            <a class="source-link" href="${s.url || '#'}" target="_blank" rel="noopener">${s.title || s.url}</a>
+            ${s.date ? `<span class="source-date">${s.date}</span>` : ''}
+          </div>
+          ${s.relevantText ? `<blockquote class="source-quote">"${s.relevantText}"</blockquote>` : ''}
+          ${s.citation ? `<cite class="source-cite">${s.citation}</cite>` : ''}
+        </div>
+      `).join('');
+
+    return `
+      <div class="modal-axis">
+        <div class="modal-axis-header">
+          <span class="modal-axis-name">${t('axis.' + ax)}</span>
+          <span class="modal-axis-score">${score}</span>
+          <span class="confidence-badge confidence-${confidence}">${t('actor.confidence.' + confidence)}</span>
+        </div>
+        ${rationale ? `<p class="modal-rationale">${rationale}</p>` : ''}
+        <div class="modal-sources">
+          <p class="modal-sources-heading">${t('actor.sources')}</p>
+          ${sourcesHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  overlay.innerHTML = `
+    <div class="modal-content">
+      <button class="modal-close" aria-label="${t('actor.close')}">&times;</button>
+      <div class="modal-header">
+        <div class="modal-color" style="background:${actor.color}"></div>
+        <div>
+          <h3 class="modal-title">${t('actor.' + actor.name)}</h3>
+          ${meta.category ? `<span class="modal-category">${meta.category}</span>` : ''}
+        </div>
+      </div>
+      ${meta.curator || meta.version || meta.lastUpdated ? `
+        <div class="modal-meta">
+          ${meta.curator ? `<span>${t('actor.curator')}: ${meta.curator}</span>` : ''}
+          ${meta.version ? `<span>${t('actor.version')}: ${meta.version}</span>` : ''}
+          ${meta.lastUpdated ? `<span>${t('actor.lastUpdated')}: ${meta.lastUpdated}</span>` : ''}
+        </div>
+      ` : ''}
+      <div class="modal-axes">
+        ${axesHtml}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const close = () => overlay.remove();
+  overlay.querySelector('.modal-close').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function escHandler(e) {
+    if (e.key === 'Escape') {
+      close();
+      document.removeEventListener('keydown', escHandler);
+    }
+  });
+  overlay.querySelector('.modal-close').focus();
 }

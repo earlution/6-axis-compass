@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Bush/Blair Iraq position",
+    "slug": "Bush-Blair-Iraq-position",
+    "category": "Political Actor",
+    "color": "#6B8E23",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-16",
+    "curator": "A Common Enemy Project",
+    "contributors": []
+  },
+  "scores": {
+    "Cultural": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "value": 10,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

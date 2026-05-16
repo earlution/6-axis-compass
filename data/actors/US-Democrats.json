@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "US Democrats",
+    "slug": "US-Democrats",
+    "category": "Political Actor",
+    "color": "#3C6EC9",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-16",
+    "curator": "A Common Enemy Project",
+    "contributors": []
+  },
+  "scores": {
+    "Cultural": {
+      "value": 3,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "value": 7,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 6,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

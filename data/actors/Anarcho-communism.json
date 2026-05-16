@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Anarcho-communism",
+    "slug": "Anarcho-communism",
+    "category": "Political Ideology",
+    "color": "#9C27B0",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-16",
+    "curator": "A Common Enemy Project",
+    "contributors": []
+  },
+  "scores": {
+    "Cultural": {
+      "value": 3,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

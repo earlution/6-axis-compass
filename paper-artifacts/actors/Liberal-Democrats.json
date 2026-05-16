@@ -1,16 +1,50 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
-  "generated": "2026-05-16T13:15:49.307Z",
+  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
+  "generated": "2026-05-16T14:24:26.060Z",
   "actor": "Liberal Democrats",
+  "slug": "Liberal-Democrats",
+  "category": "Political Actor",
   "color": "#FAA61A",
   "axes": {
     "Cultural": 3,
-    "Economic": 4,
-    "Military": 5,
     "Sovereignty": 4,
-    "Liberty": 6,
-    "Class": 4
+    "Military": 5,
+    "Economic": 4,
+    "Class": 4,
+    "Liberty": 6
+  },
+  "traceability": {
+    "Cultural": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
   }
 }

@@ -1,81 +1,279 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
-  "generated": "2026-05-16T13:15:49.307Z",
+  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
+  "generated": "2026-05-16T14:24:26.060Z",
   "groupId": "wwii-figures",
   "title": "World War II Political Figures",
   "actors": [
     {
       "name": "Clement Attlee",
+      "slug": "Clement-Attlee",
       "color": "#E74C3C",
       "axes": {
         "Cultural": 5,
-        "Economic": 7,
-        "Military": 7,
         "Sovereignty": 5,
-        "Liberty": 4,
-        "Class": 6
+        "Military": 7,
+        "Economic": 7,
+        "Class": 6,
+        "Liberty": 4
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     },
     {
       "name": "Winston Churchill",
+      "slug": "Winston-Churchill",
       "color": "#1A237E",
       "axes": {
         "Cultural": 8,
-        "Economic": 3,
-        "Military": 9,
         "Sovereignty": 8,
-        "Liberty": 3,
-        "Class": 2
+        "Military": 9,
+        "Economic": 3,
+        "Class": 2,
+        "Liberty": 3
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     },
     {
       "name": "Adolf Hitler",
+      "slug": "Adolf-Hitler",
       "color": "#212121",
       "axes": {
         "Cultural": 10,
-        "Economic": 8,
-        "Military": 10,
         "Sovereignty": 10,
-        "Liberty": 1,
-        "Class": 7
+        "Military": 10,
+        "Economic": 8,
+        "Class": 7,
+        "Liberty": 1
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     },
     {
       "name": "Franklin D. Roosevelt",
+      "slug": "Franklin-D-Roosevelt",
       "color": "#1565C0",
       "axes": {
         "Cultural": 4,
-        "Economic": 7,
-        "Military": 8,
         "Sovereignty": 5,
-        "Liberty": 4,
-        "Class": 5
+        "Military": 8,
+        "Economic": 7,
+        "Class": 5,
+        "Liberty": 4
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     },
     {
       "name": "Benito Mussolini",
+      "slug": "Benito-Mussolini",
       "color": "#424242",
       "axes": {
         "Cultural": 9,
-        "Economic": 7,
-        "Military": 9,
         "Sovereignty": 9,
-        "Liberty": 1,
-        "Class": 6
+        "Military": 9,
+        "Economic": 7,
+        "Class": 6,
+        "Liberty": 1
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     },
     {
       "name": "Joseph Stalin",
+      "slug": "Joseph-Stalin",
       "color": "#B71C1C",
       "axes": {
         "Cultural": 7,
-        "Economic": 9,
-        "Military": 9,
         "Sovereignty": 6,
-        "Liberty": 0,
-        "Class": 10
+        "Military": 9,
+        "Economic": 9,
+        "Class": 10,
+        "Liberty": 0
+      },
+      "traceability": {
+        "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Sovereignty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Military": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Liberty": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        }
       }
     }
   ]

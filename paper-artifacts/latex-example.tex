@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{svg}
+
+% Load actor data commands
+\input{actors/Conservative-Party.tex}
+\input{actors/Labour-Party.tex}
+\input{actors/Winston-Churchill.tex}
+
+\title{The Six-Axis Political Compass}
+\author{A Common Enemy Project}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The Six-Axis Political Compass maps political actors across six dimensions:
+Cultural, Economic, Military, Sovereignty, Liberty, and Class.
+
+\section{Individual Profiles}
+
+The Conservative Party scores
+\ConservativePartyCultural{} on the Cultural axis,
+\ConservativePartyEconomic{} on the Economic axis, and
+\ConservativePartyMilitary{} on the Military axis.
+
+\begin{figure}[h]
+  \centering
+  \includesvg[width=0.45\textwidth]{actors/Conservative-Party.svg}
+  \caption{Radar chart of the Conservative Party.}
+  \label{fig:conservative}
+\end{figure}
+
+Winston Churchill scores
+\WinstonChurchillCultural{} on Cultural and
+\WinstonChurchillMilitary{} on Military.
+
+\begin{figure}[h]
+  \centering
+  \includesvg[width=0.45\textwidth]{actors/Winston-Churchill.svg}
+  \caption{Radar chart of Winston Churchill.}
+  \label{fig:churchill}
+\end{figure}
+
+\section{Comparison Charts}
+
+Figure~\ref{fig:uk-parties} overlays the major UK parties.
+
+\begin{figure}[h]
+  \centering
+  \includesvg[width=0.7\textwidth]{comparisons/uk-parties.svg}
+  \caption{UK Political Parties on the Six-Axis Compass.}
+  \label{fig:uk-parties}
+\end{figure}
+
+\end{document}

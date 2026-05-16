@@ -59,7 +59,7 @@ export const QUESTIONS = [
   { axis: 'Class', text: 'What is good for business is generally good for the country as a whole.', reverse: true }
 ];
 
-export const ACTORS = [
+const _FALLBACK_ACTORS = [
   // UK Political Parties
   { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Liberty: 2, Class: 1 }, color: '#1A75BB' },
   { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#c0392b' },
@@ -97,3 +97,5 @@ export const ACTORS = [
   { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, Liberty: 10, Class: 10 }, color: '#8B4513' },
   { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, Liberty: 10, Class: 7 }, color: '#006600' }
 ];
+
+export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Orbán's Hungary",
+    "slug": "orbans-hungary",
+    "category": "National Government",
+    "activePeriod": "2010–present",
+    "color": "#006600",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-16",
+    "curator": "A Common Enemy Project",
+    "contributors": []
+  },
+  "scores": {
+    "Cultural": {
+      "value": 9.0,
+      "confidence": "high",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 7.0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "value": 6.0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 8.0,
+      "confidence": "high",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 10.0,
+      "confidence": "low",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "value": 7.0,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

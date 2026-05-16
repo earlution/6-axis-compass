@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "SNP",
+    "slug": "SNP",
+    "category": "Political Party",
+    "color": "#FDF38E",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-16",
+    "curator": "A Common Enemy Project",
+    "contributors": []
+  },
+  "scores": {
+    "Cultural": {
+      "value": 6,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 9,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 6,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "value": 7,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 7,
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

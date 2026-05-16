@@ -4,8 +4,9 @@
   "description": "A zero-dependency political compass mapping six axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.",
   "main": "dist/index.html",
   "scripts": {
-    "build": "node scripts/build.js",
-    "dev": "node scripts/build.js --watch",
+    "sync-actors": "node scripts/sync-actor-data.js",
+    "build": "npm run sync-actors && node scripts/build.js",
+    "dev": "npm run sync-actors && node scripts/build.js --watch",
     "generate-artifacts": "node scripts/generate-paper-artifacts.mjs",
     "upload-osf": "node scripts/upload-to-osf.mjs"
   },
@@ -19,6 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^17.4.2",
-    "jsdom": "^29.1.1"
+    "jsdom": "^29.1.1",
+    "sharp": "^0.34.5"
   }
 }

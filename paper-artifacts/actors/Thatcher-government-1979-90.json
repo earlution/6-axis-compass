@@ -1,0 +1,50 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
+  "generated": "2026-05-16T14:24:26.060Z",
+  "actor": "Thatcher government 1979–90",
+  "slug": "Thatcher-government-1979-90",
+  "category": "Historical Government",
+  "color": "#00BFFF",
+  "axes": {
+    "Cultural": 6,
+    "Sovereignty": 6,
+    "Military": 6,
+    "Economic": 10,
+    "Class": 10,
+    "Liberty": 3
+  },
+  "traceability": {
+    "Cultural": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  }
+}

@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [Unreleased]
+
+### Added
+- Forkable, traceable actor data architecture:
+  - `data/actors/*.json` — 27 canonical actor files with per-axis confidence, rationale, and cited sources.
+  - `data/schema.json` — JSON Schema v7 defining the actor data structure.
+  - `scripts/sync-actor-data.js` — reads JSON files and generates `src/actors-generated.js` at build time.
+  - Backward compatibility: `src/data.js` falls back to hardcoded `_FALLBACK_ACTORS` when `__ACTORS` is undefined.
+- Actor data browser UI:
+  - Information icon ("i") next to each actor toggle button in the results screen.
+  - Modal panel showing actor metadata, per-axis score breakdowns with confidence badges, rationale text, and full source citations with clickable links.
+  - Keyboard accessible (Escape to close, focus management, `role="dialog"`).
+  - New i18n keys for confidence levels, source types, and modal labels.
+- Paper artifact documentation:
+  - `paper-artifacts/README.md` — full guide to artifact formats, LaTeX integration, and provenance.
+  - `paper-artifacts/latex-example.tex` — minimal working LaTeX example.
+- Updated `README.md` with forkable data model, contributing guide, and data schema documentation.
+
 ## [2.0.0] - 2026-05-16
 
 ### Added

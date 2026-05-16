@@ -1,32 +1,21 @@
 import { JSDOM } from 'jsdom';
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, statSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
+const DATA_DIR = join(ROOT, 'data', 'actors');
 const OUT = join(ROOT, 'paper-artifacts');
 
 // ── Helpers ──────────────────────────────────────────────────────────
-
-function loadModule(file) {
-  const code = readFileSync(join(ROOT, 'src', file), 'utf-8');
-  return code
-    .replace(/^\s*import\s+.*from\s+['"].*['"];?\s*$/gm, '')
-    .replace(/^\s*export\s+/gm, '');
-}
-
-function loadModules(files) {
-  return files.map(loadModule).join('\n\n');
-}
 
 function slugify(name) {
   return name.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 function texCmd(name) {
-  // "Franklin D. Roosevelt" -> "FranklinDRoosevelt"
   return name.replace(/[^a-zA-Z0-9]/g, '');
 }
 
@@ -47,20 +36,62 @@ function getVersion() {
   }
 }
 
-// ── Bootstrap DOM and load source modules ─────────────────────────────
+function loadActors() {
+  const files = readdirSync(DATA_DIR).filter(f => f.endsWith('.json'));
+  const actors = [];
+  for (const file of files.sort()) {
+    const raw = JSON.parse(readFileSync(join(DATA_DIR, file), 'utf-8'));
+    const scores = {};
+    const scoreMeta = {};
+    for (const [axis, data] of Object.entries(raw.scores)) {
+      scores[axis] = data.value;
+      scoreMeta[axis] = {
+        confidence: data.confidence,
+        rationale: data.rationale,
+        sources: data.sources || []
+      };
+    }
+    actors.push({
+      name: raw.actor.name,
+      scores,
+      color: raw.actor.color,
+      _actorMeta: {
+        slug: raw.actor.slug,
+        category: raw.actor.category,
+        activePeriod: raw.actor.activePeriod,
+        version: raw.actor.version,
+        lastUpdated: raw.actor.lastUpdated,
+        curator: raw.actor.curator,
+        contributors: raw.actor.contributors
+      },
+      _scoreMeta: scoreMeta
+    });
+  }
+  return actors;
+}
+
+// ── Bootstrap DOM and load chart renderer ──────────────────────────────
 
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 global.document = dom.window.document;
 
-const modulesCode = loadModules(['i18n.js', 'data.js', 'chart.js']);
-const moduleScope = new Function(modulesCode + '\nreturn { ACTORS, AXES, drawRadar, t, setLanguage };')();
-const { ACTORS, AXES, drawRadar, t, setLanguage } = moduleScope;
+function loadModule(file) {
+  const code = readFileSync(join(ROOT, 'src', file), 'utf-8');
+  return code
+    .replace(/^\s*import\s+.*from\s+['"].*['"];?\s*$/gm, '')
+    .replace(/^\s*export\s+/gm, '');
+}
+
+const modulesCode = loadModule('i18n.js') + '\n\n' + loadModule('data.js') + '\n\n' + loadModule('chart.js');
+const moduleScope = new Function(modulesCode + '\nreturn { AXES, drawRadar, t, setLanguage };')();
+const { AXES, drawRadar, t, setLanguage } = moduleScope;
 
 setLanguage('en');
 
 const VERSION = getVersion();
 const GIT_COMMIT = getGitCommit();
 const GENERATED = new Date().toISOString();
+const ACTORS = loadActors();
 
 // ── Ensure output directories ─────────────────────────────────────────
 
@@ -74,15 +105,24 @@ for (const actor of ACTORS) {
   const slug = slugify(actor.name);
   const cmdPrefix = texCmd(actor.name);
 
-  // JSON data file
+  // JSON data file (with traceability)
   const json = {
     source: 'Six-Axis Political Compass',
     version: VERSION,
     gitCommit: GIT_COMMIT,
     generated: GENERATED,
     actor: actor.name,
+    slug: actor._actorMeta.slug,
+    category: actor._actorMeta.category,
     color: actor.color,
-    axes: actor.scores
+    axes: actor.scores,
+    traceability: Object.fromEntries(
+      AXES.map(ax => [ax, {
+        confidence: actor._scoreMeta[ax].confidence,
+        rationale: actor._scoreMeta[ax].rationale,
+        sources: actor._scoreMeta[ax].sources
+      }])
+    )
   };
   writeFileSync(join(OUT, 'actors', `${slug}.json`), JSON.stringify(json, null, 2) + '\n');
 
@@ -90,7 +130,7 @@ for (const actor of ACTORS) {
   const texEscape = s => s.replace(/#/g, '\\#');
   const texLines = [
     `% Provenance: Six-Axis Political Compass v${VERSION} (${GIT_COMMIT}) generated ${GENERATED}`,
-    `% Source: src/data.js — actor "${actor.name}"`,
+    `% Source: data/actors/${slug}.json`,
     `\\newcommand{\\${cmdPrefix}Color}{${texEscape(actor.color)}}`,
     ...AXES.map(ax => `\\newcommand{\\${cmdPrefix}${ax}}{${actor.scores[ax].toFixed(1)}}`),
     ''
@@ -142,7 +182,7 @@ for (const [groupId, group] of Object.entries(paperConfig.groups)) {
   postProcessSVG(svg, group.title);
   writeFileSync(join(OUT, 'comparisons', `${groupId}.svg`), svg.outerHTML + '\n');
 
-  // Also write a combined JSON for the group
+  // Combined JSON for the group (with traceability)
   const groupJson = {
     source: 'Six-Axis Political Compass',
     version: VERSION,
@@ -150,7 +190,19 @@ for (const [groupId, group] of Object.entries(paperConfig.groups)) {
     generated: GENERATED,
     groupId,
     title: group.title,
-    actors: groupActors.map(a => ({ name: a.name, color: a.color, axes: a.scores }))
+    actors: groupActors.map(a => ({
+      name: a.name,
+      slug: a._actorMeta.slug,
+      color: a.color,
+      axes: a.scores,
+      traceability: Object.fromEntries(
+        AXES.map(ax => [ax, {
+          confidence: a._scoreMeta[ax].confidence,
+          rationale: a._scoreMeta[ax].rationale,
+          sources: a._scoreMeta[ax].sources
+        }])
+      )
+    }))
   };
   writeFileSync(join(OUT, 'comparisons', `${groupId}.json`), JSON.stringify(groupJson, null, 2) + '\n');
 }
@@ -168,7 +220,6 @@ function createPrintSVG() {
 }
 
 function postProcessSVG(svg, title) {
-  // Add white background for print compatibility
   const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
   bg.setAttribute('x', '0');
   bg.setAttribute('y', '0');
@@ -177,12 +228,10 @@ function postProcessSVG(svg, title) {
   bg.setAttribute('fill', '#ffffff');
   svg.insertBefore(bg, svg.firstChild);
 
-  // Add title element for accessibility
   const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'title');
   titleEl.textContent = `Six-Axis Political Compass — ${title}`;
   svg.insertBefore(titleEl, bg);
 
-  // Convert dark-theme strokes to print-friendly dark greys
   const polygons = svg.querySelectorAll('polygon');
   polygons.forEach(poly => {
     const stroke = poly.getAttribute('stroke') || '';
@@ -211,7 +260,6 @@ function postProcessSVG(svg, title) {
     }
   });
 
-  // Add a subtle border
   const border = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
   border.setAttribute('x', '0');
   border.setAttribute('y', '0');

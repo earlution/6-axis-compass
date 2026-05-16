@@ -1,16 +1,50 @@
 {
   "source": "Six-Axis Political Compass",
   "version": "1.0.0",
-  "gitCommit": "6d0121db747528bec94997d0427e57823672befd",
-  "generated": "2026-05-16T13:15:49.307Z",
+  "gitCommit": "40b6986b8bb9bdfeca1e0cd046d23bdb9c05e9d7",
+  "generated": "2026-05-16T14:24:26.060Z",
   "actor": "Benito Mussolini",
+  "slug": "Benito-Mussolini",
+  "category": "World War II Figure",
   "color": "#424242",
   "axes": {
     "Cultural": 9,
-    "Economic": 7,
-    "Military": 9,
     "Sovereignty": 9,
-    "Liberty": 1,
-    "Class": 6
+    "Military": 9,
+    "Economic": 7,
+    "Class": 6,
+    "Liberty": 1
+  },
+  "traceability": {
+    "Cultural": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Military": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Economic": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Class": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Liberty": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
   }
 }
