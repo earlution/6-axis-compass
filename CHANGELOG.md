@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[1.0.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.0.0
+[1.1.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.1.0
+
+## [1.1.0] - 2026-05-16
+
+### Added
+- Automated deployment to GitHub Pages via GitHub Actions.
+- `deploy` job added to `.github/workflows/ci.yml` that publishes `dist/` on every push to `main`.
+- Uses `actions/configure-pages@v5`, `actions/upload-pages-artifact@v3`, and `actions/deploy-pages@v4`.
+- Workflow permissions updated to allow `pages: write` and `id-token: write`.
 
 ## [1.0.0] - 2026-05-16
 
