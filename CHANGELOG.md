@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All 4 Libertarian/Authoritarian quiz questions have their `reverse` flags swapped.
   - All 27 actor JSON files and `_FALLBACK_ACTORS` have their Libertarian/Authoritarian scores recomputed as `10 - old_score`.
   - `AXIS_META` labels swapped: low = "Authoritarian / hierarchical / illiberal", high = "Libertarian / consent-based / democratic".
-  - Export version bumped to `1.2.0`. `parseUpload()` detects pre-v1.2.0 exports and inverts the Libertarian/Authoritarian score for backwards compatibility.
+  - Export version bumped to `1.1.1`. `parseUpload()` detects v1.1.0 exports and inverts the Libertarian/Authoritarian score for backwards compatibility.
 
 ### Changed
 - **Radar chart spatial layout (initial):** Reordered `AXES` so left-associated values appear on the left side of the radar chart and right-associated values on the right.

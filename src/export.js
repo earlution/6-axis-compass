@@ -32,7 +32,7 @@ export function downloadChart(svgElement, filename = 'my-six-axis-compass.png') 
 export function downloadMapData(scores, format = 'json') {
   const payload = {
     source: 'Six-Axis Political Compass',
-    version: '1.2.0',
+    version: '1.1.1',
     generated: new Date().toISOString(),
     axes: scores
   };
@@ -97,7 +97,7 @@ export function parseUpload(fileContent, fileName) {
   // prior to v1.2.0 (old convention: 0=libertarian, 10=authoritarian)
   let invertedAxis = false;
   if (scores['Libertarian/Authoritarian'] !== undefined) {
-    const needsInvert = isOld || (p && p.version && p.version.startsWith('1.1.')) || (versionAttr && versionAttr.startsWith('1.1.'));
+    const needsInvert = isOld || (p && p.version && p.version === '1.1.0') || (versionAttr && versionAttr === '1.1.0');
     if (needsInvert) {
       scores['Libertarian/Authoritarian'] = parseFloat((10 - scores['Libertarian/Authoritarian']).toFixed(1));
       invertedAxis = true;
