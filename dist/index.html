@@ -6,13 +6,1009 @@
 <title>Six-Axis Political Compass</title>
 <meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.">
 <style>
-/* styles.css will be inlined here by build.js */
+:root {
+  --bg: #0f0f0f;
+  --bg3: #242424;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #e8e4da;
+  --text2: #8a8680;
+  --text3: #5a5650;
+  --gold: #c8a84b;
+  --gold-dim: rgba(200,168,75,0.12);
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 1rem;
+}
+
+.intro-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.intro-body {
+  color: var(--text2);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.intro-meta {
+  color: var(--text3);
+  font-size: 13px;
+  margin-bottom: 2.5rem;
+}
+
+.intro-disclaimer {
+  margin-top: 1.25rem;
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.btn {
+  display: inline-block;
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 10px 28px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-primary {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-primary:hover {
+  background: var(--gold-dim);
+}
+
+.btn-sm {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-width: 0.5px;
+}
+
+.btn-text {
+  border: none;
+  color: var(--text3);
+  font-size: 13px;
+  padding: 4px 0;
+  cursor: pointer;
+  background: none;
+  font-family: var(--sans);
+  transition: color 0.15s;
+}
+
+.btn-text:hover {
+  color: var(--text2);
+}
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 2.25rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 2px;
+  background: var(--bg3);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 1px;
+  transition: width 0.35s ease;
+  width: 0;
+}
+
+.progress-label {
+  font-size: 11px;
+  color: var(--text3);
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: right;
+}
+
+.axis-tag {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.q-text {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+.responses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.response-btn {
+  background: none;
+  border: 0.5px solid var(--border);
+  color: var(--text2);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 11px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+  border-radius: 2px;
+}
+
+.response-btn:hover,
+.response-btn.selected {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.results-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.chart-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.actor-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.actor-label {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.actor-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.score-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 2.5rem;
+}
+
+.score-row {
+  margin-bottom: 0;
+}
+
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.score-name {
+  font-size: 13px;
+}
+
+.score-val {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.score-track {
+  height: 5px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.score-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.score-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.score-end {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.divider {
+  border: none;
+  border-top: 0.5px solid var(--border);
+  margin: 2rem 0;
+}
+
+.footer-note {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.footer-note a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.footer-note a:hover {
+  text-decoration: underline;
+}
+
+/* Configuration panel */
+.config-section {
+  margin-bottom: 1.25rem;
+}
+
+.config-heading {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232,228,218,0.3);
+  margin-bottom: 0.6rem;
+}
+
+.config-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.config-btn {
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  color: rgba(232,228,218,0.5);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+}
+
+.config-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200,168,75,0.1);
+}
+
+.config-file-label {
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  color: rgba(232,228,218,0.5);
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.config-file-input {
+  display: none;
+}
+
+.config-note {
+  font-size: 11px;
+  color: rgba(232,228,218,0.25);
+  margin-top: 0.5rem;
+}
+
+.axis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.axis-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 2px;
+  cursor: grab;
+  background: rgba(255,255,255,0.02);
+  user-select: none;
+}
+
+.axis-item.dragging {
+  opacity: 0.4;
+}
+
+.axis-grip {
+  color: rgba(232,228,218,0.25);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.axis-name {
+  font-size: 13px;
+  color: rgba(232,228,218,0.65);
+}
+
+.axis-position {
+  font-size: 11px;
+  color: rgba(232,228,218,0.25);
+  margin-left: auto;
+}
+
+@media (max-width: 420px) {
+  .wrap {
+    padding: 2rem 1rem 3rem;
+  }
+  .q-text {
+    font-size: 17px;
+  }
+}
+
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script type="module">
-// modules will be inlined here by build.js
+<script>
+/**
+ * Scoring algorithm:
+ * - 4 questions per axis
+ * - Forward-scored: response value 0–4 added directly
+ * - Reverse-scored: (4 - response value) added
+ * - Raw total 0–16 normalised to 0–10:
+ *   score = (total / 16) * 10, rounded to 1 decimal place
+ */
+const AXES = ['Cultural', 'Sovereignty', 'Military', 'Economic', 'Class', 'Liberty'];
+const AXIS_META = {
+  Cultural:     { low: 'Cultural internationalism', high: 'Cultural nationalism' },
+  Economic:     { low: 'Economic internationalism', high: 'Economic nationalism' },
+  Military:     { low: 'Non-interventionist',         high: 'Interventionist' },
+  Sovereignty:  { low: 'Supranational',               high: 'National sovereignty' },
+  Liberty:      { low: 'State coercion only',         high: 'Includes private coercion' },
+  Class:        { low: 'Class harmony',               high: 'Class conflict' }
+};
+const RESPONSES = [
+  { label: 'Strongly agree', value: 4 },
+  { label: 'Agree', value: 3 },
+  { label: 'Neither agree nor disagree', value: 2 },
+  { label: 'Disagree', value: 1 },
+  { label: 'Strongly disagree', value: 0 }
+];
+const QUESTIONS = [
+  // Cultural
+  { axis: 'Cultural', text: "Preserving a nation's distinct cultural identity should be a primary concern of government.", reverse: false },
+  { axis: 'Cultural', text: 'Immigration enriches societies more than it disrupts them.', reverse: true },
+  { axis: 'Cultural', text: 'Rapid demographic change in communities is a legitimate concern deserving serious political attention.', reverse: false },
+  { axis: 'Cultural', text: 'People should be as free to settle in any country as to move within it.', reverse: true },
+  // Economic
+  { axis: 'Economic', text: 'Governments should actively protect domestic industries from foreign competition.', reverse: false },
+  { axis: 'Economic', text: 'The free movement of capital across borders generally benefits the economies involved.', reverse: true },
+  { axis: 'Economic', text: 'Strategic industries such as energy and transport should be under national democratic control.', reverse: false },
+  { axis: 'Economic', text: 'Removing trade barriers between nations creates prosperity for all participants.', reverse: true },
+  // Military
+  { axis: 'Military', text: 'My country should withdraw from or significantly reduce its commitments to NATO.', reverse: true },
+  { axis: 'Military', text: 'Western military intervention in foreign states can be a legitimate and effective instrument of policy.', reverse: false },
+  { axis: 'Military', text: 'A nation should be willing to use military force to protect its strategic interests abroad.', reverse: false },
+  { axis: 'Military', text: 'Foreign military involvement should be avoided except in direct self-defence.', reverse: true },
+  // Sovereignty
+  { axis: 'Sovereignty', text: "A country's elected parliament should have the final say on all laws affecting its citizens.", reverse: false },
+  { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
+  { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
+  { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
+  // Liberty
+  { axis: 'Liberty', text: 'Large employers hold coercive power over workers that the law needs to check.', reverse: false },
+  { axis: 'Liberty', text: 'Government regulation is the primary threat to individual freedom.', reverse: true },
+  { axis: 'Liberty', text: 'The power a landlord holds over a tenant is a form of coercion requiring political attention.', reverse: false },
+  { axis: 'Liberty', text: 'Reducing taxation is one of the most effective ways to increase personal freedom.', reverse: true },
+  // Class
+  { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
+  { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
+  { axis: 'Class', text: 'The wealth gap between rich and poor is a structural problem requiring political solutions.', reverse: false },
+  { axis: 'Class', text: 'What is good for business is generally good for the country as a whole.', reverse: true }
+];
+const ACTORS = [
+  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Liberty: 2, Class: 1 }, color: '#1A75BB' },
+  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#c0392b' },
+  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, Liberty: 3, Class: 2 }, color: '#12B6CF' },
+  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, Liberty: 6, Class: 4 }, color: '#FAA61A' },
+  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, Liberty: 8, Class: 8 }, color: '#5A9E3F' },
+  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, Liberty: 7, Class: 7 }, color: '#FDF38E' },
+  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, Liberty: 7, Class: 7 }, color: '#3CB371' },
+  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, Liberty: 6, Class: 4 }, color: '#3C6EC9' },
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Liberty: 2, Class: 1 }, color: '#C0392B' }
+];
+
+
+
+/**
+ * @param {Record<number, number>} answers — question index → response value
+ * @returns {Record<string, number>} axis name → score 0–10
+ */
+function computeScores(answers) {
+  const scores = {};
+  for (const axis of AXES) {
+    const axisQuestions = QUESTIONS
+      .map((q, i) => ({ ...q, index: i }))
+      .filter(q => q.axis === axis);
+    let total = 0;
+    for (const q of axisQuestions) {
+      const v = answers[q.index] !== undefined ? answers[q.index] : 2; // default to neutral
+      total += q.reverse ? (4 - v) : v;
+    }
+    scores[axis] = parseFloat(((total / 16) * 10).toFixed(1));
+  }
+  return scores;
+}
+function createQuiz() {
+  let current = 0;
+  const answers = {};
+
+  return {
+    get current() { return current; },
+    get total() { return QUESTIONS.length; },
+    get isComplete() { return current >= QUESTIONS.length; },
+    get question() { return QUESTIONS[current]; },
+    get progress() { return Math.round((current / QUESTIONS.length) * 100); },
+    get stepLabel() { return `${current + 1} / ${QUESTIONS.length}`; },
+
+    answer(value) {
+      answers[current] = value;
+      current++;
+      return this.isComplete;
+    },
+
+    back() {
+      if (current > 0) current--;
+    },
+
+    getAnswers() { return { ...answers }; },
+    getScores() { return computeScores(answers); }
+  };
+}
+
+
+const NS = 'http://www.w3.org/2000/svg';
+
+function createSVGElement(tag, attrs) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+function axisPoint(cx, cy, maxR, index, value, orientation) {
+  const start = orientation === 'flat' ? -60 : -90;
+  const angle = (index * 60 + start) * (Math.PI / 180);
+  const dist = (value / 10) * maxR;
+  return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];
+}
+
+function polygonPoints(cx, cy, maxR, scores, axes, orientation) {
+  return axes.map((ax, i) => {
+    const [x, y] = axisPoint(cx, cy, maxR, i, scores[ax] || 0, orientation);
+    return `${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join(' ');
+}
+function drawRadar(svg, {
+  scores,
+  axes,
+  orientation = 'flat',
+  actors = [],
+  uploadedMap = null,
+  showUser = true,
+  userColor = '#c8a84b',
+  uploadedColor = '#b478dc'
+}) {
+  svg.innerHTML = '';
+  const cx = 160, cy = 160, maxR = 108;
+
+  // Grid polygons at levels 2, 4, 6, 8, 10
+  for (const level of [2, 4, 6, 8, 10]) {
+    const gridScores = Object.fromEntries(axes.map(a => [a, level]));
+    svg.appendChild(createSVGElement('polygon', {
+      points: polygonPoints(cx, cy, maxR, gridScores, axes, orientation),
+      fill: 'none',
+      stroke: 'rgba(255,255,255,0.07)',
+      'stroke-width': '1'
+    }));
+  }
+
+  // Axis lines
+  axes.forEach((_, i) => {
+    const [x, y] = axisPoint(cx, cy, maxR, i, 10, orientation);
+    svg.appendChild(createSVGElement('line', {
+      x1: cx, y1: cy, x2: x, y2: y,
+      stroke: 'rgba(255,255,255,0.1)', 'stroke-width': '1'
+    }));
+  });
+
+  // Actor overlays
+  for (const actor of actors) {
+    svg.appendChild(createSVGElement('polygon', {
+      points: polygonPoints(cx, cy, maxR, actor.scores, axes, orientation),
+      fill: actor.color + '18',
+      stroke: actor.color + '80',
+      'stroke-width': '1.5'
+    }));
+  }
+
+  // Uploaded map overlay
+  if (uploadedMap) {
+    svg.appendChild(createSVGElement('polygon', {
+      points: polygonPoints(cx, cy, maxR, uploadedMap.scores, axes, orientation),
+      fill: 'rgba(180,120,220,0.12)',
+      stroke: uploadedColor,
+      'stroke-width': '2',
+      'stroke-dasharray': '6,3'
+    }));
+    axes.forEach((ax, i) => {
+      const [x, y] = axisPoint(cx, cy, maxR, i, uploadedMap.scores[ax] || 0, orientation);
+      svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '3.5', fill: uploadedColor }));
+    });
+  }
+
+  // User profile
+  if (showUser) {
+    svg.appendChild(createSVGElement('polygon', {
+      points: polygonPoints(cx, cy, maxR, scores, axes, orientation),
+      fill: userColor + '1e',
+      stroke: userColor,
+      'stroke-width': '2.5'
+    }));
+    axes.forEach((ax, i) => {
+      const [x, y] = axisPoint(cx, cy, maxR, i, scores[ax] || 0, orientation);
+      svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '4', fill: userColor }));
+    });
+  }
+
+  // Axis labels
+  axes.forEach((ax, i) => {
+    const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
+    const t = createSVGElement('text', {
+      x: lx.toFixed(2), y: ly.toFixed(2),
+      'text-anchor': 'middle', 'dominant-baseline': 'middle',
+      'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
+      fill: 'rgba(232,228,218,0.55)'
+    });
+    t.textContent = ax;
+    svg.appendChild(t);
+  });
+}
+
+
+function renderIntro(container, onStart) {
+  container.innerHTML = `
+    <div class="wrap">
+      <div class="screen active" id="s-intro">
+        <p class="eyebrow">Six-Axis Political Compass</p>
+        <h1 class="intro-title">Where do you sit<br>on the six axes?</h1>
+        <p class="intro-body">The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.</p>
+        <p class="intro-meta">24 statements · approximately 5 minutes</p>
+        <button class="btn btn-primary" id="btn-start">Begin</button>
+        <p class="intro-disclaimer">Your answers are not stored or transmitted anywhere.</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('btn-start').addEventListener('click', onStart);
+}
+function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
+  container.innerHTML = `
+    <div class="wrap">
+      <div class="screen active" id="s-quiz">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
+          <span class="progress-label">${stepLabel}</span>
+        </div>
+        <p class="axis-tag">${axis} axis</p>
+        <p class="q-text">${question.text}</p>
+        <div class="responses" id="responses"></div>
+        <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
+          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">← Back</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const responsesEl = document.getElementById('responses');
+  const labels = ['Strongly agree', 'Agree', 'Neither agree nor disagree', 'Disagree', 'Strongly disagree'];
+  labels.forEach((label, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'response-btn';
+    btn.textContent = label;
+    btn.addEventListener('click', () => onAnswer(4 - i));
+    responsesEl.appendChild(btn);
+  });
+
+  if (canGoBack) {
+    document.getElementById('back-btn').addEventListener('click', onBack);
+  }
+}
+function renderResults(container, {
+  scores,
+  axes,
+  orientation,
+  showUser,
+  selectedActors,
+  uploadedMap,
+  onToggleActor,
+  onRestart,
+  onDownloadChart,
+  onDownloadData,
+  onUpload,
+  onClearUpload,
+  onToggleUser,
+  onSetOrientation,
+  onReorder
+}) {
+  const actors = ACTORS.filter(a => selectedActors.has(a.name));
+
+  container.innerHTML = `
+    <div class="wrap">
+      <div class="screen active" id="s-results">
+        <p class="eyebrow">Your results</p>
+        <h2 class="results-title">Your six-axis profile</h2>
+        <div class="chart-wrap">
+          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="Six-axis radar chart showing your political profile"></svg>
+        </div>
+        <div class="actor-row">
+          <span class="actor-label">Compare:</span>
+          <div class="actor-btns" id="actor-btns"></div>
+        </div>
+        <div class="legend" id="legend"></div>
+        <div class="score-bars" id="score-bars"></div>
+        <hr class="divider">
+        <div class="config-section">
+          <p class="config-heading">Orientation</p>
+          <div class="config-row">
+            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">Edge up</button>
+            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">Vertex up</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Your map</p>
+          <button class="config-btn ${showUser ? 'active' : ''}" id="btn-toggle-user">${showUser ? 'Hide your map' : 'Show your map'}</button>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Download</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-dl-png">Image (PNG)</button>
+            <button class="config-btn" id="btn-dl-json">Data (JSON)</button>
+            <button class="config-btn" id="btn-dl-xml">Data (XML)</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Compare a saved map</p>
+          <div class="config-row">
+            <label class="config-file-label">
+              Upload JSON or XML
+              <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
+            </label>
+            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">Clear</button>
+          </div>
+          <p class="config-note">Only files exported from this tool are supported. No data is transmitted anywhere.</p>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Axis order — drag to reposition</p>
+          <div class="axis-list" id="axis-list"></div>
+        </div>
+        <hr class="divider">
+        <p class="footer-note">This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.</p>
+        <button class="btn" id="btn-restart">Retake</button>
+      </div>
+    </div>
+  `;
+
+  const svg = document.getElementById('radar');
+  drawRadar(svg, {
+    scores,
+    axes,
+    orientation,
+    actors,
+    uploadedMap,
+    showUser
+  });
+
+  // Actor toggle buttons
+  const abtn = document.getElementById('actor-btns');
+  ACTORS.forEach(actor => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm';
+    btn.textContent = actor.name;
+    if (selectedActors.has(actor.name)) {
+      btn.style.borderColor = actor.color;
+      btn.style.color = actor.color;
+      btn.style.background = actor.color + '1a';
+    }
+    btn.addEventListener('click', () => onToggleActor(actor.name));
+    abtn.appendChild(btn);
+  });
+
+  // Legend
+  const leg = document.getElementById('legend');
+  const addLegend = (name, color, solid, dashed) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    const dot = document.createElement('div');
+    dot.className = 'legend-dot';
+    dot.style.background = solid ? color : color + '50';
+    dot.style.border = (dashed ? '1.5px dashed ' : '1.5px solid ') + color;
+    const span = document.createElement('span');
+    span.className = 'legend-name';
+    span.textContent = name;
+    item.append(dot, span);
+    leg.appendChild(item);
+  };
+  if (showUser) addLegend('You', '#c8a84b', true, false);
+  actors.forEach(a => addLegend(a.name, a.color, false, false));
+  if (uploadedMap) addLegend(uploadedMap.label || 'Uploaded map', '#b478dc', false, true);
+
+  // Score bars
+  const bars = document.getElementById('score-bars');
+  ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Liberty', 'Class'].forEach(ax => {
+    const sc = scores[ax];
+    const meta = AXIS_META[ax];
+    const div = document.createElement('div');
+    div.className = 'score-row';
+    div.innerHTML = `
+      <div class="score-header">
+        <span class="score-name">${ax}</span>
+        <span class="score-val">${sc.toFixed(1)} / 10</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${sc * 10}%"></div>
+      </div>
+      <div class="score-ends">
+        <span class="score-end">${meta.low}</span>
+        <span class="score-end">${meta.high}</span>
+      </div>
+    `;
+    bars.appendChild(div);
+  });
+
+  document.getElementById('btn-restart').addEventListener('click', onRestart);
+
+  if (onDownloadChart) {
+    document.getElementById('btn-dl-png').addEventListener('click', onDownloadChart);
+  }
+  if (onDownloadData) {
+    document.getElementById('btn-dl-json').addEventListener('click', () => onDownloadData('json'));
+    document.getElementById('btn-dl-xml').addEventListener('click', () => onDownloadData('xml'));
+  }
+  if (onUpload) {
+    document.getElementById('file-upload').addEventListener('change', onUpload);
+  }
+  if (onClearUpload) {
+    const clearBtn = document.getElementById('btn-clear-upload');
+    if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
+  }
+  if (onSetOrientation) {
+    document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
+    document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
+  }
+  if (onToggleUser) {
+    document.getElementById('btn-toggle-user').addEventListener('click', onToggleUser);
+  }
+  if (onReorder) {
+    const list = document.getElementById('axis-list');
+    axes.forEach((ax, i) => {
+      const item = document.createElement('div');
+      item.className = 'axis-item';
+      item.draggable = true;
+      item.dataset.idx = i;
+      item.innerHTML = `
+        <span class="axis-grip">⠿</span>
+        <span class="axis-name">${ax}</span>
+        <span class="axis-position">position ${i + 1}</span>
+      `;
+      list.appendChild(item);
+    });
+    let dragSrcIdx = null;
+    list.querySelectorAll('.axis-item').forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        dragSrcIdx = parseInt(item.dataset.idx);
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+      item.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(item.dataset.idx);
+        if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+        const newOrder = [...axes];
+        const moved = newOrder.splice(dragSrcIdx, 1)[0];
+        newOrder.splice(targetIdx, 0, moved);
+        dragSrcIdx = null;
+        onReorder(newOrder);
+      });
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+      });
+    });
+  }
+}
+
+
+function downloadChart(svgElement, filename = 'my-six-axis-compass.png') {
+  const svg = svgElement.cloneNode(true);
+  svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  const serializer = new XMLSerializer();
+  const svgStr = serializer.serializeToString(svg);
+  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  canvas.width = 640;
+  canvas.height = 640;
+  const ctx = canvas.getContext('2d');
+
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0, 640, 640);
+    const a = document.createElement('a');
+    a.download = filename;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  };
+
+  img.onerror = () => {
+    const a = document.createElement('a');
+    a.download = filename.replace('.png', '.svg');
+    a.href = url;
+    a.click();
+  };
+
+  img.src = url;
+}
+function downloadMapData(scores, format = 'json') {
+  const payload = {
+    source: 'Six-Axis Political Compass',
+    version: '1.0.0',
+    generated: new Date().toISOString(),
+    axes: scores
+  };
+
+  let content, mime, ext;
+  if (format === 'json') {
+    content = JSON.stringify(payload, null, 2);
+    mime = 'application/json';
+    ext = 'json';
+  } else {
+    content = `<?xml version="1.0" encoding="UTF-8"?>\n<compass source="${payload.source}" version="${payload.version}" generated="${payload.generated}">\n` +
+      Object.entries(scores).map(([k, v]) => `  <axis name="${k}" score="${v}"/>`).join('\n') +
+      '\n</compass>';
+    mime = 'application/xml';
+    ext = 'xml';
+  }
+
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.download = `my-six-axis-compass.${ext}`;
+  a.href = url;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function parseUpload(fileContent, fileName) {
+  if (fileName.endsWith('.json')) {
+    const p = JSON.parse(fileContent);
+    if (!p.axes) throw new Error('No axes field');
+    return { scores: p.axes, label: 'Uploaded map' };
+  }
+  if (fileName.endsWith('.xml')) {
+    const dom = new DOMParser().parseFromString(fileContent, 'application/xml');
+    const axisEls = dom.querySelectorAll('axis');
+    if (!axisEls.length) throw new Error('No axis elements');
+    const scores = {};
+    axisEls.forEach(el => {
+      scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
+    });
+    return { scores, label: 'Uploaded map' };
+  }
+  throw new Error('Unsupported file format');
+}
+
 </script>
 </body>
 </html>

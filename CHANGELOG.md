@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[0.7.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.7.0
+[0.8.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.8.0
+
+## [0.8.0] - 2026-05-16
+
+### Added
+- `package.json` with project metadata, build and dev scripts, and zero devDependencies.
+- `scripts/build.js` Node.js inliner that reads `src/` files and produces a self-contained `dist/index.html`.
+- Regex-based stripping of `import` and `export` statements to inline ES modules.
+- Optional `--watch` mode that rebuilds on any source file change.
+- `dist/index.html` is generated and verified as self-contained (no module scripts, no external src/href).
 
 ## [0.7.0] - 2026-05-16
 
@@ -86,3 +95,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.2.0
 [0.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.3.0
 [0.4.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.4.0
+[0.5.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.5.0
+[0.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.6.0
