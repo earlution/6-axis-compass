@@ -1,4 +1,4 @@
-import { AXIS_META, ACTORS, AXES } from './data.js';
+import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 
@@ -128,10 +128,7 @@ export function renderResults(container, {
         <div class="chart-wrap">
           <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
         </div>
-        <div class="actor-row">
-          <span class="actor-label">${t('results.compare')}</span>
-          <div class="actor-btns" id="actor-btns"></div>
-        </div>
+        <div class="actor-groups" id="actor-groups"></div>
         <div class="legend" id="legend"></div>
         <div class="score-bars" id="score-bars"></div>
         <hr class="divider">
@@ -223,22 +220,9 @@ export function renderResults(container, {
   });
 
   // Actor toggle buttons
-  const abtn = document.getElementById('actor-btns');
+  const groupsEl = document.getElementById('actor-groups');
 
-  // Your map toggle
-  const userBtn = document.createElement('button');
-  userBtn.className = 'btn btn-sm';
-  userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
-  userBtn.textContent = t('results.yourMap');
-  if (showUser) {
-    userBtn.style.borderColor = '#c8a84b';
-    userBtn.style.color = '#c8a84b';
-    userBtn.style.background = 'rgba(200,168,75,0.1)';
-  }
-  userBtn.addEventListener('click', onToggleUser);
-  abtn.appendChild(userBtn);
-
-  allActors.forEach(actor => {
+  function appendActorButton(actor, container) {
     const isCustom = customActors && customActors.some(c => c.name === actor.name);
     const hasMeta = actor._scoreMeta && actor._actorMeta;
     const wrapper = document.createElement('div');
@@ -279,8 +263,84 @@ export function renderResults(container, {
       wrapper.appendChild(del);
     }
 
-    abtn.appendChild(wrapper);
+    container.appendChild(wrapper);
+  }
+
+  // Your map toggle
+  const userRow = document.createElement('div');
+  userRow.className = 'actor-row';
+  const userLabel = document.createElement('span');
+  userLabel.className = 'actor-label';
+  userLabel.textContent = t('results.compare');
+  const userBtnWrap = document.createElement('div');
+  userBtnWrap.className = 'actor-btns';
+  const userBtn = document.createElement('button');
+  userBtn.className = 'btn btn-sm';
+  userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
+  userBtn.textContent = t('results.yourMap');
+  if (showUser) {
+    userBtn.style.borderColor = '#c8a84b';
+    userBtn.style.color = '#c8a84b';
+    userBtn.style.background = 'rgba(200,168,75,0.1)';
+  }
+  userBtn.addEventListener('click', onToggleUser);
+  userBtnWrap.appendChild(userBtn);
+  userRow.append(userLabel, userBtnWrap);
+  groupsEl.appendChild(userRow);
+
+  // Grouped preset actors
+  const groupedNames = new Set();
+  Object.entries(ACTOR_GROUPS).forEach(([groupName, actorNames]) => {
+    const groupActors = actorNames
+      .map(name => allActors.find(a => a.name === name))
+      .filter(Boolean);
+    if (groupActors.length === 0) return;
+    groupActors.forEach(a => groupedNames.add(a.name));
+
+    const groupRow = document.createElement('div');
+    groupRow.className = 'actor-group';
+    const groupLabel = document.createElement('span');
+    groupLabel.className = 'actor-group-label';
+    groupLabel.textContent = groupName;
+    const groupBtns = document.createElement('div');
+    groupBtns.className = 'actor-btns';
+    groupActors.forEach(actor => appendActorButton(actor, groupBtns));
+    groupRow.append(groupLabel, groupBtns);
+    groupsEl.appendChild(groupRow);
   });
+
+  // Custom actors group
+  const customGroupActors = allActors.filter(a =>
+    customActors && customActors.some(c => c.name === a.name)
+  );
+  if (customGroupActors.length > 0) {
+    const groupRow = document.createElement('div');
+    groupRow.className = 'actor-group';
+    const groupLabel = document.createElement('span');
+    groupLabel.className = 'actor-group-label';
+    groupLabel.textContent = 'Custom actors';
+    const groupBtns = document.createElement('div');
+    groupBtns.className = 'actor-btns';
+    customGroupActors.forEach(actor => appendActorButton(actor, groupBtns));
+    groupRow.append(groupLabel, groupBtns);
+    groupsEl.appendChild(groupRow);
+    customGroupActors.forEach(a => groupedNames.add(a.name));
+  }
+
+  // Ungrouped fallback
+  const ungrouped = allActors.filter(a => !groupedNames.has(a.name));
+  if (ungrouped.length > 0) {
+    const groupRow = document.createElement('div');
+    groupRow.className = 'actor-group';
+    const groupLabel = document.createElement('span');
+    groupLabel.className = 'actor-group-label';
+    groupLabel.textContent = 'Other';
+    const groupBtns = document.createElement('div');
+    groupBtns.className = 'actor-btns';
+    ungrouped.forEach(actor => appendActorButton(actor, groupBtns));
+    groupRow.append(groupLabel, groupBtns);
+    groupsEl.appendChild(groupRow);
+  }
 
   // Legend
   const leg = document.getElementById('legend');

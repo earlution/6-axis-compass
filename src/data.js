@@ -99,3 +99,23 @@ const _FALLBACK_ACTORS = [
 ];
 
 export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
+
+export const ACTOR_GROUPS = {
+  '2024–2029 UK Parliament': [
+    'Conservative Party', 'Labour Party', 'Reform UK',
+    'Liberal Democrats', 'Green Party', 'SNP', 'Plaid Cymru'
+  ],
+  'US Congress (current cycle)': ['US Democrats', 'US Republicans'],
+  'Thatcher / Reagan era': ['Thatcher government 1979–90'],
+  'World War II figures': [
+    'Clement Attlee', 'Winston Churchill', 'Adolf Hitler',
+    'Franklin D. Roosevelt', 'Benito Mussolini', 'Joseph Stalin'
+  ],
+  'Economic thinkers': ['John Maynard Keynes', 'Milton Friedman'],
+  'Ideological anchors': [
+    'Attlee government 1945–51', 'Bush/Blair Iraq position',
+    'Stop the War Coalition', 'Enoch Powell 1968',
+    'Federalist EU tradition', 'Anarcho-communism',
+    'Leninism', 'Fascism', "Orbán's Hungary"
+  ]
+};
