@@ -5,9 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[0.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.2.0
+[0.5.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.5.0
 
-[0.4.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.4.0
+## [0.5.0] - 2026-05-16
+
+### Added
+- Intro screen with title, description, and start button.
+- Quiz screen with progress bar, axis tag, question text, and Likert response buttons.
+- Results screen with SVG radar chart, actor comparison toggles, legend, and score bars.
+- Full CSS stylesheet ported from original with variables, component classes, and mobile breakpoint.
+- `renderIntro()`, `renderQuiz()`, and `renderResults()` in `src/ui.js`.
+- Wired `src/index.html` module script handling full quiz flow: intro → quiz → results → retake.
+- All inline event handlers replaced with `addEventListener` calls.
+- State passed through function parameters — no global mutable variables.
 
 ## [0.4.0] - 2026-05-16
 
@@ -52,3 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.gitignore` ignoring `node_modules/`, `.DS_Store`, and `*.log`.
 
 [0.1.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.1.0
+[0.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.2.0
+[0.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.3.0
+[0.4.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.4.0

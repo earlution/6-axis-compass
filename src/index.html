@@ -12,7 +12,81 @@
 <body>
 <div id="app"></div>
 <script type="module">
-// modules will be inlined here by build.js
+import { AXES } from './data.js';
+import { createQuiz } from './quiz.js';
+import { renderIntro, renderQuiz, renderResults } from './ui.js';
+
+const app = document.getElementById('app');
+let quiz;
+let selectedActors = new Set();
+let orientation = 'flat';
+let axesOrder = [...AXES];
+let showUser = true;
+let uploadedMap = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz() {
+  quiz = createQuiz();
+  renderQuizScreen();
+}
+
+function renderQuizScreen() {
+  renderQuiz(app, {
+    question: quiz.question,
+    progress: quiz.progress,
+    stepLabel: quiz.stepLabel,
+    axis: quiz.question.axis,
+    onAnswer: handleAnswer,
+    onBack: goBack,
+    canGoBack: quiz.current > 0
+  });
+}
+
+function handleAnswer(value) {
+  const complete = quiz.answer(value);
+  if (complete) {
+    showResults();
+  } else {
+    renderQuizScreen();
+  }
+}
+
+function goBack() {
+  quiz.back();
+  renderQuizScreen();
+}
+
+function showResults() {
+  const scores = quiz.getScores();
+  renderResults(app, {
+    scores,
+    axes: axesOrder,
+    orientation,
+    showUser,
+    selectedActors,
+    uploadedMap,
+    onToggleActor: name => {
+      selectedActors.has(name) ? selectedActors.delete(name) : selectedActors.add(name);
+      showResults();
+    },
+    onRestart: () => {
+      orientation = 'flat';
+      axesOrder = [...AXES];
+      showUser = true;
+      uploadedMap = null;
+      selectedActors.clear();
+      renderIntro(app, startQuiz);
+    }
+  });
+}
+
+renderIntro(app, startQuiz);
 </script>
 </body>
 </html>
