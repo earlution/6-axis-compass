@@ -806,7 +806,7 @@ const TRANSLATIONS = {
   en: {
     'intro.eyebrow': 'Six-Axis Political Compass',
     'intro.title': 'Where do you sit<br>on the six axes?',
-    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, libertarian/authoritarian, and class.',
     'intro.meta': '24 statements · approximately 5 minutes',
     'intro.begin': 'Begin',
     'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',
@@ -3049,14 +3049,14 @@ function renderResults(container, {
   };
   if (showUser) addLegend(t('results.you'), '#c8a84b', true, false);
   actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
-  if (uploadedMap) addLegend(t('results.uploadedMap'), '#b478dc', false, true);
+  if (uploadedMap) addLegend(uploadedMap.label || t('results.uploadedMap'), '#b478dc', false, true);
 
   // Score bars
   const bars = document.getElementById('score-bars');
   const profiles = [];
   if (showUser) profiles.push({ name: t('results.you'), color: '#c8a84b', scores });
   actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
-  if (uploadedMap) profiles.push({ name: t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
+  if (uploadedMap) profiles.push({ name: uploadedMap.label || t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
 
   if (profiles.length === 0) {
     bars.innerHTML = `<p class="config-note" style="text-align:center;padding:1rem 0;">${t('results.emptyScores')}</p>`;
@@ -3332,22 +3332,44 @@ function downloadMapData(scores, format = 'json') {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 function parseUpload(fileContent, fileName) {
+  let scores = {};
+  let isOld = false;
+
   if (fileName.endsWith('.json')) {
     const p = JSON.parse(fileContent);
     if (!p.axes) throw new Error('No axes field');
-    return { scores: p.axes, label: 'Uploaded map' };
-  }
-  if (fileName.endsWith('.xml')) {
+    scores = p.axes;
+    const oldVersion = p.version && p.version.startsWith('0.0.');
+    const oldSource = p.source && p.source.includes('Common Enemy');
+    if (oldVersion || oldSource) isOld = true;
+  } else if (fileName.endsWith('.xml')) {
     const dom = new DOMParser().parseFromString(fileContent, 'application/xml');
     const axisEls = dom.querySelectorAll('axis');
     if (!axisEls.length) throw new Error('No axis elements');
-    const scores = {};
     axisEls.forEach(el => {
       scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
     });
-    return { scores, label: 'Uploaded map' };
+    const versionAttr = dom.documentElement.getAttribute('version');
+    const sourceAttr = dom.documentElement.getAttribute('source');
+    if ((versionAttr && versionAttr.startsWith('0.0.')) || (sourceAttr && sourceAttr.includes('Common Enemy'))) {
+      isOld = true;
+    }
+  } else {
+    throw new Error('Unsupported file format');
   }
-  throw new Error('Unsupported file format');
+
+  // Backwards compatibility: map old Liberty axis to Libertarian/Authoritarian
+  if (scores.Liberty !== undefined) {
+    scores['Libertarian/Authoritarian'] = scores.Liberty;
+    delete scores.Liberty;
+    isOld = true;
+  }
+
+  const label = isOld
+    ? 'Uploaded map (earlier version — Liberty axis mapped to Libertarian/Authoritarian)'
+    : 'Uploaded map';
+
+  return { scores, label };
 }
 
 

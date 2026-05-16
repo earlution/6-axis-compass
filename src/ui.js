@@ -299,14 +299,14 @@ export function renderResults(container, {
   };
   if (showUser) addLegend(t('results.you'), '#c8a84b', true, false);
   actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
-  if (uploadedMap) addLegend(t('results.uploadedMap'), '#b478dc', false, true);
+  if (uploadedMap) addLegend(uploadedMap.label || t('results.uploadedMap'), '#b478dc', false, true);
 
   // Score bars
   const bars = document.getElementById('score-bars');
   const profiles = [];
   if (showUser) profiles.push({ name: t('results.you'), color: '#c8a84b', scores });
   actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
-  if (uploadedMap) profiles.push({ name: t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
+  if (uploadedMap) profiles.push({ name: uploadedMap.label || t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
 
   if (profiles.length === 0) {
     bars.innerHTML = `<p class="config-note" style="text-align:center;padding:1rem 0;">${t('results.emptyScores')}</p>`;

@@ -2,7 +2,7 @@ const TRANSLATIONS = {
   en: {
     'intro.eyebrow': 'Six-Axis Political Compass',
     'intro.title': 'Where do you sit<br>on the six axes?',
-    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, libertarian/authoritarian, and class.',
     'intro.meta': '24 statements · approximately 5 minutes',
     'intro.begin': 'Begin',
     'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',

@@ -30,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     Plaid Cymru 7 → 3, US Democrats 6 → 4, US Republicans 2 → 6.
   - data/actors/*.json updated and src/actors-generated.js rebuilt.
 
+### Changed
+- **Axis restructure (B4):** Updated user-facing text and export/import backwards compatibility.
+  - Intro text and meta description now reference "libertarian/authoritarian".
+  - Export version bumped to `1.1.0`.
+  - `parseUpload()` detects old exports (v0.0.x or `Liberty` key) and:
+    - Maps `Liberty` scores to `Libertarian/Authoritarian`.
+    - Returns a descriptive label warning that the map was created with an earlier version.
+
 ### Added
 - Forkable, traceable actor data architecture:
   - `data/actors/*.json` — 27 canonical actor files with per-axis confidence, rationale, and cited sources.

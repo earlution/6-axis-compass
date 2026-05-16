@@ -60,20 +60,42 @@ export function downloadMapData(scores, format = 'json') {
 }
 
 export function parseUpload(fileContent, fileName) {
+  let scores = {};
+  let isOld = false;
+
   if (fileName.endsWith('.json')) {
     const p = JSON.parse(fileContent);
     if (!p.axes) throw new Error('No axes field');
-    return { scores: p.axes, label: 'Uploaded map' };
-  }
-  if (fileName.endsWith('.xml')) {
+    scores = p.axes;
+    const oldVersion = p.version && p.version.startsWith('0.0.');
+    const oldSource = p.source && p.source.includes('Common Enemy');
+    if (oldVersion || oldSource) isOld = true;
+  } else if (fileName.endsWith('.xml')) {
     const dom = new DOMParser().parseFromString(fileContent, 'application/xml');
     const axisEls = dom.querySelectorAll('axis');
     if (!axisEls.length) throw new Error('No axis elements');
-    const scores = {};
     axisEls.forEach(el => {
       scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
     });
-    return { scores, label: 'Uploaded map' };
+    const versionAttr = dom.documentElement.getAttribute('version');
+    const sourceAttr = dom.documentElement.getAttribute('source');
+    if ((versionAttr && versionAttr.startsWith('0.0.')) || (sourceAttr && sourceAttr.includes('Common Enemy'))) {
+      isOld = true;
+    }
+  } else {
+    throw new Error('Unsupported file format');
   }
-  throw new Error('Unsupported file format');
+
+  // Backwards compatibility: map old Liberty axis to Libertarian/Authoritarian
+  if (scores.Liberty !== undefined) {
+    scores['Libertarian/Authoritarian'] = scores.Liberty;
+    delete scores.Liberty;
+    isOld = true;
+  }
+
+  const label = isOld
+    ? 'Uploaded map (earlier version — Liberty axis mapped to Libertarian/Authoritarian)'
+    : 'Uploaded map';
+
+  return { scores, label };
 }
