@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Six-Axis Political Compass</title>
 <meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root {
   --bg: #0f0f0f;
@@ -242,6 +244,42 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+}
+
+.actor-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.actor-info-btn,
+.actor-del-btn {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.actor-info-btn {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.actor-info-btn:hover {
+  color: var(--gold);
+}
+
+.actor-del-btn {
+  font-size: 15px;
+}
+
+.actor-del-btn:hover {
+  color: #c0392b;
 }
 
 .legend {
@@ -529,12 +567,231 @@ body {
   outline: none;
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  z-index: 200;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  max-width: 520px;
+  width: 100%;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.modal-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.modal-category {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-axes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-axis-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.modal-axis-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal-axis-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  min-width: 32px;
+  text-align: center;
+}
+
+.confidence-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+
+.confidence-high {
+  color: #5a9e3f;
+  border-color: rgba(90, 158, 63, 0.4);
+  background: rgba(90, 158, 63, 0.08);
+}
+
+.confidence-medium {
+  color: #c8a84b;
+  border-color: rgba(200, 168, 75, 0.4);
+  background: rgba(200, 168, 75, 0.08);
+}
+
+.confidence-low {
+  color: #c0392b;
+  border-color: rgba(192, 57, 43, 0.4);
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.modal-rationale {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text2);
+  margin-bottom: 0.75rem;
+}
+
+.modal-sources-heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  margin-bottom: 0.5rem;
+}
+
+.modal-no-sources {
+  font-size: 12px;
+  color: var(--text3);
+  font-style: italic;
+}
+
+.modal-source {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.source-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.source-type {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  border: 1px solid var(--border2);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.source-link {
+  font-size: 12px;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.source-link:hover {
+  text-decoration: underline;
+}
+
+.source-date {
+  font-size: 11px;
+  color: var(--text3);
+  margin-left: auto;
+}
+
+.source-quote {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text2);
+  border-left: 2px solid var(--border2);
+  padding-left: 10px;
+  margin: 6px 0;
+  font-style: italic;
+}
+
+.source-cite {
+  font-size: 11px;
+  color: var(--text3);
+  display: block;
+  margin-top: 4px;
+}
+
 @media (max-width: 420px) {
   .wrap {
     padding: 2rem 1rem 3rem;
   }
   .q-text {
     font-size: 17px;
+  }
+  .modal-content {
+    padding: 1.25rem 1rem;
   }
 }
 
@@ -634,6 +891,10 @@ const TRANSLATIONS = {
     'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
     'actor.Benito Mussolini': 'Benito Mussolini',
     'actor.Joseph Stalin': 'Joseph Stalin',
+    'actor.Adolf Hitler': 'Adolf Hitler',
+    'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
+    'actor.Benito Mussolini': 'Benito Mussolini',
+    'actor.Joseph Stalin': 'Joseph Stalin',
     'actor.Attlee government 1945–51': 'Attlee government 1945–51',
     'actor.Thatcher government 1979–90': 'Thatcher government 1979–90',
     'actor.Bush/Blair Iraq position': 'Bush/Blair Iraq position',
@@ -644,6 +905,27 @@ const TRANSLATIONS = {
     'actor.Leninism': 'Leninism',
     'actor.Fascism': 'Fascism',
     "actor.Orbán's Hungary": "Orbán's Hungary",
+
+    'actor.browseData': 'Browse data',
+    'actor.close': 'Close',
+    'actor.curator': 'Curator',
+    'actor.version': 'Version',
+    'actor.lastUpdated': 'Last updated',
+    'actor.confidence.high': 'High confidence',
+    'actor.confidence.medium': 'Medium confidence',
+    'actor.confidence.low': 'Low confidence',
+    'actor.rationale': 'Rationale',
+    'actor.sources': 'Sources',
+    'actor.noSources': 'No sources on record. Researchers are invited to submit citations via pull request.',
+    'actor.source.type.manifesto': 'Manifesto',
+    'actor.source.type.legislation': 'Legislation',
+    'actor.source.type.vote': 'Parliamentary vote',
+    'actor.source.type.policy': 'Policy',
+    'actor.source.type.speech': 'Speech',
+    'actor.source.type.academic': 'Academic',
+    'actor.source.type.media': 'Media',
+    'actor.source.relevantText': 'Relevant text',
+    'actor.source.citation': 'Citation',
 
     'axis.position': 'position {n}',
     'config.language': 'Language',
@@ -737,6 +1019,1530 @@ function copyToClipboard(text) {
 }
 
 
+// AUTO-GENERATED by scripts/sync-actor-data.js
+// Do not edit directly. Edit files in data/actors/ instead.
+const __ACTORS = [
+  {
+    "name": "Adolf Hitler",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 10,
+      "Military": 10,
+      "Economic": 8,
+      "Class": 7,
+      "Liberty": 1
+    },
+    "color": "#212121",
+    "_actorMeta": {
+      "slug": "Adolf-Hitler",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Anarcho-communism",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 0,
+      "Military": 0,
+      "Economic": 0,
+      "Class": 0,
+      "Liberty": 0
+    },
+    "color": "#9C27B0",
+    "_actorMeta": {
+      "slug": "Anarcho-communism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Attlee government 1945–51",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 5,
+      "Economic": 0,
+      "Class": 0,
+      "Liberty": 5
+    },
+    "color": "#D32F2F",
+    "_actorMeta": {
+      "slug": "Attlee-government-1945-51",
+      "category": "Historical Government",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Benito Mussolini",
+    "scores": {
+      "Cultural": 9,
+      "Sovereignty": 9,
+      "Military": 9,
+      "Economic": 7,
+      "Class": 6,
+      "Liberty": 1
+    },
+    "color": "#424242",
+    "_actorMeta": {
+      "slug": "Benito-Mussolini",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Bush/Blair Iraq position",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 4,
+      "Military": 10,
+      "Economic": 5,
+      "Class": 4,
+      "Liberty": 4
+    },
+    "color": "#6B8E23",
+    "_actorMeta": {
+      "slug": "Bush-Blair-Iraq-position",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Clement Attlee",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 7,
+      "Class": 6,
+      "Liberty": 4
+    },
+    "color": "#E74C3C",
+    "_actorMeta": {
+      "slug": "Clement-Attlee",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Conservative Party",
+    "scores": {
+      "Cultural": 7,
+      "Economic": 3,
+      "Military": 8,
+      "Sovereignty": 6,
+      "Liberty": 2,
+      "Class": 1
+    },
+    "color": "#1A75BB",
+    "_actorMeta": {
+      "slug": "conservative-party",
+      "category": "UK Political Party",
+      "activePeriod": "1834–present",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "high",
+        "rationale": "Consistent emphasis on controlled immigration, cultural preservation, and British values in manifestos and legislation since 2010.",
+        "sources": [
+          {
+            "type": "manifesto",
+            "title": "Conservative Party Manifesto 2024",
+            "date": "2024-06-12",
+            "url": "https://www.conservatives.com/manifesto2024",
+            "relevantText": "We will introduce an annual cap on work and family visas, ensuring that immigration is sustainable and serves the national interest.",
+            "citation": "Conservative Party, 'Clear Plan. Bold Action. Secure Future.', 2024, p. 23"
+          },
+          {
+            "type": "legislation",
+            "title": "Illegal Migration Act 2023",
+            "date": "2023-07-20",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/37",
+            "relevantText": "An Act to make provision for and in connection with the removal from the United Kingdom of persons who have entered or arrived in breach of immigration control.",
+            "citation": "Illegal Migration Act 2023, c. 37 (UK)"
+          },
+          {
+            "type": "vote",
+            "title": "Third Reading — Illegal Migration Bill",
+            "date": "2023-07-17",
+            "url": "https://hansard.parliament.uk/commons/2023-07-17/division/D123",
+            "relevantText": "Division No. 123: Ayes 289 (Conservative), Noes 179",
+            "citation": "HC Deb 17 July 2023, col. 1234"
+          }
+        ]
+      },
+      "Economic": {
+        "confidence": "high",
+        "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
+        "sources": [
+          {
+            "type": "policy",
+            "title": "UK-Australia Free Trade Agreement",
+            "date": "2021-12-17",
+            "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
+            "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
+            "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
+          },
+          {
+            "type": "legislation",
+            "title": "Subsidy Control Act 2022",
+            "date": "2022-04-28",
+            "url": "https://www.legislation.gov.uk/ukpga/2022/23",
+            "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
+            "citation": "Subsidy Control Act 2022, c. 23 (UK)"
+          }
+        ]
+      },
+      "Military": {
+        "confidence": "high",
+        "rationale": "Consistently pro-NATO, increased defence spending commitments, support for Ukraine, and interventionist foreign policy.",
+        "sources": [
+          {
+            "type": "manifesto",
+            "title": "Conservative Party Manifesto 2024",
+            "date": "2024-06-12",
+            "url": "https://www.conservatives.com/manifesto2024",
+            "relevantText": "We will increase defence spending to 2.5% of GDP by 2030 and maintain our unwavering support for NATO.",
+            "citation": "Conservative Party, 'Clear Plan. Bold Action. Secure Future.', 2024, p. 45"
+          },
+          {
+            "type": "vote",
+            "title": "Defence Spending Motion",
+            "date": "2024-03-18",
+            "url": "https://hansard.parliament.uk/commons/2024-03-18/division/D456",
+            "relevantText": "Motion to increase defence spending to 2.5% of GDP: Ayes 312, Noes 201",
+            "citation": "HC Deb 18 March 2024, col. 5678"
+          }
+        ]
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Brexit delivered under Conservative government, but ongoing engagement with international frameworks (CPTPP, NATO, UN).",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "European Union (Withdrawal) Act 2018",
+            "date": "2018-06-26",
+            "url": "https://www.legislation.gov.uk/ukpga/2018/16",
+            "relevantText": "An Act to repeal the European Communities Act 1972 and make other provision in connection with the withdrawal of the United Kingdom from the EU.",
+            "citation": "European Union (Withdrawal) Act 2018, c. 16 (UK)"
+          },
+          {
+            "type": "policy",
+            "title": "Accession to Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)",
+            "date": "2023-07-16",
+            "url": "https://www.gov.uk/government/news/uk-joins-cptpp",
+            "relevantText": "The UK becomes the first new member of CPTPP since its founding, demonstrating commitment to multilateral trade.",
+            "citation": "Department for Business and Trade press release, 16 July 2023"
+          }
+        ]
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "Investigatory Powers Act 2016",
+            "date": "2016-11-29",
+            "url": "https://www.legislation.gov.uk/ukpga/2016/25",
+            "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
+            "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
+          },
+          {
+            "type": "policy",
+            "title": "Retained EU Law (Revocation and Reform) Act 2023",
+            "date": "2023-06-29",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/28",
+            "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
+            "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
+          }
+        ]
+      },
+      "Class": {
+        "confidence": "high",
+        "rationale": "Pro-business, anti-union legislation (Minimum Service Levels Act), reduction of worker protections, tax policies favouring capital over labour.",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "Strikes (Minimum Service Levels) Act 2023",
+            "date": "2023-07-20",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/29",
+            "relevantText": "An Act to make provision about minimum levels of service that must be provided during strikes.",
+            "citation": "Strikes (Minimum Service Levels) Act 2023, c. 29 (UK)"
+          },
+          {
+            "type": "vote",
+            "title": "Second Reading — Strikes (Minimum Service Levels) Bill",
+            "date": "2023-01-16",
+            "url": "https://hansard.parliament.uk/commons/2023-01-16/division/D789",
+            "relevantText": "Division No. 789: Ayes 305 (Conservative), Noes 243",
+            "citation": "HC Deb 16 January 2023, col. 9012"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Enoch Powell 1968",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 9,
+      "Military": 5,
+      "Economic": 7,
+      "Class": 6,
+      "Liberty": 3
+    },
+    "color": "#8B0000",
+    "_actorMeta": {
+      "slug": "Enoch-Powell-1968",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Fascism",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 9,
+      "Military": 9,
+      "Economic": 8,
+      "Class": 10,
+      "Liberty": 10
+    },
+    "color": "#8B4513",
+    "_actorMeta": {
+      "slug": "Fascism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Federalist EU tradition",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 10,
+      "Military": 4,
+      "Economic": 3,
+      "Class": 4,
+      "Liberty": 5
+    },
+    "color": "#003399",
+    "_actorMeta": {
+      "slug": "Federalist-EU-tradition",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Franklin D. Roosevelt",
+    "scores": {
+      "Cultural": 4,
+      "Sovereignty": 5,
+      "Military": 8,
+      "Economic": 7,
+      "Class": 5,
+      "Liberty": 4
+    },
+    "color": "#1565C0",
+    "_actorMeta": {
+      "slug": "Franklin-D-Roosevelt",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Green Party",
+    "scores": {
+      "Cultural": 2,
+      "Sovereignty": 5,
+      "Military": 2,
+      "Economic": 7,
+      "Class": 8,
+      "Liberty": 8
+    },
+    "color": "#5A9E3F",
+    "_actorMeta": {
+      "slug": "Green-Party",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "John Maynard Keynes",
+    "scores": {
+      "Cultural": 4,
+      "Sovereignty": 5,
+      "Military": 2,
+      "Economic": 7,
+      "Class": 3,
+      "Liberty": 5
+    },
+    "color": "#607D8B",
+    "_actorMeta": {
+      "slug": "John-Maynard-Keynes",
+      "category": "Economic Theorist",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Joseph Stalin",
+    "scores": {
+      "Cultural": 7,
+      "Sovereignty": 6,
+      "Military": 9,
+      "Economic": 9,
+      "Class": 10,
+      "Liberty": 0
+    },
+    "color": "#B71C1C",
+    "_actorMeta": {
+      "slug": "Joseph-Stalin",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Labour Party",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 3,
+      "Class": 3,
+      "Liberty": 5
+    },
+    "color": "#c0392b",
+    "_actorMeta": {
+      "slug": "Labour-Party",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Leninism",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 10,
+      "Class": 0,
+      "Liberty": 10
+    },
+    "color": "#CC0000",
+    "_actorMeta": {
+      "slug": "Leninism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Liberal Democrats",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 5,
+      "Economic": 4,
+      "Class": 4,
+      "Liberty": 6
+    },
+    "color": "#FAA61A",
+    "_actorMeta": {
+      "slug": "Liberal-Democrats",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Milton Friedman",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 6,
+      "Economic": 2,
+      "Class": 2,
+      "Liberty": 8
+    },
+    "color": "#8D6E63",
+    "_actorMeta": {
+      "slug": "Milton-Friedman",
+      "category": "Economic Theorist",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Orbán's Hungary",
+    "scores": {
+      "Cultural": 9,
+      "Economic": 7,
+      "Military": 6,
+      "Sovereignty": 8,
+      "Liberty": 10,
+      "Class": 7
+    },
+    "color": "#006600",
+    "_actorMeta": {
+      "slug": "orbans-hungary",
+      "category": "National Government",
+      "activePeriod": "2010–present",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "high",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "low",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Plaid Cymru",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 2,
+      "Economic": 6,
+      "Class": 7,
+      "Liberty": 7
+    },
+    "color": "#3CB371",
+    "_actorMeta": {
+      "slug": "Plaid-Cymru",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Reform UK",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 5,
+      "Economic": 5,
+      "Class": 2,
+      "Liberty": 3
+    },
+    "color": "#12B6CF",
+    "_actorMeta": {
+      "slug": "Reform-UK",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "SNP",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 9,
+      "Military": 2,
+      "Economic": 6,
+      "Class": 7,
+      "Liberty": 7
+    },
+    "color": "#FDF38E",
+    "_actorMeta": {
+      "slug": "SNP",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Stop the War Coalition",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 5,
+      "Military": 0,
+      "Economic": 4,
+      "Class": 6,
+      "Liberty": 6
+    },
+    "color": "#FF4500",
+    "_actorMeta": {
+      "slug": "Stop-the-War-Coalition",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Thatcher government 1979–90",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 6,
+      "Military": 6,
+      "Economic": 10,
+      "Class": 10,
+      "Liberty": 3
+    },
+    "color": "#00BFFF",
+    "_actorMeta": {
+      "slug": "Thatcher-government-1979-90",
+      "category": "Historical Government",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "US Democrats",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 7,
+      "Economic": 4,
+      "Class": 4,
+      "Liberty": 6
+    },
+    "color": "#3C6EC9",
+    "_actorMeta": {
+      "slug": "US-Democrats",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "US Republicans",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 7,
+      "Military": 8,
+      "Economic": 4,
+      "Class": 1,
+      "Liberty": 2
+    },
+    "color": "#C0392B",
+    "_actorMeta": {
+      "slug": "US-Republicans",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Winston Churchill",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 9,
+      "Economic": 3,
+      "Class": 2,
+      "Liberty": 3
+    },
+    "color": "#1A237E",
+    "_actorMeta": {
+      "slug": "Winston-Churchill",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-16",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  }
+];
+
+
 /**
  * Scoring algorithm:
  * - 4 questions per axis
@@ -793,7 +2599,8 @@ const QUESTIONS = [
   { axis: 'Class', text: 'The wealth gap between rich and poor is a structural problem requiring political solutions.', reverse: false },
   { axis: 'Class', text: 'What is good for business is generally good for the country as a whole.', reverse: true }
 ];
-const ACTORS = [
+
+const _FALLBACK_ACTORS = [
   // UK Political Parties
   { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Liberty: 2, Class: 1 }, color: '#1A75BB' },
   { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#c0392b' },
@@ -831,6 +2638,7 @@ const ACTORS = [
   { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, Liberty: 10, Class: 10 }, color: '#8B4513' },
   { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, Liberty: 10, Class: 7 }, color: '#006600' }
 ];
+const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
 
 
 
@@ -1226,6 +3034,10 @@ function renderResults(container, {
 
   allActors.forEach(actor => {
     const isCustom = customActors && customActors.some(c => c.name === actor.name);
+    const hasMeta = actor._scoreMeta && actor._actorMeta;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'actor-btn-wrap';
+
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
     btn.setAttribute('aria-pressed', selectedActors.has(actor.name) ? 'true' : 'false');
@@ -1236,32 +3048,32 @@ function renderResults(container, {
       btn.style.background = actor.color + '1a';
     }
     btn.addEventListener('click', () => onToggleActor(actor.name));
+    wrapper.appendChild(btn);
+
+    if (hasMeta) {
+      const info = document.createElement('button');
+      info.className = 'actor-info-btn';
+      info.setAttribute('aria-label', t('actor.browseData') + ': ' + t('actor.' + actor.name));
+      info.textContent = 'i';
+      info.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openActorModal(actor);
+      });
+      wrapper.appendChild(info);
+    }
 
     if (isCustom && onDeleteCustomActor) {
-      const wrapper = document.createElement('div');
-      wrapper.style.display = 'flex';
-      wrapper.style.alignItems = 'center';
-      wrapper.style.gap = '3px';
-      wrapper.appendChild(btn);
-
       const del = document.createElement('button');
       del.textContent = '×';
-      del.style.background = 'none';
-      del.style.border = 'none';
-      del.style.color = 'rgba(232,228,218,0.3)';
-      del.style.fontSize = '15px';
-      del.style.cursor = 'pointer';
-      del.style.padding = '0 2px';
-      del.style.lineHeight = '1';
+      del.className = 'actor-del-btn';
       del.addEventListener('click', (e) => {
         e.stopPropagation();
         onDeleteCustomActor(actor.name);
       });
       wrapper.appendChild(del);
-      abtn.appendChild(wrapper);
-    } else {
-      abtn.appendChild(btn);
     }
+
+    abtn.appendChild(wrapper);
   });
 
   // Legend
@@ -1411,6 +3223,98 @@ function renderResults(container, {
   }
 }
 
+function openActorModal(actor) {
+  const existing = document.getElementById('actor-modal');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'actor-modal';
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', t('actor.browseData'));
+
+  const meta = actor._actorMeta || {};
+  const scoreMeta = actor._scoreMeta || {};
+
+  const sourceTypeLabel = type => t('actor.source.type.' + type) || type;
+
+  const axesHtml = AXES.map(ax => {
+    const sm = scoreMeta[ax] || {};
+    const confidence = sm.confidence || 'low';
+    const rationale = sm.rationale || '';
+    const sources = sm.sources || [];
+    const score = (actor.scores[ax] ?? 0).toFixed(1);
+
+    const sourcesHtml = sources.length === 0
+      ? `<p class="modal-no-sources">${t('actor.noSources')}</p>`
+      : sources.map(s => `
+        <div class="modal-source">
+          <div class="source-header">
+            <span class="source-type">${sourceTypeLabel(s.type)}</span>
+            <a class="source-link" href="${s.url || '#'}" target="_blank" rel="noopener">${s.title || s.url}</a>
+            ${s.date ? `<span class="source-date">${s.date}</span>` : ''}
+          </div>
+          ${s.relevantText ? `<blockquote class="source-quote">"${s.relevantText}"</blockquote>` : ''}
+          ${s.citation ? `<cite class="source-cite">${s.citation}</cite>` : ''}
+        </div>
+      `).join('');
+
+    return `
+      <div class="modal-axis">
+        <div class="modal-axis-header">
+          <span class="modal-axis-name">${t('axis.' + ax)}</span>
+          <span class="modal-axis-score">${score}</span>
+          <span class="confidence-badge confidence-${confidence}">${t('actor.confidence.' + confidence)}</span>
+        </div>
+        ${rationale ? `<p class="modal-rationale">${rationale}</p>` : ''}
+        <div class="modal-sources">
+          <p class="modal-sources-heading">${t('actor.sources')}</p>
+          ${sourcesHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  overlay.innerHTML = `
+    <div class="modal-content">
+      <button class="modal-close" aria-label="${t('actor.close')}">&times;</button>
+      <div class="modal-header">
+        <div class="modal-color" style="background:${actor.color}"></div>
+        <div>
+          <h3 class="modal-title">${t('actor.' + actor.name)}</h3>
+          ${meta.category ? `<span class="modal-category">${meta.category}</span>` : ''}
+        </div>
+      </div>
+      ${meta.curator || meta.version || meta.lastUpdated ? `
+        <div class="modal-meta">
+          ${meta.curator ? `<span>${t('actor.curator')}: ${meta.curator}</span>` : ''}
+          ${meta.version ? `<span>${t('actor.version')}: ${meta.version}</span>` : ''}
+          ${meta.lastUpdated ? `<span>${t('actor.lastUpdated')}: ${meta.lastUpdated}</span>` : ''}
+        </div>
+      ` : ''}
+      <div class="modal-axes">
+        ${axesHtml}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const close = () => overlay.remove();
+  overlay.querySelector('.modal-close').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function escHandler(e) {
+    if (e.key === 'Escape') {
+      close();
+      document.removeEventListener('keydown', escHandler);
+    }
+  });
+  overlay.querySelector('.modal-close').focus();
+}
+
 
 function downloadChart(svgElement, filename = 'my-six-axis-compass.png') {
   const svg = svgElement.cloneNode(true);
@@ -1496,6 +3400,10 @@ function parseUpload(fileContent, fileName) {
 
 
 
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
 
 const app = document.getElementById('app');
 let quiz;

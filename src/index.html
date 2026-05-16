@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Six-Axis Political Compass</title>
 <meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 /* styles.css will be inlined here by build.js */
 </style>
@@ -20,6 +22,10 @@ import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
 import { t, setLanguage } from './i18n.js';
 import { encodeHash, decodeHash, copyToClipboard } from './url.js';
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
 
 const app = document.getElementById('app');
 let quiz;

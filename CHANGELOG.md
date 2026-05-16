@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [2.0.0] - 2026-05-16
+
+### Added
+- Progressive Web App (PWA) support:
+  - `src/manifest.json` with app metadata, theme colours, and PNG icon references.
+  - `src/sw.js` minimal service worker that caches `index.html` for offline use.
+  - Service worker registration in the inline module script.
+  - `src/icon.svg` and `scripts/generate-icons.js` (using `sharp`) to produce 192×192 and 512×512 PNGs.
+  - `apple-touch-icon` link for iOS home-screen addition.
+  - `scripts/build.js` copies `manifest.json` and `sw.js` into `dist/` alongside `index.html`.
+
 ## [1.9.0] - 2026-05-16
 
 ### Added
