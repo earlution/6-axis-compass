@@ -1,16 +1,17 @@
 import { AXIS_META, ACTORS } from './data.js';
 import { drawRadar } from './chart.js';
+import { t } from './i18n.js';
 
 export function renderIntro(container, onStart) {
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-intro">
-        <p class="eyebrow">Six-Axis Political Compass</p>
-        <h1 class="intro-title">Where do you sit<br>on the six axes?</h1>
-        <p class="intro-body">The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.</p>
-        <p class="intro-meta">24 statements · approximately 5 minutes</p>
-        <button class="btn btn-primary" id="btn-start">Begin</button>
-        <p class="intro-disclaimer">Your answers are not stored or transmitted anywhere.</p>
+        <p class="eyebrow">${t('intro.eyebrow')}</p>
+        <h1 class="intro-title">${t('intro.title')}</h1>
+        <p class="intro-body">${t('intro.body')}</p>
+        <p class="intro-meta">${t('intro.meta')}</p>
+        <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
+        <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
   `;
@@ -25,18 +26,24 @@ export function renderQuiz(container, { question, progress, stepLabel, axis, onA
           <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
           <span class="progress-label">${stepLabel}</span>
         </div>
-        <p class="axis-tag">${axis} axis</p>
+        <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
         <p class="q-text">${question.text}</p>
         <div class="responses" id="responses"></div>
         <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
-          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">← Back</button>
+          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
         </div>
       </div>
     </div>
   `;
 
   const responsesEl = document.getElementById('responses');
-  const labels = ['Strongly agree', 'Agree', 'Neither agree nor disagree', 'Disagree', 'Strongly disagree'];
+  const labels = [
+    t('response.stronglyAgree'),
+    t('response.agree'),
+    t('response.neutral'),
+    t('response.disagree'),
+    t('response.stronglyDisagree')
+  ];
   labels.forEach((label, i) => {
     const btn = document.createElement('button');
     btn.className = 'response-btn';
@@ -65,58 +72,68 @@ export function renderResults(container, {
   onClearUpload,
   onToggleUser,
   onSetOrientation,
-  onReorder
+  onReorder,
+  onSetLanguage,
+  language
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
 
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-results">
-        <p class="eyebrow">Your results</p>
-        <h2 class="results-title">Your six-axis profile</h2>
+        <p class="eyebrow">${t('results.eyebrow')}</p>
+        <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
           <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="Six-axis radar chart showing your political profile"></svg>
         </div>
         <div class="actor-row">
-          <span class="actor-label">Compare:</span>
+          <span class="actor-label">${t('results.compare')}</span>
           <div class="actor-btns" id="actor-btns"></div>
         </div>
         <div class="legend" id="legend"></div>
         <div class="score-bars" id="score-bars"></div>
         <hr class="divider">
         <div class="config-section">
-          <p class="config-heading">Orientation</p>
+          <p class="config-heading">${t('config.language')}</p>
           <div class="config-row">
-            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">Edge up</button>
-            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">Vertex up</button>
+            <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
+              <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
+            </select>
           </div>
         </div>
         <div class="config-section">
-          <p class="config-heading">Download</p>
+          <p class="config-heading">${t('results.orientation')}</p>
           <div class="config-row">
-            <button class="config-btn" id="btn-dl-png">Image (PNG)</button>
-            <button class="config-btn" id="btn-dl-json">Data (JSON)</button>
-            <button class="config-btn" id="btn-dl-xml">Data (XML)</button>
+            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
+            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
           </div>
         </div>
         <div class="config-section">
-          <p class="config-heading">Compare a saved map</p>
+          <p class="config-heading">${t('results.download')}</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
+            <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
+            <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.compareSaved')}</p>
           <div class="config-row">
             <label class="config-file-label">
-              Upload JSON or XML
+              ${t('results.uploadLabel')}
               <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
             </label>
-            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">Clear</button>
+            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
           </div>
-          <p class="config-note">Only files exported from this tool are supported. No data is transmitted anywhere.</p>
+          <p class="config-note">${t('results.uploadNote')}</p>
         </div>
         <div class="config-section">
-          <p class="config-heading">Axis order — drag to reposition</p>
+          <p class="config-heading">${t('results.axisOrder')}</p>
           <div class="axis-list" id="axis-list"></div>
         </div>
         <hr class="divider">
-        <p class="footer-note">This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.</p>
-        <button class="btn" id="btn-restart">Retake</button>
+        <p class="footer-note">${t('results.footer')}</p>
+        <button class="btn" id="btn-restart">${t('results.retake')}</button>
       </div>
     </div>
   `;
@@ -137,7 +154,7 @@ export function renderResults(container, {
   // Your map toggle
   const userBtn = document.createElement('button');
   userBtn.className = 'btn btn-sm';
-  userBtn.textContent = 'Your map';
+  userBtn.textContent = t('results.yourMap');
   if (showUser) {
     userBtn.style.borderColor = '#c8a84b';
     userBtn.style.color = '#c8a84b';
@@ -149,7 +166,7 @@ export function renderResults(container, {
   ACTORS.forEach(actor => {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
-    btn.textContent = actor.name;
+    btn.textContent = t('actor.' + actor.name);
     if (selectedActors.has(actor.name)) {
       btn.style.borderColor = actor.color;
       btn.style.color = actor.color;
@@ -174,19 +191,19 @@ export function renderResults(container, {
     item.append(dot, span);
     leg.appendChild(item);
   };
-  if (showUser) addLegend('You', '#c8a84b', true, false);
-  actors.forEach(a => addLegend(a.name, a.color, false, false));
-  if (uploadedMap) addLegend(uploadedMap.label || 'Uploaded map', '#b478dc', false, true);
+  if (showUser) addLegend(t('results.you'), '#c8a84b', true, false);
+  actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
+  if (uploadedMap) addLegend(t('results.uploadedMap'), '#b478dc', false, true);
 
   // Score bars
   const bars = document.getElementById('score-bars');
   const profiles = [];
-  if (showUser) profiles.push({ name: 'You', color: '#c8a84b', scores });
-  actors.forEach(a => profiles.push({ name: a.name, color: a.color, scores: a.scores }));
-  if (uploadedMap) profiles.push({ name: uploadedMap.label || 'Uploaded map', color: '#b478dc', scores: uploadedMap.scores });
+  if (showUser) profiles.push({ name: t('results.you'), color: '#c8a84b', scores });
+  actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
+  if (uploadedMap) profiles.push({ name: t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
 
   if (profiles.length === 0) {
-    bars.innerHTML = '<p class="config-note" style="text-align:center;padding:1rem 0;">Select a profile above to see scores.</p>';
+    bars.innerHTML = `<p class="config-note" style="text-align:center;padding:1rem 0;">${t('results.emptyScores')}</p>`;
   } else {
     axes.forEach(ax => {
       const meta = AXIS_META[ax];
@@ -207,12 +224,12 @@ export function renderResults(container, {
       });
       div.innerHTML = `
         <div class="score-header">
-          <span class="score-name">${ax}</span>
+          <span class="score-name">${t('axis.' + ax)}</span>
         </div>
         ${rowsHtml}
         <div class="score-ends">
-          <span class="score-end">${meta.low}</span>
-          <span class="score-end">${meta.high}</span>
+          <span class="score-end">${t('axis.' + ax + '.low')}</span>
+          <span class="score-end">${t('axis.' + ax + '.high')}</span>
         </div>
       `;
       bars.appendChild(div);
@@ -239,6 +256,11 @@ export function renderResults(container, {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
   }
+  if (onSetLanguage) {
+    document.getElementById('lang-select').addEventListener('change', (e) => {
+      onSetLanguage(e.target.value);
+    });
+  }
   if (onReorder) {
     const list = document.getElementById('axis-list');
     axes.forEach((ax, i) => {
@@ -248,7 +270,7 @@ export function renderResults(container, {
       item.dataset.idx = i;
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
-        <span class="axis-name">${ax}</span>
+        <span class="axis-name">${t('axis.' + ax)}</span>
         <span class="axis-position">position ${i + 1}</span>
       `;
       list.appendChild(item);

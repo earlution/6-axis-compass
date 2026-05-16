@@ -491,6 +491,109 @@ body {
 <body>
 <div id="app"></div>
 <script>
+const TRANSLATIONS = {
+  en: {
+    'intro.eyebrow': 'Six-Axis Political Compass',
+    'intro.title': 'Where do you sit<br>on the six axes?',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
+    'intro.meta': '24 statements · approximately 5 minutes',
+    'intro.begin': 'Begin',
+    'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',
+
+    'quiz.axisTag': '{axis} axis',
+    'quiz.back': '← Back',
+
+    'response.stronglyAgree': 'Strongly agree',
+    'response.agree': 'Agree',
+    'response.neutral': 'Neither agree nor disagree',
+    'response.disagree': 'Disagree',
+    'response.stronglyDisagree': 'Strongly disagree',
+
+    'results.eyebrow': 'Your results',
+    'results.title': 'Your six-axis profile',
+    'results.compare': 'Compare:',
+    'results.yourMap': 'Your map',
+    'results.orientation': 'Orientation',
+    'results.edgeUp': 'Edge up',
+    'results.vertexUp': 'Vertex up',
+    'results.download': 'Download',
+    'results.imagePng': 'Image (PNG)',
+    'results.dataJson': 'Data (JSON)',
+    'results.dataXml': 'Data (XML)',
+    'results.compareSaved': 'Compare a saved map',
+    'results.uploadLabel': 'Upload JSON or XML',
+    'results.clear': 'Clear',
+    'results.uploadNote': 'Only files exported from this tool are supported. No data is transmitted anywhere.',
+    'results.axisOrder': 'Axis order — drag to reposition',
+    'results.footer': 'This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.',
+    'results.retake': 'Retake',
+    'results.you': 'You',
+    'results.uploadedMap': 'Uploaded map',
+    'results.emptyScores': 'Select a profile above to see scores.',
+
+    'error.upload': 'Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n',
+
+    'axis.Cultural': 'Cultural',
+    'axis.Sovereignty': 'Sovereignty',
+    'axis.Military': 'Military',
+    'axis.Economic': 'Economic',
+    'axis.Class': 'Class',
+    'axis.Liberty': 'Liberty',
+
+    'axis.Cultural.low': 'Cultural internationalism',
+    'axis.Cultural.high': 'Cultural nationalism',
+    'axis.Economic.low': 'Economic internationalism',
+    'axis.Economic.high': 'Economic nationalism',
+    'axis.Military.low': 'Non-interventionist',
+    'axis.Military.high': 'Interventionist',
+    'axis.Sovereignty.low': 'Supranational',
+    'axis.Sovereignty.high': 'National sovereignty',
+    'axis.Liberty.low': 'State coercion only',
+    'axis.Liberty.high': 'Includes private coercion',
+    'axis.Class.low': 'Class harmony',
+    'axis.Class.high': 'Class conflict',
+
+    'actor.Conservative Party': 'Conservative Party',
+    'actor.Labour Party': 'Labour Party',
+    'actor.Reform UK': 'Reform UK',
+    'actor.Liberal Democrats': 'Liberal Democrats',
+    'actor.Green Party': 'Green Party',
+    'actor.SNP': 'SNP',
+    'actor.Plaid Cymru': 'Plaid Cymru',
+    'actor.US Democrats': 'US Democrats',
+    'actor.US Republicans': 'US Republicans',
+
+    'actor.John Maynard Keynes': 'John Maynard Keynes',
+    'actor.Milton Friedman': 'Milton Friedman',
+
+    'actor.Clement Attlee': 'Clement Attlee',
+    'actor.Winston Churchill': 'Winston Churchill',
+    'actor.Adolf Hitler': 'Adolf Hitler',
+    'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
+    'actor.Benito Mussolini': 'Benito Mussolini',
+    'actor.Joseph Stalin': 'Joseph Stalin',
+
+    'config.language': 'Language'
+  }
+};
+
+let currentLang = 'en';
+function setLanguage(lang) {
+  currentLang = lang;
+}
+function getLanguage() {
+  return currentLang;
+}
+function t(key, vars = {}) {
+  const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+  let text = dict[key] || key;
+  for (const [k, v] of Object.entries(vars)) {
+    text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+  }
+  return text;
+}
+
+
 /**
  * Scoring algorithm:
  * - 4 questions per axis
@@ -548,6 +651,7 @@ const QUESTIONS = [
   { axis: 'Class', text: 'What is good for business is generally good for the country as a whole.', reverse: true }
 ];
 const ACTORS = [
+  // UK Political Parties
   { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Liberty: 2, Class: 1 }, color: '#1A75BB' },
   { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#c0392b' },
   { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, Liberty: 3, Class: 2 }, color: '#12B6CF' },
@@ -555,8 +659,22 @@ const ACTORS = [
   { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, Liberty: 8, Class: 8 }, color: '#5A9E3F' },
   { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, Liberty: 7, Class: 7 }, color: '#FDF38E' },
   { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, Liberty: 7, Class: 7 }, color: '#3CB371' },
+
+  // US Political Parties
   { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, Liberty: 6, Class: 4 }, color: '#3C6EC9' },
-  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Liberty: 2, Class: 1 }, color: '#C0392B' }
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Liberty: 2, Class: 1 }, color: '#C0392B' },
+
+  // Economic Historical Figures
+  { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#607D8B' },
+  { name: 'Milton Friedman',     scores: { Cultural: 3, Economic: 2, Military: 6, Sovereignty: 4, Liberty: 8, Class: 2 }, color: '#8D6E63' },
+
+  // World War II Political Figures
+  { name: 'Clement Attlee',          scores: { Cultural: 5, Economic: 7, Military: 7, Sovereignty: 5, Liberty: 4, Class: 6 }, color: '#E74C3C' },
+  { name: 'Winston Churchill',         scores: { Cultural: 8, Economic: 3, Military: 9, Sovereignty: 8, Liberty: 3, Class: 2 }, color: '#1A237E' },
+  { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, Liberty: 1, Class: 7 }, color: '#212121' },
+  { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, Liberty: 4, Class: 5 }, color: '#1565C0' },
+  { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, Liberty: 1, Class: 6 }, color: '#424242' },
+  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, Liberty: 0, Class: 10 }, color: '#B71C1C' }
 ];
 
 
@@ -606,6 +724,7 @@ function createQuiz() {
     getScores() { return computeScores(answers); }
   };
 }
+
 
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -704,14 +823,14 @@ function drawRadar(svg, {
   // Axis labels
   axes.forEach((ax, i) => {
     const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
-    const t = createSVGElement('text', {
+    const labelEl = createSVGElement('text', {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
       'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
       fill: 'rgba(232,228,218,0.55)'
     });
-    t.textContent = ax;
-    svg.appendChild(t);
+    labelEl.textContent = t('axis.' + ax);
+    svg.appendChild(labelEl);
   });
 }
 
@@ -720,12 +839,12 @@ function renderIntro(container, onStart) {
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-intro">
-        <p class="eyebrow">Six-Axis Political Compass</p>
-        <h1 class="intro-title">Where do you sit<br>on the six axes?</h1>
-        <p class="intro-body">The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.</p>
-        <p class="intro-meta">24 statements · approximately 5 minutes</p>
-        <button class="btn btn-primary" id="btn-start">Begin</button>
-        <p class="intro-disclaimer">Your answers are not stored or transmitted anywhere.</p>
+        <p class="eyebrow">${t('intro.eyebrow')}</p>
+        <h1 class="intro-title">${t('intro.title')}</h1>
+        <p class="intro-body">${t('intro.body')}</p>
+        <p class="intro-meta">${t('intro.meta')}</p>
+        <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
+        <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
   `;
@@ -739,18 +858,24 @@ function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, 
           <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
           <span class="progress-label">${stepLabel}</span>
         </div>
-        <p class="axis-tag">${axis} axis</p>
+        <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
         <p class="q-text">${question.text}</p>
         <div class="responses" id="responses"></div>
         <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
-          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">← Back</button>
+          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
         </div>
       </div>
     </div>
   `;
 
   const responsesEl = document.getElementById('responses');
-  const labels = ['Strongly agree', 'Agree', 'Neither agree nor disagree', 'Disagree', 'Strongly disagree'];
+  const labels = [
+    t('response.stronglyAgree'),
+    t('response.agree'),
+    t('response.neutral'),
+    t('response.disagree'),
+    t('response.stronglyDisagree')
+  ];
   labels.forEach((label, i) => {
     const btn = document.createElement('button');
     btn.className = 'response-btn';
@@ -778,58 +903,68 @@ function renderResults(container, {
   onClearUpload,
   onToggleUser,
   onSetOrientation,
-  onReorder
+  onReorder,
+  onSetLanguage,
+  language
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
 
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-results">
-        <p class="eyebrow">Your results</p>
-        <h2 class="results-title">Your six-axis profile</h2>
+        <p class="eyebrow">${t('results.eyebrow')}</p>
+        <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
           <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="Six-axis radar chart showing your political profile"></svg>
         </div>
         <div class="actor-row">
-          <span class="actor-label">Compare:</span>
+          <span class="actor-label">${t('results.compare')}</span>
           <div class="actor-btns" id="actor-btns"></div>
         </div>
         <div class="legend" id="legend"></div>
         <div class="score-bars" id="score-bars"></div>
         <hr class="divider">
         <div class="config-section">
-          <p class="config-heading">Orientation</p>
+          <p class="config-heading">${t('config.language')}</p>
           <div class="config-row">
-            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">Edge up</button>
-            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">Vertex up</button>
+            <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
+              <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
+            </select>
           </div>
         </div>
         <div class="config-section">
-          <p class="config-heading">Download</p>
+          <p class="config-heading">${t('results.orientation')}</p>
           <div class="config-row">
-            <button class="config-btn" id="btn-dl-png">Image (PNG)</button>
-            <button class="config-btn" id="btn-dl-json">Data (JSON)</button>
-            <button class="config-btn" id="btn-dl-xml">Data (XML)</button>
+            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
+            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
           </div>
         </div>
         <div class="config-section">
-          <p class="config-heading">Compare a saved map</p>
+          <p class="config-heading">${t('results.download')}</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
+            <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
+            <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.compareSaved')}</p>
           <div class="config-row">
             <label class="config-file-label">
-              Upload JSON or XML
+              ${t('results.uploadLabel')}
               <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
             </label>
-            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">Clear</button>
+            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
           </div>
-          <p class="config-note">Only files exported from this tool are supported. No data is transmitted anywhere.</p>
+          <p class="config-note">${t('results.uploadNote')}</p>
         </div>
         <div class="config-section">
-          <p class="config-heading">Axis order — drag to reposition</p>
+          <p class="config-heading">${t('results.axisOrder')}</p>
           <div class="axis-list" id="axis-list"></div>
         </div>
         <hr class="divider">
-        <p class="footer-note">This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.</p>
-        <button class="btn" id="btn-restart">Retake</button>
+        <p class="footer-note">${t('results.footer')}</p>
+        <button class="btn" id="btn-restart">${t('results.retake')}</button>
       </div>
     </div>
   `;
@@ -850,7 +985,7 @@ function renderResults(container, {
   // Your map toggle
   const userBtn = document.createElement('button');
   userBtn.className = 'btn btn-sm';
-  userBtn.textContent = 'Your map';
+  userBtn.textContent = t('results.yourMap');
   if (showUser) {
     userBtn.style.borderColor = '#c8a84b';
     userBtn.style.color = '#c8a84b';
@@ -862,7 +997,7 @@ function renderResults(container, {
   ACTORS.forEach(actor => {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
-    btn.textContent = actor.name;
+    btn.textContent = t('actor.' + actor.name);
     if (selectedActors.has(actor.name)) {
       btn.style.borderColor = actor.color;
       btn.style.color = actor.color;
@@ -887,19 +1022,19 @@ function renderResults(container, {
     item.append(dot, span);
     leg.appendChild(item);
   };
-  if (showUser) addLegend('You', '#c8a84b', true, false);
-  actors.forEach(a => addLegend(a.name, a.color, false, false));
-  if (uploadedMap) addLegend(uploadedMap.label || 'Uploaded map', '#b478dc', false, true);
+  if (showUser) addLegend(t('results.you'), '#c8a84b', true, false);
+  actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
+  if (uploadedMap) addLegend(t('results.uploadedMap'), '#b478dc', false, true);
 
   // Score bars
   const bars = document.getElementById('score-bars');
   const profiles = [];
-  if (showUser) profiles.push({ name: 'You', color: '#c8a84b', scores });
-  actors.forEach(a => profiles.push({ name: a.name, color: a.color, scores: a.scores }));
-  if (uploadedMap) profiles.push({ name: uploadedMap.label || 'Uploaded map', color: '#b478dc', scores: uploadedMap.scores });
+  if (showUser) profiles.push({ name: t('results.you'), color: '#c8a84b', scores });
+  actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
+  if (uploadedMap) profiles.push({ name: t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
 
   if (profiles.length === 0) {
-    bars.innerHTML = '<p class="config-note" style="text-align:center;padding:1rem 0;">Select a profile above to see scores.</p>';
+    bars.innerHTML = `<p class="config-note" style="text-align:center;padding:1rem 0;">${t('results.emptyScores')}</p>`;
   } else {
     axes.forEach(ax => {
       const meta = AXIS_META[ax];
@@ -920,12 +1055,12 @@ function renderResults(container, {
       });
       div.innerHTML = `
         <div class="score-header">
-          <span class="score-name">${ax}</span>
+          <span class="score-name">${t('axis.' + ax)}</span>
         </div>
         ${rowsHtml}
         <div class="score-ends">
-          <span class="score-end">${meta.low}</span>
-          <span class="score-end">${meta.high}</span>
+          <span class="score-end">${t('axis.' + ax + '.low')}</span>
+          <span class="score-end">${t('axis.' + ax + '.high')}</span>
         </div>
       `;
       bars.appendChild(div);
@@ -952,6 +1087,11 @@ function renderResults(container, {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
   }
+  if (onSetLanguage) {
+    document.getElementById('lang-select').addEventListener('change', (e) => {
+      onSetLanguage(e.target.value);
+    });
+  }
   if (onReorder) {
     const list = document.getElementById('axis-list');
     axes.forEach((ax, i) => {
@@ -961,7 +1101,7 @@ function renderResults(container, {
       item.dataset.idx = i;
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
-        <span class="axis-name">${ax}</span>
+        <span class="axis-name">${t('axis.' + ax)}</span>
         <span class="axis-position">position ${i + 1}</span>
       `;
       list.appendChild(item);
@@ -1078,6 +1218,7 @@ function parseUpload(fileContent, fileName) {
 
 
 
+
 const app = document.getElementById('app');
 let quiz;
 let selectedActors = new Set();
@@ -1085,6 +1226,7 @@ let orientation = 'flat';
 let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
+let language = 'en';
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1161,7 +1303,7 @@ function showResults() {
           uploadedMap = parseUpload(evt.target.result, file.name);
           showResults();
         } catch (err) {
-          alert('Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n' + err.message);
+          alert(t('error.upload') + err.message);
         }
       };
       reader.readAsText(file);
@@ -1182,7 +1324,13 @@ function showResults() {
     onReorder: (newOrder) => {
       axesOrder = newOrder;
       showResults();
-    }
+    },
+    onSetLanguage: (lang) => {
+      language = lang;
+      setLanguage(lang);
+      showResults();
+    },
+    language
   });
 }
 

@@ -16,6 +16,7 @@ import { AXES } from './data.js';
 import { createQuiz } from './quiz.js';
 import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
+import { t, setLanguage } from './i18n.js';
 
 const app = document.getElementById('app');
 let quiz;
@@ -24,6 +25,7 @@ let orientation = 'flat';
 let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
+let language = 'en';
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -100,7 +102,7 @@ function showResults() {
           uploadedMap = parseUpload(evt.target.result, file.name);
           showResults();
         } catch (err) {
-          alert('Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n' + err.message);
+          alert(t('error.upload') + err.message);
         }
       };
       reader.readAsText(file);
@@ -121,7 +123,13 @@ function showResults() {
     onReorder: (newOrder) => {
       axesOrder = newOrder;
       showResults();
-    }
+    },
+    onSetLanguage: (lang) => {
+      language = lang;
+      setLanguage(lang);
+      showResults();
+    },
+    language
   });
 }
 

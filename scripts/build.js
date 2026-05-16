@@ -12,6 +12,7 @@ function inlineModules() {
   // Read source files
   const html = read('index.html');
   const css = read('styles.css');
+  const i18n = read('i18n.js');
   const data = read('data.js');
   const quiz = read('quiz.js');
   const chart = read('chart.js');
@@ -28,7 +29,7 @@ function inlineModules() {
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
   // Combine: modules first (with imports/exports stripped), then the inline script (imports stripped)
-  const js = [data, quiz, chart, ui, exp]
+  const js = [i18n, data, quiz, chart, ui, exp]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');
@@ -46,7 +47,7 @@ inlineModules();
 
 // Optional watch mode
 if (process.argv.includes('--watch')) {
-  const files = ['index.html', 'styles.css', 'data.js', 'quiz.js', 'chart.js', 'ui.js', 'export.js'];
+  const files = ['index.html', 'styles.css', 'i18n.js', 'data.js', 'quiz.js', 'chart.js', 'ui.js', 'export.js'];
   files.forEach(f => {
     fs.watchFile(path.join(SRC, f), () => {
       console.log(`Rebuilding: ${f}`);

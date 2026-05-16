@@ -1,0 +1,104 @@
+const TRANSLATIONS = {
+  en: {
+    'intro.eyebrow': 'Six-Axis Political Compass',
+    'intro.title': 'Where do you sit<br>on the six axes?',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
+    'intro.meta': '24 statements · approximately 5 minutes',
+    'intro.begin': 'Begin',
+    'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',
+
+    'quiz.axisTag': '{axis} axis',
+    'quiz.back': '← Back',
+
+    'response.stronglyAgree': 'Strongly agree',
+    'response.agree': 'Agree',
+    'response.neutral': 'Neither agree nor disagree',
+    'response.disagree': 'Disagree',
+    'response.stronglyDisagree': 'Strongly disagree',
+
+    'results.eyebrow': 'Your results',
+    'results.title': 'Your six-axis profile',
+    'results.compare': 'Compare:',
+    'results.yourMap': 'Your map',
+    'results.orientation': 'Orientation',
+    'results.edgeUp': 'Edge up',
+    'results.vertexUp': 'Vertex up',
+    'results.download': 'Download',
+    'results.imagePng': 'Image (PNG)',
+    'results.dataJson': 'Data (JSON)',
+    'results.dataXml': 'Data (XML)',
+    'results.compareSaved': 'Compare a saved map',
+    'results.uploadLabel': 'Upload JSON or XML',
+    'results.clear': 'Clear',
+    'results.uploadNote': 'Only files exported from this tool are supported. No data is transmitted anywhere.',
+    'results.axisOrder': 'Axis order — drag to reposition',
+    'results.footer': 'This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.',
+    'results.retake': 'Retake',
+    'results.you': 'You',
+    'results.uploadedMap': 'Uploaded map',
+    'results.emptyScores': 'Select a profile above to see scores.',
+
+    'error.upload': 'Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n',
+
+    'axis.Cultural': 'Cultural',
+    'axis.Sovereignty': 'Sovereignty',
+    'axis.Military': 'Military',
+    'axis.Economic': 'Economic',
+    'axis.Class': 'Class',
+    'axis.Liberty': 'Liberty',
+
+    'axis.Cultural.low': 'Cultural internationalism',
+    'axis.Cultural.high': 'Cultural nationalism',
+    'axis.Economic.low': 'Economic internationalism',
+    'axis.Economic.high': 'Economic nationalism',
+    'axis.Military.low': 'Non-interventionist',
+    'axis.Military.high': 'Interventionist',
+    'axis.Sovereignty.low': 'Supranational',
+    'axis.Sovereignty.high': 'National sovereignty',
+    'axis.Liberty.low': 'State coercion only',
+    'axis.Liberty.high': 'Includes private coercion',
+    'axis.Class.low': 'Class harmony',
+    'axis.Class.high': 'Class conflict',
+
+    'actor.Conservative Party': 'Conservative Party',
+    'actor.Labour Party': 'Labour Party',
+    'actor.Reform UK': 'Reform UK',
+    'actor.Liberal Democrats': 'Liberal Democrats',
+    'actor.Green Party': 'Green Party',
+    'actor.SNP': 'SNP',
+    'actor.Plaid Cymru': 'Plaid Cymru',
+    'actor.US Democrats': 'US Democrats',
+    'actor.US Republicans': 'US Republicans',
+
+    'actor.John Maynard Keynes': 'John Maynard Keynes',
+    'actor.Milton Friedman': 'Milton Friedman',
+
+    'actor.Clement Attlee': 'Clement Attlee',
+    'actor.Winston Churchill': 'Winston Churchill',
+    'actor.Adolf Hitler': 'Adolf Hitler',
+    'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
+    'actor.Benito Mussolini': 'Benito Mussolini',
+    'actor.Joseph Stalin': 'Joseph Stalin',
+
+    'config.language': 'Language'
+  }
+};
+
+let currentLang = 'en';
+
+export function setLanguage(lang) {
+  currentLang = lang;
+}
+
+export function getLanguage() {
+  return currentLang;
+}
+
+export function t(key, vars = {}) {
+  const dict = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+  let text = dict[key] || key;
+  for (const [k, v] of Object.entries(vars)) {
+    text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+  }
+  return text;
+}

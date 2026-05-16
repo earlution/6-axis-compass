@@ -1,3 +1,5 @@
+import { t } from './i18n.js';
+
 const NS = 'http://www.w3.org/2000/svg';
 
 function createSVGElement(tag, attrs) {
@@ -95,13 +97,13 @@ export function drawRadar(svg, {
   // Axis labels
   axes.forEach((ax, i) => {
     const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
-    const t = createSVGElement('text', {
+    const labelEl = createSVGElement('text', {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
       'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
       fill: 'rgba(232,228,218,0.55)'
     });
-    t.textContent = ax;
-    svg.appendChild(t);
+    labelEl.textContent = t('axis.' + ax);
+    svg.appendChild(labelEl);
   });
 }
