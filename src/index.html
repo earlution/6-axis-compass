@@ -162,7 +162,7 @@ function showResults() {
       uploadedMap = null;
       selectedActors.clear();
       window.location.hash = '';
-      renderIntro(app, startQuiz);
+      renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
     },
     onDownloadChart: () => {
       const svg = document.getElementById('radar');
