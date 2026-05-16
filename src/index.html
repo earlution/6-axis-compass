@@ -109,6 +109,18 @@ function showResults() {
     onClearUpload: () => {
       uploadedMap = null;
       showResults();
+    },
+    onToggleUser: () => {
+      showUser = !showUser;
+      showResults();
+    },
+    onSetOrientation: (o) => {
+      orientation = o;
+      showResults();
+    },
+    onReorder: (newOrder) => {
+      axesOrder = newOrder;
+      showResults();
     }
   });
 }

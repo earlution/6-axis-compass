@@ -62,7 +62,10 @@ export function renderResults(container, {
   onDownloadChart,
   onDownloadData,
   onUpload,
-  onClearUpload
+  onClearUpload,
+  onToggleUser,
+  onSetOrientation,
+  onReorder
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
 
@@ -82,6 +85,17 @@ export function renderResults(container, {
         <div class="score-bars" id="score-bars"></div>
         <hr class="divider">
         <div class="config-section">
+          <p class="config-heading">Orientation</p>
+          <div class="config-row">
+            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">Edge up</button>
+            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">Vertex up</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Your map</p>
+          <button class="config-btn ${showUser ? 'active' : ''}" id="btn-toggle-user">${showUser ? 'Hide your map' : 'Show your map'}</button>
+        </div>
+        <div class="config-section">
           <p class="config-heading">Download</p>
           <div class="config-row">
             <button class="config-btn" id="btn-dl-png">Image (PNG)</button>
@@ -99,6 +113,10 @@ export function renderResults(container, {
             <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">Clear</button>
           </div>
           <p class="config-note">Only files exported from this tool are supported. No data is transmitted anywhere.</p>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">Axis order — drag to reposition</p>
+          <div class="axis-list" id="axis-list"></div>
         </div>
         <hr class="divider">
         <p class="footer-note">This framework is the analytical foundation of <em>The Common Enemy</em> — a podcast and academic project examining the structural causes of contemporary British political crisis. <a href="https://github.com/earlution/common-enemy" target="_blank" rel="noopener">Learn more</a>.</p>
@@ -189,5 +207,52 @@ export function renderResults(container, {
   if (onClearUpload) {
     const clearBtn = document.getElementById('btn-clear-upload');
     if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
+  }
+  if (onSetOrientation) {
+    document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
+    document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
+  }
+  if (onToggleUser) {
+    document.getElementById('btn-toggle-user').addEventListener('click', onToggleUser);
+  }
+  if (onReorder) {
+    const list = document.getElementById('axis-list');
+    axes.forEach((ax, i) => {
+      const item = document.createElement('div');
+      item.className = 'axis-item';
+      item.draggable = true;
+      item.dataset.idx = i;
+      item.innerHTML = `
+        <span class="axis-grip">⠿</span>
+        <span class="axis-name">${ax}</span>
+        <span class="axis-position">position ${i + 1}</span>
+      `;
+      list.appendChild(item);
+    });
+    let dragSrcIdx = null;
+    list.querySelectorAll('.axis-item').forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        dragSrcIdx = parseInt(item.dataset.idx);
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+      item.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(item.dataset.idx);
+        if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+        const newOrder = [...axes];
+        const moved = newOrder.splice(dragSrcIdx, 1)[0];
+        newOrder.splice(targetIdx, 0, moved);
+        dragSrcIdx = null;
+        onReorder(newOrder);
+      });
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+      });
+    });
   }
 }
