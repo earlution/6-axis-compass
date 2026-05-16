@@ -80,6 +80,31 @@ body {
   color: var(--text3);
 }
 
+.intro-upload {
+  margin-top: 1.5rem;
+}
+
+.intro-file-label {
+  font-size: 13px;
+  padding: 8px 16px;
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+  display: inline-block;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.intro-file-label:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.intro-file-input {
+  display: none;
+}
+
 .btn {
   display: inline-block;
   background: none;

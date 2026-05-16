@@ -90,6 +90,31 @@ body {
   color: var(--text3);
 }
 
+.intro-upload {
+  margin-top: 1.5rem;
+}
+
+.intro-file-label {
+  font-size: 13px;
+  padding: 8px 16px;
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+  display: inline-block;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.intro-file-label:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.intro-file-input {
+  display: none;
+}
+
 .btn {
   display: inline-block;
   background: none;
@@ -2858,7 +2883,7 @@ function drawRadar(svg, {
 }
 
 
-function renderIntro(container, onStart) {
+function renderIntro(container, { onStart, onUpload } = {}) {
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
@@ -2867,11 +2892,20 @@ function renderIntro(container, onStart) {
         <p class="intro-body">${t('intro.body')}</p>
         <p class="intro-meta">${t('intro.meta')}</p>
         <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
+        <div class="intro-upload">
+          <label class="intro-file-label">
+            ${t('intro.uploadLabel')}
+            <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
+          </label>
+        </div>
         <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
   `;
   document.getElementById('btn-start').addEventListener('click', onStart);
+  if (onUpload) {
+    document.getElementById('intro-file-upload').addEventListener('change', onUpload);
+  }
 }
 function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
   container.innerHTML = `
@@ -3762,8 +3796,31 @@ function showResults() {
   });
 }
 
+function handleIntroUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      const result = parseUpload(evt.target.result, file.name);
+      quiz = {
+        getScores: () => result.scores,
+        getAnswers: () => ({}),
+        current: 24,
+        total: 24,
+        isComplete: true
+      };
+      showResults();
+    } catch (err) {
+      alert(t('error.upload') + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
 if (!loadFromHash()) {
-  renderIntro(app, startQuiz);
+  renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
 }
 
 </script>

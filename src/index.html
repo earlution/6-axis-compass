@@ -235,8 +235,31 @@ function showResults() {
   });
 }
 
+function handleIntroUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      const result = parseUpload(evt.target.result, file.name);
+      quiz = {
+        getScores: () => result.scores,
+        getAnswers: () => ({}),
+        current: 24,
+        total: 24,
+        isComplete: true
+      };
+      showResults();
+    } catch (err) {
+      alert(t('error.upload') + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
 if (!loadFromHash()) {
-  renderIntro(app, startQuiz);
+  renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
 }
 </script>
 </body>

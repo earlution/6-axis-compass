@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Persistent footer:** Site-wide footer showing copyright, MIT licence link, and version number injected from `package.json` at build time.
 
 ### Added
+- **Intro-screen file upload:** Users can now upload a saved JSON or XML map directly from the intro screen without taking the quiz first.
+  - New `onUpload` callback passed to `renderIntro()` in `src/ui.js`.
+  - Parsed scores become the user's map; the app skips directly to the results screen.
+  - Old export versions are handled by existing `parseUpload()` backwards-compatibility logic.
+
+### Added
 - **Grouped actor comparison:** Actor toggle buttons are now arranged into labelled sets under Compare:
   - 2024–2029 UK Parliament (7 actors)
   - US Congress (current cycle) (2 actors)

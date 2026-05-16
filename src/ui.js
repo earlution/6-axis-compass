@@ -2,7 +2,7 @@ import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 
-export function renderIntro(container, onStart) {
+export function renderIntro(container, { onStart, onUpload } = {}) {
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
@@ -11,11 +11,20 @@ export function renderIntro(container, onStart) {
         <p class="intro-body">${t('intro.body')}</p>
         <p class="intro-meta">${t('intro.meta')}</p>
         <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
+        <div class="intro-upload">
+          <label class="intro-file-label">
+            ${t('intro.uploadLabel')}
+            <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
+          </label>
+        </div>
         <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
   `;
   document.getElementById('btn-start').addEventListener('click', onStart);
+  if (onUpload) {
+    document.getElementById('intro-file-upload').addEventListener('change', onUpload);
+  }
 }
 
 export function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
