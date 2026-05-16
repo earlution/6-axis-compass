@@ -23,7 +23,8 @@ jobs:
           grep -q '<style>' dist/index.html
           ! grep -q 'type="module"' dist/index.html
           ! grep -qE '<script[^>]*src=' dist/index.html
-          ! grep -qE '<link[^>]*href=' dist/index.html
+          # Allow PWA manifest and apple-touch-icon links (local files only)
+          ! grep -qE '<link[^>]*href="https?://' dist/index.html
       - run: npm run generate-artifacts
       - name: Verify paper artifacts
         run: |
