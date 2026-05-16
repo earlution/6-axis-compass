@@ -161,4 +161,4 @@ MIT License — see [LICENSE](./LICENSE).
 
 ## Acknowledgements
 
-Originally developed as part of [The Common Enemy](https://github.com/earlution/common-enemy).
+Originally developed as part of [A Common Enemy](https://github.com/earlution/common-enemy).
