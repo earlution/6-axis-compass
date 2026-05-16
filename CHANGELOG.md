@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [0.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.2.0
 
+[0.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v0.3.0
+
+## [0.3.0] - 2026-05-16
+
+### Added
+- Quiz state management via `createQuiz()` factory.
+- `computeScores()` scoring engine matching original algorithm.
+- Immutable quiz instance with getters for current question, progress, and completion state.
+- Answer/back navigation with answers stored in an internal record.
+- Pure logic module — no DOM dependencies.
+
 ## [0.2.0] - 2026-05-16
 
 ### Added
