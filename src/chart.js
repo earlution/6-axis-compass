@@ -41,7 +41,7 @@ export function drawRadar(svg, {
     svg.appendChild(createSVGElement('polygon', {
       points: polygonPoints(cx, cy, maxR, gridScores, axes, orientation),
       fill: 'none',
-      stroke: 'rgba(255,255,255,0.07)',
+      stroke: 'var(--chart-grid)',
       'stroke-width': '1'
     }));
   }
@@ -51,7 +51,7 @@ export function drawRadar(svg, {
     const [x, y] = axisPoint(cx, cy, maxR, i, 10, orientation);
     svg.appendChild(createSVGElement('line', {
       x1: cx, y1: cy, x2: x, y2: y,
-      stroke: 'rgba(255,255,255,0.1)', 'stroke-width': '1'
+      stroke: 'var(--chart-axis)', 'stroke-width': '1'
     }));
   });
 
@@ -101,7 +101,7 @@ export function drawRadar(svg, {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
       'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
-      fill: 'rgba(232,228,218,0.55)'
+      fill: 'var(--chart-label)'
     });
     labelEl.textContent = t('axis.' + ax);
     svg.appendChild(labelEl);

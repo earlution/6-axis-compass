@@ -27,6 +27,7 @@ let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
+let theme = 'dark';
 let customActors = [];
 
 function loadCustomActors() {
@@ -42,7 +43,22 @@ function saveCustomActors() {
   } catch (_) {}
 }
 
+function loadTheme() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-theme');
+    if (stored === 'light' || stored === 'dark') theme = stored;
+  } catch (_) {}
+}
+
+function saveTheme() {
+  try {
+    localStorage.setItem('six-axis-compass-theme', theme);
+  } catch (_) {}
+}
+
 loadCustomActors();
+loadTheme();
+document.documentElement.setAttribute('data-theme', theme);
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -183,7 +199,14 @@ function showResults() {
       saveCustomActors();
       showResults();
     },
-    language
+    language,
+    theme,
+    onSetTheme: (t) => {
+      theme = t;
+      saveTheme();
+      document.documentElement.setAttribute('data-theme', theme);
+      showResults();
+    }
   });
 }
 

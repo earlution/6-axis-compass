@@ -18,6 +18,10 @@
   --gold-dim: rgba(200,168,75,0.12);
   --serif: Georgia, 'Times New Roman', serif;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --chart-grid: rgba(255,255,255,0.07);
+  --chart-axis: rgba(255,255,255,0.1);
+  --chart-label: rgba(232,228,218,0.55);
 }
 
 *, *::before, *::after {
@@ -414,7 +418,7 @@ body {
 .config-btn.active {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(200,168,75,0.1);
+  background: var(--gold-dim);
 }
 
 .config-file-label {
@@ -475,6 +479,21 @@ body {
   font-size: 11px;
   color: rgba(232,228,218,0.25);
   margin-left: auto;
+}
+
+[data-theme="light"] {
+  --bg: #f5f3ef;
+  --bg3: #e8e4da;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #1a1a1a;
+  --text2: #5a5650;
+  --text3: #8a8680;
+  --gold: #8b6914;
+  --gold-dim: rgba(139,105,20,0.12);
+  --chart-grid: rgba(0,0,0,0.07);
+  --chart-axis: rgba(0,0,0,0.1);
+  --chart-label: rgba(26,26,26,0.55);
 }
 
 @media (max-width: 420px) {
@@ -592,7 +611,10 @@ const TRANSLATIONS = {
     "actor.Orbán's Hungary": "Orbán's Hungary",
 
     'axis.position': 'position {n}',
-    'config.language': 'Language'
+    'config.language': 'Language',
+    'config.theme': 'Theme',
+    'results.dark': 'Dark',
+    'results.light': 'Light'
   }
 };
 
@@ -865,7 +887,7 @@ function drawRadar(svg, {
     svg.appendChild(createSVGElement('polygon', {
       points: polygonPoints(cx, cy, maxR, gridScores, axes, orientation),
       fill: 'none',
-      stroke: 'rgba(255,255,255,0.07)',
+      stroke: 'var(--chart-grid)',
       'stroke-width': '1'
     }));
   }
@@ -875,7 +897,7 @@ function drawRadar(svg, {
     const [x, y] = axisPoint(cx, cy, maxR, i, 10, orientation);
     svg.appendChild(createSVGElement('line', {
       x1: cx, y1: cy, x2: x, y2: y,
-      stroke: 'rgba(255,255,255,0.1)', 'stroke-width': '1'
+      stroke: 'var(--chart-axis)', 'stroke-width': '1'
     }));
   });
 
@@ -925,7 +947,7 @@ function drawRadar(svg, {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
       'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
-      fill: 'rgba(232,228,218,0.55)'
+      fill: 'var(--chart-label)'
     });
     labelEl.textContent = t('axis.' + ax);
     svg.appendChild(labelEl);
@@ -1007,6 +1029,8 @@ function renderResults(container, {
   onCopyLink,
   onAddCustomActor,
   onDeleteCustomActor,
+  onSetTheme,
+  theme,
   language
 }) {
   const allActors = [...ACTORS, ...(customActors || [])];
@@ -1033,6 +1057,13 @@ function renderResults(container, {
             <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
               <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
             </select>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('config.theme')}</p>
+          <div class="config-row">
+            <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
+            <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -1240,6 +1271,10 @@ function renderResults(container, {
   if (onCopyLink) {
     document.getElementById('btn-copy-link').addEventListener('click', onCopyLink);
   }
+  if (onSetTheme) {
+    document.getElementById('btn-theme-dark').addEventListener('click', () => onSetTheme('dark'));
+    document.getElementById('btn-theme-light').addEventListener('click', () => onSetTheme('light'));
+  }
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
@@ -1398,6 +1433,7 @@ let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
+let theme = 'dark';
 let customActors = [];
 
 function loadCustomActors() {
@@ -1413,7 +1449,22 @@ function saveCustomActors() {
   } catch (_) {}
 }
 
+function loadTheme() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-theme');
+    if (stored === 'light' || stored === 'dark') theme = stored;
+  } catch (_) {}
+}
+
+function saveTheme() {
+  try {
+    localStorage.setItem('six-axis-compass-theme', theme);
+  } catch (_) {}
+}
+
 loadCustomActors();
+loadTheme();
+document.documentElement.setAttribute('data-theme', theme);
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1554,7 +1605,14 @@ function showResults() {
       saveCustomActors();
       showResults();
     },
-    language
+    language,
+    theme,
+    onSetTheme: (t) => {
+      theme = t;
+      saveTheme();
+      document.documentElement.setAttribute('data-theme', theme);
+      showResults();
+    }
   });
 }
 

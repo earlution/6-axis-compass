@@ -78,6 +78,8 @@ export function renderResults(container, {
   onCopyLink,
   onAddCustomActor,
   onDeleteCustomActor,
+  onSetTheme,
+  theme,
   language
 }) {
   const allActors = [...ACTORS, ...(customActors || [])];
@@ -104,6 +106,13 @@ export function renderResults(container, {
             <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
               <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
             </select>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('config.theme')}</p>
+          <div class="config-row">
+            <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
+            <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -310,6 +319,10 @@ export function renderResults(container, {
   }
   if (onCopyLink) {
     document.getElementById('btn-copy-link').addEventListener('click', onCopyLink);
+  }
+  if (onSetTheme) {
+    document.getElementById('btn-theme-dark').addEventListener('click', () => onSetTheme('dark'));
+    document.getElementById('btn-theme-light').addEventListener('click', () => onSetTheme('light'));
   }
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));

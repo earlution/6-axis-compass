@@ -10,6 +10,10 @@
   --gold-dim: rgba(200,168,75,0.12);
   --serif: Georgia, 'Times New Roman', serif;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --chart-grid: rgba(255,255,255,0.07);
+  --chart-axis: rgba(255,255,255,0.1);
+  --chart-label: rgba(232,228,218,0.55);
 }
 
 *, *::before, *::after {
@@ -406,7 +410,7 @@ body {
 .config-btn.active {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(200,168,75,0.1);
+  background: var(--gold-dim);
 }
 
 .config-file-label {
@@ -467,6 +471,21 @@ body {
   font-size: 11px;
   color: rgba(232,228,218,0.25);
   margin-left: auto;
+}
+
+[data-theme="light"] {
+  --bg: #f5f3ef;
+  --bg3: #e8e4da;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #1a1a1a;
+  --text2: #5a5650;
+  --text3: #8a8680;
+  --gold: #8b6914;
+  --gold-dim: rgba(139,105,20,0.12);
+  --chart-grid: rgba(0,0,0,0.07);
+  --chart-axis: rgba(0,0,0,0.1);
+  --chart-label: rgba(26,26,26,0.55);
 }
 
 @media (max-width: 420px) {

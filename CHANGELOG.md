@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [1.8.0] - 2026-05-16
+
+### Added
+- Dark / light theme toggle in the results configuration panel.
+- Theme preference persists in `localStorage` (`six-axis-compass-theme`).
+- `data-theme="light"` attribute applied to `<html>`; all colours are driven by CSS custom properties so the switch is instant and covers both DOM and inline SVG.
+- `loadTheme()` / `saveTheme()` utilities in the inline module script.
+
 ## [1.7.0] - 2026-05-16
 
 ### Added

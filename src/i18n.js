@@ -99,7 +99,10 @@ const TRANSLATIONS = {
     "actor.Orbán's Hungary": "Orbán's Hungary",
 
     'axis.position': 'position {n}',
-    'config.language': 'Language'
+    'config.language': 'Language',
+    'config.theme': 'Theme',
+    'results.dark': 'Dark',
+    'results.light': 'Light'
   }
 };
 
