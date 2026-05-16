@@ -26,10 +26,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ACTOR_GROUPS` map added to `src/data.js`.
 
 ### Changed
-- **Radar chart spatial layout:** Reordered `AXES` so left-associated values appear on the left side of the radar chart and right-associated values on the right.
-  - New order: Cultural, Economic, Military, Sovereignty, Class, Libertarian/Authoritarian.
-  - Class moves from 240° (up-left) to 180° (true left).
-  - Economic remains at 0° (true right).
+- **Radar chart spatial layout (revised):** Reordered `AXES` so the left half of the radar chart consistently represents traditionally left-associated values and the right half represents traditionally right-associated values.
+  - New order: Cultural, Military, Sovereignty, Economic, Class, Libertarian/Authoritarian.
+  - Left side (120°–240°): Economic (nationalism), Class (conflict), Libertarian/Authoritarian (libertarian).
+  - Right side (-60°–60°): Cultural (nationalism), Military (interventionist), Sovereignty (national sovereignty).
+  - **BREAKING:** Inverted the `Libertarian/Authoritarian` axis so that "libertarian" is now the HIGH (outward) value and "authoritarian" is the LOW (inward) value. This was necessary to position libertarian on the left side of the chart.
+  - All 4 Libertarian/Authoritarian quiz questions have their `reverse` flags swapped.
+  - All 27 actor JSON files and `_FALLBACK_ACTORS` have their Libertarian/Authoritarian scores recomputed as `10 - old_score`.
+  - `AXIS_META` labels swapped: low = "Authoritarian / hierarchical / illiberal", high = "Libertarian / consent-based / democratic".
+  - Export version bumped to `1.2.0`. `parseUpload()` detects pre-v1.2.0 exports and inverts the Libertarian/Authoritarian score for backwards compatibility.
+
+### Changed
+- **Radar chart spatial layout (initial):** Reordered `AXES` so left-associated values appear on the left side of the radar chart and right-associated values on the right.
+  - Order: Cultural, Economic, Military, Sovereignty, Class, Libertarian/Authoritarian.
+  - Superseded by the revised layout above.
 
 ### Fixed
 - **Class axis data audit:** Corrected inverted Class scores for 5 methodology anchor actors whose values were entered with the opposite convention.

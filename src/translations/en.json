@@ -62,8 +62,8 @@
   "axis.Military.high": "Interventionist",
   "axis.Sovereignty.low": "Supranational",
   "axis.Sovereignty.high": "National sovereignty",
-  "axis.Libertarian/Authoritarian.low": "Libertarian / consent-based / democratic",
-  "axis.Libertarian/Authoritarian.high": "Authoritarian / hierarchical / illiberal",
+  "axis.Libertarian/Authoritarian.low": "Authoritarian / hierarchical / illiberal",
+  "axis.Libertarian/Authoritarian.high": "Libertarian / consent-based / democratic",
   "axis.Class.low": "Class harmony",
   "axis.Class.high": "Class conflict",
 

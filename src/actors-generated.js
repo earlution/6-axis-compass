@@ -9,7 +9,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 8,
       "Class": 7,
-      "Libertarian/Authoritarian": 1
+      "Libertarian/Authoritarian": 9
     },
     "color": "#212121",
     "_actorMeta": {
@@ -61,7 +61,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 0,
       "Class": 10,
-      "Libertarian/Authoritarian": 0
+      "Libertarian/Authoritarian": 10
     },
     "color": "#9C27B0",
     "_actorMeta": {
@@ -165,7 +165,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 1
+      "Libertarian/Authoritarian": 9
     },
     "color": "#424242",
     "_actorMeta": {
@@ -217,7 +217,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 5,
       "Class": 4,
-      "Libertarian/Authoritarian": 4
+      "Libertarian/Authoritarian": 6
     },
     "color": "#6B8E23",
     "_actorMeta": {
@@ -269,7 +269,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 4
+      "Libertarian/Authoritarian": 6
     },
     "color": "#E74C3C",
     "_actorMeta": {
@@ -469,7 +469,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#8B0000",
     "_actorMeta": {
@@ -521,7 +521,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 8,
       "Class": 0,
-      "Libertarian/Authoritarian": 10
+      "Libertarian/Authoritarian": 0
     },
     "color": "#8B4513",
     "_actorMeta": {
@@ -625,7 +625,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 7,
       "Class": 5,
-      "Libertarian/Authoritarian": 4
+      "Libertarian/Authoritarian": 6
     },
     "color": "#1565C0",
     "_actorMeta": {
@@ -677,7 +677,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 7,
       "Class": 8,
-      "Libertarian/Authoritarian": 2
+      "Libertarian/Authoritarian": 8
     },
     "color": "#5A9E3F",
     "_actorMeta": {
@@ -781,7 +781,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 9,
       "Class": 10,
-      "Libertarian/Authoritarian": 0
+      "Libertarian/Authoritarian": 10
     },
     "color": "#B71C1C",
     "_actorMeta": {
@@ -833,7 +833,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 3,
       "Class": 3,
-      "Libertarian/Authoritarian": 4
+      "Libertarian/Authoritarian": 6
     },
     "color": "#c0392b",
     "_actorMeta": {
@@ -885,7 +885,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 10,
       "Class": 10,
-      "Libertarian/Authoritarian": 10
+      "Libertarian/Authoritarian": 0
     },
     "color": "#CC0000",
     "_actorMeta": {
@@ -937,7 +937,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 4,
       "Class": 4,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#FAA61A",
     "_actorMeta": {
@@ -989,7 +989,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 2,
       "Class": 2,
-      "Libertarian/Authoritarian": 8
+      "Libertarian/Authoritarian": 2
     },
     "color": "#8D6E63",
     "_actorMeta": {
@@ -1041,7 +1041,7 @@ const __ACTORS = [
       "Military": 6,
       "Sovereignty": 8,
       "Class": 7,
-      "Libertarian/Authoritarian": 10
+      "Libertarian/Authoritarian": 0
     },
     "color": "#006600",
     "_actorMeta": {
@@ -1094,7 +1094,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#3CB371",
     "_actorMeta": {
@@ -1198,7 +1198,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#FDF38E",
     "_actorMeta": {
@@ -1250,7 +1250,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 4,
       "Class": 6,
-      "Libertarian/Authoritarian": 6
+      "Libertarian/Authoritarian": 4
     },
     "color": "#FF4500",
     "_actorMeta": {
@@ -1302,7 +1302,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 10,
       "Class": 0,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#00BFFF",
     "_actorMeta": {
@@ -1354,7 +1354,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 4,
       "Class": 4,
-      "Libertarian/Authoritarian": 4
+      "Libertarian/Authoritarian": 6
     },
     "color": "#3C6EC9",
     "_actorMeta": {
@@ -1406,7 +1406,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 4,
       "Class": 1,
-      "Libertarian/Authoritarian": 6
+      "Libertarian/Authoritarian": 4
     },
     "color": "#C0392B",
     "_actorMeta": {
@@ -1458,7 +1458,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 3,
       "Class": 2,
-      "Libertarian/Authoritarian": 3
+      "Libertarian/Authoritarian": 7
     },
     "color": "#1A237E",
     "_actorMeta": {

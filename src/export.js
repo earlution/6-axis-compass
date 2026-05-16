@@ -32,7 +32,7 @@ export function downloadChart(svgElement, filename = 'my-six-axis-compass.png') 
 export function downloadMapData(scores, format = 'json') {
   const payload = {
     source: 'Six-Axis Political Compass',
-    version: '1.1.0',
+    version: '1.2.0',
     generated: new Date().toISOString(),
     axes: scores
   };
@@ -93,8 +93,22 @@ export function parseUpload(fileContent, fileName) {
     isOld = true;
   }
 
-  const label = isOld
-    ? 'Uploaded map (earlier version — Liberty axis mapped to Libertarian/Authoritarian)'
+  // Backwards compatibility: invert Libertarian/Authoritarian scores from exports
+  // prior to v1.2.0 (old convention: 0=libertarian, 10=authoritarian)
+  let invertedAxis = false;
+  if (scores['Libertarian/Authoritarian'] !== undefined) {
+    const needsInvert = isOld || (p && p.version && p.version.startsWith('1.1.')) || (versionAttr && versionAttr.startsWith('1.1.'));
+    if (needsInvert) {
+      scores['Libertarian/Authoritarian'] = parseFloat((10 - scores['Libertarian/Authoritarian']).toFixed(1));
+      invertedAxis = true;
+    }
+  }
+
+  const labelParts = [];
+  if (isOld) labelParts.push('earlier version — Liberty axis mapped to Libertarian/Authoritarian');
+  if (invertedAxis) labelParts.push('Libertarian/Authoritarian score inverted for v1.2.0 convention');
+  const label = labelParts.length > 0
+    ? 'Uploaded map (' + labelParts.join('; ') + ')'
     : 'Uploaded map';
 
   return { scores, label };
