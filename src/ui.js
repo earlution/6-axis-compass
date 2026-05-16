@@ -74,6 +74,7 @@ export function renderResults(container, {
   onSetOrientation,
   onReorder,
   onSetLanguage,
+  onCopyLink,
   language
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
@@ -84,7 +85,7 @@ export function renderResults(container, {
         <p class="eyebrow">${t('results.eyebrow')}</p>
         <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
-          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="Six-axis radar chart showing your political profile"></svg>
+          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
         </div>
         <div class="actor-row">
           <span class="actor-label">${t('results.compare')}</span>
@@ -114,6 +115,12 @@ export function renderResults(container, {
             <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
             <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
             <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.share')}</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -252,6 +259,9 @@ export function renderResults(container, {
     const clearBtn = document.getElementById('btn-clear-upload');
     if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
   }
+  if (onCopyLink) {
+    document.getElementById('btn-copy-link').addEventListener('click', onCopyLink);
+  }
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
@@ -271,7 +281,7 @@ export function renderResults(container, {
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
         <span class="axis-name">${t('axis.' + ax)}</span>
-        <span class="axis-position">position ${i + 1}</span>
+        <span class="axis-position">${t('axis.position', { n: i + 1 })}</span>
       `;
       list.appendChild(item);
     });

@@ -530,6 +530,10 @@ const TRANSLATIONS = {
     'results.you': 'You',
     'results.uploadedMap': 'Uploaded map',
     'results.emptyScores': 'Select a profile above to see scores.',
+    'results.share': 'Share',
+    'results.copyLink': 'Copy link',
+
+    'chart.ariaLabel': 'Six-axis radar chart showing your political profile',
 
     'error.upload': 'Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n',
 
@@ -573,6 +577,7 @@ const TRANSLATIONS = {
     'actor.Benito Mussolini': 'Benito Mussolini',
     'actor.Joseph Stalin': 'Joseph Stalin',
 
+    'axis.position': 'position {n}',
     'config.language': 'Language'
   }
 };
@@ -591,6 +596,73 @@ function t(key, vars = {}) {
     text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
   }
   return text;
+}
+
+
+const AXIS_KEYS = {
+  Cultural: 'c',
+  Economic: 'e',
+  Military: 'm',
+  Sovereignty: 's',
+  Liberty: 'l',
+  Class: 'a'
+};
+
+const KEY_TO_AXIS = Object.fromEntries(
+  Object.entries(AXIS_KEYS).map(([k, v]) => [v, k])
+);
+function encodeHash(scores, orientation, axesOrder) {
+  const scoreParts = axesOrder.map(ax => `${AXIS_KEYS[ax]}=${scores[ax].toFixed(1)}`);
+  const orderCode = axesOrder.map(ax => AXIS_KEYS[ax]).join('');
+  return `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+}
+function decodeHash(hash) {
+  if (!hash || hash.length < 2) return null;
+  const str = hash.startsWith('#') ? hash.slice(1) : hash;
+  const parts = str.split(';');
+  if (parts[0] !== 'v1') return null;
+
+  const scores = {};
+  let orientation = 'flat';
+  let axesOrder = null;
+
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    if (!part) continue;
+    if (part.startsWith('o=')) {
+      orientation = part.slice(2);
+    } else if (part.startsWith('x=')) {
+      axesOrder = part.slice(2).split('').map(k => KEY_TO_AXIS[k]).filter(Boolean);
+    } else if (part.includes('=')) {
+      const pairs = part.split(',');
+      pairs.forEach(pair => {
+        const [pk, pv] = pair.split('=');
+        const axis = KEY_TO_AXIS[pk];
+        if (axis) scores[axis] = parseFloat(pv);
+      });
+    }
+  }
+
+  if (Object.keys(scores).length === 0) return null;
+  return { scores, orientation, axesOrder };
+}
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+    } catch (_) {}
+    document.body.removeChild(ta);
+    resolve();
+  });
 }
 
 
@@ -905,6 +977,7 @@ function renderResults(container, {
   onSetOrientation,
   onReorder,
   onSetLanguage,
+  onCopyLink,
   language
 }) {
   const actors = ACTORS.filter(a => selectedActors.has(a.name));
@@ -915,7 +988,7 @@ function renderResults(container, {
         <p class="eyebrow">${t('results.eyebrow')}</p>
         <h2 class="results-title">${t('results.title')}</h2>
         <div class="chart-wrap">
-          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="Six-axis radar chart showing your political profile"></svg>
+          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
         </div>
         <div class="actor-row">
           <span class="actor-label">${t('results.compare')}</span>
@@ -945,6 +1018,12 @@ function renderResults(container, {
             <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
             <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
             <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.share')}</p>
+          <div class="config-row">
+            <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -1083,6 +1162,9 @@ function renderResults(container, {
     const clearBtn = document.getElementById('btn-clear-upload');
     if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
   }
+  if (onCopyLink) {
+    document.getElementById('btn-copy-link').addEventListener('click', onCopyLink);
+  }
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
@@ -1102,7 +1184,7 @@ function renderResults(container, {
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
         <span class="axis-name">${t('axis.' + ax)}</span>
-        <span class="axis-position">position ${i + 1}</span>
+        <span class="axis-position">${t('axis.position', { n: i + 1 })}</span>
       `;
       list.appendChild(item);
     });
@@ -1219,6 +1301,7 @@ function parseUpload(fileContent, fileName) {
 
 
 
+
 const app = document.getElementById('app');
 let quiz;
 let selectedActors = new Set();
@@ -1266,8 +1349,27 @@ function goBack() {
   renderQuizScreen();
 }
 
+function loadFromHash() {
+  const decoded = decodeHash(window.location.hash);
+  if (!decoded) return false;
+  orientation = decoded.orientation;
+  if (decoded.axesOrder && decoded.axesOrder.length === 6) {
+    axesOrder = decoded.axesOrder;
+  }
+  quiz = {
+    getScores: () => decoded.scores,
+    getAnswers: () => ({}),
+    current: 24,
+    total: 24,
+    isComplete: true
+  };
+  showResults();
+  return true;
+}
+
 function showResults() {
   const scores = quiz.getScores();
+  window.location.hash = encodeHash(scores, orientation, axesOrder);
   renderResults(app, {
     scores,
     axes: axesOrder,
@@ -1285,6 +1387,7 @@ function showResults() {
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
+      window.location.hash = '';
       renderIntro(app, startQuiz);
     },
     onDownloadChart: () => {
@@ -1330,11 +1433,16 @@ function showResults() {
       setLanguage(lang);
       showResults();
     },
+    onCopyLink: () => {
+      copyToClipboard(window.location.href);
+    },
     language
   });
 }
 
-renderIntro(app, startQuiz);
+if (!loadFromHash()) {
+  renderIntro(app, startQuiz);
+}
 
 </script>
 </body>

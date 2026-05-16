@@ -17,6 +17,7 @@ import { createQuiz } from './quiz.js';
 import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
 import { t, setLanguage } from './i18n.js';
+import { encodeHash, decodeHash, copyToClipboard } from './url.js';
 
 const app = document.getElementById('app');
 let quiz;
@@ -65,8 +66,27 @@ function goBack() {
   renderQuizScreen();
 }
 
+function loadFromHash() {
+  const decoded = decodeHash(window.location.hash);
+  if (!decoded) return false;
+  orientation = decoded.orientation;
+  if (decoded.axesOrder && decoded.axesOrder.length === 6) {
+    axesOrder = decoded.axesOrder;
+  }
+  quiz = {
+    getScores: () => decoded.scores,
+    getAnswers: () => ({}),
+    current: 24,
+    total: 24,
+    isComplete: true
+  };
+  showResults();
+  return true;
+}
+
 function showResults() {
   const scores = quiz.getScores();
+  window.location.hash = encodeHash(scores, orientation, axesOrder);
   renderResults(app, {
     scores,
     axes: axesOrder,
@@ -84,6 +104,7 @@ function showResults() {
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
+      window.location.hash = '';
       renderIntro(app, startQuiz);
     },
     onDownloadChart: () => {
@@ -129,11 +150,16 @@ function showResults() {
       setLanguage(lang);
       showResults();
     },
+    onCopyLink: () => {
+      copyToClipboard(window.location.href);
+    },
     language
   });
 }
 
-renderIntro(app, startQuiz);
+if (!loadFromHash()) {
+  renderIntro(app, startQuiz);
+}
 </script>
 </body>
 </html>

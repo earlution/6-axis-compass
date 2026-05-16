@@ -37,6 +37,10 @@ const TRANSLATIONS = {
     'results.you': 'You',
     'results.uploadedMap': 'Uploaded map',
     'results.emptyScores': 'Select a profile above to see scores.',
+    'results.share': 'Share',
+    'results.copyLink': 'Copy link',
+
+    'chart.ariaLabel': 'Six-axis radar chart showing your political profile',
 
     'error.upload': 'Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n',
 
@@ -80,6 +84,7 @@ const TRANSLATIONS = {
     'actor.Benito Mussolini': 'Benito Mussolini',
     'actor.Joseph Stalin': 'Joseph Stalin',
 
+    'axis.position': 'position {n}',
     'config.language': 'Language'
   }
 };

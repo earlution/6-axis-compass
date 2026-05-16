@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [1.6.0] - 2026-05-16
+
+### Added
+- Shareable URLs: scores, orientation, and axis order are encoded in the URL hash (`#v1;c=5.0,...;o=flat;x=cemsla`).
+- On reaching the results screen, the URL hash updates automatically so users can copy their profile link directly.
+- On page load with a valid hash, the app skips the intro and quiz and renders results immediately with the decoded scores.
+- "Copy link" button added to the results configuration panel.
+- `src/url.js` with `encodeHash()`, `decodeHash()`, and `copyToClipboard()` utilities.
+- Versioned hash format (`v1`) for graceful future format changes.
+
 ## [1.5.0] - 2026-05-16
 
 ### Added
