@@ -38,7 +38,7 @@ const neutral = {};
 for (let i = 0; i < 24; i++) neutral[i] = 2;
 assertEqual(computeScores(neutral), {
   Cultural: 5.0, Economic: 5.0, Military: 5.0,
-  Sovereignty: 5.0, Liberty: 5.0, Class: 5.0
+  Sovereignty: 5.0, 'Libertarian/Authoritarian': 5.0, Class: 5.0
 }, 'All neutral should yield 5.0 per axis');
 
 // Test 2: All strongly agree → 5.0 per axis (balanced by reverse questions)
@@ -46,7 +46,7 @@ const agree = {};
 for (let i = 0; i < 24; i++) agree[i] = 4;
 assertEqual(computeScores(agree), {
   Cultural: 5.0, Economic: 5.0, Military: 5.0,
-  Sovereignty: 5.0, Liberty: 5.0, Class: 5.0
+  Sovereignty: 5.0, 'Libertarian/Authoritarian': 5.0, Class: 5.0
 }, 'All agree should yield 5.0 per axis due to reverse scoring');
 
 // Test 3: All strongly disagree → 5.0 per axis (balanced by reverse questions)
@@ -54,7 +54,7 @@ const disagree = {};
 for (let i = 0; i < 24; i++) disagree[i] = 0;
 assertEqual(computeScores(disagree), {
   Cultural: 5.0, Economic: 5.0, Military: 5.0,
-  Sovereignty: 5.0, Liberty: 5.0, Class: 5.0
+  Sovereignty: 5.0, 'Libertarian/Authoritarian': 5.0, Class: 5.0
 }, 'All disagree should yield 5.0 per axis due to reverse scoring');
 
 // Test 3b: Forward=4, Reverse=0 → maximum score per axis
@@ -64,7 +64,7 @@ QUESTIONS.forEach((q, i) => {
 });
 assertEqual(computeScores(maxAnswers), {
   Cultural: 10, Economic: 10, Military: 10,
-  Sovereignty: 10, Liberty: 10, Class: 10
+  Sovereignty: 10, 'Libertarian/Authoritarian': 10, Class: 10
 }, 'Forward=4, Reverse=0 should yield 10 per axis');
 
 // Test 3c: Forward=0, Reverse=4 → minimum score per axis
@@ -74,7 +74,7 @@ QUESTIONS.forEach((q, i) => {
 });
 assertEqual(computeScores(minAnswers), {
   Cultural: 0, Economic: 0, Military: 0,
-  Sovereignty: 0, Liberty: 0, Class: 0
+  Sovereignty: 0, 'Libertarian/Authoritarian': 0, Class: 0
 }, 'Forward=0, Reverse=4 should yield 0 per axis');
 
 // Test 4: createQuiz basic state
