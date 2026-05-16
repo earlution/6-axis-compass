@@ -72,6 +72,7 @@ function getMimeType(filePath) {
   if (filePath.endsWith('.svg')) return 'image/svg+xml';
   if (filePath.endsWith('.tex')) return 'text/x-tex';
   if (filePath.endsWith('.md')) return 'text/markdown';
+  if (filePath.endsWith('.pdf')) return 'application/pdf';
   return 'application/octet-stream';
 }
 
@@ -95,7 +96,8 @@ async function main() {
   console.log(`Using OSF Storage: ${rootUploadUrl}`);
 
   // 3. Create parent folders (fatal on failure)
-  const folders = ['actors', 'comparisons'];
+  const folders = readdirSync(ARTIFACTS_DIR)
+    .filter(entry => statSync(join(ARTIFACTS_DIR, entry)).isDirectory());
   for (const folder of folders) {
     const createUrl = `${rootUploadUrl}?kind=folder&name=${encodeURIComponent(folder)}`;
     const res = await fetch(createUrl, {
