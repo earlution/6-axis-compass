@@ -9,11 +9,13 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-16",
     "curator": "A Common Enemy Project",
-    "contributors": ["Ruari Mears"]
+    "contributors": [
+      "Ruari Mears"
+    ]
   },
   "scores": {
     "Cultural": {
-      "value": 7.0,
+      "value": 7,
       "confidence": "high",
       "rationale": "Consistent emphasis on controlled immigration, cultural preservation, and British values in manifestos and legislation since 2010.",
       "sources": [
@@ -44,7 +46,7 @@
       ]
     },
     "Economic": {
-      "value": 3.0,
+      "value": 3,
       "confidence": "high",
       "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
       "sources": [
@@ -67,7 +69,7 @@
       ]
     },
     "Military": {
-      "value": 8.0,
+      "value": 8,
       "confidence": "high",
       "rationale": "Consistently pro-NATO, increased defence spending commitments, support for Ukraine, and interventionist foreign policy.",
       "sources": [
@@ -90,7 +92,7 @@
       ]
     },
     "Sovereignty": {
-      "value": 6.0,
+      "value": 6,
       "confidence": "high",
       "rationale": "Brexit delivered under Conservative government, but ongoing engagement with international frameworks (CPTPP, NATO, UN).",
       "sources": [
@@ -112,31 +114,8 @@
         }
       ]
     },
-    "Liberty": {
-      "value": 2.0,
-      "confidence": "medium",
-      "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
-      "sources": [
-        {
-          "type": "legislation",
-          "title": "Investigatory Powers Act 2016",
-          "date": "2016-11-29",
-          "url": "https://www.legislation.gov.uk/ukpga/2016/25",
-          "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
-          "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
-        },
-        {
-          "type": "policy",
-          "title": "Retained EU Law (Revocation and Reform) Act 2023",
-          "date": "2023-06-29",
-          "url": "https://www.legislation.gov.uk/ukpga/2023/28",
-          "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
-          "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
-        }
-      ]
-    },
     "Class": {
-      "value": 1.0,
+      "value": 1,
       "confidence": "high",
       "rationale": "Pro-business, anti-union legislation (Minimum Service Levels Act), reduction of worker protections, tax policies favouring capital over labour.",
       "sources": [
@@ -155,6 +134,29 @@
           "url": "https://hansard.parliament.uk/commons/2023-01-16/division/D789",
           "relevantText": "Division No. 789: Ayes 305 (Conservative), Noes 243",
           "citation": "HC Deb 16 January 2023, col. 9012"
+        }
+      ]
+    },
+    "Libertarian/Authoritarian": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
+      "sources": [
+        {
+          "type": "legislation",
+          "title": "Investigatory Powers Act 2016",
+          "date": "2016-11-29",
+          "url": "https://www.legislation.gov.uk/ukpga/2016/25",
+          "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
+          "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
+        },
+        {
+          "type": "policy",
+          "title": "Retained EU Law (Revocation and Reform) Act 2023",
+          "date": "2023-06-29",
+          "url": "https://www.legislation.gov.uk/ukpga/2023/28",
+          "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
+          "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
         }
       ]
     }

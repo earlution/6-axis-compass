@@ -32,7 +32,7 @@ export function downloadChart(svgElement, filename = 'my-six-axis-compass.png') 
 export function downloadMapData(scores, format = 'json') {
   const payload = {
     source: 'Six-Axis Political Compass',
-    version: '1.0.0',
+    version: '1.1.0',
     generated: new Date().toISOString(),
     axes: scores
   };

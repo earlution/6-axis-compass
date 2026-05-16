@@ -9,7 +9,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 8,
       "Class": 7,
-      "Liberty": 1
+      "Libertarian/Authoritarian": 1
     },
     "color": "#212121",
     "_actorMeta": {
@@ -46,7 +46,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -61,7 +61,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 0,
       "Class": 0,
-      "Liberty": 0
+      "Libertarian/Authoritarian": 0
     },
     "color": "#9C27B0",
     "_actorMeta": {
@@ -98,7 +98,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -113,7 +113,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 0,
       "Class": 0,
-      "Liberty": 5
+      "Libertarian/Authoritarian": 5
     },
     "color": "#D32F2F",
     "_actorMeta": {
@@ -150,7 +150,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -165,7 +165,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 7,
       "Class": 6,
-      "Liberty": 1
+      "Libertarian/Authoritarian": 1
     },
     "color": "#424242",
     "_actorMeta": {
@@ -202,7 +202,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -217,7 +217,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 5,
       "Class": 4,
-      "Liberty": 4
+      "Libertarian/Authoritarian": 4
     },
     "color": "#6B8E23",
     "_actorMeta": {
@@ -254,7 +254,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -269,7 +269,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 7,
       "Class": 6,
-      "Liberty": 4
+      "Libertarian/Authoritarian": 4
     },
     "color": "#E74C3C",
     "_actorMeta": {
@@ -306,7 +306,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -320,8 +320,8 @@ const __ACTORS = [
       "Economic": 3,
       "Military": 8,
       "Sovereignty": 6,
-      "Liberty": 2,
-      "Class": 1
+      "Class": 1,
+      "Libertarian/Authoritarian": 2
     },
     "color": "#1A75BB",
     "_actorMeta": {
@@ -432,28 +432,6 @@ const __ACTORS = [
           }
         ]
       },
-      "Liberty": {
-        "confidence": "medium",
-        "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
-        "sources": [
-          {
-            "type": "legislation",
-            "title": "Investigatory Powers Act 2016",
-            "date": "2016-11-29",
-            "url": "https://www.legislation.gov.uk/ukpga/2016/25",
-            "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
-            "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
-          },
-          {
-            "type": "policy",
-            "title": "Retained EU Law (Revocation and Reform) Act 2023",
-            "date": "2023-06-29",
-            "url": "https://www.legislation.gov.uk/ukpga/2023/28",
-            "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
-            "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
-          }
-        ]
-      },
       "Class": {
         "confidence": "high",
         "rationale": "Pro-business, anti-union legislation (Minimum Service Levels Act), reduction of worker protections, tax policies favouring capital over labour.",
@@ -475,6 +453,28 @@ const __ACTORS = [
             "citation": "HC Deb 16 January 2023, col. 9012"
           }
         ]
+      },
+      "Libertarian/Authoritarian": {
+        "confidence": "medium",
+        "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "Investigatory Powers Act 2016",
+            "date": "2016-11-29",
+            "url": "https://www.legislation.gov.uk/ukpga/2016/25",
+            "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
+            "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
+          },
+          {
+            "type": "policy",
+            "title": "Retained EU Law (Revocation and Reform) Act 2023",
+            "date": "2023-06-29",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/28",
+            "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
+            "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
+          }
+        ]
       }
     }
   },
@@ -486,7 +486,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 7,
       "Class": 6,
-      "Liberty": 3
+      "Libertarian/Authoritarian": 3
     },
     "color": "#8B0000",
     "_actorMeta": {
@@ -523,7 +523,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -538,7 +538,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 8,
       "Class": 10,
-      "Liberty": 10
+      "Libertarian/Authoritarian": 10
     },
     "color": "#8B4513",
     "_actorMeta": {
@@ -575,7 +575,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -590,7 +590,7 @@ const __ACTORS = [
       "Military": 4,
       "Economic": 3,
       "Class": 4,
-      "Liberty": 5
+      "Libertarian/Authoritarian": 5
     },
     "color": "#003399",
     "_actorMeta": {
@@ -627,7 +627,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -642,7 +642,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 7,
       "Class": 5,
-      "Liberty": 4
+      "Libertarian/Authoritarian": 4
     },
     "color": "#1565C0",
     "_actorMeta": {
@@ -679,7 +679,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -694,7 +694,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 7,
       "Class": 8,
-      "Liberty": 8
+      "Libertarian/Authoritarian": 8
     },
     "color": "#5A9E3F",
     "_actorMeta": {
@@ -731,7 +731,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -746,7 +746,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 7,
       "Class": 3,
-      "Liberty": 5
+      "Libertarian/Authoritarian": 5
     },
     "color": "#607D8B",
     "_actorMeta": {
@@ -783,7 +783,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -798,7 +798,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 9,
       "Class": 10,
-      "Liberty": 0
+      "Libertarian/Authoritarian": 0
     },
     "color": "#B71C1C",
     "_actorMeta": {
@@ -835,7 +835,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -850,7 +850,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 3,
       "Class": 3,
-      "Liberty": 5
+      "Libertarian/Authoritarian": 5
     },
     "color": "#c0392b",
     "_actorMeta": {
@@ -887,7 +887,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -902,7 +902,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 10,
       "Class": 0,
-      "Liberty": 10
+      "Libertarian/Authoritarian": 10
     },
     "color": "#CC0000",
     "_actorMeta": {
@@ -939,7 +939,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -954,7 +954,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 4,
       "Class": 4,
-      "Liberty": 6
+      "Libertarian/Authoritarian": 6
     },
     "color": "#FAA61A",
     "_actorMeta": {
@@ -991,7 +991,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1006,7 +1006,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 2,
       "Class": 2,
-      "Liberty": 8
+      "Libertarian/Authoritarian": 8
     },
     "color": "#8D6E63",
     "_actorMeta": {
@@ -1043,7 +1043,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1057,8 +1057,8 @@ const __ACTORS = [
       "Economic": 7,
       "Military": 6,
       "Sovereignty": 8,
-      "Liberty": 10,
-      "Class": 7
+      "Class": 7,
+      "Libertarian/Authoritarian": 10
     },
     "color": "#006600",
     "_actorMeta": {
@@ -1091,13 +1091,13 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
-        "confidence": "low",
+      "Class": {
+        "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Class": {
-        "confidence": "medium",
+      "Libertarian/Authoritarian": {
+        "confidence": "low",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
@@ -1111,7 +1111,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Liberty": 7
+      "Libertarian/Authoritarian": 7
     },
     "color": "#3CB371",
     "_actorMeta": {
@@ -1148,7 +1148,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1163,7 +1163,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 5,
       "Class": 2,
-      "Liberty": 3
+      "Libertarian/Authoritarian": 3
     },
     "color": "#12B6CF",
     "_actorMeta": {
@@ -1200,7 +1200,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1215,7 +1215,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Liberty": 7
+      "Libertarian/Authoritarian": 7
     },
     "color": "#FDF38E",
     "_actorMeta": {
@@ -1252,7 +1252,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1267,7 +1267,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 4,
       "Class": 6,
-      "Liberty": 6
+      "Libertarian/Authoritarian": 6
     },
     "color": "#FF4500",
     "_actorMeta": {
@@ -1304,7 +1304,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1319,7 +1319,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 10,
       "Class": 10,
-      "Liberty": 3
+      "Libertarian/Authoritarian": 3
     },
     "color": "#00BFFF",
     "_actorMeta": {
@@ -1356,7 +1356,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1371,7 +1371,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 4,
       "Class": 4,
-      "Liberty": 6
+      "Libertarian/Authoritarian": 6
     },
     "color": "#3C6EC9",
     "_actorMeta": {
@@ -1408,7 +1408,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1423,7 +1423,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 4,
       "Class": 1,
-      "Liberty": 2
+      "Libertarian/Authoritarian": 2
     },
     "color": "#C0392B",
     "_actorMeta": {
@@ -1460,7 +1460,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1475,7 +1475,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 3,
       "Class": 2,
-      "Liberty": 3
+      "Libertarian/Authoritarian": 3
     },
     "color": "#1A237E",
     "_actorMeta": {
@@ -1512,7 +1512,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Liberty": {
+      "Libertarian/Authoritarian": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []

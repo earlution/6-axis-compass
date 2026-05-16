@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Axis restructure (B1):** Renamed the deprecated *Liberty* axis to *Libertarian/Authoritarian*.
+  - `src/data.js`: `AXES` order updated to Cultural, Economic, Military, Sovereignty, Libertarian/Authoritarian, Class.
+  - `AXIS_META` updated with new low/high labels: "Libertarian / consent-based / democratic" ↔ "Authoritarian / hierarchical / illiberal".
+  - All actor score objects renamed the axis key (values unchanged in this commit).
+  - `src/url.js`, `src/i18n.js`, `src/translations/en.json`, `src/index.html`, `src/export.js` updated.
+  - `data/actors/*.json` and regenerated `src/actors-generated.js`.
+
 ### Added
 - Forkable, traceable actor data architecture:
   - `data/actors/*.json` — 27 canonical actor files with per-axis confidence, rationale, and cited sources.

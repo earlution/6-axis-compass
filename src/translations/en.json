@@ -48,11 +48,11 @@
   "error.upload": "Could not read file. Make sure it is a valid .json or .xml exported from this tool.\n\n",
 
   "axis.Cultural": "Cultural",
-  "axis.Sovereignty": "Sovereignty",
-  "axis.Military": "Military",
   "axis.Economic": "Economic",
+  "axis.Military": "Military",
+  "axis.Sovereignty": "Sovereignty",
+  "axis.Libertarian/Authoritarian": "Libertarian / Authoritarian",
   "axis.Class": "Class",
-  "axis.Liberty": "Liberty",
 
   "axis.Cultural.low": "Cultural internationalism",
   "axis.Cultural.high": "Cultural nationalism",
@@ -62,8 +62,8 @@
   "axis.Military.high": "Interventionist",
   "axis.Sovereignty.low": "Supranational",
   "axis.Sovereignty.high": "National sovereignty",
-  "axis.Liberty.low": "State coercion only",
-  "axis.Liberty.high": "Includes private coercion",
+  "axis.Libertarian/Authoritarian.low": "Libertarian / consent-based / democratic",
+  "axis.Libertarian/Authoritarian.high": "Authoritarian / hierarchical / illiberal",
   "axis.Class.low": "Class harmony",
   "axis.Class.high": "Class conflict",
 
