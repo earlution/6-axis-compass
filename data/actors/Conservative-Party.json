@@ -137,28 +137,6 @@
         }
       ]
     },
-    "Libertarian/Authoritarian": {
-      "value": 2,
-      "confidence": "medium",
-      "rationale": "Generally pro-business, deregulatory stance; sceptical of worker and tenant protections. Supports state surveillance powers (Investigatory Powers Act).",
-      "sources": [
-        {
-          "type": "legislation",
-          "title": "Investigatory Powers Act 2016",
-          "date": "2016-11-29",
-          "url": "https://www.legislation.gov.uk/ukpga/2016/25",
-          "relevantText": "An Act to make provision for, and in connection with, the interception of communications, equipment interference and the acquisition and retention of communications data.",
-          "citation": "Investigatory Powers Act 2016, c. 25 (UK)"
-        },
-        {
-          "type": "policy",
-          "title": "Retained EU Law (Revocation and Reform) Act 2023",
-          "date": "2023-06-29",
-          "url": "https://www.legislation.gov.uk/ukpga/2023/28",
-          "relevantText": "An Act to make provision for the revocation and reform of retained EU law.",
-          "citation": "Retained EU Law (Revocation and Reform) Act 2023, c. 28 (UK)"
-        }
-      ]
-    }
+    "Libertarian/Authoritarian": 5
   }
 }

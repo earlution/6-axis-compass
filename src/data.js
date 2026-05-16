@@ -61,17 +61,17 @@ export const QUESTIONS = [
 
 const _FALLBACK_ACTORS = [
   // UK Political Parties
-  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, 'Libertarian/Authoritarian': 2, Class: 1 }, color: '#1A75BB' },
-  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 3 }, color: '#c0392b' },
-  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, 'Libertarian/Authoritarian': 3, Class: 2 }, color: '#12B6CF' },
-  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, 'Libertarian/Authoritarian': 6, Class: 4 }, color: '#FAA61A' },
-  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, 'Libertarian/Authoritarian': 8, Class: 8 }, color: '#5A9E3F' },
-  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, 'Libertarian/Authoritarian': 7, Class: 7 }, color: '#FDF38E' },
-  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, 'Libertarian/Authoritarian': 7, Class: 7 }, color: '#3CB371' },
+  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, 'Libertarian/Authoritarian': 5, Class: 1 }, color: '#1A75BB' },
+  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 4, Class: 3 }, color: '#c0392b' },
+  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, 'Libertarian/Authoritarian': 5, Class: 2 }, color: '#12B6CF' },
+  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, 'Libertarian/Authoritarian': 3, Class: 4 }, color: '#FAA61A' },
+  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, 'Libertarian/Authoritarian': 2, Class: 8 }, color: '#5A9E3F' },
+  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, 'Libertarian/Authoritarian': 3, Class: 7 }, color: '#FDF38E' },
+  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, 'Libertarian/Authoritarian': 3, Class: 7 }, color: '#3CB371' },
 
   // US Political Parties
-  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, 'Libertarian/Authoritarian': 6, Class: 4 }, color: '#3C6EC9' },
-  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, 'Libertarian/Authoritarian': 2, Class: 1 }, color: '#C0392B' },
+  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, 'Libertarian/Authoritarian': 4, Class: 4 }, color: '#3C6EC9' },
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, 'Libertarian/Authoritarian': 6, Class: 1 }, color: '#C0392B' },
 
   // Economic Historical Figures
   { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 3 }, color: '#607D8B' },

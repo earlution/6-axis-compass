@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Two forward (authoritarian) and two reverse (libertarian), balanced.
   - Old liberty questions (employer coercion, landlord power, taxation) retired.
 
+### Changed
+- **Axis restructure (B3):** Recalibrated Libertarian/Authoritarian scores for 9 preset UK/US parties:
+  - Conservative Party 2 → 5, Labour Party 5 → 4, Reform UK 3 → 5,
+    Liberal Democrats 6 → 3, Green Party 8 → 2, SNP 7 → 3,
+    Plaid Cymru 7 → 3, US Democrats 6 → 4, US Republicans 2 → 6.
+  - data/actors/*.json updated and src/actors-generated.js rebuilt.
+
 ### Added
 - Forkable, traceable actor data architecture:
   - `data/actors/*.json` — 27 canonical actor files with per-axis confidence, rationale, and cited sources.
