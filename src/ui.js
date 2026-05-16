@@ -82,18 +82,14 @@ export function renderResults(container, {
           <div class="actor-btns" id="actor-btns"></div>
         </div>
         <div class="legend" id="legend"></div>
-        <div class="score-bars" id="score-bars" style="display:${showUser ? '' : 'none'}"></div>
-        <hr class="divider" style="display:${showUser ? '' : 'none'}">
+        <div class="score-bars" id="score-bars"></div>
+        <hr class="divider">
         <div class="config-section">
           <p class="config-heading">Orientation</p>
           <div class="config-row">
             <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">Edge up</button>
             <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">Vertex up</button>
           </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">Your map</p>
-          <button class="config-btn ${showUser ? 'active' : ''}" id="btn-toggle-user">${showUser ? 'Hide your map' : 'Show your map'}</button>
         </div>
         <div class="config-section">
           <p class="config-heading">Download</p>
@@ -137,6 +133,19 @@ export function renderResults(container, {
 
   // Actor toggle buttons
   const abtn = document.getElementById('actor-btns');
+
+  // Your map toggle
+  const userBtn = document.createElement('button');
+  userBtn.className = 'btn btn-sm';
+  userBtn.textContent = 'Your map';
+  if (showUser) {
+    userBtn.style.borderColor = '#c8a84b';
+    userBtn.style.color = '#c8a84b';
+    userBtn.style.background = 'rgba(200,168,75,0.1)';
+  }
+  userBtn.addEventListener('click', onToggleUser);
+  abtn.appendChild(userBtn);
+
   ACTORS.forEach(actor => {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
@@ -171,26 +180,44 @@ export function renderResults(container, {
 
   // Score bars
   const bars = document.getElementById('score-bars');
-  ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Liberty', 'Class'].forEach(ax => {
-    const sc = scores[ax];
-    const meta = AXIS_META[ax];
-    const div = document.createElement('div');
-    div.className = 'score-row';
-    div.innerHTML = `
-      <div class="score-header">
-        <span class="score-name">${ax}</span>
-        <span class="score-val">${sc.toFixed(1)} / 10</span>
-      </div>
-      <div class="score-track">
-        <div class="score-fill" style="width:${sc * 10}%"></div>
-      </div>
-      <div class="score-ends">
-        <span class="score-end">${meta.low}</span>
-        <span class="score-end">${meta.high}</span>
-      </div>
-    `;
-    bars.appendChild(div);
-  });
+  const profiles = [];
+  if (showUser) profiles.push({ name: 'You', color: '#c8a84b', scores });
+  actors.forEach(a => profiles.push({ name: a.name, color: a.color, scores: a.scores }));
+  if (uploadedMap) profiles.push({ name: uploadedMap.label || 'Uploaded map', color: '#b478dc', scores: uploadedMap.scores });
+
+  if (profiles.length === 0) {
+    bars.innerHTML = '<p class="config-note" style="text-align:center;padding:1rem 0;">Select a profile above to see scores.</p>';
+  } else {
+    axes.forEach(ax => {
+      const meta = AXIS_META[ax];
+      const div = document.createElement('div');
+      div.className = 'score-row';
+      let rowsHtml = '';
+      profiles.forEach(p => {
+        const sc = p.scores[ax];
+        rowsHtml += `
+          <div class="actor-bar-row">
+            <span class="actor-bar-name">${p.name}</span>
+            <div class="actor-bar-track">
+              <div class="actor-bar-fill" style="width:${sc * 10}%;background:${p.color}"></div>
+            </div>
+            <span class="actor-bar-val">${sc.toFixed(1)}</span>
+          </div>
+        `;
+      });
+      div.innerHTML = `
+        <div class="score-header">
+          <span class="score-name">${ax}</span>
+        </div>
+        ${rowsHtml}
+        <div class="score-ends">
+          <span class="score-end">${meta.low}</span>
+          <span class="score-end">${meta.high}</span>
+        </div>
+      `;
+      bars.appendChild(div);
+    });
+  }
 
   document.getElementById('btn-restart').addEventListener('click', onRestart);
 
@@ -211,9 +238,6 @@ export function renderResults(container, {
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
-  }
-  if (onToggleUser) {
-    document.getElementById('btn-toggle-user').addEventListener('click', onToggleUser);
   }
   if (onReorder) {
     const list = document.getElementById('axis-list');

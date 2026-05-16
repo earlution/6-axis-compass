@@ -265,7 +265,9 @@ body {
 }
 
 .score-row {
-  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .score-header {
@@ -308,6 +310,44 @@ body {
 .score-end {
   font-size: 11px;
   color: var(--text3);
+}
+
+.actor-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actor-bar-name {
+  font-size: 11px;
+  color: var(--text2);
+  width: 80px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actor-bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.actor-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.actor-bar-val {
+  font-size: 11px;
+  color: var(--text3);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .divider {

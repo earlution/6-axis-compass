@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
+
+## [1.3.0] - 2026-05-16
+
+### Changed
+- "Your map" toggle moved from the configuration panel into the **Compare** row alongside party buttons.
+- Score bars section is now always visible and dynamically shows bars for every selected profile.
+- Each axis row displays a colour-coded mini-bar for the user (gold) and every selected party (their brand colour).
+- Actor bars include a name label, a thin coloured track, and a numeric score — matching the radar chart overlay pattern.
+- Empty state shown when no profiles are selected.
 
 ## [1.2.0] - 2026-05-16
 
