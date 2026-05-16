@@ -5,7 +5,7 @@
   "intro.meta": "24 statements · approximately 5 minutes",
   "intro.begin": "Begin",
   "intro.disclaimer": "Your answers are not stored or transmitted anywhere.",
-  "intro.uploadLabel": "Or upload a saved map",
+  "intro.uploadLabel": "Upload saved map (JSON / XML)",
 
   "quiz.axisTag": "{axis} axis",
   "quiz.back": "← Back",
