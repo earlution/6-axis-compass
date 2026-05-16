@@ -48,6 +48,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Superseded by the revised layout above.
 
 ### Fixed
+- **Begin button after Retake:** `onRestart` in `src/index.html` now passes the correct options object `{ onStart, onUpload }` to `renderIntro()`, fixing a regression where the Begin button became unresponsive after clicking Retake.
+
+### Fixed
 - **Class axis data audit:** Corrected inverted Class scores for 5 methodology anchor actors whose values were entered with the opposite convention.
   - `Anarcho-communism`: 0 → 10 (class conflict)
   - `Attlee government 1945–51`: 0 → 10 (class conflict)
