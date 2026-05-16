@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/build.js
+      - run: node tests/quiz.test.js
+      - name: Verify dist/index.html exists and is self-contained
+        run: |
+          test -f dist/index.html
+          grep -q '<script>' dist/index.html
+          grep -q '<style>' dist/index.html
+          ! grep -q 'type="module"' dist/index.html
+          ! grep -qE '<script[^>]*src=' dist/index.html
+          ! grep -qE '<link[^>]*href=' dist/index.html
