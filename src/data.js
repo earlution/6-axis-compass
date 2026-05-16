@@ -7,7 +7,7 @@
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
 
-export const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Libertarian/Authoritarian', 'Class'];
+export const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Class', 'Libertarian/Authoritarian'];
 
 export const AXIS_META = {
   Cultural:                { low: 'Cultural internationalism', high: 'Cultural nationalism' },
@@ -86,15 +86,15 @@ const _FALLBACK_ACTORS = [
   { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, 'Libertarian/Authoritarian': 0, Class: 10 }, color: '#B71C1C' },
 
   // Methodology anchor examples
-  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 0 }, color: '#D32F2F' },
-  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, 'Libertarian/Authoritarian': 3, Class: 10 }, color: '#00BFFF' },
+  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 10 }, color: '#D32F2F' },
+  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, 'Libertarian/Authoritarian': 3, Class: 0 }, color: '#00BFFF' },
   { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, 'Libertarian/Authoritarian': 4, Class: 4 }, color: '#6B8E23' },
   { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, 'Libertarian/Authoritarian': 6, Class: 6 }, color: '#FF4500' },
   { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, 'Libertarian/Authoritarian': 3, Class: 6 }, color: '#8B0000' },
   { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, 'Libertarian/Authoritarian': 5, Class: 4 }, color: '#003399' },
-  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Libertarian/Authoritarian': 0, Class: 0 }, color: '#9C27B0' },
-  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 10, Class: 0 }, color: '#CC0000' },
-  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Libertarian/Authoritarian': 10, Class: 10 }, color: '#8B4513' },
+  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Libertarian/Authoritarian': 0, Class: 10 }, color: '#9C27B0' },
+  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 10, Class: 10 }, color: '#CC0000' },
+  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Libertarian/Authoritarian': 10, Class: 0 }, color: '#8B4513' },
   { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Libertarian/Authoritarian': 10, Class: 7 }, color: '#006600' }
 ];
 

@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Radar chart spatial layout:** Reordered `AXES` so left-associated values appear on the left side of the radar chart and right-associated values on the right.
+  - New order: Cultural, Economic, Military, Sovereignty, Class, Libertarian/Authoritarian.
+  - Class moves from 240° (up-left) to 180° (true left).
+  - Economic remains at 0° (true right).
+
+### Fixed
+- **Class axis data audit:** Corrected inverted Class scores for 5 methodology anchor actors whose values were entered with the opposite convention.
+  - `Anarcho-communism`: 0 → 10 (class conflict)
+  - `Attlee government 1945–51`: 0 → 10 (class conflict)
+  - `Leninism`: 0 → 10 (class conflict)
+  - `Thatcher government 1979–90`: 10 → 0 (class harmony)
+  - `Fascism`: 10 → 0 (class harmony)
+  - `src/data.js` `_FALLBACK_ACTORS` and `data/actors/*.json` updated.
+  - `src/actors-generated.js` regenerated.
+
+### Changed
 - **Axis restructure (B1):** Renamed the deprecated *Liberty* axis to *Libertarian/Authoritarian*.
   - `src/data.js`: `AXES` order updated to Cultural, Economic, Military, Sovereignty, Libertarian/Authoritarian, Class.
   - `AXIS_META` updated with new low/high labels: "Libertarian / consent-based / democratic" ↔ "Authoritarian / hierarchical / illiberal".

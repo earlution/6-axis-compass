@@ -60,7 +60,7 @@ const __ACTORS = [
       "Sovereignty": 0,
       "Military": 0,
       "Economic": 0,
-      "Class": 0,
+      "Class": 10,
       "Libertarian/Authoritarian": 0
     },
     "color": "#9C27B0",
@@ -112,7 +112,7 @@ const __ACTORS = [
       "Sovereignty": 5,
       "Military": 5,
       "Economic": 0,
-      "Class": 0,
+      "Class": 10,
       "Libertarian/Authoritarian": 5
     },
     "color": "#D32F2F",
@@ -520,7 +520,7 @@ const __ACTORS = [
       "Sovereignty": 9,
       "Military": 9,
       "Economic": 8,
-      "Class": 10,
+      "Class": 0,
       "Libertarian/Authoritarian": 10
     },
     "color": "#8B4513",
@@ -884,7 +884,7 @@ const __ACTORS = [
       "Sovereignty": 5,
       "Military": 7,
       "Economic": 10,
-      "Class": 0,
+      "Class": 10,
       "Libertarian/Authoritarian": 10
     },
     "color": "#CC0000",
@@ -1301,7 +1301,7 @@ const __ACTORS = [
       "Sovereignty": 6,
       "Military": 6,
       "Economic": 10,
-      "Class": 10,
+      "Class": 0,
       "Libertarian/Authoritarian": 3
     },
     "color": "#00BFFF",
