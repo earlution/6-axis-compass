@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Intro upload label:** Changed from "Or upload a saved map" to "Upload saved map (JSON / XML)" for clarity and consistency with the results-screen upload label.
+  - Note: `src/i18n.js` stores translations in a hardcoded `TRANSLATIONS` object; `src/translations/en.json` is not currently consumed by the build.
 
 ### Fixed
 - **Begin button after Retake:** `onRestart` in `src/index.html` now passes the correct options object `{ onStart, onUpload }` to `renderIntro()`, fixing a regression where the Begin button became unresponsive after clicking Retake.
