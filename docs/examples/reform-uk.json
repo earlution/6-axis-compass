@@ -1,0 +1,13 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "1.0.0",
+  "generated": "2026-05-16T00:00:00.000Z",
+  "axes": {
+    "Cultural": 8.0,
+    "Economic": 5.0,
+    "Military": 5.0,
+    "Sovereignty": 8.0,
+    "Liberty": 3.0,
+    "Class": 2.0
+  }
+}
