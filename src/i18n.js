@@ -39,6 +39,10 @@ const TRANSLATIONS = {
     'results.emptyScores': 'Select a profile above to see scores.',
     'results.share': 'Share',
     'results.copyLink': 'Copy link',
+    'results.addCustomActor': 'Add custom actor',
+    'results.actorName': 'Name',
+    'results.actorColor': 'Colour',
+    'results.add': 'Add',
 
     'chart.ariaLabel': 'Six-axis radar chart showing your political profile',
 
@@ -83,6 +87,16 @@ const TRANSLATIONS = {
     'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
     'actor.Benito Mussolini': 'Benito Mussolini',
     'actor.Joseph Stalin': 'Joseph Stalin',
+    'actor.Attlee government 1945–51': 'Attlee government 1945–51',
+    'actor.Thatcher government 1979–90': 'Thatcher government 1979–90',
+    'actor.Bush/Blair Iraq position': 'Bush/Blair Iraq position',
+    'actor.Stop the War Coalition': 'Stop the War Coalition',
+    'actor.Enoch Powell 1968': 'Enoch Powell 1968',
+    'actor.Federalist EU tradition': 'Federalist EU tradition',
+    'actor.Anarcho-communism': 'Anarcho-communism',
+    'actor.Leninism': 'Leninism',
+    'actor.Fascism': 'Fascism',
+    "actor.Orbán's Hungary": "Orbán's Hungary",
 
     'axis.position': 'position {n}',
     'config.language': 'Language'

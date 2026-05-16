@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.3.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
+## [1.7.0] - 2026-05-16
+
+### Added
+- 10 new preset actors from the methodology document's anchor examples:
+  Attlee government 1945–51, Thatcher government 1979–90, Bush/Blair Iraq position,
+  Stop the War Coalition, Enoch Powell 1968, Federalist EU tradition,
+  Anarcho-communism, Leninism, Fascism, Orbán's Hungary.
+- Custom actor creation UI in the configuration panel:
+  name input, colour picker, and six score inputs (0–10).
+- Custom actors persist in `localStorage` and appear in the actor toggle list.
+- Custom actors can be deleted via a small × button on their toggle.
+- Custom actors are not included in export/import (local-only).
+- `src/i18n.js` and `src/translations/en.json` updated with translations for all new and historical actors.
+
 ## [1.6.0] - 2026-05-16
 
 ### Added

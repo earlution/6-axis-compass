@@ -27,6 +27,22 @@ let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
+let customActors = [];
+
+function loadCustomActors() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-custom-actors');
+    if (stored) customActors = JSON.parse(stored);
+  } catch (_) {}
+}
+
+function saveCustomActors() {
+  try {
+    localStorage.setItem('six-axis-compass-custom-actors', JSON.stringify(customActors));
+  } catch (_) {}
+}
+
+loadCustomActors();
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -152,6 +168,20 @@ function showResults() {
     },
     onCopyLink: () => {
       copyToClipboard(window.location.href);
+    },
+    customActors,
+    onAddCustomActor: (actor) => {
+      if (customActors.some(c => c.name === actor.name)) return;
+      customActors.push(actor);
+      selectedActors.add(actor.name);
+      saveCustomActors();
+      showResults();
+    },
+    onDeleteCustomActor: (name) => {
+      customActors = customActors.filter(c => c.name !== name);
+      selectedActors.delete(name);
+      saveCustomActors();
+      showResults();
     },
     language
   });

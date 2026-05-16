@@ -532,6 +532,10 @@ const TRANSLATIONS = {
     'results.emptyScores': 'Select a profile above to see scores.',
     'results.share': 'Share',
     'results.copyLink': 'Copy link',
+    'results.addCustomActor': 'Add custom actor',
+    'results.actorName': 'Name',
+    'results.actorColor': 'Colour',
+    'results.add': 'Add',
 
     'chart.ariaLabel': 'Six-axis radar chart showing your political profile',
 
@@ -576,6 +580,16 @@ const TRANSLATIONS = {
     'actor.Franklin D. Roosevelt': 'Franklin D. Roosevelt',
     'actor.Benito Mussolini': 'Benito Mussolini',
     'actor.Joseph Stalin': 'Joseph Stalin',
+    'actor.Attlee government 1945–51': 'Attlee government 1945–51',
+    'actor.Thatcher government 1979–90': 'Thatcher government 1979–90',
+    'actor.Bush/Blair Iraq position': 'Bush/Blair Iraq position',
+    'actor.Stop the War Coalition': 'Stop the War Coalition',
+    'actor.Enoch Powell 1968': 'Enoch Powell 1968',
+    'actor.Federalist EU tradition': 'Federalist EU tradition',
+    'actor.Anarcho-communism': 'Anarcho-communism',
+    'actor.Leninism': 'Leninism',
+    'actor.Fascism': 'Fascism',
+    "actor.Orbán's Hungary": "Orbán's Hungary",
 
     'axis.position': 'position {n}',
     'config.language': 'Language'
@@ -746,7 +760,19 @@ const ACTORS = [
   { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, Liberty: 1, Class: 7 }, color: '#212121' },
   { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, Liberty: 4, Class: 5 }, color: '#1565C0' },
   { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, Liberty: 1, Class: 6 }, color: '#424242' },
-  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, Liberty: 0, Class: 10 }, color: '#B71C1C' }
+  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, Liberty: 0, Class: 10 }, color: '#B71C1C' },
+
+  // Methodology anchor examples
+  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, Liberty: 5, Class: 0 }, color: '#D32F2F' },
+  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, Liberty: 3, Class: 10 }, color: '#00BFFF' },
+  { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, Liberty: 4, Class: 4 }, color: '#6B8E23' },
+  { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, Liberty: 6, Class: 6 }, color: '#FF4500' },
+  { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, Liberty: 3, Class: 6 }, color: '#8B0000' },
+  { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, Liberty: 5, Class: 4 }, color: '#003399' },
+  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, Liberty: 0, Class: 0 }, color: '#9C27B0' },
+  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, Liberty: 10, Class: 0 }, color: '#CC0000' },
+  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, Liberty: 10, Class: 10 }, color: '#8B4513' },
+  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, Liberty: 10, Class: 7 }, color: '#006600' }
 ];
 
 
@@ -967,6 +993,7 @@ function renderResults(container, {
   showUser,
   selectedActors,
   uploadedMap,
+  customActors,
   onToggleActor,
   onRestart,
   onDownloadChart,
@@ -978,9 +1005,12 @@ function renderResults(container, {
   onReorder,
   onSetLanguage,
   onCopyLink,
+  onAddCustomActor,
+  onDeleteCustomActor,
   language
 }) {
-  const actors = ACTORS.filter(a => selectedActors.has(a.name));
+  const allActors = [...ACTORS, ...(customActors || [])];
+  const actors = allActors.filter(a => selectedActors.has(a.name));
 
   container.innerHTML = `
     <div class="wrap">
@@ -1024,6 +1054,25 @@ function renderResults(container, {
           <p class="config-heading">${t('results.share')}</p>
           <div class="config-row">
             <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.addCustomActor')}</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
+            <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
+              <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+              ${AXES.map(ax => `
+                <div style="display:flex;flex-direction:column;gap:2px;">
+                  <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
+                  <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
+                </div>
+              `).join('')}
+            </div>
+            <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -1073,7 +1122,8 @@ function renderResults(container, {
   userBtn.addEventListener('click', onToggleUser);
   abtn.appendChild(userBtn);
 
-  ACTORS.forEach(actor => {
+  allActors.forEach(actor => {
+    const isCustom = customActors && customActors.some(c => c.name === actor.name);
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
     btn.textContent = t('actor.' + actor.name);
@@ -1083,7 +1133,32 @@ function renderResults(container, {
       btn.style.background = actor.color + '1a';
     }
     btn.addEventListener('click', () => onToggleActor(actor.name));
-    abtn.appendChild(btn);
+
+    if (isCustom && onDeleteCustomActor) {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.gap = '3px';
+      wrapper.appendChild(btn);
+
+      const del = document.createElement('button');
+      del.textContent = '×';
+      del.style.background = 'none';
+      del.style.border = 'none';
+      del.style.color = 'rgba(232,228,218,0.3)';
+      del.style.fontSize = '15px';
+      del.style.cursor = 'pointer';
+      del.style.padding = '0 2px';
+      del.style.lineHeight = '1';
+      del.addEventListener('click', (e) => {
+        e.stopPropagation();
+        onDeleteCustomActor(actor.name);
+      });
+      wrapper.appendChild(del);
+      abtn.appendChild(wrapper);
+    } else {
+      abtn.appendChild(btn);
+    }
   });
 
   // Legend
@@ -1172,6 +1247,19 @@ function renderResults(container, {
   if (onSetLanguage) {
     document.getElementById('lang-select').addEventListener('change', (e) => {
       onSetLanguage(e.target.value);
+    });
+  }
+  if (onAddCustomActor) {
+    document.getElementById('btn-add-actor').addEventListener('click', () => {
+      const name = document.getElementById('ca-name').value.trim();
+      const color = document.getElementById('ca-color').value;
+      if (!name) return;
+      const actorScores = {};
+      AXES.forEach(ax => {
+        const val = parseFloat(document.getElementById('ca-' + ax).value);
+        actorScores[ax] = isNaN(val) ? 5.0 : Math.max(0, Math.min(10, val));
+      });
+      onAddCustomActor({ name, color, scores: actorScores });
     });
   }
   if (onReorder) {
@@ -1310,6 +1398,22 @@ let axesOrder = [...AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
+let customActors = [];
+
+function loadCustomActors() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-custom-actors');
+    if (stored) customActors = JSON.parse(stored);
+  } catch (_) {}
+}
+
+function saveCustomActors() {
+  try {
+    localStorage.setItem('six-axis-compass-custom-actors', JSON.stringify(customActors));
+  } catch (_) {}
+}
+
+loadCustomActors();
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1435,6 +1539,20 @@ function showResults() {
     },
     onCopyLink: () => {
       copyToClipboard(window.location.href);
+    },
+    customActors,
+    onAddCustomActor: (actor) => {
+      if (customActors.some(c => c.name === actor.name)) return;
+      customActors.push(actor);
+      selectedActors.add(actor.name);
+      saveCustomActors();
+      showResults();
+    },
+    onDeleteCustomActor: (name) => {
+      customActors = customActors.filter(c => c.name !== name);
+      selectedActors.delete(name);
+      saveCustomActors();
+      showResults();
     },
     language
   });

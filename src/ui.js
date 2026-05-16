@@ -1,4 +1,4 @@
-import { AXIS_META, ACTORS } from './data.js';
+import { AXIS_META, ACTORS, AXES } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 
@@ -64,6 +64,7 @@ export function renderResults(container, {
   showUser,
   selectedActors,
   uploadedMap,
+  customActors,
   onToggleActor,
   onRestart,
   onDownloadChart,
@@ -75,9 +76,12 @@ export function renderResults(container, {
   onReorder,
   onSetLanguage,
   onCopyLink,
+  onAddCustomActor,
+  onDeleteCustomActor,
   language
 }) {
-  const actors = ACTORS.filter(a => selectedActors.has(a.name));
+  const allActors = [...ACTORS, ...(customActors || [])];
+  const actors = allActors.filter(a => selectedActors.has(a.name));
 
   container.innerHTML = `
     <div class="wrap">
@@ -121,6 +125,25 @@ export function renderResults(container, {
           <p class="config-heading">${t('results.share')}</p>
           <div class="config-row">
             <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <p class="config-heading">${t('results.addCustomActor')}</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
+            <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
+              <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+              ${AXES.map(ax => `
+                <div style="display:flex;flex-direction:column;gap:2px;">
+                  <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
+                  <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
+                </div>
+              `).join('')}
+            </div>
+            <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
           </div>
         </div>
         <div class="config-section">
@@ -170,7 +193,8 @@ export function renderResults(container, {
   userBtn.addEventListener('click', onToggleUser);
   abtn.appendChild(userBtn);
 
-  ACTORS.forEach(actor => {
+  allActors.forEach(actor => {
+    const isCustom = customActors && customActors.some(c => c.name === actor.name);
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm';
     btn.textContent = t('actor.' + actor.name);
@@ -180,7 +204,32 @@ export function renderResults(container, {
       btn.style.background = actor.color + '1a';
     }
     btn.addEventListener('click', () => onToggleActor(actor.name));
-    abtn.appendChild(btn);
+
+    if (isCustom && onDeleteCustomActor) {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.gap = '3px';
+      wrapper.appendChild(btn);
+
+      const del = document.createElement('button');
+      del.textContent = '×';
+      del.style.background = 'none';
+      del.style.border = 'none';
+      del.style.color = 'rgba(232,228,218,0.3)';
+      del.style.fontSize = '15px';
+      del.style.cursor = 'pointer';
+      del.style.padding = '0 2px';
+      del.style.lineHeight = '1';
+      del.addEventListener('click', (e) => {
+        e.stopPropagation();
+        onDeleteCustomActor(actor.name);
+      });
+      wrapper.appendChild(del);
+      abtn.appendChild(wrapper);
+    } else {
+      abtn.appendChild(btn);
+    }
   });
 
   // Legend
@@ -269,6 +318,19 @@ export function renderResults(container, {
   if (onSetLanguage) {
     document.getElementById('lang-select').addEventListener('change', (e) => {
       onSetLanguage(e.target.value);
+    });
+  }
+  if (onAddCustomActor) {
+    document.getElementById('btn-add-actor').addEventListener('click', () => {
+      const name = document.getElementById('ca-name').value.trim();
+      const color = document.getElementById('ca-color').value;
+      if (!name) return;
+      const actorScores = {};
+      AXES.forEach(ax => {
+        const val = parseFloat(document.getElementById('ca-' + ax).value);
+        actorScores[ax] = isNaN(val) ? 5.0 : Math.max(0, Math.min(10, val));
+      });
+      onAddCustomActor({ name, color, scores: actorScores });
     });
   }
   if (onReorder) {
