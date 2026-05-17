@@ -11,10 +11,15 @@ const KEY_TO_AXIS = Object.fromEntries(
   Object.entries(AXIS_KEYS).map(([k, v]) => [v, k])
 );
 
-export function encodeHash(scores, orientation, axesOrder) {
+export function encodeHash(scores, orientation, axesOrder, invertedAxes) {
   const scoreParts = axesOrder.map(ax => `${AXIS_KEYS[ax]}=${scores[ax].toFixed(1)}`);
   const orderCode = axesOrder.map(ax => AXIS_KEYS[ax]).join('');
-  return `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+  const invertCode = (invertedAxes && invertedAxes.size > 0)
+    ? axesOrder.filter(ax => invertedAxes.has(ax)).map(ax => AXIS_KEYS[ax]).join('')
+    : '';
+  let hash = `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+  if (invertCode) hash += `;i=${invertCode}`;
+  return hash;
 }
 
 export function decodeHash(hash) {
@@ -26,6 +31,7 @@ export function decodeHash(hash) {
   const scores = {};
   let orientation = 'flat';
   let axesOrder = null;
+  let invertedAxes = [];
 
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
@@ -34,6 +40,8 @@ export function decodeHash(hash) {
       orientation = part.slice(2);
     } else if (part.startsWith('x=')) {
       axesOrder = part.slice(2).split('').map(k => KEY_TO_AXIS[k]).filter(Boolean);
+    } else if (part.startsWith('i=')) {
+      invertedAxes = part.slice(2).split('').map(k => KEY_TO_AXIS[k]).filter(Boolean);
     } else if (part.includes('=')) {
       const pairs = part.split(',');
       pairs.forEach(pair => {
@@ -45,7 +53,7 @@ export function decodeHash(hash) {
   }
 
   if (Object.keys(scores).length === 0) return null;
-  return { scores, orientation, axesOrder };
+  return { scores, orientation, axesOrder, invertedAxes };
 }
 
 export function copyToClipboard(text) {

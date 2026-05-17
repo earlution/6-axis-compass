@@ -567,6 +567,27 @@ body {
   margin-left: auto;
 }
 
+.axis-invert {
+  font-size: 13px;
+  color: var(--text3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+
+.axis-invert:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+}
+
+.axis-invert.active {
+  color: var(--gold);
+}
+
 [data-theme="light"] {
   --bg: #f5f3ef;
   --bg3: #e8e4da;
@@ -1015,7 +1036,9 @@ const TRANSLATIONS = {
     'config.language': 'Language',
     'config.theme': 'Theme',
     'results.dark': 'Dark',
-    'results.light': 'Light'
+    'results.light': 'Light',
+
+    'results.invertPoles': 'Invert poles'
   }
 };
 
@@ -1048,10 +1071,15 @@ const AXIS_KEYS = {
 const KEY_TO_AXIS = Object.fromEntries(
   Object.entries(AXIS_KEYS).map(([k, v]) => [v, k])
 );
-function encodeHash(scores, orientation, axesOrder) {
+function encodeHash(scores, orientation, axesOrder, invertedAxes) {
   const scoreParts = axesOrder.map(ax => `${AXIS_KEYS[ax]}=${scores[ax].toFixed(1)}`);
   const orderCode = axesOrder.map(ax => AXIS_KEYS[ax]).join('');
-  return `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+  const invertCode = (invertedAxes && invertedAxes.size > 0)
+    ? axesOrder.filter(ax => invertedAxes.has(ax)).map(ax => AXIS_KEYS[ax]).join('')
+    : '';
+  let hash = `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+  if (invertCode) hash += `;i=${invertCode}`;
+  return hash;
 }
 function decodeHash(hash) {
   if (!hash || hash.length < 2) return null;
@@ -1062,6 +1090,7 @@ function decodeHash(hash) {
   const scores = {};
   let orientation = 'flat';
   let axesOrder = null;
+  let invertedAxes = [];
 
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
@@ -1070,6 +1099,8 @@ function decodeHash(hash) {
       orientation = part.slice(2);
     } else if (part.startsWith('x=')) {
       axesOrder = part.slice(2).split('').map(k => KEY_TO_AXIS[k]).filter(Boolean);
+    } else if (part.startsWith('i=')) {
+      invertedAxes = part.slice(2).split('').map(k => KEY_TO_AXIS[k]).filter(Boolean);
     } else if (part.includes('=')) {
       const pairs = part.split(',');
       pairs.forEach(pair => {
@@ -1081,7 +1112,7 @@ function decodeHash(hash) {
   }
 
   if (Object.keys(scores).length === 0) return null;
-  return { scores, orientation, axesOrder };
+  return { scores, orientation, axesOrder, invertedAxes };
 }
 function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -2805,10 +2836,21 @@ function drawRadar(svg, {
   uploadedMap = null,
   showUser = true,
   userColor = '#c8a84b',
-  uploadedColor = '#b478dc'
+  uploadedColor = '#b478dc',
+  invertedAxes = new Set()
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
+
+  function displayScore(ax, val) {
+    return invertedAxes && invertedAxes.has(ax) ? 10 - val : val;
+  }
+
+  function displayScores(source) {
+    const out = {};
+    for (const ax of axes) out[ax] = displayScore(ax, source[ax] || 0);
+    return out;
+  }
 
   // Grid polygons at levels 2, 4, 6, 8, 10
   for (const level of [2, 4, 6, 8, 10]) {
@@ -2833,7 +2875,7 @@ function drawRadar(svg, {
   // Actor overlays
   for (const actor of actors) {
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, actor.scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
       fill: actor.color + '18',
       stroke: actor.color + '80',
       'stroke-width': '1.5'
@@ -2842,29 +2884,31 @@ function drawRadar(svg, {
 
   // Uploaded map overlay
   if (uploadedMap) {
+    const disp = displayScores(uploadedMap.scores);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, uploadedMap.scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
       fill: 'rgba(180,120,220,0.12)',
       stroke: uploadedColor,
       'stroke-width': '2',
       'stroke-dasharray': '6,3'
     }));
     axes.forEach((ax, i) => {
-      const [x, y] = axisPoint(cx, cy, maxR, i, uploadedMap.scores[ax] || 0, orientation);
+      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
       svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '3.5', fill: uploadedColor }));
     });
   }
 
   // User profile
   if (showUser) {
+    const disp = displayScores(scores);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
       fill: userColor + '1e',
       stroke: userColor,
       'stroke-width': '2.5'
     }));
     axes.forEach((ax, i) => {
-      const [x, y] = axisPoint(cx, cy, maxR, i, scores[ax] || 0, orientation);
+      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
       svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '4', fill: userColor }));
     });
   }
@@ -2989,6 +3033,7 @@ function renderResults(container, {
   selectedActors,
   uploadedMap,
   customActors,
+  invertedAxes,
   onToggleActor,
   onRestart,
   onDownloadChart,
@@ -3003,6 +3048,7 @@ function renderResults(container, {
   onAddCustomActor,
   onDeleteCustomActor,
   onSetTheme,
+  onToggleInvertAxis,
   theme,
   language
 }) {
@@ -3105,7 +3151,8 @@ function renderResults(container, {
     orientation,
     actors,
     uploadedMap,
-    showUser
+    showUser,
+    invertedAxes
   });
 
   // Actor toggle buttons
@@ -3262,29 +3309,33 @@ function renderResults(container, {
   } else {
     axes.forEach(ax => {
       const meta = AXIS_META[ax];
+      const isInverted = invertedAxes && invertedAxes.has(ax);
       const div = document.createElement('div');
       div.className = 'score-row';
       let rowsHtml = '';
       profiles.forEach(p => {
         const sc = p.scores[ax];
+        const displaySc = isInverted ? 10 - sc : sc;
         rowsHtml += `
           <div class="actor-bar-row">
             <span class="actor-bar-name">${p.name}</span>
             <div class="actor-bar-track">
-              <div class="actor-bar-fill" style="width:${sc * 10}%;background:${p.color}"></div>
+              <div class="actor-bar-fill" style="width:${displaySc * 10}%;background:${p.color}"></div>
             </div>
-            <span class="actor-bar-val">${sc.toFixed(1)}</span>
+            <span class="actor-bar-val">${displaySc.toFixed(1)}</span>
           </div>
         `;
       });
+      const lowLabel = t('axis.' + ax + '.low');
+      const highLabel = t('axis.' + ax + '.high');
       div.innerHTML = `
         <div class="score-header">
           <span class="score-name">${t('axis.' + ax)}</span>
         </div>
         ${rowsHtml}
         <div class="score-ends">
-          <span class="score-end">${t('axis.' + ax + '.low')}</span>
-          <span class="score-end">${t('axis.' + ax + '.high')}</span>
+          <span class="score-end">${isInverted ? highLabel : lowLabel}</span>
+          <span class="score-end">${isInverted ? lowLabel : highLabel}</span>
         </div>
       `;
       bars.appendChild(div);
@@ -3343,9 +3394,11 @@ function renderResults(container, {
       item.className = 'axis-item';
       item.draggable = true;
       item.dataset.idx = i;
+      const isInverted = invertedAxes && invertedAxes.has(ax);
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
         <span class="axis-name">${t('axis.' + ax)}</span>
+        ${onToggleInvertAxis ? `<button class="axis-invert ${isInverted ? 'active' : ''}" data-axis="${ax}" title="${t('results.invertPoles')}" draggable="false">⇄</button>` : ''}
         <span class="axis-position">${t('axis.position', { n: i + 1 })}</span>
       `;
       list.appendChild(item);
@@ -3375,6 +3428,14 @@ function renderResults(container, {
         item.classList.remove('dragging');
       });
     });
+    if (onToggleInvertAxis) {
+      list.querySelectorAll('.axis-invert').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          onToggleInvertAxis(btn.dataset.axis);
+        });
+      });
+    }
   }
 }
 
@@ -3606,6 +3667,7 @@ let uploadedMap = null;
 let language = 'en';
 let theme = 'dark';
 let customActors = [];
+let invertedAxes = new Set();
 
 function loadCustomActors() {
   try {
@@ -3633,8 +3695,22 @@ function saveTheme() {
   } catch (_) {}
 }
 
+function loadInvertedAxes() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-inverted-axes');
+    if (stored) invertedAxes = new Set(JSON.parse(stored));
+  } catch (_) {}
+}
+
+function saveInvertedAxes() {
+  try {
+    localStorage.setItem('six-axis-compass-inverted-axes', JSON.stringify([...invertedAxes]));
+  } catch (_) {}
+}
+
 loadCustomActors();
 loadTheme();
+loadInvertedAxes();
 document.documentElement.setAttribute('data-theme', theme);
 
 function announce(message) {
@@ -3692,6 +3768,9 @@ function loadFromHash() {
   if (decoded.axesOrder && decoded.axesOrder.length === 6) {
     axesOrder = decoded.axesOrder;
   }
+  if (decoded.invertedAxes && decoded.invertedAxes.length > 0) {
+    invertedAxes = new Set(decoded.invertedAxes);
+  }
   quiz = {
     getScores: () => decoded.scores,
     getAnswers: () => ({}),
@@ -3705,7 +3784,7 @@ function loadFromHash() {
 
 function showResults() {
   const scores = quiz.getScores();
-  window.location.hash = encodeHash(scores, orientation, axesOrder);
+  window.location.hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
   renderResults(app, {
     scores,
     axes: axesOrder,
@@ -3713,6 +3792,7 @@ function showResults() {
     showUser,
     selectedActors,
     uploadedMap,
+    invertedAxes,
     onToggleActor: name => {
       selectedActors.has(name) ? selectedActors.delete(name) : selectedActors.add(name);
       showResults();
@@ -3723,6 +3803,8 @@ function showResults() {
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
+      invertedAxes = new Set();
+      saveInvertedAxes();
       window.location.hash = '';
       renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
     },
@@ -3784,6 +3866,11 @@ function showResults() {
       customActors = customActors.filter(c => c.name !== name);
       selectedActors.delete(name);
       saveCustomActors();
+      showResults();
+    },
+    onToggleInvertAxis: (ax) => {
+      invertedAxes.has(ax) ? invertedAxes.delete(ax) : invertedAxes.add(ax);
+      saveInvertedAxes();
       showResults();
     },
     language,

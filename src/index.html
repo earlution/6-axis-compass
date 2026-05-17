@@ -44,6 +44,7 @@ let uploadedMap = null;
 let language = 'en';
 let theme = 'dark';
 let customActors = [];
+let invertedAxes = new Set();
 
 function loadCustomActors() {
   try {
@@ -71,8 +72,22 @@ function saveTheme() {
   } catch (_) {}
 }
 
+function loadInvertedAxes() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-inverted-axes');
+    if (stored) invertedAxes = new Set(JSON.parse(stored));
+  } catch (_) {}
+}
+
+function saveInvertedAxes() {
+  try {
+    localStorage.setItem('six-axis-compass-inverted-axes', JSON.stringify([...invertedAxes]));
+  } catch (_) {}
+}
+
 loadCustomActors();
 loadTheme();
+loadInvertedAxes();
 document.documentElement.setAttribute('data-theme', theme);
 
 function announce(message) {
@@ -130,6 +145,9 @@ function loadFromHash() {
   if (decoded.axesOrder && decoded.axesOrder.length === 6) {
     axesOrder = decoded.axesOrder;
   }
+  if (decoded.invertedAxes && decoded.invertedAxes.length > 0) {
+    invertedAxes = new Set(decoded.invertedAxes);
+  }
   quiz = {
     getScores: () => decoded.scores,
     getAnswers: () => ({}),
@@ -143,7 +161,7 @@ function loadFromHash() {
 
 function showResults() {
   const scores = quiz.getScores();
-  window.location.hash = encodeHash(scores, orientation, axesOrder);
+  window.location.hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
   renderResults(app, {
     scores,
     axes: axesOrder,
@@ -151,6 +169,7 @@ function showResults() {
     showUser,
     selectedActors,
     uploadedMap,
+    invertedAxes,
     onToggleActor: name => {
       selectedActors.has(name) ? selectedActors.delete(name) : selectedActors.add(name);
       showResults();
@@ -161,6 +180,8 @@ function showResults() {
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
+      invertedAxes = new Set();
+      saveInvertedAxes();
       window.location.hash = '';
       renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
     },
@@ -222,6 +243,11 @@ function showResults() {
       customActors = customActors.filter(c => c.name !== name);
       selectedActors.delete(name);
       saveCustomActors();
+      showResults();
+    },
+    onToggleInvertAxis: (ax) => {
+      invertedAxes.has(ax) ? invertedAxes.delete(ax) : invertedAxes.add(ax);
+      saveInvertedAxes();
       showResults();
     },
     language,

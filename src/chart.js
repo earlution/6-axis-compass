@@ -30,10 +30,21 @@ export function drawRadar(svg, {
   uploadedMap = null,
   showUser = true,
   userColor = '#c8a84b',
-  uploadedColor = '#b478dc'
+  uploadedColor = '#b478dc',
+  invertedAxes = new Set()
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
+
+  function displayScore(ax, val) {
+    return invertedAxes && invertedAxes.has(ax) ? 10 - val : val;
+  }
+
+  function displayScores(source) {
+    const out = {};
+    for (const ax of axes) out[ax] = displayScore(ax, source[ax] || 0);
+    return out;
+  }
 
   // Grid polygons at levels 2, 4, 6, 8, 10
   for (const level of [2, 4, 6, 8, 10]) {
@@ -58,7 +69,7 @@ export function drawRadar(svg, {
   // Actor overlays
   for (const actor of actors) {
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, actor.scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
       fill: actor.color + '18',
       stroke: actor.color + '80',
       'stroke-width': '1.5'
@@ -67,29 +78,31 @@ export function drawRadar(svg, {
 
   // Uploaded map overlay
   if (uploadedMap) {
+    const disp = displayScores(uploadedMap.scores);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, uploadedMap.scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
       fill: 'rgba(180,120,220,0.12)',
       stroke: uploadedColor,
       'stroke-width': '2',
       'stroke-dasharray': '6,3'
     }));
     axes.forEach((ax, i) => {
-      const [x, y] = axisPoint(cx, cy, maxR, i, uploadedMap.scores[ax] || 0, orientation);
+      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
       svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '3.5', fill: uploadedColor }));
     });
   }
 
   // User profile
   if (showUser) {
+    const disp = displayScores(scores);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, scores, axes, orientation),
+      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
       fill: userColor + '1e',
       stroke: userColor,
       'stroke-width': '2.5'
     }));
     axes.forEach((ax, i) => {
-      const [x, y] = axisPoint(cx, cy, maxR, i, scores[ax] || 0, orientation);
+      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
       svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '4', fill: userColor }));
     });
   }

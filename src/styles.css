@@ -557,6 +557,27 @@ body {
   margin-left: auto;
 }
 
+.axis-invert {
+  font-size: 13px;
+  color: var(--text3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+
+.axis-invert:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+}
+
+.axis-invert.active {
+  color: var(--gold);
+}
+
 [data-theme="light"] {
   --bg: #f5f3ef;
   --bg3: #e8e4da;

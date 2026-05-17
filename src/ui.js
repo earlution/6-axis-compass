@@ -109,6 +109,7 @@ export function renderResults(container, {
   selectedActors,
   uploadedMap,
   customActors,
+  invertedAxes,
   onToggleActor,
   onRestart,
   onDownloadChart,
@@ -123,6 +124,7 @@ export function renderResults(container, {
   onAddCustomActor,
   onDeleteCustomActor,
   onSetTheme,
+  onToggleInvertAxis,
   theme,
   language
 }) {
@@ -225,7 +227,8 @@ export function renderResults(container, {
     orientation,
     actors,
     uploadedMap,
-    showUser
+    showUser,
+    invertedAxes
   });
 
   // Actor toggle buttons
@@ -382,29 +385,33 @@ export function renderResults(container, {
   } else {
     axes.forEach(ax => {
       const meta = AXIS_META[ax];
+      const isInverted = invertedAxes && invertedAxes.has(ax);
       const div = document.createElement('div');
       div.className = 'score-row';
       let rowsHtml = '';
       profiles.forEach(p => {
         const sc = p.scores[ax];
+        const displaySc = isInverted ? 10 - sc : sc;
         rowsHtml += `
           <div class="actor-bar-row">
             <span class="actor-bar-name">${p.name}</span>
             <div class="actor-bar-track">
-              <div class="actor-bar-fill" style="width:${sc * 10}%;background:${p.color}"></div>
+              <div class="actor-bar-fill" style="width:${displaySc * 10}%;background:${p.color}"></div>
             </div>
-            <span class="actor-bar-val">${sc.toFixed(1)}</span>
+            <span class="actor-bar-val">${displaySc.toFixed(1)}</span>
           </div>
         `;
       });
+      const lowLabel = t('axis.' + ax + '.low');
+      const highLabel = t('axis.' + ax + '.high');
       div.innerHTML = `
         <div class="score-header">
           <span class="score-name">${t('axis.' + ax)}</span>
         </div>
         ${rowsHtml}
         <div class="score-ends">
-          <span class="score-end">${t('axis.' + ax + '.low')}</span>
-          <span class="score-end">${t('axis.' + ax + '.high')}</span>
+          <span class="score-end">${isInverted ? highLabel : lowLabel}</span>
+          <span class="score-end">${isInverted ? lowLabel : highLabel}</span>
         </div>
       `;
       bars.appendChild(div);
@@ -463,9 +470,11 @@ export function renderResults(container, {
       item.className = 'axis-item';
       item.draggable = true;
       item.dataset.idx = i;
+      const isInverted = invertedAxes && invertedAxes.has(ax);
       item.innerHTML = `
         <span class="axis-grip">⠿</span>
         <span class="axis-name">${t('axis.' + ax)}</span>
+        ${onToggleInvertAxis ? `<button class="axis-invert ${isInverted ? 'active' : ''}" data-axis="${ax}" title="${t('results.invertPoles')}" draggable="false">⇄</button>` : ''}
         <span class="axis-position">${t('axis.position', { n: i + 1 })}</span>
       `;
       list.appendChild(item);
@@ -495,6 +504,14 @@ export function renderResults(container, {
         item.classList.remove('dragging');
       });
     });
+    if (onToggleInvertAxis) {
+      list.querySelectorAll('.axis-invert').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          onToggleInvertAxis(btn.dataset.axis);
+        });
+      });
+    }
   }
 }
 

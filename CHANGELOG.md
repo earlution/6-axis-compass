@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Per-axis pole inversion:** Users can now invert the poles of any axis, swapping its low and high ends visually.
+  - New `invertedAxes` display preference (Set of axis names), persisted to localStorage and encoded in shareable URLs via the `i=` hash parameter.
+  - Inverted axes render with `displayScore = 10 - rawScore` in the radar chart and score bars.
+  - Score-bar labels swap positions when an axis is inverted.
+  - Inversion toggles appear as `⇄` buttons in the axis reorder list.
+  - `src/url.js`: `encodeHash()` and `decodeHash()` now handle `i=` (backwards-compatible with existing `v1` URLs).
+  - `src/chart.js`: `drawRadar()` accepts `invertedAxes` option.
+  - `src/ui.js`: `renderResults()` accepts `invertedAxes` and `onToggleInvertAxis`.
+  - `src/index.html`: state management, localStorage persistence, and handler wiring added.
+
+### Added
 - **Persistent footer:** Site-wide footer showing copyright, MIT licence link, and version number injected from `package.json` at build time.
 
 ### Added

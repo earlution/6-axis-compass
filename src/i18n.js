@@ -128,7 +128,9 @@ const TRANSLATIONS = {
     'config.language': 'Language',
     'config.theme': 'Theme',
     'results.dark': 'Dark',
-    'results.light': 'Light'
+    'results.light': 'Light',
+
+    'results.invertPoles': 'Invert poles'
   }
 };
 
