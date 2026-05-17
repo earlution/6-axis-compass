@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Display labels, intro text, and meta description updated to match.
 
 ### Added
+- **Brexit factions:** Four new actors under the 'Brexit factions' compare group.
+  - **Hard Brexit** (`data/actors/Hard-Brexit.json`) — ERG-style no-deal position.
+  - **Soft Brexit** (`data/actors/Soft-Brexit.json`) — Withdrawal Agreement / customs union alignment.
+  - **People's Vote** (`data/actors/Peoples-Vote.json`) — Second referendum / remain campaign.
+  - **Brexit Intersection** (`data/actors/Brexit-Intersection.json`) — Meta-map representing the geometric intersection (common ground) of the three faction positions.
+
+### Added
 - **Favicon and PWA icons:** New radar-chart favicon (`favicon.svg`) with PNG fallbacks (`favicon-32x32.png`, `favicon-16x16.png`) and `apple-touch-icon.png`, plus `scripts/generate-favicon.js` to regenerate assets from the canonical SVG.
 
 ### Added

@@ -95,7 +95,13 @@ const _FALLBACK_ACTORS = [
   { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Liberty': 10, Class: 10 }, color: '#9C27B0' },
   { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Liberty': 0, Class: 10 }, color: '#CC0000' },
   { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Liberty': 0, Class: 0 }, color: '#8B4513' },
-  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Liberty': 0, Class: 7 }, color: '#006600' }
+  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Liberty': 0, Class: 7 }, color: '#006600' },
+
+  // Brexit Factions
+  { name: 'Hard Brexit',              scores: { Cultural: 8, Economic: 7, Military: 5, Sovereignty: 9, 'Liberty': 5, Class: 5 }, color: '#8B0000' },
+  { name: 'Soft Brexit',              scores: { Cultural: 5, Economic: 4, Military: 5, Sovereignty: 5, 'Liberty': 6, Class: 4 }, color: '#FF8C00' },
+  { name: "People's Vote",            scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 2, 'Liberty': 7, Class: 5 }, color: '#1E90FF' },
+  { name: 'Brexit Intersection',      scores: { Cultural: 5.3, Economic: 4.7, Military: 4.7, Sovereignty: 5.3, 'Liberty': 6.0, Class: 4.7 }, color: '#800080' }
 ];
 
 export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
@@ -117,5 +123,8 @@ export const ACTOR_GROUPS = {
     'Stop the War Coalition', 'Enoch Powell 1968',
     'Federalist EU tradition', 'Anarcho-communism',
     'Leninism', 'Fascism', "Orbán's Hungary"
+  ],
+  'Brexit factions': [
+    'Hard Brexit', 'Soft Brexit', "People's Vote", 'Brexit Intersection'
   ]
 };

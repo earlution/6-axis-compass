@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Brexit Intersection",
+    "slug": "brexit-intersection",
+    "category": "Meta-Map",
+    "activePeriod": "2016–2020",
+    "color": "#800080",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-17",
+    "curator": "A Common Enemy Project",
+    "contributors": [
+      "Ruari Mears"
+    ]
+  },
+  "scores": {
+    "Cultural": {
+      "value": 5.3,
+      "confidence": "low",
+      "rationale": "Geometric intersection (minimum overlap) of Hard Brexit, Soft Brexit, and People's Vote positions on the cultural axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 4.7,
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Military": {
+      "value": 4.7,
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the military axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 5.3,
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the sovereignty axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Class": {
+      "value": 4.7,
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 6.0,
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the liberty axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    }
+  }
+}

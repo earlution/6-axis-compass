@@ -103,6 +103,11 @@ const TRANSLATIONS = {
     'actor.Fascism': 'Fascism',
     "actor.Orbán's Hungary": "Orbán's Hungary",
 
+    'actor.Hard Brexit': 'Hard Brexit',
+    'actor.Soft Brexit': 'Soft Brexit',
+    "actor.People's Vote": "People's Vote",
+    'actor.Brexit Intersection': 'Brexit Intersection',
+
     'actor.browseData': 'Browse data',
     'actor.close': 'Close',
     'actor.curator': 'Curator',

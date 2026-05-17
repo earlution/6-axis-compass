@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Hard Brexit",
+    "slug": "hard-brexit",
+    "category": "Brexit Faction",
+    "activePeriod": "2016–2020",
+    "color": "#8B0000",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-17",
+    "curator": "A Common Enemy Project",
+    "contributors": [
+      "Ruari Mears"
+    ]
+  },
+  "scores": {
+    "Cultural": {
+      "value": 8,
+      "confidence": "medium",
+      "rationale": "Strong emphasis on British cultural identity, controlled immigration, and sovereignty over multicultural integration. To be documented.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 7,
+      "confidence": "medium",
+      "rationale": "Preference for protectionist trade policy and economic nationalism over EU single-market membership. To be documented.",
+      "sources": []
+    },
+    "Military": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Mixed interventionism; strong on national defence but sceptical of EU defence integration. To be documented.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 9,
+      "confidence": "high",
+      "rationale": "Absolute priority on restoring full parliamentary sovereignty and ending ECJ jurisdiction. To be documented.",
+      "sources": []
+    },
+    "Class": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Cross-class coalition with varied positions on workers' rights and regulation. To be documented.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Mixed; emphasis on national self-determination but some acceptance of state authority. To be documented.",
+      "sources": []
+    }
+  }
+}

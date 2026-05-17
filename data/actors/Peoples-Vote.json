@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "People's Vote",
+    "slug": "peoples-vote",
+    "category": "Brexit Faction",
+    "activePeriod": "2018–2020",
+    "color": "#1E90FF",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-17",
+    "curator": "A Common Enemy Project",
+    "contributors": [
+      "Ruari Mears"
+    ]
+  },
+  "scores": {
+    "Cultural": {
+      "value": 3,
+      "confidence": "medium",
+      "rationale": "Pro-European cultural identity; emphasis on openness, diversity, and internationalism. To be documented.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Strong preference for retaining EU single-market membership and free movement. To be documented.",
+      "sources": []
+    },
+    "Military": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "Support for EU defence cooperation and multilateralism; generally less hawkish. To be documented.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 2,
+      "confidence": "high",
+      "rationale": "Advocacy for shared sovereignty and supranational governance via EU membership. To be documented.",
+      "sources": []
+    },
+    "Class": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Cross-class coalition; emphasis on protecting workers' rights via EU regulatory frameworks. To be documented.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 7,
+      "confidence": "medium",
+      "rationale": "Emphasis on democratic participation, civil liberties, and rule of law at supranational level. To be documented.",
+      "sources": []
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "actor": {
+    "name": "Soft Brexit",
+    "slug": "soft-brexit",
+    "category": "Brexit Faction",
+    "activePeriod": "2017–2019",
+    "color": "#FF8C00",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-17",
+    "curator": "A Common Enemy Project",
+    "contributors": [
+      "Ruari Mears"
+    ]
+  },
+  "scores": {
+    "Cultural": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Moderate cultural nationalism; acceptance of controlled immigration balanced with integration. To be documented.",
+      "sources": []
+    },
+    "Economic": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "Desire to maintain close economic ties with EU, possibly via customs union or single market alignment. To be documented.",
+      "sources": []
+    },
+    "Military": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Continued support for NATO and Western alliances, pragmatic on EU defence cooperation. To be documented.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "value": 5,
+      "confidence": "medium",
+      "rationale": "Acceptance of Brexit outcome but with significant continued regulatory alignment and shared institutions. To be documented.",
+      "sources": []
+    },
+    "Class": {
+      "value": 4,
+      "confidence": "medium",
+      "rationale": "Concerned about economic impact on workers; emphasis on protecting labour rights post-Brexit. To be documented.",
+      "sources": []
+    },
+    "Liberty": {
+      "value": 6,
+      "confidence": "medium",
+      "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
+      "sources": []
+    }
+  }
+}

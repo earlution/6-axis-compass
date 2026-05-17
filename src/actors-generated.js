@@ -210,6 +210,61 @@ const __ACTORS = [
     }
   },
   {
+    "name": "Brexit Intersection",
+    "scores": {
+      "Cultural": 5.3,
+      "Economic": 4.7,
+      "Military": 4.7,
+      "Sovereignty": 5.3,
+      "Class": 4.7,
+      "Liberty": 6
+    },
+    "color": "#800080",
+    "_actorMeta": {
+      "slug": "brexit-intersection",
+      "category": "Meta-Map",
+      "activePeriod": "2016–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-17",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "low",
+        "rationale": "Geometric intersection (minimum overlap) of Hard Brexit, Soft Brexit, and People's Vote positions on the cultural axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the military axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the sovereignty axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the liberty axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      }
+    }
+  },
+  {
     "name": "Bush/Blair Iraq position",
     "scores": {
       "Cultural": 5,
@@ -722,6 +777,61 @@ const __ACTORS = [
     }
   },
   {
+    "name": "Hard Brexit",
+    "scores": {
+      "Cultural": 8,
+      "Economic": 7,
+      "Military": 5,
+      "Sovereignty": 9,
+      "Class": 5,
+      "Liberty": 5
+    },
+    "color": "#8B0000",
+    "_actorMeta": {
+      "slug": "hard-brexit",
+      "category": "Brexit Faction",
+      "activePeriod": "2016–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-17",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Strong emphasis on British cultural identity, controlled immigration, and sovereignty over multicultural integration. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "Preference for protectionist trade policy and economic nationalism over EU single-market membership. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Mixed interventionism; strong on national defence but sceptical of EU defence integration. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Absolute priority on restoring full parliamentary sovereignty and ending ECJ jurisdiction. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Cross-class coalition with varied positions on workers' rights and regulation. To be documented.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "Mixed; emphasis on national self-determination but some acceptance of state authority. To be documented.",
+        "sources": []
+      }
+    }
+  },
+  {
     "name": "John Maynard Keynes",
     "scores": {
       "Cultural": 4,
@@ -1087,6 +1197,61 @@ const __ACTORS = [
     }
   },
   {
+    "name": "People's Vote",
+    "scores": {
+      "Cultural": 3,
+      "Economic": 3,
+      "Military": 4,
+      "Sovereignty": 2,
+      "Class": 5,
+      "Liberty": 7
+    },
+    "color": "#1E90FF",
+    "_actorMeta": {
+      "slug": "peoples-vote",
+      "category": "Brexit Faction",
+      "activePeriod": "2018–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-17",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Pro-European cultural identity; emphasis on openness, diversity, and internationalism. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "high",
+        "rationale": "Strong preference for retaining EU single-market membership and free movement. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Support for EU defence cooperation and multilateralism; generally less hawkish. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Advocacy for shared sovereignty and supranational governance via EU membership. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Cross-class coalition; emphasis on protecting workers' rights via EU regulatory frameworks. To be documented.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "Emphasis on democratic participation, civil liberties, and rule of law at supranational level. To be documented.",
+        "sources": []
+      }
+    }
+  },
+  {
     "name": "Plaid Cymru",
     "scores": {
       "Cultural": 8,
@@ -1238,6 +1403,61 @@ const __ACTORS = [
       "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    }
+  },
+  {
+    "name": "Soft Brexit",
+    "scores": {
+      "Cultural": 5,
+      "Economic": 4,
+      "Military": 5,
+      "Sovereignty": 5,
+      "Class": 4,
+      "Liberty": 6
+    },
+    "color": "#FF8C00",
+    "_actorMeta": {
+      "slug": "soft-brexit",
+      "category": "Brexit Faction",
+      "activePeriod": "2017–2019",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-17",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Moderate cultural nationalism; acceptance of controlled immigration balanced with integration. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "Desire to maintain close economic ties with EU, possibly via customs union or single market alignment. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Continued support for NATO and Western alliances, pragmatic on EU defence cooperation. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "Acceptance of Brexit outcome but with significant continued regulatory alignment and shared institutions. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Concerned about economic impact on workers; emphasis on protecting labour rights post-Brexit. To be documented.",
+        "sources": []
+      },
+      "Liberty": {
+        "confidence": "medium",
+        "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
         "sources": []
       }
     }
