@@ -53,8 +53,8 @@ function inlineModules() {
   fs.mkdirSync(DIST, { recursive: true });
   fs.writeFileSync(path.join(DIST, 'index.html'), output, 'utf-8');
 
-  // Copy PWA assets
-  const pwaFiles = ['manifest.json', 'sw.js'];
+  // Copy PWA assets and favicons
+  const pwaFiles = ['manifest.json', 'sw.js', 'favicon.svg', 'favicon-32x32.png', 'favicon-16x16.png', 'apple-touch-icon.png'];
   for (const f of pwaFiles) {
     const srcPath = path.join(SRC, f);
     if (fs.existsSync(srcPath)) {
