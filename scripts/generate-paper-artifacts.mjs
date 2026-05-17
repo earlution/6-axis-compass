@@ -128,7 +128,18 @@ for (const actor of ACTORS) {
   writeFileSync(join(OUT, 'actors', `${slug}.json`), JSON.stringify(json, null, 2) + '\n');
 
   // LaTeX command definitions
-  const texEscape = s => s.replace(/\\/g, '\\textbackslash{}').replace(/#/g, '\\#');
+  const texEscape = s => String(s).replace(/[\\{}#$%&_~^]/g, ch => ({
+    '\\': '\\textbackslash{}',
+    '{': '\\{',
+    '}': '\\}',
+    '#': '\\#',
+    '$': '\\$',
+    '%': '\\%',
+    '&': '\\&',
+    '_': '\\_',
+    '~': '\\textasciitilde{}',
+    '^': '\\textasciicircum{}'
+  }[ch]));
   const texLines = [
     `% Provenance: Six-Axis Political Compass v${VERSION} (${GIT_COMMIT}) generated ${GENERATED}`,
     `% Source: data/actors/${slug}.json`,
