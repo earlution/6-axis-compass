@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Favicon and PWA icons:** New radar-chart favicon (`favicon.svg`) with PNG fallbacks (`favicon-32x32.png`, `favicon-16x16.png`) and `apple-touch-icon.png`, plus `scripts/generate-favicon.js` to regenerate assets from the canonical SVG.
+
+### Added
 - **Per-axis pole inversion:** Users can now invert the poles of any axis, swapping its low and high ends visually.
   - New `invertedAxes` display preference (Set of axis names), persisted to localStorage and encoded in shareable URLs via the `i=` hash parameter.
   - Inverted axes render with `displayScore = 10 - rawScore` in the radar chart and score bars.
