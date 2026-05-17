@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Axis rename:** `Libertarian/Authoritarian` → `Liberty` across the entire codebase.
+  - The axis key is now `Liberty` in `src/data.js`, `data/actors/*.json`, URLs (`l=`), exports, and translations.
+  - `src/export.js` retains backwards compatibility: old exports with `Libertarian/Authoritarian` are automatically mapped to `Liberty`.
+  - Display labels, intro text, and meta description updated to match.
+
 ### Added
 - **Favicon and PWA icons:** New radar-chart favicon (`favicon.svg`) with PNG fallbacks (`favicon-32x32.png`, `favicon-16x16.png`) and `apple-touch-icon.png`, plus `scripts/generate-favicon.js` to regenerate assets from the canonical SVG.
 

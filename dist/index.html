@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Six-Axis Political Compass</title>
-<meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Libertarian/Authoritarian, and Class.">
+<meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -913,7 +913,7 @@ const TRANSLATIONS = {
   en: {
     'intro.eyebrow': 'Six-Axis Political Compass',
     'intro.title': 'Where do you sit<br>on the six axes?',
-    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, libertarian/authoritarian, and class.',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
     'intro.meta': '24 statements · approximately 5 minutes',
     'intro.begin': 'Begin',
     'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',
@@ -964,7 +964,7 @@ const TRANSLATIONS = {
     'axis.Economic': 'Economic',
     'axis.Military': 'Military',
     'axis.Sovereignty': 'Sovereignty',
-    'axis.Libertarian/Authoritarian': 'Libertarian / Authoritarian',
+    'axis.Liberty': 'Liberty',
     'axis.Class': 'Class',
 
     'axis.Cultural.low': 'Cultural internationalism',
@@ -975,8 +975,8 @@ const TRANSLATIONS = {
     'axis.Military.high': 'Interventionist',
     'axis.Sovereignty.low': 'Supranational',
     'axis.Sovereignty.high': 'National sovereignty',
-    'axis.Libertarian/Authoritarian.low': 'Libertarian / consent-based / democratic',
-    'axis.Libertarian/Authoritarian.high': 'Authoritarian / hierarchical / illiberal',
+    'axis.Liberty.low': 'Libertarian / consent-based / democratic',
+    'axis.Liberty.high': 'Authoritarian / hierarchical / illiberal',
     'axis.Class.low': 'Class harmony',
     'axis.Class.high': 'Class conflict',
 
@@ -1067,7 +1067,7 @@ const AXIS_KEYS = {
   Economic: 'e',
   Military: 'm',
   Sovereignty: 's',
-  'Libertarian/Authoritarian': 'l',
+  'Liberty': 'l',
   Class: 'a'
 };
 
@@ -1148,7 +1148,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 8,
       "Class": 7,
-      "Libertarian/Authoritarian": 9
+      "Liberty": 9
     },
     "color": "#212121",
     "_actorMeta": {
@@ -1185,7 +1185,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1200,7 +1200,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 0,
       "Class": 10,
-      "Libertarian/Authoritarian": 10
+      "Liberty": 10
     },
     "color": "#9C27B0",
     "_actorMeta": {
@@ -1237,7 +1237,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1252,7 +1252,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 0,
       "Class": 10,
-      "Libertarian/Authoritarian": 5
+      "Liberty": 5
     },
     "color": "#D32F2F",
     "_actorMeta": {
@@ -1289,7 +1289,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1304,7 +1304,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 9
+      "Liberty": 9
     },
     "color": "#424242",
     "_actorMeta": {
@@ -1341,7 +1341,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1356,7 +1356,7 @@ const __ACTORS = [
       "Military": 10,
       "Economic": 5,
       "Class": 4,
-      "Libertarian/Authoritarian": 6
+      "Liberty": 6
     },
     "color": "#6B8E23",
     "_actorMeta": {
@@ -1393,7 +1393,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1408,7 +1408,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 6
+      "Liberty": 6
     },
     "color": "#E74C3C",
     "_actorMeta": {
@@ -1445,7 +1445,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1460,7 +1460,7 @@ const __ACTORS = [
       "Military": 8,
       "Sovereignty": 6,
       "Class": 1,
-      "Libertarian/Authoritarian": 5
+      "Liberty": 5
     },
     "color": "#1A75BB",
     "_actorMeta": {
@@ -1593,7 +1593,7 @@ const __ACTORS = [
           }
         ]
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1608,7 +1608,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 7,
       "Class": 6,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#8B0000",
     "_actorMeta": {
@@ -1645,7 +1645,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1660,7 +1660,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 8,
       "Class": 0,
-      "Libertarian/Authoritarian": 0
+      "Liberty": 0
     },
     "color": "#8B4513",
     "_actorMeta": {
@@ -1697,7 +1697,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1712,7 +1712,7 @@ const __ACTORS = [
       "Military": 4,
       "Economic": 3,
       "Class": 4,
-      "Libertarian/Authoritarian": 5
+      "Liberty": 5
     },
     "color": "#003399",
     "_actorMeta": {
@@ -1749,7 +1749,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1764,7 +1764,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 7,
       "Class": 5,
-      "Libertarian/Authoritarian": 6
+      "Liberty": 6
     },
     "color": "#1565C0",
     "_actorMeta": {
@@ -1801,7 +1801,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1816,7 +1816,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 7,
       "Class": 8,
-      "Libertarian/Authoritarian": 8
+      "Liberty": 8
     },
     "color": "#5A9E3F",
     "_actorMeta": {
@@ -1853,7 +1853,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1868,7 +1868,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 7,
       "Class": 3,
-      "Libertarian/Authoritarian": 5
+      "Liberty": 5
     },
     "color": "#607D8B",
     "_actorMeta": {
@@ -1905,7 +1905,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1920,7 +1920,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 9,
       "Class": 10,
-      "Libertarian/Authoritarian": 10
+      "Liberty": 10
     },
     "color": "#B71C1C",
     "_actorMeta": {
@@ -1957,7 +1957,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -1972,7 +1972,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 3,
       "Class": 3,
-      "Libertarian/Authoritarian": 6
+      "Liberty": 6
     },
     "color": "#c0392b",
     "_actorMeta": {
@@ -2009,7 +2009,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2024,7 +2024,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 10,
       "Class": 10,
-      "Libertarian/Authoritarian": 0
+      "Liberty": 0
     },
     "color": "#CC0000",
     "_actorMeta": {
@@ -2061,7 +2061,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2076,7 +2076,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 4,
       "Class": 4,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#FAA61A",
     "_actorMeta": {
@@ -2113,7 +2113,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2128,7 +2128,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 2,
       "Class": 2,
-      "Libertarian/Authoritarian": 2
+      "Liberty": 2
     },
     "color": "#8D6E63",
     "_actorMeta": {
@@ -2165,7 +2165,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2180,7 +2180,7 @@ const __ACTORS = [
       "Military": 6,
       "Sovereignty": 8,
       "Class": 7,
-      "Libertarian/Authoritarian": 0
+      "Liberty": 0
     },
     "color": "#006600",
     "_actorMeta": {
@@ -2218,7 +2218,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "low",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2233,7 +2233,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#3CB371",
     "_actorMeta": {
@@ -2270,7 +2270,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2285,7 +2285,7 @@ const __ACTORS = [
       "Military": 5,
       "Economic": 5,
       "Class": 2,
-      "Libertarian/Authoritarian": 5
+      "Liberty": 5
     },
     "color": "#12B6CF",
     "_actorMeta": {
@@ -2322,7 +2322,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2337,7 +2337,7 @@ const __ACTORS = [
       "Military": 2,
       "Economic": 6,
       "Class": 7,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#FDF38E",
     "_actorMeta": {
@@ -2374,7 +2374,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2389,7 +2389,7 @@ const __ACTORS = [
       "Military": 0,
       "Economic": 4,
       "Class": 6,
-      "Libertarian/Authoritarian": 4
+      "Liberty": 4
     },
     "color": "#FF4500",
     "_actorMeta": {
@@ -2426,7 +2426,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2441,7 +2441,7 @@ const __ACTORS = [
       "Military": 6,
       "Economic": 10,
       "Class": 0,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#00BFFF",
     "_actorMeta": {
@@ -2478,7 +2478,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2493,7 +2493,7 @@ const __ACTORS = [
       "Military": 7,
       "Economic": 4,
       "Class": 4,
-      "Libertarian/Authoritarian": 6
+      "Liberty": 6
     },
     "color": "#3C6EC9",
     "_actorMeta": {
@@ -2530,7 +2530,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2545,7 +2545,7 @@ const __ACTORS = [
       "Military": 8,
       "Economic": 4,
       "Class": 1,
-      "Libertarian/Authoritarian": 4
+      "Liberty": 4
     },
     "color": "#C0392B",
     "_actorMeta": {
@@ -2582,7 +2582,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2597,7 +2597,7 @@ const __ACTORS = [
       "Military": 9,
       "Economic": 3,
       "Class": 2,
-      "Libertarian/Authoritarian": 7
+      "Liberty": 7
     },
     "color": "#1A237E",
     "_actorMeta": {
@@ -2634,7 +2634,7 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       },
-      "Libertarian/Authoritarian": {
+      "Liberty": {
         "confidence": "medium",
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
@@ -2652,13 +2652,13 @@ const __ACTORS = [
  * - Raw total 0–16 normalised to 0–10:
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
-const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Libertarian/Authoritarian'];
+const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Liberty'];
 const AXIS_META = {
   Cultural:                { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:                { low: 'Economic internationalism', high: 'Economic nationalism' },
   Military:                { low: 'Non-interventionist',         high: 'Interventionist' },
   Sovereignty:             { low: 'Supranational',               high: 'National sovereignty' },
-  'Libertarian/Authoritarian': { low: 'Authoritarian / hierarchical / illiberal', high: 'Libertarian / consent-based / democratic' },
+  'Liberty': { low: 'Authoritarian / hierarchical / illiberal', high: 'Libertarian / consent-based / democratic' },
   Class:                   { low: 'Class harmony',               high: 'Class conflict' }
 };
 const RESPONSES = [
@@ -2689,11 +2689,11 @@ const QUESTIONS = [
   { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
   { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
   { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
-  // Libertarian/Authoritarian
-  { axis: 'Libertarian/Authoritarian', text: 'In times of serious crisis, the government should have the authority to suspend normal legal protections if doing so is necessary to protect national security or social order.', reverse: true },
-  { axis: 'Libertarian/Authoritarian', text: 'Individual freedom of expression should be protected by law even when the views expressed are offensive to the majority.', reverse: false },
-  { axis: 'Libertarian/Authoritarian', text: 'Social order and the preservation of traditional values are more important than protecting the rights of minority groups who challenge them.', reverse: true },
-  { axis: 'Libertarian/Authoritarian', text: 'Hierarchical structures in government and society should be continuously open to challenge and accountable to the people subject to them.', reverse: false },
+  // Liberty
+  { axis: 'Liberty', text: 'In times of serious crisis, the government should have the authority to suspend normal legal protections if doing so is necessary to protect national security or social order.', reverse: true },
+  { axis: 'Liberty', text: 'Individual freedom of expression should be protected by law even when the views expressed are offensive to the majority.', reverse: false },
+  { axis: 'Liberty', text: 'Social order and the preservation of traditional values are more important than protecting the rights of minority groups who challenge them.', reverse: true },
+  { axis: 'Liberty', text: 'Hierarchical structures in government and society should be continuously open to challenge and accountable to the people subject to them.', reverse: false },
   // Class
   { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
   { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
@@ -2703,41 +2703,41 @@ const QUESTIONS = [
 
 const _FALLBACK_ACTORS = [
   // UK Political Parties
-  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, 'Libertarian/Authoritarian': 5, Class: 1 }, color: '#1A75BB' },
-  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 6, Class: 3 }, color: '#c0392b' },
-  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, 'Libertarian/Authoritarian': 5, Class: 2 }, color: '#12B6CF' },
-  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, 'Libertarian/Authoritarian': 7, Class: 4 }, color: '#FAA61A' },
-  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, 'Libertarian/Authoritarian': 8, Class: 8 }, color: '#5A9E3F' },
-  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, 'Libertarian/Authoritarian': 7, Class: 7 }, color: '#FDF38E' },
-  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, 'Libertarian/Authoritarian': 7, Class: 7 }, color: '#3CB371' },
+  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, 'Liberty': 5, Class: 1 }, color: '#1A75BB' },
+  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, 'Liberty': 6, Class: 3 }, color: '#c0392b' },
+  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, 'Liberty': 5, Class: 2 }, color: '#12B6CF' },
+  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, 'Liberty': 7, Class: 4 }, color: '#FAA61A' },
+  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, 'Liberty': 8, Class: 8 }, color: '#5A9E3F' },
+  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, 'Liberty': 7, Class: 7 }, color: '#FDF38E' },
+  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, 'Liberty': 7, Class: 7 }, color: '#3CB371' },
 
   // US Political Parties
-  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, 'Libertarian/Authoritarian': 6, Class: 4 }, color: '#3C6EC9' },
-  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, 'Libertarian/Authoritarian': 4, Class: 1 }, color: '#C0392B' },
+  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, 'Liberty': 6, Class: 4 }, color: '#3C6EC9' },
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, 'Liberty': 4, Class: 1 }, color: '#C0392B' },
 
   // Economic Historical Figures
-  { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 3 }, color: '#607D8B' },
-  { name: 'Milton Friedman',     scores: { Cultural: 3, Economic: 2, Military: 6, Sovereignty: 4, 'Libertarian/Authoritarian': 2, Class: 2 }, color: '#8D6E63' },
+  { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, 'Liberty': 5, Class: 3 }, color: '#607D8B' },
+  { name: 'Milton Friedman',     scores: { Cultural: 3, Economic: 2, Military: 6, Sovereignty: 4, 'Liberty': 2, Class: 2 }, color: '#8D6E63' },
 
   // World War II Political Figures
-  { name: 'Clement Attlee',          scores: { Cultural: 5, Economic: 7, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 6, Class: 6 }, color: '#E74C3C' },
-  { name: 'Winston Churchill',         scores: { Cultural: 8, Economic: 3, Military: 9, Sovereignty: 8, 'Libertarian/Authoritarian': 7, Class: 2 }, color: '#1A237E' },
-  { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, 'Libertarian/Authoritarian': 9, Class: 7 }, color: '#212121' },
-  { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, 'Libertarian/Authoritarian': 6, Class: 5 }, color: '#1565C0' },
-  { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, 'Libertarian/Authoritarian': 9, Class: 6 }, color: '#424242' },
-  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, 'Libertarian/Authoritarian': 10, Class: 10 }, color: '#B71C1C' },
+  { name: 'Clement Attlee',          scores: { Cultural: 5, Economic: 7, Military: 7, Sovereignty: 5, 'Liberty': 6, Class: 6 }, color: '#E74C3C' },
+  { name: 'Winston Churchill',         scores: { Cultural: 8, Economic: 3, Military: 9, Sovereignty: 8, 'Liberty': 7, Class: 2 }, color: '#1A237E' },
+  { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, 'Liberty': 9, Class: 7 }, color: '#212121' },
+  { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, 'Liberty': 6, Class: 5 }, color: '#1565C0' },
+  { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, 'Liberty': 9, Class: 6 }, color: '#424242' },
+  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, 'Liberty': 10, Class: 10 }, color: '#B71C1C' },
 
   // Methodology anchor examples
-  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, 'Libertarian/Authoritarian': 5, Class: 10 }, color: '#D32F2F' },
-  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, 'Libertarian/Authoritarian': 7, Class: 0 }, color: '#00BFFF' },
-  { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, 'Libertarian/Authoritarian': 6, Class: 4 }, color: '#6B8E23' },
-  { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, 'Libertarian/Authoritarian': 4, Class: 6 }, color: '#FF4500' },
-  { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, 'Libertarian/Authoritarian': 7, Class: 6 }, color: '#8B0000' },
-  { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, 'Libertarian/Authoritarian': 5, Class: 4 }, color: '#003399' },
-  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Libertarian/Authoritarian': 10, Class: 10 }, color: '#9C27B0' },
-  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Libertarian/Authoritarian': 0, Class: 10 }, color: '#CC0000' },
-  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Libertarian/Authoritarian': 0, Class: 0 }, color: '#8B4513' },
-  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Libertarian/Authoritarian': 0, Class: 7 }, color: '#006600' }
+  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, 'Liberty': 5, Class: 10 }, color: '#D32F2F' },
+  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, 'Liberty': 7, Class: 0 }, color: '#00BFFF' },
+  { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, 'Liberty': 6, Class: 4 }, color: '#6B8E23' },
+  { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, 'Liberty': 4, Class: 6 }, color: '#FF4500' },
+  { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, 'Liberty': 7, Class: 6 }, color: '#8B0000' },
+  { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, 'Liberty': 5, Class: 4 }, color: '#003399' },
+  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Liberty': 10, Class: 10 }, color: '#9C27B0' },
+  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Liberty': 0, Class: 10 }, color: '#CC0000' },
+  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Liberty': 0, Class: 0 }, color: '#8B4513' },
+  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Liberty': 0, Class: 7 }, color: '#006600' }
 ];
 const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
 const ACTOR_GROUPS = {
@@ -3621,27 +3621,26 @@ function parseUpload(fileContent, fileName) {
     throw new Error('Unsupported file format');
   }
 
-  // Backwards compatibility: map old Liberty axis to Libertarian/Authoritarian
-  if (scores.Liberty !== undefined) {
-    scores['Libertarian/Authoritarian'] = scores.Liberty;
-    delete scores.Liberty;
-    isOld = true;
+  // Backwards compatibility: map old Libertarian/Authoritarian axis to Liberty
+  if (scores['Libertarian/Authoritarian'] !== undefined) {
+    scores.Liberty = scores['Libertarian/Authoritarian'];
+    delete scores['Libertarian/Authoritarian'];
   }
 
-  // Backwards compatibility: invert Libertarian/Authoritarian scores from exports
+  // Backwards compatibility: invert old Liberty scores from pre-v1.2.0 exports
   // prior to v1.2.0 (old convention: 0=libertarian, 10=authoritarian)
   let invertedAxis = false;
-  if (scores['Libertarian/Authoritarian'] !== undefined) {
+  if (scores.Liberty !== undefined) {
     const needsInvert = isOld || (p && p.version && p.version === '1.1.0') || (versionAttr && versionAttr === '1.1.0');
     if (needsInvert) {
-      scores['Libertarian/Authoritarian'] = parseFloat((10 - scores['Libertarian/Authoritarian']).toFixed(1));
+      scores.Liberty = parseFloat((10 - scores.Liberty).toFixed(1));
       invertedAxis = true;
     }
   }
 
   const labelParts = [];
-  if (isOld) labelParts.push('earlier version — Liberty axis mapped to Libertarian/Authoritarian');
-  if (invertedAxis) labelParts.push('Libertarian/Authoritarian score inverted for v1.2.0 convention');
+  if (isOld) labelParts.push('earlier version');
+  if (invertedAxis) labelParts.push('Liberty score inverted for v1.2.0 convention');
   const label = labelParts.length > 0
     ? 'Uploaded map (' + labelParts.join('; ') + ')'
     : 'Uploaded map';

@@ -86,27 +86,26 @@ export function parseUpload(fileContent, fileName) {
     throw new Error('Unsupported file format');
   }
 
-  // Backwards compatibility: map old Liberty axis to Libertarian/Authoritarian
-  if (scores.Liberty !== undefined) {
-    scores['Libertarian/Authoritarian'] = scores.Liberty;
-    delete scores.Liberty;
-    isOld = true;
+  // Backwards compatibility: map old Libertarian/Authoritarian axis to Liberty
+  if (scores['Libertarian/Authoritarian'] !== undefined) {
+    scores.Liberty = scores['Libertarian/Authoritarian'];
+    delete scores['Libertarian/Authoritarian'];
   }
 
-  // Backwards compatibility: invert Libertarian/Authoritarian scores from exports
+  // Backwards compatibility: invert old Liberty scores from pre-v1.2.0 exports
   // prior to v1.2.0 (old convention: 0=libertarian, 10=authoritarian)
   let invertedAxis = false;
-  if (scores['Libertarian/Authoritarian'] !== undefined) {
+  if (scores.Liberty !== undefined) {
     const needsInvert = isOld || (p && p.version && p.version === '1.1.0') || (versionAttr && versionAttr === '1.1.0');
     if (needsInvert) {
-      scores['Libertarian/Authoritarian'] = parseFloat((10 - scores['Libertarian/Authoritarian']).toFixed(1));
+      scores.Liberty = parseFloat((10 - scores.Liberty).toFixed(1));
       invertedAxis = true;
     }
   }
 
   const labelParts = [];
-  if (isOld) labelParts.push('earlier version — Liberty axis mapped to Libertarian/Authoritarian');
-  if (invertedAxis) labelParts.push('Libertarian/Authoritarian score inverted for v1.2.0 convention');
+  if (isOld) labelParts.push('earlier version');
+  if (invertedAxis) labelParts.push('Liberty score inverted for v1.2.0 convention');
   const label = labelParts.length > 0
     ? 'Uploaded map (' + labelParts.join('; ') + ')'
     : 'Uploaded map';

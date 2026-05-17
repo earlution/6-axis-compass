@@ -2,7 +2,7 @@ const TRANSLATIONS = {
   en: {
     'intro.eyebrow': 'Six-Axis Political Compass',
     'intro.title': 'Where do you sit<br>on the six axes?',
-    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, libertarian/authoritarian, and class.',
+    'intro.body': 'The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.',
     'intro.meta': '24 statements · approximately 5 minutes',
     'intro.begin': 'Begin',
     'intro.disclaimer': 'Your answers are not stored or transmitted anywhere.',
@@ -53,7 +53,7 @@ const TRANSLATIONS = {
     'axis.Economic': 'Economic',
     'axis.Military': 'Military',
     'axis.Sovereignty': 'Sovereignty',
-    'axis.Libertarian/Authoritarian': 'Libertarian / Authoritarian',
+    'axis.Liberty': 'Liberty',
     'axis.Class': 'Class',
 
     'axis.Cultural.low': 'Cultural internationalism',
@@ -64,8 +64,8 @@ const TRANSLATIONS = {
     'axis.Military.high': 'Interventionist',
     'axis.Sovereignty.low': 'Supranational',
     'axis.Sovereignty.high': 'National sovereignty',
-    'axis.Libertarian/Authoritarian.low': 'Libertarian / consent-based / democratic',
-    'axis.Libertarian/Authoritarian.high': 'Authoritarian / hierarchical / illiberal',
+    'axis.Liberty.low': 'Libertarian / consent-based / democratic',
+    'axis.Liberty.high': 'Authoritarian / hierarchical / illiberal',
     'axis.Class.low': 'Class harmony',
     'axis.Class.high': 'Class conflict',
 

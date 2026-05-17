@@ -3,7 +3,7 @@ const AXIS_KEYS = {
   Economic: 'e',
   Military: 'm',
   Sovereignty: 's',
-  'Libertarian/Authoritarian': 'l',
+  'Liberty': 'l',
   Class: 'a'
 };
 
