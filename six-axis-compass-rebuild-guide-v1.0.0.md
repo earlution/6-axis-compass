@@ -54,7 +54,7 @@ six-axis-compass/
 `README.md`:
 - Title: "Six-Axis Political Compass"
 - Tagline: "The standard left-right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them."
-- Include the six-axis table from the parent README (Cultural, Economic, Military, Sovereignty, Liberty, Class) with ranges and explanations.
+- Include the six-axis table from the parent README (Cultural, Economic, Military, Sovereignty, Governance, Class) with ranges and explanations.
 - Usage: open `dist/index.html` in any browser. No build step, no server, no dependencies.
 - Development: edit files in `src/`, run `node scripts/build.js` to inline into `dist/index.html`.
 - License section referencing MIT.
@@ -77,7 +77,7 @@ node_modules/
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Six-Axis Political Compass</title>
-<meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.">
+<meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Governance, and Class.">
 <style>
 /* styles.css will be inlined here by build.js */
 </style>
@@ -104,14 +104,14 @@ node_modules/
 Port the following from the original compass (lines 19–23 of v0.0.5, or the readable v0.0.4 source):
 
 ```javascript
-export const AXES = ['Cultural', 'Sovereignty', 'Military', 'Economic', 'Class', 'Liberty'];
+export const AXES = ['Cultural', 'Sovereignty', 'Military', 'Economic', 'Class', 'Governance'];
 
 export const AXIS_META = {
   Cultural:     { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:     { low: 'Economic internationalism', high: 'Economic nationalism' },
   Military:     { low: 'Non-interventionist',         high: 'Interventionist' },
   Sovereignty:  { low: 'Supranational',               high: 'National sovereignty' },
-  Liberty:      { low: 'State coercion only',         high: 'Includes private coercion' },
+  Governance:   { low: 'Maximal autonomy / consent-based / democratic', high: 'Maximal hierarchy / authority / coercive' },
   Class:        { low: 'Class harmony',               high: 'Class conflict' }
 };
 
@@ -144,11 +144,11 @@ export const QUESTIONS = [
   { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
   { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
   { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
-  // Liberty
-  { axis: 'Liberty', text: 'Large employers hold coercive power over workers that the law needs to check.', reverse: false },
-  { axis: 'Liberty', text: 'Government regulation is the primary threat to individual freedom.', reverse: true },
-  { axis: 'Liberty', text: 'The power a landlord holds over a tenant is a form of coercion requiring political attention.', reverse: false },
-  { axis: 'Liberty', text: 'Reducing taxation is one of the most effective ways to increase personal freedom.', reverse: true },
+  // Governance
+  { axis: 'Governance', text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: false },
+  { axis: 'Governance', text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: true },
+  { axis: 'Governance', text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: false },
+  { axis: 'Governance', text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: true },
   // Class
   { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
   { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
@@ -157,15 +157,15 @@ export const QUESTIONS = [
 ];
 
 export const ACTORS = [
-  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Liberty: 2, Class: 1 }, color: '#1A75BB' },
-  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Liberty: 5, Class: 3 }, color: '#c0392b' },
-  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, Liberty: 3, Class: 2 }, color: '#12B6CF' },
-  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, Liberty: 6, Class: 4 }, color: '#FAA61A' },
-  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, Liberty: 8, Class: 8 }, color: '#5A9E3F' },
-  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, Liberty: 7, Class: 7 }, color: '#FDF38E' },
-  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, Liberty: 7, Class: 7 }, color: '#3CB371' },
-  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, Liberty: 6, Class: 4 }, color: '#3C6EC9' },
-  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Liberty: 2, Class: 1 }, color: '#C0392B' }
+  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Governance: 5, Class: 1 }, color: '#1A75BB' },
+  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Governance: 6, Class: 3 }, color: '#c0392b' },
+  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, Governance: 5, Class: 2 }, color: '#12B6CF' },
+  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, Governance: 7, Class: 4 }, color: '#FAA61A' },
+  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, Governance: 8, Class: 8 }, color: '#5A9E3F' },
+  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, Governance: 7, Class: 7 }, color: '#FDF38E' },
+  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, Governance: 7, Class: 7 }, color: '#3CB371' },
+  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, Governance: 6, Class: 4 }, color: '#3C6EC9' },
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Governance: 4, Class: 1 }, color: '#C0392B' }
 ];
 ```
 
@@ -365,7 +365,7 @@ export function drawRadar(svg, {
 - The `drawRadar` function takes an options object — this is cleaner than the original's global mutable state.
 - `axisPoint` and `polygonPoints` are internal helpers, not exported.
 
-**Verification:** Call `drawRadar(document.getElementById('radar'), { scores: { Cultural: 5, Sovereignty: 5, Military: 5, Economic: 5, Class: 5, Liberty: 5 }, axes: ['Cultural', 'Sovereignty', 'Military', 'Economic', 'Class', 'Liberty'] })` produces a regular hexagon centered in the SVG.
+**Verification:** Call `drawRadar(document.getElementById('radar'), { scores: { Cultural: 5, Sovereignty: 5, Military: 5, Economic: 5, Class: 5, Governance: 5 }, axes: ['Cultural', 'Sovereignty', 'Military', 'Economic', 'Class', 'Governance'] })` produces a regular hexagon centered in the SVG.
 
 ---
 
@@ -397,7 +397,7 @@ export function renderIntro(container, onStart) {
     <div class="screen active" id="s-intro">
       <p class="eyebrow">Six-Axis Political Compass</p>
       <h1 class="intro-title">Where do you sit<br>on the six axes?</h1>
-      <p class="intro-body">The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.</p>
+      <p class="intro-body">The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, governance, and class.</p>
       <p class="intro-meta">24 statements · approximately 5 minutes</p>
       <button class="btn btn-primary" id="btn-start">Begin</button>
       <p class="intro-disclaimer">Your answers are not stored or transmitted anywhere.</p>
@@ -572,7 +572,7 @@ export function parseUpload(fileContent, fileName) {
 {
   "name": "six-axis-compass",
   "version": "1.0.0",
-  "description": "A zero-dependency political compass mapping six axes: Cultural, Economic, Military, Sovereignty, Liberty, and Class.",
+  "description": "A zero-dependency political compass mapping six axes: Cultural, Economic, Military, Sovereignty, Governance, and Class.",
   "main": "dist/index.html",
   "scripts": {
     "build": "node scripts/build.js",
@@ -667,7 +667,7 @@ Maps attitudes toward military alliances, foreign military engagement, and the u
 ## Sovereignty: Unilateralism ↔ Pooled governance
 Maps attitudes toward the supremacy of national democratic institutions versus international legal frameworks and shared governance.
 
-## Liberty: Substantive (includes corporate coercion) ↔ Formal (state coercion only)
+## Governance: Substantive (includes corporate coercion) ↔ Formal (state coercion only)
 Maps whether threats to individual freedom are understood as primarily state-based or include private power (employers, landlords).
 
 ## Class: Conflict (capital vs labour structurally opposed) ↔ Harmony (aligned interests)
@@ -710,7 +710,7 @@ const neutral = {};
 for (let i = 0; i < 24; i++) neutral[i] = 2;
 assertEqual(computeScores(neutral), {
   Cultural: 1.25, Economic: 1.25, Military: 1.25,
-  Sovereignty: 1.25, Liberty: 1.25, Class: 1.25
+  Sovereignty: 1.25, Governance: 1.25, Class: 1.25
 }, 'All neutral should yield 1.25 per axis');
 
 // Test 2: All strongly agree → all scores = 10
@@ -718,7 +718,7 @@ const agree = {};
 for (let i = 0; i < 24; i++) agree[i] = 4;
 assertEqual(computeScores(agree), {
   Cultural: 10, Economic: 10, Military: 10,
-  Sovereignty: 10, Liberty: 10, Class: 10
+  Sovereignty: 10, Governance: 10, Class: 10
 }, 'All agree should yield 10 per axis');
 
 // Test 3: All strongly disagree → all scores = 0
@@ -726,7 +726,7 @@ const disagree = {};
 for (let i = 0; i < 24; i++) disagree[i] = 0;
 assertEqual(computeScores(disagree), {
   Cultural: 0, Economic: 0, Military: 0,
-  Sovereignty: 0, Liberty: 0, Class: 0
+  Sovereignty: 0, Governance: 0, Class: 0
 }, 'All disagree should yield 0 per axis');
 
 console.log('All tests passed');

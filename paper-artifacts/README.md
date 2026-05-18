@@ -67,7 +67,7 @@ One `\newcommand` per axis plus a colour command. Example for "Conservative Part
 \newcommand{\ConservativePartyMilitary}{8.0}
 \newcommand{\ConservativePartyEconomic}{3.0}
 \newcommand{\ConservativePartyClass}{1.0}
-\newcommand{\ConservativePartyLiberty}{2.0}
+\newcommand{\ConservativePartyGovernance}{5.0}
 ```
 
 Command names are derived from the actor display name by removing non-alphanumeric characters.

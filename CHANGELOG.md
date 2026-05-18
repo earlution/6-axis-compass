@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - `README.md` Six Axes table updated to reflect Governance labels.
 - `docs/axes.md` rewritten with Governance axis definition.
+- `six-axis-compass-rebuild-guide-v1.0.0.md` updated to current axis names, questions, and scores.
+- `paper-artifacts/README.md` and `latex-example.tex` example references updated to `Governance`.
 
 ## [2.1.0] - 2026-05-18
 
