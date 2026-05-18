@@ -62,9 +62,11 @@ export function downloadMapData(scores, format = 'json') {
 export function parseUpload(fileContent, fileName) {
   let scores = {};
   let isOld = false;
+  let p = null;
+  let versionAttr = null;
 
   if (fileName.endsWith('.json')) {
-    const p = JSON.parse(fileContent);
+    p = JSON.parse(fileContent);
     if (!p.axes) throw new Error('No axes field');
     scores = p.axes;
     const oldVersion = p.version && p.version.startsWith('0.0.');
@@ -77,7 +79,7 @@ export function parseUpload(fileContent, fileName) {
     axisEls.forEach(el => {
       scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
     });
-    const versionAttr = dom.documentElement.getAttribute('version');
+    versionAttr = dom.documentElement.getAttribute('version');
     const sourceAttr = dom.documentElement.getAttribute('source');
     if ((versionAttr && versionAttr.startsWith('0.0.')) || (sourceAttr && sourceAttr.includes('Common Enemy'))) {
       isOld = true;
