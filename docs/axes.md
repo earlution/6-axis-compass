@@ -12,8 +12,8 @@ Maps attitudes toward military alliances, foreign military engagement, and the u
 ## Sovereignty: Unilateralism ↔ Pooled governance
 Maps attitudes toward the supremacy of national democratic institutions versus international legal frameworks and shared governance.
 
-## Governance: Autonomy / consent ↔ Hierarchy / authority
-Maps attitudes toward hierarchical authority versus participatory autonomy. A high score indicates acceptance of strong chains of command, delegated leadership, and deference to legitimate authority. A low score indicates preference for consent-based decision-making, broad participatory democracy, and maximum local autonomy.
+## Governance: Hierarchy / authority ↔ Autonomy / consent
+Maps attitudes toward hierarchical authority versus participatory autonomy. A high score indicates preference for consent-based decision-making, broad participatory democracy, and maximum local autonomy. A low score indicates acceptance of strong chains of command, delegated leadership, and deference to legitimate authority.
 
 ## Class: Conflict (capital vs labour structurally opposed) ↔ Harmony (aligned interests)
 Maps whether employer-employee interests are seen as fundamentally opposed or mutually beneficial.

@@ -17,7 +17,7 @@ export function encodeHash(scores, orientation, axesOrder, invertedAxes) {
   const invertCode = (invertedAxes && invertedAxes.size > 0)
     ? axesOrder.filter(ax => invertedAxes.has(ax)).map(ax => AXIS_KEYS[ax]).join('')
     : '';
-  let hash = `#v1;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
+  let hash = `#v2;${scoreParts.join(',')};o=${orientation};x=${orderCode}`;
   if (invertCode) hash += `;i=${invertCode}`;
   return hash;
 }
@@ -26,7 +26,8 @@ export function decodeHash(hash) {
   if (!hash || hash.length < 2) return null;
   const str = hash.startsWith('#') ? hash.slice(1) : hash;
   const parts = str.split(';');
-  if (parts[0] !== 'v1') return null;
+  const urlVersion = parts[0];
+  if (urlVersion !== 'v1' && urlVersion !== 'v2') return null;
 
   const scores = {};
   let orientation = 'flat';
@@ -53,6 +54,13 @@ export function decodeHash(hash) {
   }
 
   if (Object.keys(scores).length === 0) return null;
+
+  // v1 URLs store Governance scores computed with inverted questions (low=autonomy, high=hierarchy).
+  // v2 URLs store Governance scores with corrected polarity (low=hierarchy, high=autonomy).
+  if (urlVersion === 'v1' && scores.Governance !== undefined) {
+    scores.Governance = parseFloat((10 - scores.Governance).toFixed(1));
+  }
+
   return { scores, orientation, axesOrder, invertedAxes };
 }
 

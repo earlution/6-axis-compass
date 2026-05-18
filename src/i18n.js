@@ -64,8 +64,8 @@ const TRANSLATIONS = {
     'axis.Military.high': 'Interventionist',
     'axis.Sovereignty.low': 'Supranational',
     'axis.Sovereignty.high': 'National sovereignty',
-    'axis.Governance.low': 'Maximal autonomy / consent-based / democratic',
-    'axis.Governance.high': 'Maximal hierarchy / authority / coercive',
+    'axis.Governance.low': 'Maximal hierarchy / authority / coercive',
+    'axis.Governance.high': 'Maximal autonomy / consent-based / democratic',
     'axis.Class.low': 'Class harmony',
     'axis.Class.high': 'Class conflict',
 

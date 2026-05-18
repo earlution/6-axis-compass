@@ -1,4 +1,4 @@
-const CACHE_NAME = 'six-axis-compass-v1';
+const CACHE_NAME = 'six-axis-compass-v2';
 const ASSETS = ['./index.html'];
 
 self.addEventListener('install', (event) => {

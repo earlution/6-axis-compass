@@ -14,7 +14,7 @@ export const AXIS_META = {
   Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },
   Military:    { low: 'Non-interventionist',         high: 'Interventionist' },
   Sovereignty: { low: 'Supranational',               high: 'National sovereignty' },
-  Governance:  { low: 'Maximal autonomy / consent-based / democratic', high: 'Maximal hierarchy / authority / coercive' },
+  Governance:  { low: 'Maximal hierarchy / authority / coercive', high: 'Maximal autonomy / consent-based / democratic' },
   Class:       { low: 'Class harmony',               high: 'Class conflict' }
 };
 
@@ -48,10 +48,10 @@ export const QUESTIONS = [
   { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
   { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
   // Governance
-  { axis: 'Governance', text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: false },
-  { axis: 'Governance', text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: true },
-  { axis: 'Governance', text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: false },
-  { axis: 'Governance', text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: true },
+  { axis: 'Governance', text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: true },
+  { axis: 'Governance', text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: false },
+  { axis: 'Governance', text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: true },
+  { axis: 'Governance', text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: false },
   // Class
   { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
   { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
