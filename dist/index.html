@@ -906,7 +906,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v1.0.0</span>
+  <span class="footer-ver">v2.1.0</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -3831,9 +3831,11 @@ function downloadMapData(scores, format = 'json') {
 function parseUpload(fileContent, fileName) {
   let scores = {};
   let isOld = false;
+  let p = null;
+  let versionAttr = null;
 
   if (fileName.endsWith('.json')) {
-    const p = JSON.parse(fileContent);
+    p = JSON.parse(fileContent);
     if (!p.axes) throw new Error('No axes field');
     scores = p.axes;
     const oldVersion = p.version && p.version.startsWith('0.0.');
@@ -3846,7 +3848,7 @@ function parseUpload(fileContent, fileName) {
     axisEls.forEach(el => {
       scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
     });
-    const versionAttr = dom.documentElement.getAttribute('version');
+    versionAttr = dom.documentElement.getAttribute('version');
     const sourceAttr = dom.documentElement.getAttribute('source');
     if ((versionAttr && versionAttr.startsWith('0.0.')) || (sourceAttr && sourceAttr.includes('Common Enemy'))) {
       isOld = true;
