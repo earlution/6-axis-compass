@@ -44,10 +44,10 @@
       "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
       "sources": []
     },
-    "Liberty": {
+    "Governance": {
       "value": 6.0,
       "confidence": "low",
-      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the liberty axis. Represents the common ground across all Brexit factions.",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
       "sources": []
     }
   }

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.2.0
 [2.1.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.1.0
 [2.0.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.0.0
 [1.9.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.9.0
@@ -17,6 +18,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.2.0] - 2026-05-18
+
+### Changed
+- **Axis rename:** `Liberty` → `Governance` across the entire codebase (upstream OQ4 sync).
+  - The axis key is now `Governance` in `src/data.js`, `data/actors/*.json`, URLs (`l=`), exports, and translations.
+  - Axis definition changed from state-vs-private coercion to **autonomy/consent vs hierarchy/authority**.
+  - New low/high labels: "Maximal autonomy / consent-based / democratic" ↔ "Maximal hierarchy / authority / coercive".
+  - All four Governance-axis quiz questions rewritten to probe the new dimension.
+  - `src/export.js` retains backwards compatibility:
+    - Old exports with `Liberty` key are automatically mapped to `Governance` on import.
+    - Existing `Libertarian/Authoritarian` → `Liberty` → `Governance` chain still works for very old exports.
+  - Export version bumped to `2.1.0`.
+
+### Changed
+- `README.md` Six Axes table updated to reflect Governance labels.
+- `docs/axes.md` rewritten with Governance axis definition.
 
 ## [2.1.0] - 2026-05-18
 

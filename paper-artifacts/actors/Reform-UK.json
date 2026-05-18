@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "1.0.0",
-  "gitCommit": "82ff68c6a582f9a326f1bcb27f3a377ac1bc8838",
-  "generated": "2026-05-16T16:37:36.763Z",
+  "version": "2.2.0",
+  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
+  "generated": "2026-05-18T13:44:41.323Z",
   "actor": "Reform UK",
   "slug": "Reform-UK",
   "category": "Political Actor",
@@ -13,15 +13,10 @@
     "Military": 5,
     "Economic": 5,
     "Class": 2,
-    "Libertarian/Authoritarian": 5
+    "Governance": 5
   },
   "traceability": {
     "Cultural": {
-      "confidence": "medium",
-      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-      "sources": []
-    },
-    "Economic": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
@@ -36,12 +31,17 @@
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
     },
-    "Libertarian/Authoritarian": {
+    "Economic": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []
     },
     "Class": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    },
+    "Governance": {
       "confidence": "medium",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
       "sources": []

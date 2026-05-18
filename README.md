@@ -10,7 +10,7 @@ The standard left–right spectrum collapses six distinct political dimensions i
 | **Economic** | Economic internationalism | Economic nationalism |
 | **Military** | Non-interventionist | Interventionist |
 | **Sovereignty** | Supranational | National sovereignty |
-| **Liberty** | State coercion only | Includes private coercion |
+| **Governance** | Maximal autonomy / consent-based / democratic | Maximal hierarchy / authority / coercive |
 | **Class** | Class harmony | Class conflict |
 
 ## Usage

@@ -1,0 +1,50 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "2.2.0",
+  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
+  "generated": "2026-05-18T13:44:41.323Z",
+  "actor": "Brexit Intersection",
+  "slug": "brexit-intersection",
+  "category": "Meta-Map",
+  "color": "#800080",
+  "axes": {
+    "Cultural": 5.3,
+    "Economic": 4.7,
+    "Military": 4.7,
+    "Sovereignty": 5.3,
+    "Class": 4.7,
+    "Governance": 6
+  },
+  "traceability": {
+    "Cultural": {
+      "confidence": "low",
+      "rationale": "Geometric intersection (minimum overlap) of Hard Brexit, Soft Brexit, and People's Vote positions on the cultural axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Military": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the military axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the sovereignty axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Economic": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Class": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
+    "Governance": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    }
+  }
+}

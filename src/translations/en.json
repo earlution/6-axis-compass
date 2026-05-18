@@ -1,7 +1,7 @@
 {
   "intro.eyebrow": "Six-Axis Political Compass",
   "intro.title": "Where do you sit<br>on the six axes?",
-  "intro.body": "The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, liberty, and class.",
+  "intro.body": "The standard left–right spectrum collapses six distinct political dimensions into one. This tool maps your position across all of them: cultural, economic, military, sovereignty, governance, and class.",
   "intro.meta": "24 statements · approximately 5 minutes",
   "intro.begin": "Begin",
   "intro.disclaimer": "Your answers are not stored or transmitted anywhere.",
@@ -52,7 +52,7 @@
   "axis.Economic": "Economic",
   "axis.Military": "Military",
   "axis.Sovereignty": "Sovereignty",
-  "axis.Liberty": "Liberty",
+  "axis.Governance": "Governance",
   "axis.Class": "Class",
 
   "axis.Cultural.low": "Cultural internationalism",
@@ -63,8 +63,8 @@
   "axis.Military.high": "Interventionist",
   "axis.Sovereignty.low": "Supranational",
   "axis.Sovereignty.high": "National sovereignty",
-  "axis.Liberty.low": "Authoritarian / hierarchical / illiberal",
-  "axis.Liberty.high": "Libertarian / consent-based / democratic",
+  "axis.Governance.low": "Maximal autonomy / consent-based / democratic",
+  "axis.Governance.high": "Maximal hierarchy / authority / coercive",
   "axis.Class.low": "Class harmony",
   "axis.Class.high": "Class conflict",
 

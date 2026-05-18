@@ -1,0 +1,50 @@
+{
+  "source": "Six-Axis Political Compass",
+  "version": "2.2.0",
+  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
+  "generated": "2026-05-18T13:44:41.323Z",
+  "actor": "People's Vote",
+  "slug": "peoples-vote",
+  "category": "Brexit Faction",
+  "color": "#1E90FF",
+  "axes": {
+    "Cultural": 3,
+    "Economic": 3,
+    "Military": 4,
+    "Sovereignty": 2,
+    "Class": 5,
+    "Governance": 7
+  },
+  "traceability": {
+    "Cultural": {
+      "confidence": "medium",
+      "rationale": "Pro-European cultural identity; emphasis on openness, diversity, and internationalism. To be documented.",
+      "sources": []
+    },
+    "Military": {
+      "confidence": "medium",
+      "rationale": "Support for EU defence cooperation and multilateralism; generally less hawkish. To be documented.",
+      "sources": []
+    },
+    "Sovereignty": {
+      "confidence": "high",
+      "rationale": "Advocacy for shared sovereignty and supranational governance via EU membership. To be documented.",
+      "sources": []
+    },
+    "Economic": {
+      "confidence": "high",
+      "rationale": "Strong preference for retaining EU single-market membership and free movement. To be documented.",
+      "sources": []
+    },
+    "Class": {
+      "confidence": "medium",
+      "rationale": "Cross-class coalition; emphasis on protecting workers' rights via EU regulatory frameworks. To be documented.",
+      "sources": []
+    },
+    "Governance": {
+      "confidence": "medium",
+      "rationale": "Emphasis on democratic participation, civil liberties, and rule of law at supranational level. To be documented.",
+      "sources": []
+    }
+  }
+}

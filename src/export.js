@@ -32,7 +32,7 @@ export function downloadChart(svgElement, filename = 'my-six-axis-compass.png') 
 export function downloadMapData(scores, format = 'json') {
   const payload = {
     source: 'Six-Axis Political Compass',
-    version: '1.1.1',
+    version: '2.1.0',
     generated: new Date().toISOString(),
     axes: scores
   };
@@ -103,6 +103,12 @@ export function parseUpload(fileContent, fileName) {
       scores.Liberty = parseFloat((10 - scores.Liberty).toFixed(1));
       invertedAxis = true;
     }
+  }
+
+  // Backwards compatibility: map old Liberty axis to Governance
+  if (scores.Liberty !== undefined) {
+    scores.Governance = scores.Liberty;
+    delete scores.Liberty;
   }
 
   const labelParts = [];

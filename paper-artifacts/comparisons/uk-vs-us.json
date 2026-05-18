@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "1.0.0",
-  "gitCommit": "82ff68c6a582f9a326f1bcb27f3a377ac1bc8838",
-  "generated": "2026-05-16T16:37:36.763Z",
+  "version": "2.2.0",
+  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
+  "generated": "2026-05-18T13:44:41.323Z",
   "groupId": "uk-vs-us",
   "title": "UK vs US Major Parties",
   "actors": [
@@ -16,7 +16,7 @@
         "Military": 8,
         "Sovereignty": 6,
         "Class": 1,
-        "Libertarian/Authoritarian": 5
+        "Governance": 5
       },
       "traceability": {
         "Cultural": {
@@ -46,28 +46,6 @@
               "url": "https://hansard.parliament.uk/commons/2023-07-17/division/D123",
               "relevantText": "Division No. 123: Ayes 289 (Conservative), Noes 179",
               "citation": "HC Deb 17 July 2023, col. 1234"
-            }
-          ]
-        },
-        "Economic": {
-          "confidence": "high",
-          "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
-          "sources": [
-            {
-              "type": "policy",
-              "title": "UK-Australia Free Trade Agreement",
-              "date": "2021-12-17",
-              "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
-              "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
-              "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
-            },
-            {
-              "type": "legislation",
-              "title": "Subsidy Control Act 2022",
-              "date": "2022-04-28",
-              "url": "https://www.legislation.gov.uk/ukpga/2022/23",
-              "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
-              "citation": "Subsidy Control Act 2022, c. 23 (UK)"
             }
           ]
         },
@@ -115,10 +93,27 @@
             }
           ]
         },
-        "Libertarian/Authoritarian": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
+        "Economic": {
+          "confidence": "high",
+          "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
+          "sources": [
+            {
+              "type": "policy",
+              "title": "UK-Australia Free Trade Agreement",
+              "date": "2021-12-17",
+              "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
+              "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
+              "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
+            },
+            {
+              "type": "legislation",
+              "title": "Subsidy Control Act 2022",
+              "date": "2022-04-28",
+              "url": "https://www.legislation.gov.uk/ukpga/2022/23",
+              "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
+              "citation": "Subsidy Control Act 2022, c. 23 (UK)"
+            }
+          ]
         },
         "Class": {
           "confidence": "high",
@@ -141,6 +136,11 @@
               "citation": "HC Deb 16 January 2023, col. 9012"
             }
           ]
+        },
+        "Governance": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
         }
       }
     },
@@ -154,15 +154,10 @@
         "Military": 7,
         "Economic": 3,
         "Class": 3,
-        "Libertarian/Authoritarian": 4
+        "Governance": 6
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -177,12 +172,17 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Libertarian/Authoritarian": {
+        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
         "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -199,15 +199,10 @@
         "Military": 7,
         "Economic": 4,
         "Class": 4,
-        "Libertarian/Authoritarian": 4
+        "Governance": 6
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -222,12 +217,17 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Libertarian/Authoritarian": {
+        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
         "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -244,15 +244,10 @@
         "Military": 8,
         "Economic": 4,
         "Class": 1,
-        "Libertarian/Authoritarian": 6
+        "Governance": 4
       },
       "traceability": {
         "Cultural": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -267,12 +262,17 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Libertarian/Authoritarian": {
+        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
         "Class": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []

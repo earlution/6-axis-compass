@@ -7,15 +7,15 @@
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
 
-export const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Liberty'];
+export const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Governance'];
 
 export const AXIS_META = {
-  Cultural:                { low: 'Cultural internationalism', high: 'Cultural nationalism' },
-  Economic:                { low: 'Economic internationalism', high: 'Economic nationalism' },
-  Military:                { low: 'Non-interventionist',         high: 'Interventionist' },
-  Sovereignty:             { low: 'Supranational',               high: 'National sovereignty' },
-  'Liberty': { low: 'Authoritarian / hierarchical / illiberal', high: 'Libertarian / consent-based / democratic' },
-  Class:                   { low: 'Class harmony',               high: 'Class conflict' }
+  Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },
+  Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },
+  Military:    { low: 'Non-interventionist',         high: 'Interventionist' },
+  Sovereignty: { low: 'Supranational',               high: 'National sovereignty' },
+  Governance:  { low: 'Maximal autonomy / consent-based / democratic', high: 'Maximal hierarchy / authority / coercive' },
+  Class:       { low: 'Class harmony',               high: 'Class conflict' }
 };
 
 export const RESPONSES = [
@@ -47,11 +47,11 @@ export const QUESTIONS = [
   { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
   { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
   { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
-  // Liberty
-  { axis: 'Liberty', text: 'In times of serious crisis, the government should have the authority to suspend normal legal protections if doing so is necessary to protect national security or social order.', reverse: true },
-  { axis: 'Liberty', text: 'Individual freedom of expression should be protected by law even when the views expressed are offensive to the majority.', reverse: false },
-  { axis: 'Liberty', text: 'Social order and the preservation of traditional values are more important than protecting the rights of minority groups who challenge them.', reverse: true },
-  { axis: 'Liberty', text: 'Hierarchical structures in government and society should be continuously open to challenge and accountable to the people subject to them.', reverse: false },
+  // Governance
+  { axis: 'Governance', text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: false },
+  { axis: 'Governance', text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: true },
+  { axis: 'Governance', text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: false },
+  { axis: 'Governance', text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: true },
   // Class
   { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
   { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
@@ -61,47 +61,47 @@ export const QUESTIONS = [
 
 const _FALLBACK_ACTORS = [
   // UK Political Parties
-  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, 'Liberty': 5, Class: 1 }, color: '#1A75BB' },
-  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, 'Liberty': 6, Class: 3 }, color: '#c0392b' },
-  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, 'Liberty': 5, Class: 2 }, color: '#12B6CF' },
-  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, 'Liberty': 7, Class: 4 }, color: '#FAA61A' },
-  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, 'Liberty': 8, Class: 8 }, color: '#5A9E3F' },
-  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, 'Liberty': 7, Class: 7 }, color: '#FDF38E' },
-  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, 'Liberty': 7, Class: 7 }, color: '#3CB371' },
+  { name: 'Conservative Party', scores: { Cultural: 7, Economic: 3, Military: 8, Sovereignty: 6, Governance: 5, Class: 1 }, color: '#1A75BB' },
+  { name: 'Labour Party',       scores: { Cultural: 5, Economic: 3, Military: 7, Sovereignty: 5, Governance: 6, Class: 3 }, color: '#c0392b' },
+  { name: 'Reform UK',          scores: { Cultural: 8, Economic: 5, Military: 5, Sovereignty: 8, Governance: 5, Class: 2 }, color: '#12B6CF' },
+  { name: 'Liberal Democrats',  scores: { Cultural: 3, Economic: 4, Military: 5, Sovereignty: 4, Governance: 7, Class: 4 }, color: '#FAA61A' },
+  { name: 'Green Party',        scores: { Cultural: 2, Economic: 7, Military: 2, Sovereignty: 5, Governance: 8, Class: 8 }, color: '#5A9E3F' },
+  { name: 'SNP',                scores: { Cultural: 6, Economic: 6, Military: 2, Sovereignty: 9, Governance: 7, Class: 7 }, color: '#FDF38E' },
+  { name: 'Plaid Cymru',        scores: { Cultural: 8, Economic: 6, Military: 2, Sovereignty: 8, Governance: 7, Class: 7 }, color: '#3CB371' },
 
   // US Political Parties
-  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, 'Liberty': 6, Class: 4 }, color: '#3C6EC9' },
-  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, 'Liberty': 4, Class: 1 }, color: '#C0392B' },
+  { name: 'US Democrats',       scores: { Cultural: 3, Economic: 4, Military: 7, Sovereignty: 4, Governance: 6, Class: 4 }, color: '#3C6EC9' },
+  { name: 'US Republicans',     scores: { Cultural: 8, Economic: 4, Military: 8, Sovereignty: 7, Governance: 4, Class: 1 }, color: '#C0392B' },
 
   // Economic Historical Figures
-  { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, 'Liberty': 5, Class: 3 }, color: '#607D8B' },
-  { name: 'Milton Friedman',     scores: { Cultural: 3, Economic: 2, Military: 6, Sovereignty: 4, 'Liberty': 2, Class: 2 }, color: '#8D6E63' },
+  { name: 'John Maynard Keynes', scores: { Cultural: 4, Economic: 7, Military: 2, Sovereignty: 5, Governance: 5, Class: 3 }, color: '#607D8B' },
+  { name: 'Milton Friedman',     scores: { Cultural: 3, Economic: 2, Military: 6, Sovereignty: 4, Governance: 2, Class: 2 }, color: '#8D6E63' },
 
   // World War II Political Figures
-  { name: 'Clement Attlee',          scores: { Cultural: 5, Economic: 7, Military: 7, Sovereignty: 5, 'Liberty': 6, Class: 6 }, color: '#E74C3C' },
-  { name: 'Winston Churchill',         scores: { Cultural: 8, Economic: 3, Military: 9, Sovereignty: 8, 'Liberty': 7, Class: 2 }, color: '#1A237E' },
-  { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, 'Liberty': 9, Class: 7 }, color: '#212121' },
-  { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, 'Liberty': 6, Class: 5 }, color: '#1565C0' },
-  { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, 'Liberty': 9, Class: 6 }, color: '#424242' },
-  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, 'Liberty': 10, Class: 10 }, color: '#B71C1C' },
+  { name: 'Clement Attlee',          scores: { Cultural: 5, Economic: 7, Military: 7, Sovereignty: 5, Governance: 6, Class: 6 }, color: '#E74C3C' },
+  { name: 'Winston Churchill',         scores: { Cultural: 8, Economic: 3, Military: 9, Sovereignty: 8, Governance: 7, Class: 2 }, color: '#1A237E' },
+  { name: 'Adolf Hitler',              scores: { Cultural: 10, Economic: 8, Military: 10, Sovereignty: 10, Governance: 9, Class: 7 }, color: '#212121' },
+  { name: 'Franklin D. Roosevelt',     scores: { Cultural: 4, Economic: 7, Military: 8, Sovereignty: 5, Governance: 6, Class: 5 }, color: '#1565C0' },
+  { name: 'Benito Mussolini',          scores: { Cultural: 9, Economic: 7, Military: 9, Sovereignty: 9, Governance: 9, Class: 6 }, color: '#424242' },
+  { name: 'Joseph Stalin',             scores: { Cultural: 7, Economic: 9, Military: 9, Sovereignty: 6, Governance: 10, Class: 10 }, color: '#B71C1C' },
 
   // Methodology anchor examples
-  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, 'Liberty': 5, Class: 10 }, color: '#D32F2F' },
-  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, 'Liberty': 7, Class: 0 }, color: '#00BFFF' },
-  { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, 'Liberty': 6, Class: 4 }, color: '#6B8E23' },
-  { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, 'Liberty': 4, Class: 6 }, color: '#FF4500' },
-  { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, 'Liberty': 7, Class: 6 }, color: '#8B0000' },
-  { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, 'Liberty': 5, Class: 4 }, color: '#003399' },
-  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, 'Liberty': 10, Class: 10 }, color: '#9C27B0' },
-  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, 'Liberty': 0, Class: 10 }, color: '#CC0000' },
-  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, 'Liberty': 0, Class: 0 }, color: '#8B4513' },
-  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, 'Liberty': 0, Class: 7 }, color: '#006600' },
+  { name: 'Attlee government 1945–51', scores: { Cultural: 5, Economic: 0, Military: 5, Sovereignty: 5, Governance: 5, Class: 10 }, color: '#D32F2F' },
+  { name: 'Thatcher government 1979–90', scores: { Cultural: 6, Economic: 10, Military: 6, Sovereignty: 6, Governance: 7, Class: 0 }, color: '#00BFFF' },
+  { name: 'Bush/Blair Iraq position',  scores: { Cultural: 5, Economic: 5, Military: 10, Sovereignty: 4, Governance: 6, Class: 4 }, color: '#6B8E23' },
+  { name: 'Stop the War Coalition',     scores: { Cultural: 3, Economic: 4, Military: 0, Sovereignty: 5, Governance: 4, Class: 6 }, color: '#FF4500' },
+  { name: 'Enoch Powell 1968',          scores: { Cultural: 10, Economic: 7, Military: 5, Sovereignty: 9, Governance: 7, Class: 6 }, color: '#8B0000' },
+  { name: 'Federalist EU tradition',    scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 10, Governance: 5, Class: 4 }, color: '#003399' },
+  { name: 'Anarcho-communism',        scores: { Cultural: 3, Economic: 0, Military: 0, Sovereignty: 0, Governance: 10, Class: 10 }, color: '#9C27B0' },
+  { name: 'Leninism',                 scores: { Cultural: 6, Economic: 10, Military: 7, Sovereignty: 5, Governance: 0, Class: 10 }, color: '#CC0000' },
+  { name: 'Fascism',                  scores: { Cultural: 10, Economic: 8, Military: 9, Sovereignty: 9, Governance: 0, Class: 0 }, color: '#8B4513' },
+  { name: "Orbán's Hungary",          scores: { Cultural: 9, Economic: 7, Military: 6, Sovereignty: 8, Governance: 0, Class: 7 }, color: '#006600' },
 
   // Brexit Factions
-  { name: 'Hard Brexit',              scores: { Cultural: 8, Economic: 7, Military: 5, Sovereignty: 9, 'Liberty': 5, Class: 5 }, color: '#8B0000' },
-  { name: 'Soft Brexit',              scores: { Cultural: 5, Economic: 4, Military: 5, Sovereignty: 5, 'Liberty': 6, Class: 4 }, color: '#FF8C00' },
-  { name: "People's Vote",            scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 2, 'Liberty': 7, Class: 5 }, color: '#1E90FF' },
-  { name: 'Brexit Intersection',      scores: { Cultural: 5.3, Economic: 4.7, Military: 4.7, Sovereignty: 5.3, 'Liberty': 6.0, Class: 4.7 }, color: '#800080' }
+  { name: 'Hard Brexit',              scores: { Cultural: 8, Economic: 7, Military: 5, Sovereignty: 9, Governance: 5, Class: 5 }, color: '#8B0000' },
+  { name: 'Soft Brexit',              scores: { Cultural: 5, Economic: 4, Military: 5, Sovereignty: 5, Governance: 6, Class: 4 }, color: '#FF8C00' },
+  { name: "People's Vote",            scores: { Cultural: 3, Economic: 3, Military: 4, Sovereignty: 2, Governance: 7, Class: 5 }, color: '#1E90FF' },
+  { name: 'Brexit Intersection',      scores: { Cultural: 5.3, Economic: 4.7, Military: 4.7, Sovereignty: 5.3, Governance: 6.0, Class: 4.7 }, color: '#800080' }
 ];
 
 export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
