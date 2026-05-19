@@ -1,5 +1,10 @@
 # Six-Axis Compass — REST API Specification
 
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.1.0 | 2026-05-19 | Added "Shareable Web URL" section documenting the parameterised hash URL format. |
+| 1.0.0 | 2026-05-18 | Initial release. Endpoints: `GET /health`, `GET /actors`, `POST /chart`. |
+
 For **A Common Enemy** integration.
 
 ## Base URL
