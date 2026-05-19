@@ -183,6 +183,46 @@ tr.group-header:first-child td {
   border-top: none;
 }
 
+tr.group-header td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-reorder {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.group-reorder button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  border-radius: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.group-reorder button:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+}
+
+.group-reorder button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+@media (prefers-color-scheme: light) {
+  .group-reorder button:hover {
+    background: rgba(0,0,0,0.06);
+  }
+}
+
 tr.detail td {
   padding: 0;
   border-bottom: 1px solid var(--border);
@@ -371,10 +411,25 @@ const AXES = ['Cultural','Economic','Military','Sovereignty','Governance','Class
 
 let currentSort = { col: 'name', dir: 'asc' };
 let expandedRow = null;
+let groupOrder = [];
+
+function loadGroupOrder() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-data-group-order');
+    if (stored) groupOrder = JSON.parse(stored);
+  } catch (_) {}
+}
+
+function saveGroupOrder() {
+  try {
+    localStorage.setItem('six-axis-compass-data-group-order', JSON.stringify(groupOrder));
+  } catch (_) {}
+}
 
 function groupActors(actors) {
   const groups = [];
   const grouped = new Set();
+  const orderMap = new Map(groupOrder.map((n, i) => [n, i]));
 
   for (const [groupName, actorNames] of Object.entries(ACTOR_GROUPS || {})) {
     const members = actors.filter(a => actorNames.includes(a.name));
@@ -388,6 +443,15 @@ function groupActors(actors) {
   if (other.length > 0) {
     groups.push({ name: 'Other', actors: other });
   }
+
+  groups.sort((a, b) => {
+    const ai = orderMap.get(a.name);
+    const bi = orderMap.get(b.name);
+    if (ai !== undefined && bi !== undefined) return ai - bi;
+    if (ai !== undefined) return -1;
+    if (bi !== undefined) return 1;
+    return 0;
+  });
 
   return groups;
 }
@@ -407,10 +471,53 @@ function render(groups) {
 
   document.getElementById('count').textContent = `${totalActors} actor${totalActors !== 1 ? 's' : ''}`;
 
-  for (const group of groups) {
+  groups.forEach((group, groupIndex) => {
     const header = document.createElement('tr');
     header.className = 'group-header';
-    header.innerHTML = `<td colspan="8">${escapeHtml(group.name)} <span style="color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;">(${group.actors.length})</span></td>`;
+
+    const reorder = document.createElement('span');
+    reorder.className = 'group-reorder';
+    reorder.innerHTML = `
+      <button aria-label="Move group up" ${groupIndex === 0 ? 'disabled' : ''}>↑</button>
+      <button aria-label="Move group down" ${groupIndex === groups.length - 1 ? 'disabled' : ''}>↓</button>
+    `;
+    const upBtn = reorder.querySelector('button:first-child');
+    const downBtn = reorder.querySelector('button:last-child');
+
+    upBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (groupIndex > 0) {
+        const newOrder = groups.map(g => g.name);
+        [newOrder[groupIndex], newOrder[groupIndex - 1]] = [newOrder[groupIndex - 1], newOrder[groupIndex]];
+        groupOrder = newOrder;
+        saveGroupOrder();
+        refresh();
+      }
+    });
+
+    downBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (groupIndex < groups.length - 1) {
+        const newOrder = groups.map(g => g.name);
+        [newOrder[groupIndex], newOrder[groupIndex + 1]] = [newOrder[groupIndex + 1], newOrder[groupIndex]];
+        groupOrder = newOrder;
+        saveGroupOrder();
+        refresh();
+      }
+    });
+
+    const label = document.createElement('span');
+    label.textContent = `${group.name} `;
+    const count = document.createElement('span');
+    count.style.cssText = 'color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;';
+    count.textContent = `(${group.actors.length})`;
+    label.appendChild(count);
+
+    const td = document.createElement('td');
+    td.setAttribute('colspan', '8');
+    td.appendChild(label);
+    td.appendChild(reorder);
+    header.appendChild(td);
     tbody.appendChild(header);
 
     for (const actor of group.actors) {
@@ -438,7 +545,15 @@ function render(groups) {
       tr.addEventListener('click', () => toggleDetail(tr, actor));
       tbody.appendChild(tr);
     }
-  }
+  });
+}
+
+function refresh() {
+  const q = document.getElementById('search').value;
+  const filtered = filterActors(ACTORS, q);
+  const sorted = sortActors(filtered, currentSort.col, currentSort.dir);
+  const grouped = groupActors(sorted);
+  render(grouped);
 }
 
 function toggleDetail(tr, actor) {
@@ -536,9 +651,8 @@ function filterActors(actors, q) {
 }
 
 // Init
-const sortedAll = sortActors(ACTORS, currentSort.col, currentSort.dir);
-let displayed = groupActors(sortedAll);
-render(displayed);
+loadGroupOrder();
+refresh();
 
 // Sort clicks
 document.querySelectorAll('th[data-sort]').forEach(th => {
@@ -550,22 +664,12 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
     document.querySelectorAll('th').forEach(t => t.classList.remove('asc','desc'));
     th.classList.add(dir);
 
-    const q = document.getElementById('search').value;
-    const filtered = filterActors(ACTORS, q);
-    const sorted = sortActors(filtered, col, dir);
-    displayed = groupActors(sorted);
-    render(displayed);
+    refresh();
   });
 });
 
 // Search
-document.getElementById('search').addEventListener('input', e => {
-  const q = e.target.value;
-  const filtered = filterActors(ACTORS, q);
-  const sorted = sortActors(filtered, currentSort.col, currentSort.dir);
-  displayed = groupActors(sorted);
-  render(displayed);
-});
+document.getElementById('search').addEventListener('input', () => refresh());
 </script>
 </body>
 </html>

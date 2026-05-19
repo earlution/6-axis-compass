@@ -34,6 +34,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.4] - 2026-05-19
+
+### Added
+- **User-reorderable actor groups** on the dataset page (`data.html`).
+  - Each group header now has up/down arrow buttons to reorder groups.
+  - Reordered sequence is persisted to `localStorage` under `six-axis-compass-data-group-order`.
+  - Order is restored on page load and respected during search/sort operations.
+  - New `.group-reorder` CSS styles with hover and disabled states for light/dark modes.
+
 ## [2.5.3] - 2026-05-19
 
 ### Changed
