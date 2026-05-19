@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.3.0 | 2026-05-19 | Added "Actor Data Schema" section documenting the full JSON structure for `data/actors/*.json`. |
 | 1.2.0 | 2026-05-19 | Added "CI/CD Dispatch API" section documenting `repository_dispatch` event types for selective generation and upload. |
 | 1.1.0 | 2026-05-19 | Added "Shareable Web URL" section documenting the parameterised hash URL format. |
 | 1.0.0 | 2026-05-18 | Initial release. Endpoints: `GET /health`, `GET /actors`, `POST /chart`. |
@@ -203,6 +204,116 @@ Returns raw PNG bytes with `Content-Type: image/png`.
 | **Sovereignty** | Globalist / pooled authority | Nationalist / self-determination |
 | **Governance** | Libertarian / minimal state | Authoritarian / strong state |
 | **Class** | Egalitarian / classless | Hierarchical / stratified |
+
+---
+
+## Actor Data Schema
+
+Every political actor in the dataset is defined by a single JSON file in `data/actors/{slug}.json`. The schema is validated at build time against `data/schema.json`. Researchers fork this repository, edit these files, and submit pull requests.
+
+**Schema version:** `1.1.0`  
+**Required top-level keys:** `schemaVersion`, `actor`, `scores`
+
+### Top-Level Structure
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `schemaVersion` | `string` | **Yes** | Schema version. Must be `"1.1.0"` (or `"1.0.0"` for files without `responses`). |
+| `actor` | `object` | **Yes** | Metadata block. See [Actor Metadata](#actor-metadata). |
+| `scores` | `object` | **Yes** | Map of six axis names to [Score objects](#score-object). |
+| `responses` | `object` | No | Map of `Q1`…`Q24` to [Response objects](#response-object). Optional; inferred from axis scores when absent. |
+
+### Actor Metadata
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | **Yes** | Display name exactly as shown in the UI. |
+| `slug` | `string` | **Yes** | URL-safe identifier, kebab-case. Must match the filename (e.g. `conservative-party`). |
+| `category` | `string` | **Yes** | Classification, e.g. `"UK Political Party"`, `"World War II Figure"`. |
+| `color` | `string` | **Yes** | Hex colour for chart rendering. Pattern: `^#[0-9A-Fa-f]{6}$`. |
+| `activePeriod` | `string` | No | Human-readable date range, e.g. `"1834–present"`. |
+| `version` | `string` | No | Data-file version, e.g. `"1.0.0"`. |
+| `lastUpdated` | `string` | No | ISO-8601 date (`YYYY-MM-DD`). |
+| `curator` | `string` | No | Person or project responsible for the scores. |
+| `contributors` | `string[]` | No | Additional contributors. |
+
+### Score Object
+
+Each key under `scores` must be one of the six axes (`Cultural`, `Economic`, `Military`, `Sovereignty`, `Governance`, `Class`).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `value` | `number` | **Yes** | Score on this axis, `0–10`. |
+| `confidence` | `string` | No | `"low"`, `"medium"`, `"high"`, or `"very-high"`. |
+| `rationale` | `string` | No | Short explanation of how the score was derived. |
+| `sources` | `Source[]` | No | Array of [Source objects](#source-object) backing this score. |
+
+### Source Object
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `type` | `string` | **Yes** | `"manifesto"`, `"legislation"`, `"vote"`, `"speech"`, `"policy"`, `"book"`, `"academic"`, or `"other"`. |
+| `title` | `string` | **Yes** | Source title. |
+| `date` | `string` | No | ISO-8601 date. |
+| `url` | `string` | No | URL to primary source. |
+| `relevantText` | `string` | No | Quoted excerpt supporting the score. |
+| `citation` | `string` | No | Full academic or parliamentary citation. |
+
+### Response Object
+
+Each key under `responses` is `Q1` through `Q24`, mapping to the 24 questionnaire statements (4 per axis).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `value` | `integer` | **Yes** | Likert response: `0`=Strongly disagree, `1`=Disagree, `2`=Neutral, `3`=Agree, `4`=Strongly agree. |
+| `confidence` | `string` | No | `"low"`, `"medium"`, `"high"`, or `"very-high"`. |
+| `rationale` | `string` | No | Why this response was assigned. |
+| `sources` | `Source[]` | No | Array of [Source objects](#source-object). |
+
+### Example Actor JSON
+
+```json
+{
+  "schemaVersion": "1.1.0",
+  "actor": {
+    "name": "Conservative Party",
+    "slug": "conservative-party",
+    "category": "UK Political Party",
+    "activePeriod": "1834–present",
+    "color": "#1A75BB",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-19",
+    "curator": "A Common Enemy Project",
+    "contributors": ["Ruari Mears"]
+  },
+  "scores": {
+    "Cultural": {
+      "value": 7,
+      "confidence": "high",
+      "rationale": "Consistent emphasis on controlled immigration, cultural preservation...",
+      "sources": [
+        {
+          "type": "manifesto",
+          "title": "Conservative Party Manifesto 2024",
+          "date": "2024-06-12",
+          "url": "https://www.conservatives.com/manifesto2024",
+          "relevantText": "We will introduce an annual cap on work and family visas...",
+          "citation": "Conservative Party, 'Clear Plan. Bold Action. Secure Future.', 2024, p. 23"
+        }
+      ]
+    },
+    "Economic": { "value": 3, "confidence": "high", "rationale": "...", "sources": [] },
+    "Military": { "value": 8, "confidence": "high", "rationale": "...", "sources": [] },
+    "Sovereignty": { "value": 6, "confidence": "high", "rationale": "...", "sources": [] },
+    "Class": { "value": 1, "confidence": "high", "rationale": "...", "sources": [] },
+    "Governance": { "value": 5, "confidence": "medium", "rationale": "...", "sources": [] }
+  },
+  "responses": {
+    "Q1": { "value": 1, "confidence": "high", "rationale": "Inferred from Cultural axis score of 7.", "sources": [] },
+    "Q2": { "value": 0, "confidence": "high", "rationale": "Inferred from Cultural axis score of 7.", "sources": [] }
+  }
+}
+```
 
 ---
 

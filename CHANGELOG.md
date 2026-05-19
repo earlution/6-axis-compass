@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.4.9]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.9
 [2.4.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.8
 [2.4.7]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.7
 [2.4.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.6
@@ -28,6 +29,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.4.9] - 2026-05-19
+
+### Added
+- **Actor Data Schema documentation** in `API.md` (v1.3.0).
+  - New section documenting the complete JSON structure for `data/actors/*.json`.
+  - Field tables for: top-level structure, actor metadata, score objects, source objects, response objects (Q1–Q24).
+  - Example actor JSON with real-world Conservative Party data.
+  - Reference to `data/schema.json` as the machine-validated source of truth.
 
 ## [2.4.8] - 2026-05-19
 
