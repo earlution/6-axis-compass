@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.5.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.8
+[2.5.7]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.7
 [2.5.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.6
 [2.5.5]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.5
 [2.5.4]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.4
@@ -36,6 +38,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.5.8] - 2026-05-19
+
+### Added
+- **Register toggle on graph page** — switch between Primary, Declared, and Structural scores.
+  - New `getEffectiveScores(actor, register)` helper in `src/data.js`.
+  - `drawRadar` accepts `register` parameter and uses effective scores for actor overlays.
+  - Toggle buttons added to results screen config panel (Primary / Declared / Structural).
+  - `registerMode` persisted to `localStorage` under `six-axis-compass-register-mode`.
+  - New i18n strings: `results.register`, `results.primary`, `results.declared`, `results.structural`.
+- **`GET /api/actors/:slug`** endpoint returning full actor record including `dualRegister`.
+  - New route handler `api/routes/actor-detail.js`.
+  - `api/lib/actor-store.js` gains `getActorBySlug()`.
+  - Documented in `API.md` v1.5.0.
+- **Data page detail panels** now show dual-register metadata (protocol, period, status, evidence quality) and per-axis declared/structural/delta scores with confidence percentages when available.
 
 ## [2.5.7] - 2026-05-19
 

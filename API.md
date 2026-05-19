@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.5.0 | 2026-05-19 | Added `GET /api/actors/:slug` endpoint returning full actor record including dual-register data. |
 | 1.4.0 | 2026-05-19 | Added `dualRegister` field to Actor Data Schema. Documented declared/structural/delta scores, numeric confidence, and dual-register source sets. |
 | 1.3.0 | 2026-05-19 | Added "Actor Data Schema" section documenting the full JSON structure for `data/actors/*.json`. |
 | 1.2.0 | 2026-05-19 | Added "CI/CD Dispatch API" section documenting `repository_dispatch` event types for selective generation and upload. |
@@ -89,7 +90,71 @@ Authorization: Bearer <API_SECRET>
 
 ---
 
-### 3. Render Chart
+### 3. Get Actor Detail
+
+Returns the full record for a single actor, including metadata, scores, per-question responses, dual-register data, and source citations.
+
+```http
+GET /api/actors/:slug
+Authorization: Bearer <API_SECRET>
+```
+
+The `:slug` parameter is the URL-safe identifier from `data/actors/{slug}.json` (e.g. `conservative-party`, `restore-britain-2025-2026`).
+
+**Response — 200 OK**
+
+```json
+{
+  "name": "Conservative Party",
+  "slug": "conservative-party",
+  "color": "#1A75BB",
+  "scores": {
+    "Cultural": 7,
+    "Economic": 3,
+    "Military": 8,
+    "Sovereignty": 6,
+    "Governance": 5,
+    "Class": 1
+  },
+  "responses": { "Q1": { "value": 1 }, "Q2": { "value": 0 } },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2010–2024",
+    "status": "governing",
+    "declared": { "Cultural": 10, "Economic": 0, "Military": 8.1, "Sovereignty": 8.8, "Governance": 8.8, "Class": 2.5 },
+    "structural": { "Cultural": 9.4, "Economic": 0, "Military": 10, "Sovereignty": 8.1, "Governance": 8.8, "Class": 2.5 },
+    "delta": { "Cultural": -0.6, "Economic": 0, "Military": 1.9, "Sovereignty": -0.7, "Governance": 0, "Class": 0 },
+    "confidence": { "Cultural": { "declared": 0.95, "structural": 0.90 } },
+    "sources": { "declared": [...], "structural": [...] }
+  },
+  "_meta": {
+    "category": "UK Political Party",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-19",
+    "curator": "A Common Enemy Project",
+    "contributors": ["Ruari Mears"]
+  },
+  "_scoreMeta": {
+    "Cultural": { "confidence": "high", "rationale": "...", "sources": [...] }
+  }
+}
+```
+
+**Error — 404 Not Found**
+
+```json
+{ "error": "Actor not found" }
+```
+
+**Error — 401 Unauthorized**
+
+```json
+{ "error": "Unauthorized" }
+```
+
+---
+
+### 4. Render Chart
 
 Generates a radar-chart image from your scores, optionally overlaying known actors.
 
@@ -190,7 +255,7 @@ Returns raw PNG bytes with `Content-Type: image/png`.
 | `200` | Success |
 | `400` | Malformed request (bad axis, bad score, unknown actor, invalid format) |
 | `401` | Missing or incorrect `Authorization` header |
-| `404` | Unknown endpoint |
+| `404` | Unknown endpoint or actor slug not found |
 | `500` | Server error (e.g. `API_SECRET` not configured) |
 
 ---

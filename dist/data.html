@@ -400,7 +400,7 @@ footer a {
   </div>
 
   <footer>
-    <p>Data version <strong>v2.5.7</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
+    <p>Data version <strong>v2.5.8</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
   </footer>
 </div>
 
@@ -3685,14 +3685,52 @@ function toggleDetail(tr, actor) {
     const sources = (sm.sources || []).map(s =>
       `<li><a href="${escapeHtml(s.url || '#')}" target="_blank" rel="noopener">${escapeHtml(s.title || s.type || 'Source')}</a></li>`
     ).join('') || '<li>No sources on file.</li>';
+    let dualRegHtml = '';
+    if (actor.dualRegister) {
+      const declared = actor.dualRegister.declared?.[ax];
+      const structural = actor.dualRegister.structural?.[ax];
+      const delta = actor.dualRegister.delta?.[ax];
+      const conf = actor.dualRegister.confidence?.[ax];
+      if (declared !== undefined && structural !== undefined) {
+        const declaredStr = declared.toFixed(1);
+        const structuralStr = structural.toFixed(1);
+        const deltaStr = delta >= 0 ? '+' + delta.toFixed(1) : delta.toFixed(1);
+        const declaredConf = conf?.declared ? ` (${(conf.declared * 100).toFixed(0)}%)` : '';
+        const structuralConf = conf?.structural ? ` (${(conf.structural * 100).toFixed(0)}%)` : '';
+        dualRegHtml = `
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;">
+            Declared: ${declaredStr}${declaredConf} · Structural: ${structuralStr}${structuralConf} · Delta: ${deltaStr}
+          </p>
+        `;
+      }
+    }
     return `
       <div class="detail-group">
         <h4>${ax} — ${actor.scores[ax]?.toFixed(1)}</h4>
         <p class="rationale">${rationale}</p>
+        ${dualRegHtml}
         <ul class="source-list">${sources}</ul>
       </div>
     `;
   }).join('');
+
+  let dualRegMetaHtml = '';
+  if (actor.dualRegister) {
+    const dr = actor.dualRegister;
+    const confInfo = dr.confidence ? Object.entries(dr.confidence).map(([ax, c]) => {
+      return `${ax}: declared ${(c.declared * 100).toFixed(0)}%, structural ${(c.structural * 100).toFixed(0)}%`;
+    }).join('; ') : '';
+    dualRegMetaHtml = `
+      <div class="detail-group">
+        <h4>Dual-Register</h4>
+        <p>Protocol: ${escapeHtml(dr.protocol || '')}</p>
+        <p>Period: ${escapeHtml(dr.period || '')}</p>
+        <p>Status: ${escapeHtml(dr.status || '')}</p>
+        <p>Evidence quality: ${escapeHtml(dr.evidenceQuality || '')}</p>
+        ${confInfo ? `<p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;">${escapeHtml(confInfo)}</p>` : ''}
+      </div>
+    `;
+  }
 
   detail.innerHTML = `
     <td colspan="8">
@@ -3704,6 +3742,7 @@ function toggleDetail(tr, actor) {
           <p>Curator: ${escapeHtml(meta.curator || '')}</p>
           <p><a href="${jsonUrl}" target="_blank" rel="noopener">View raw JSON ↗</a></p>
         </div>
+        ${dualRegMetaHtml}
         ${axisDetails}
       </div>
     </td>

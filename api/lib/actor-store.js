@@ -57,6 +57,10 @@ export function getActorByName(name) {
   return loadActors().find(a => a.name === name);
 }
 
+export function getActorBySlug(slug) {
+  return loadActors().find(a => a.slug === slug);
+}
+
 export function listActors() {
   return loadActors().map(a => ({ name: a.name, slug: a.slug, color: a.color }));
 }

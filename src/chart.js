@@ -1,3 +1,4 @@
+import { getEffectiveScores } from './data.js';
 import { t } from './i18n.js';
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -31,7 +32,8 @@ export function drawRadar(svg, {
   showUser = true,
   userColor = '#c8a84b',
   uploadedColor = '#b478dc',
-  invertedAxes = new Set()
+  invertedAxes = new Set(),
+  register = 'primary'
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
@@ -99,8 +101,9 @@ export function drawRadar(svg, {
 
   // Actor overlays (drawn last so they sit on top)
   for (const actor of actors) {
+    const effectiveScores = getEffectiveScores(actor, register);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
+      points: polygonPoints(cx, cy, maxR, displayScores(effectiveScores), axes, orientation),
       fill: actor.color + '18',
       stroke: actor.color + '80',
       'stroke-width': '1.5'

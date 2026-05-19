@@ -1,4 +1,4 @@
-import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES } from './data.js';
+import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES, getEffectiveScores } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 
@@ -126,7 +126,9 @@ export function renderResults(container, {
   onSetTheme,
   onToggleInvertAxis,
   onReorderGroups,
+  onSetRegister,
   groupOrder,
+  register = 'primary',
   theme,
   language
 }) {
@@ -171,6 +173,14 @@ export function renderResults(container, {
               <div class="config-row">
                 <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
                 <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.register')}</p>
+              <div class="config-row">
+                <button class="config-btn ${register === 'primary' ? 'active' : ''}" id="btn-reg-primary">${t('results.primary')}</button>
+                <button class="config-btn ${register === 'declared' ? 'active' : ''}" id="btn-reg-declared">${t('results.declared')}</button>
+                <button class="config-btn ${register === 'structural' ? 'active' : ''}" id="btn-reg-structural">${t('results.structural')}</button>
               </div>
             </div>
             <div class="config-section">
@@ -239,7 +249,8 @@ export function renderResults(container, {
     uploadedMap,
     showUser,
     userColor,
-    invertedAxes
+    invertedAxes,
+    register
   });
 
   // Actor toggle buttons
@@ -487,6 +498,11 @@ export function renderResults(container, {
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
+  }
+  if (onSetRegister) {
+    document.getElementById('btn-reg-primary').addEventListener('click', () => onSetRegister('primary'));
+    document.getElementById('btn-reg-declared').addEventListener('click', () => onSetRegister('declared'));
+    document.getElementById('btn-reg-structural').addEventListener('click', () => onSetRegister('structural'));
   }
   if (onSetLanguage) {
     document.getElementById('lang-select').addEventListener('change', (e) => {

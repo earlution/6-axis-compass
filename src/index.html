@@ -51,6 +51,7 @@ let theme = 'dark';
 let customActors = [];
 let invertedAxes = new Set();
 let actorGroupOrder = [];
+let registerMode = 'primary';
 
 function loadActorGroupOrder() {
   try {
@@ -104,10 +105,24 @@ function saveInvertedAxes() {
   } catch (_) {}
 }
 
+function loadRegisterMode() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-register-mode');
+    if (stored && ['primary', 'declared', 'structural'].includes(stored)) registerMode = stored;
+  } catch (_) {}
+}
+
+function saveRegisterMode() {
+  try {
+    localStorage.setItem('six-axis-compass-register-mode', registerMode);
+  } catch (_) {}
+}
+
 loadCustomActors();
 loadTheme();
 loadInvertedAxes();
 loadActorGroupOrder();
+loadRegisterMode();
 document.documentElement.setAttribute('data-theme', theme);
 
 function announce(message) {
@@ -253,6 +268,7 @@ function showResults() {
     onCopyLink: () => {
       copyToClipboard(window.location.href);
     },
+    register: registerMode,
     customActors,
     onAddCustomActor: (actor) => {
       if (customActors.some(c => c.name === actor.name)) return;
@@ -284,6 +300,11 @@ function showResults() {
       theme = t;
       saveTheme();
       document.documentElement.setAttribute('data-theme', theme);
+      showResults();
+    },
+    onSetRegister: (r) => {
+      registerMode = r;
+      saveRegisterMode();
       showResults();
     }
   });

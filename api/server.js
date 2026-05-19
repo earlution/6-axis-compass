@@ -2,6 +2,7 @@ import http from 'http';
 import { URL } from 'url';
 import { handleHealth } from './routes/health.js';
 import { handleActors } from './routes/actors.js';
+import { handleActorDetail } from './routes/actor-detail.js';
 import { handleChart } from './routes/chart.js';
 
 const PORT = process.env.API_PORT || 3000;
@@ -50,6 +51,10 @@ const server = http.createServer(async (req, res) => {
     } else if (url.pathname === '/api/actors' && req.method === 'GET') {
       if (!checkAuth(req, res)) return;
       await handleActors(req, res);
+    } else if (url.pathname.startsWith('/api/actors/') && req.method === 'GET') {
+      if (!checkAuth(req, res)) return;
+      const slug = decodeURIComponent(url.pathname.slice('/api/actors/'.length));
+      await handleActorDetail(req, res, slug);
     } else if (url.pathname === '/api/chart' && req.method === 'POST') {
       if (!checkAuth(req, res)) return;
       const body = await parseBody(req);

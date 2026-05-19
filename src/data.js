@@ -106,6 +106,16 @@ const _FALLBACK_ACTORS = [
 
 export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
 
+export function getEffectiveScores(actor, register = 'primary') {
+  if (register === 'declared' && actor.dualRegister?.declared) {
+    return actor.dualRegister.declared;
+  }
+  if (register === 'structural' && actor.dualRegister?.structural) {
+    return actor.dualRegister.structural;
+  }
+  return actor.scores;
+}
+
 export const ACTOR_GROUPS = {
   '2024–2029 UK Parliament': [
     'Conservative Party', 'Labour Party', 'Reform UK',

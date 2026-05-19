@@ -996,7 +996,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.5.7</span>
+  <span class="footer-ver">v2.5.8</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -1025,6 +1025,10 @@ const TRANSLATIONS = {
     'results.orientation': 'Orientation',
     'results.edgeUp': 'Edge up',
     'results.vertexUp': 'Vertex up',
+    'results.register': 'Register',
+    'results.primary': 'Primary',
+    'results.declared': 'Declared',
+    'results.structural': 'Structural',
     'results.download': 'Download',
     'results.imagePng': 'Image (PNG)',
     'results.dataJson': 'Data (JSON)',
@@ -4417,6 +4421,15 @@ const _FALLBACK_ACTORS = [
   { name: 'Brexit Intersection',      scores: { Cultural: 5.3, Economic: 4.7, Military: 4.7, Sovereignty: 5.3, Governance: 6.0, Class: 4.7 }, color: '#800080' }
 ];
 const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACTORS;
+function getEffectiveScores(actor, register = 'primary') {
+  if (register === 'declared' && actor.dualRegister?.declared) {
+    return actor.dualRegister.declared;
+  }
+  if (register === 'structural' && actor.dualRegister?.structural) {
+    return actor.dualRegister.structural;
+  }
+  return actor.scores;
+}
 const ACTOR_GROUPS = {
   '2024–2029 UK Parliament': [
     'Conservative Party', 'Labour Party', 'Reform UK',
@@ -4491,6 +4504,7 @@ function createQuiz() {
 
 
 
+
 const NS = 'http://www.w3.org/2000/svg';
 
 function createSVGElement(tag, attrs) {
@@ -4521,7 +4535,8 @@ function drawRadar(svg, {
   showUser = true,
   userColor = '#c8a84b',
   uploadedColor = '#b478dc',
-  invertedAxes = new Set()
+  invertedAxes = new Set(),
+  register = 'primary'
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
@@ -4589,8 +4604,9 @@ function drawRadar(svg, {
 
   // Actor overlays (drawn last so they sit on top)
   for (const actor of actors) {
+    const effectiveScores = getEffectiveScores(actor, register);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
+      points: polygonPoints(cx, cy, maxR, displayScores(effectiveScores), axes, orientation),
       fill: actor.color + '18',
       stroke: actor.color + '80',
       'stroke-width': '1.5'
@@ -4734,7 +4750,9 @@ function renderResults(container, {
   onSetTheme,
   onToggleInvertAxis,
   onReorderGroups,
+  onSetRegister,
   groupOrder,
+  register = 'primary',
   theme,
   language
 }) {
@@ -4779,6 +4797,14 @@ function renderResults(container, {
               <div class="config-row">
                 <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
                 <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.register')}</p>
+              <div class="config-row">
+                <button class="config-btn ${register === 'primary' ? 'active' : ''}" id="btn-reg-primary">${t('results.primary')}</button>
+                <button class="config-btn ${register === 'declared' ? 'active' : ''}" id="btn-reg-declared">${t('results.declared')}</button>
+                <button class="config-btn ${register === 'structural' ? 'active' : ''}" id="btn-reg-structural">${t('results.structural')}</button>
               </div>
             </div>
             <div class="config-section">
@@ -4847,7 +4873,8 @@ function renderResults(container, {
     uploadedMap,
     showUser,
     userColor,
-    invertedAxes
+    invertedAxes,
+    register
   });
 
   // Actor toggle buttons
@@ -5095,6 +5122,11 @@ function renderResults(container, {
   if (onSetOrientation) {
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
+  }
+  if (onSetRegister) {
+    document.getElementById('btn-reg-primary').addEventListener('click', () => onSetRegister('primary'));
+    document.getElementById('btn-reg-declared').addEventListener('click', () => onSetRegister('declared'));
+    document.getElementById('btn-reg-structural').addEventListener('click', () => onSetRegister('structural'));
   }
   if (onSetLanguage) {
     document.getElementById('lang-select').addEventListener('change', (e) => {
@@ -5403,6 +5435,7 @@ let theme = 'dark';
 let customActors = [];
 let invertedAxes = new Set();
 let actorGroupOrder = [];
+let registerMode = 'primary';
 
 function loadActorGroupOrder() {
   try {
@@ -5456,10 +5489,24 @@ function saveInvertedAxes() {
   } catch (_) {}
 }
 
+function loadRegisterMode() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-register-mode');
+    if (stored && ['primary', 'declared', 'structural'].includes(stored)) registerMode = stored;
+  } catch (_) {}
+}
+
+function saveRegisterMode() {
+  try {
+    localStorage.setItem('six-axis-compass-register-mode', registerMode);
+  } catch (_) {}
+}
+
 loadCustomActors();
 loadTheme();
 loadInvertedAxes();
 loadActorGroupOrder();
+loadRegisterMode();
 document.documentElement.setAttribute('data-theme', theme);
 
 function announce(message) {
@@ -5605,6 +5652,7 @@ function showResults() {
     onCopyLink: () => {
       copyToClipboard(window.location.href);
     },
+    register: registerMode,
     customActors,
     onAddCustomActor: (actor) => {
       if (customActors.some(c => c.name === actor.name)) return;
@@ -5636,6 +5684,11 @@ function showResults() {
       theme = t;
       saveTheme();
       document.documentElement.setAttribute('data-theme', theme);
+      showResults();
+    },
+    onSetRegister: (r) => {
+      registerMode = r;
+      saveRegisterMode();
       showResults();
     }
   });
