@@ -1,0 +1,417 @@
+{
+  "meta": {
+    "title": "6-Axis Compass — UK Political Actors Data File",
+    "version": "0.1.0",
+    "date": "2026-05-19",
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "source_documents": [
+      "sourced-conservative-party-v0_1_0.md",
+      "sourced-labour-party-v0_2_1.md",
+      "sourced-liberal-democrats-v0_3_0.md",
+      "sourced-reform-uk-and-restore-britain-v0_1_0.md",
+      "sourced-green-party-v0_1_0.md",
+      "sourced-snp-and-plaid-cymru-v0_1_0.md"
+    ],
+    "academic_paper": "academic-paper-v0.1.10.md",
+    "axes": ["cultural", "economic", "military", "sovereignty", "governance", "class"],
+    "scale": "0–10 normalised (0 = internationalist/interventionist/supranational/broad/harmony, 10 = nationalist/non-interventionist/sovereigntist/state-centric/conflict)"
+  },
+  "actors": [
+    {
+      "id": "conservative-2010-2024",
+      "name": "Conservative Party",
+      "display_name": "Conservative (2010–24)",
+      "period": "2010–2024",
+      "status": "governing",
+      "evidence_quality": "strong",
+      "coordinates": {
+        "declared": {
+          "cultural": 10.0,
+          "economic": 0.0,
+          "military": 8.1,
+          "sovereignty": 8.8,
+          "governance": 8.8,
+          "class": 2.5
+        },
+        "structural": {
+          "cultural": 9.4,
+          "economic": 0.0,
+          "military": 10.0,
+          "sovereignty": 8.1,
+          "governance": 8.8,
+          "class": 2.5
+        },
+        "delta": {
+          "cultural": -0.6,
+          "economic": 0.0,
+          "military": 1.9,
+          "sovereignty": -0.7,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.95, "structural": 0.90, "note": "14-year governing record provides exceptionally rich structural evidence" },
+        "economic": { "declared": 0.95, "structural": 0.95, "note": "Washington Consensus alignment consistent across Cameron–Sunak" },
+        "military": { "declared": 0.85, "structural": 0.95, "note": "Strong structural record: Libya intervention, Syria votes, Afghanistan continuity" },
+        "sovereignty": { "declared": 0.90, "structural": 0.90, "note": "Brexit delivery + retained EU law framework" },
+        "governance": { "declared": 0.85, "structural": 0.90, "note": "State-centric authority model consistent" },
+        "class": { "declared": 0.90, "structural": 0.90, "note": "Class-harmony orientation toward capital consistent" }
+      },
+      "sources": {
+        "declared": ["Conservative Manifesto 2024", "Conservative Manifestos 2010–2019"],
+        "structural": ["Governing record 2010–2024", "Lowe 2025", "ONS migration statistics", "Treasury fiscal records"]
+      }
+    },
+    {
+      "id": "labour-2024",
+      "name": "Labour Party",
+      "display_name": "Labour (2024–)",
+      "period": "2024–present",
+      "status": "governing",
+      "evidence_quality": "moderate",
+      "coordinates": {
+        "declared": {
+          "cultural": 6.9,
+          "economic": 5.0,
+          "military": 8.1,
+          "sovereignty": 3.1,
+          "governance": 6.3,
+          "class": 5.6
+        },
+        "structural": {
+          "cultural": 6.3,
+          "economic": 5.0,
+          "military": 8.1,
+          "sovereignty": 3.1,
+          "governance": 6.3,
+          "class": 5.6
+        },
+        "delta": {
+          "cultural": -0.6,
+          "economic": 0.0,
+          "military": 0.0,
+          "sovereignty": 0.0,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.85, "structural": 0.75, "note": "~22 months governing record; Employment Rights Act provides evidence" },
+        "economic": { "declared": 0.90, "structural": 0.85, "note": "October 2024 Budget + fiscal rules confirm continuity" },
+        "military": { "declared": 0.85, "structural": 0.80, "note": "Strategic Defence Review 2025 confirms interventionist posture" },
+        "sovereignty": { "declared": 0.85, "structural": 0.80, "note": "EU relationship reset, no rejoin; ECHR retention" },
+        "governance": { "declared": 0.85, "structural": 0.80, "note": "State reform agenda moderate" },
+        "class": { "declared": 0.85, "structural": 0.80, "note": "Employment Rights Act + growth mission confirm class-harmony" }
+      },
+      "sources": {
+        "declared": ["Labour Manifesto 2024", "Starmer conference speeches 2024–2026"],
+        "structural": ["Employment Rights Act 2025", "October 2024 Budget", "Strategic Defence Review 2025", "Border Security Command"]
+      }
+    },
+    {
+      "id": "liberal-democrats-2020-2026",
+      "name": "Liberal Democrats",
+      "display_name": "Liberal Democrats",
+      "period": "2020–2026 (Davey era)",
+      "status": "opposition",
+      "evidence_quality": "moderate",
+      "coordinates": {
+        "declared": {
+          "cultural": 2.5,
+          "economic": 1.3,
+          "military": 8.1,
+          "sovereignty": 0.6,
+          "governance": 3.1,
+          "class": 4.4
+        },
+        "structural": {
+          "cultural": 2.5,
+          "economic": 1.3,
+          "military": 8.1,
+          "sovereignty": 0.6,
+          "governance": 3.1,
+          "class": 4.4
+        },
+        "delta": {
+          "cultural": 0.0,
+          "economic": 0.0,
+          "military": 0.0,
+          "sovereignty": 0.0,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.90, "structural": 0.70, "note": "Opposition throughout Davey era; voting record consistent" },
+        "economic": { "declared": 0.90, "structural": 0.70, "note": "Pro-market internationalism clear in manifesto" },
+        "military": { "declared": 0.85, "structural": 0.70, "note": "Interventionist voting record" },
+        "sovereignty": { "declared": 0.95, "structural": 0.75, "note": "EU rejoin + single market most explicit pro-supranational position" },
+        "governance": { "declared": 0.85, "structural": 0.70, "note": "Liberal democratic reform agenda" },
+        "class": { "declared": 0.85, "structural": 0.70, "note": "Professional-class base + market liberalism" }
+      },
+      "sources": {
+        "declared": ["Lib Dem Manifesto 2024", "Davey conference speeches 2020–2026", "Youth Mobility Scheme policy"],
+        "structural": ["Westminster voting record 2020–2026", "Council governance (Lib Dem controlled)"]
+      }
+    },
+    {
+      "id": "reform-uk-2024-2026",
+      "name": "Reform UK",
+      "display_name": "Reform UK",
+      "period": "2024–present",
+      "status": "opposition",
+      "evidence_quality": "constrained",
+      "coordinates": {
+        "declared": {
+          "cultural": 10.0,
+          "economic": 1.3,
+          "military": 4.4,
+          "sovereignty": 8.8,
+          "governance": 8.8,
+          "class": 1.9
+        },
+        "structural": {
+          "cultural": 7.5,
+          "economic": 0.6,
+          "military": 4.4,
+          "sovereignty": 8.1,
+          "governance": 8.8,
+          "class": 1.9
+        },
+        "delta": {
+          "cultural": -2.5,
+          "economic": -0.7,
+          "military": 0.0,
+          "sovereignty": -0.7,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.90, "structural": 0.60, "note": "CONSTRAINED: 5–8 MPs, no governing record; council governance emerging" },
+        "economic": { "declared": 0.80, "structural": 0.55, "note": "CONSTRAINED: Tax cuts declared; voting record limited" },
+        "military": { "declared": 0.75, "structural": 0.60, "note": "CONSTRAINED: Non-interventionist rhetoric; limited voting record" },
+        "sovereignty": { "declared": 0.90, "structural": 0.65, "note": "CONSTRAINED: ECHR withdrawal declared; no governing test" },
+        "governance": { "declared": 0.85, "structural": 0.60, "note": "CONSTRAINED: Populist authority model clear; untested in government" },
+        "class": { "declared": 0.85, "structural": 0.60, "note": "CONSTRAINED: Class-harmony orientation declared" }
+      },
+      "sources": {
+        "declared": ["Reform UK Manifesto 2024 (Our Contract With You)", "reformparty.uk policies 2026"],
+        "structural": ["Westminster voting record 2024–2026", "Council governance (10+ councils from May 2025)", "Leadership statements"]
+      }
+    },
+    {
+      "id": "restore-britain-2025-2026",
+      "name": "Restore Britain",
+      "display_name": "Restore Britain",
+      "period": "2025–present",
+      "status": "opposition",
+      "evidence_quality": "very_constrained",
+      "coordinates": {
+        "declared": {
+          "cultural": 10.0,
+          "economic": 0.0,
+          "military": 4.4,
+          "sovereignty": 9.4,
+          "governance": 9.4,
+          "class": 0.0
+        },
+        "structural": {
+          "cultural": 7.5,
+          "economic": 0.0,
+          "military": 4.4,
+          "sovereignty": 9.4,
+          "governance": 9.4,
+          "class": 0.0
+        },
+        "delta": {
+          "cultural": -2.5,
+          "economic": 0.0,
+          "military": 0.0,
+          "sovereignty": 0.0,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.75, "structural": 0.40, "note": "VERY CONSTRAINED: No elections stood; Lowe's individual record only" },
+        "economic": { "declared": 0.80, "structural": 0.50, "note": "VERY CONSTRAINED: Lowe's 1980s London finance nostalgia documented; no party governing record" },
+        "military": { "declared": 0.60, "structural": 0.40, "note": "VERY CONSTRAINED: Limited statements" },
+        "sovereignty": { "declared": 0.85, "structural": 0.45, "note": "VERY CONSTRAINED: ECHR/Refugee Convention withdrawal declared; untested" },
+        "governance": { "declared": 0.85, "structural": 0.45, "note": "VERY CONSTRAINED: Courts/treaty override rhetoric; boundary of right/extreme per taxonomy note" },
+        "class": { "declared": 0.80, "structural": 0.45, "note": "VERY CONSTRAINED: Class-harmony orientation inferred from economic position" }
+      },
+      "sources": {
+        "declared": ["Restore Britain website 2026", "Lowe statements February 2026 launch", "Lowe parliamentary speeches"],
+        "structural": ["Lowe voting record as independent MP 2024–2026", "Lowe statements on mass deportation"]
+      },
+      "taxonomy_note": "Restore Britain sits at the extreme boundary of 'the right' per the Trilling criterion. Core policy (mass deportation requiring ECHR/Human Rights Act withdrawal) constitutes serious challenge to judicial independence and rule of law. Party has attracted neo-fascist support. Classification held as interpretive question, not settled finding. See sourced-reform-uk-and-restore-britain-v0_1_0.md CRITICAL TAXONOMY NOTE."
+    },
+    {
+      "id": "green-party-2024-2026",
+      "name": "Green Party of England and Wales",
+      "display_name": "Green Party",
+      "period": "2024–present",
+      "status": "opposition",
+      "evidence_quality": "moderate",
+      "coordinates": {
+        "declared": {
+          "cultural": 0.0,
+          "economic": 6.3,
+          "military": 1.3,
+          "sovereignty": 1.3,
+          "governance": 2.5,
+          "class": 9.4
+        },
+        "structural": {
+          "cultural": 2.5,
+          "economic": 6.9,
+          "military": 1.3,
+          "sovereignty": 1.3,
+          "governance": 2.5,
+          "class": 9.4
+        },
+        "delta": {
+          "cultural": 2.5,
+          "economic": 0.6,
+          "military": 0.0,
+          "sovereignty": 0.0,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.90, "structural": 0.65, "note": "4 MPs + 900+ councillors; council governance provides some structural evidence" },
+        "economic": { "declared": 0.90, "structural": 0.70, "note": "Anti-Washington Consensus position clear; council budgets show constraints" },
+        "military": { "declared": 0.90, "structural": 0.65, "note": "Non-interventionist voting record" },
+        "sovereignty": { "declared": 0.80, "structural": 0.65, "note": "EU membership + devolution support creates ambivalent position" },
+        "governance": { "declared": 0.85, "structural": 0.70, "note": "Broad governance conception (private coercion included)" },
+        "class": { "declared": 0.90, "structural": 0.75, "note": "Class-conflict orientation clearest in UK party landscape" }
+      },
+      "sources": {
+        "declared": ["Green Party Manifesto 2024", "Green Party policies 2024–2026"],
+        "structural": ["Westminster voting record 2024–2026 (4→5 MPs)", "Council governance (30+ councils in control/coalition)", "Membership growth 150k→230k"]
+      },
+      "convergence_note": "Primary representative of anti-imperialist left in convergence thesis. Shares structural target with nationalist right on economic and military axes while diverging on cultural, governance, class, and sovereignty."
+    },
+    {
+      "id": "snp-2007-2026",
+      "name": "Scottish National Party",
+      "display_name": "SNP",
+      "period": "2007–2026 (Holyrood)",
+      "status": "devolved_governing",
+      "evidence_quality": "strong",
+      "coordinates": {
+        "declared": {
+          "cultural": 5.0,
+          "economic": 5.0,
+          "military": 3.8,
+          "sovereignty": 5.0,
+          "governance": 5.6,
+          "class": 7.5
+        },
+        "structural": {
+          "cultural": 5.0,
+          "economic": 5.6,
+          "military": 3.8,
+          "sovereignty": 4.4,
+          "governance": 5.6,
+          "class": 7.5
+        },
+        "delta": {
+          "cultural": 0.0,
+          "economic": 0.6,
+          "military": 0.0,
+          "sovereignty": -0.6,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.90, "structural": 0.85, "note": "19 years Holyrood government provides strong structural record" },
+        "economic": { "declared": 0.85, "structural": 0.85, "note": "Centrist economic management record" },
+        "military": { "declared": 0.80, "structural": 0.75, "note": "Non-interventionist inclination; reserved matter limits structural evidence" },
+        "sovereignty": { "declared": 0.95, "structural": 0.85, "note": "Independence referendum commitment + EU rejoin position clear" },
+        "governance": { "declared": 0.85, "structural": 0.85, "note": "Civic nationalist governance model" },
+        "class": { "declared": 0.85, "structural": 0.85, "note": "Nordic model orientation + public investment" }
+      },
+      "sources": {
+        "declared": ["SNP Westminster Manifesto 2024", "Holyrood programme 2021–2026"],
+        "structural": ["Holyrood governing record 2007–2026 (5 consecutive terms)", "Westminster voting record 2024–2026"]
+      },
+      "sovereignty_note": "Sovereign nationalist, not cultural nationalist. Sovereignty axis high (self-determination); cultural axis moderate (civic, residence-based identity)."
+    },
+    {
+      "id": "plaid-cymru-2021-2026",
+      "name": "Plaid Cymru",
+      "display_name": "Plaid Cymru",
+      "period": "2021–2026",
+      "status": "devolved_governing",
+      "evidence_quality": "moderate",
+      "coordinates": {
+        "declared": {
+          "cultural": 5.6,
+          "economic": 5.6,
+          "military": 2.5,
+          "sovereignty": 5.0,
+          "governance": 5.6,
+          "class": 6.9
+        },
+        "structural": {
+          "cultural": 5.6,
+          "economic": 5.6,
+          "military": 2.5,
+          "sovereignty": 4.4,
+          "governance": 5.6,
+          "class": 6.9
+        },
+        "delta": {
+          "cultural": 0.0,
+          "economic": 0.0,
+          "military": 0.0,
+          "sovereignty": -0.6,
+          "governance": 0.0,
+          "class": 0.0
+        }
+      },
+      "confidence": {
+        "cultural": { "declared": 0.85, "structural": 0.70, "note": "Co-operation Agreement 2021–2024 provides partial governing record; 2026 election win brand new" },
+        "economic": { "declared": 0.85, "structural": 0.70, "note": "Centrist Welsh economic development focus" },
+        "military": { "declared": 0.75, "structural": 0.60, "note": "Non-interventionist; reserved matter limits evidence" },
+        "sovereignty": { "declared": 0.85, "structural": 0.70, "note": "Independence commitment; EU relationship similar to SNP" },
+        "governance": { "declared": 0.85, "structural": 0.70, "note": "Welsh civic nationalist model" },
+        "class": { "declared": 0.85, "structural": 0.70, "note": "Working-class Welsh communities base" }
+      },
+      "sources": {
+        "declared": ["Plaid Cymru Westminster Manifesto 2024", "2026 Senedd manifesto"],
+        "structural": ["Co-operation Agreement with Welsh Labour 2021–2024", "Westminster voting record 2024–2026", "Senedd voting record", "2026 election outcome (43 seats, forming government)"]
+      },
+      "sovereignty_note": "Sovereign nationalist, not cultural nationalist. Higher cultural score than SNP reflects Welsh language/cultural protection commitments."
+    }
+  ],
+  "table_1_summary": {
+    "title": "Structural Axis Scores for Eight UK Political Actors",
+    "source": "academic-paper-v0.1.10.md, Section 3.3",
+    "data": [
+      {"actor": "Conservative (2010–24)", "cultural": 9.4, "economic": 0.0, "military": 10.0, "sovereignty": 8.1, "governance": 8.8, "class": 2.5},
+      {"actor": "Labour (2024–)", "cultural": 6.3, "economic": 5.0, "military": 8.1, "sovereignty": 3.1, "governance": 6.3, "class": 5.6},
+      {"actor": "Liberal Democrats", "cultural": 2.5, "economic": 1.3, "military": 8.1, "sovereignty": 0.6, "governance": 3.1, "class": 4.4},
+      {"actor": "Reform UK", "cultural": 7.5, "economic": 0.6, "military": 4.4, "sovereignty": 8.1, "governance": 8.8, "class": 1.9},
+      {"actor": "Restore Britain", "cultural": 7.5, "economic": 0.0, "military": 4.4, "sovereignty": 9.4, "governance": 9.4, "class": 0.0},
+      {"actor": "Green Party", "cultural": 2.5, "economic": 6.9, "military": 1.3, "sovereignty": 1.3, "governance": 2.5, "class": 9.4},
+      {"actor": "SNP", "cultural": 5.0, "economic": 5.6, "military": 3.8, "sovereignty": 4.4, "governance": 5.6, "class": 7.5},
+      {"actor": "Plaid Cymru", "cultural": 5.6, "economic": 5.6, "military": 2.5, "sovereignty": 4.4, "governance": 5.6, "class": 6.9}
+    ]
+  },
+  "usage_notes": {
+    "for_compass_update": "This data file provides all coordinates and confidence values needed to update the 6-Axis Compass standalone application. Transfer to https://github.com/earlution/6-axis-compass and update the data layer.",
+    "confidence_interpretation": {
+      "strong": "0.85–0.95 — Rich evidence base (governing record or extensive manifesto + voting history)",
+      "moderate": "0.70–0.85 — Adequate evidence (opposition voting record + clear manifesto positions)",
+      "constrained": "0.55–0.70 — Limited evidence (few MPs, no national governing record)",
+      "very_constrained": "0.40–0.55 — Minimal evidence (no elections stood, individual record only)"
+    },
+    "delta_interpretation": "Positive delta = structural score higher than declared (more nationalist/authoritarian in practice). Negative delta = structural score lower than declared (more internationalist/broad in practice). Delta magnitude >1.0 indicates significant declared/structural gap."
+  }
+}

@@ -17,7 +17,6 @@ export function renderIntro(container, { onStart, onUpload } = {}) {
             <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
           </label>
         </div>
-        <a class="data-link" href="data.html">Browse the actor dataset &rarr;</a>
         <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
@@ -149,6 +148,7 @@ export function renderResults(container, {
           </div>
           <div class="content-pane">
             <div class="actor-groups" id="actor-groups"></div>
+            <a class="data-link" href="data.html">Browse the full actor dataset &rarr;</a>
             <div class="score-bars" id="score-bars"></div>
             <hr class="divider">
             <div class="config-section">
