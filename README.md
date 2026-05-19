@@ -55,9 +55,9 @@ This makes the compass a living research instrument: users can inspect the evide
 
 ## API
 
-A small HTTP API is available for generating radar charts programmatically. This is useful for academic papers, build pipelines, or external tools that need to capture compass visual artifacts on demand.
+### REST API (Server-side)
 
-### Running the API
+A small HTTP API is available for generating radar charts programmatically. This is useful for academic papers, build pipelines, or external tools that need to capture compass visual artifacts on demand.
 
 ```bash
 API_SECRET=your-secret-here npm run api
@@ -65,45 +65,13 @@ API_SECRET=your-secret-here npm run api
 
 The server listens on `API_PORT` (default 3000). All endpoints except `/api/health` require authentication via the `Authorization: Bearer <API_SECRET>` header.
 
-### Endpoints
+| Endpoint | Auth | Description |
+|----------|------|-------------|
+| `GET /api/health` | No | Health check |
+| `GET /api/actors` | Bearer | List all preset actors |
+| `POST /api/chart` | Bearer | Generate SVG or PNG chart |
 
-#### `GET /api/health`
-Unauthenticated health check.
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-#### `GET /api/actors`
-List all available pre-set actors.
-
-```bash
-curl -H "Authorization: Bearer $API_SECRET" http://localhost:3000/api/actors
-```
-
-#### `POST /api/chart`
-Generate a radar chart. Returns SVG or PNG.
-
-```bash
-curl -H "Authorization: Bearer $API_SECRET" \
-     -H "Content-Type: application/json" \
-     -d '{"scores":{"Cultural":5,"Economic":5,"Military":5,"Sovereignty":5,"Governance":5,"Class":5},"format":"svg"}' \
-     http://localhost:3000/api/chart -o chart.svg
-```
-
-**Request body:**
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `scores` | object | no | Map of axis names to 0–10 values. Defaults to all zeros. |
-| `actors` | string[] | no | Names of pre-set actors to overlay. |
-| `format` | string | no | `"svg"` or `"png"`. Default `"svg"`. |
-| `orientation` | string | no | `"flat"` or `"pointy"`. Default `"flat"`. |
-| `width` | number | no | PNG width in px. Default 600. |
-| `height` | number | no | PNG height in px. Default 600. |
-| `colors.user` | string | no | Hex colour for the primary profile. Default `#c8a84b`. |
-
-**Example with actor overlays and PNG output:**
+**Example:**
 
 ```bash
 curl -H "Authorization: Bearer $API_SECRET" \
@@ -111,6 +79,31 @@ curl -H "Authorization: Bearer $API_SECRET" \
      -d '{"scores":{"Cultural":5,"Economic":3,"Military":7,"Sovereignty":5,"Governance":6,"Class":3},"actors":["Green Party","Labour Party"],"format":"png"}' \
      http://localhost:3000/api/chart -o comparison.png
 ```
+
+Full endpoint documentation, request/response schemas, and error reference: [`API.md`](./API.md).
+
+### Shareable Web URL (Client-side)
+
+The live UI supports generating maps directly via a **parameterised hash URL**—no API key or server required. Everything is rendered client-side.
+
+```
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemsla
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `v2` | URL format version (`v1` legacy, `v2` current) | `v2` |
+| `c=5.0,e=5.0,...` | Axis scores (0–10). Keys: `c`=Cultural, `e`=Economic, `m`=Military, `s`=Sovereignty, `l`=Governance, `a`=Class | `c=7.0,e=3.0,m=8.0,s=6.0,l=5.0,a=1.0` |
+| `o=flat` | Chart orientation: `flat` or `pointy` | `o=pointy` |
+| `x=cemsla` | Axis display order (clockwise from top-right) | `x=cemsla` |
+| `i=` *(optional)* | Inverted axes (swapped poles) | `i=la` |
+
+**Example — Centrist profile:**
+```
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemsla
+```
+
+Visiting a valid hash URL skips the quiz and renders the results screen immediately. The URL auto-updates when orientation or axis order changes, so copying the address bar always captures the current view. `v1` URLs are backwards-compatible.
 
 ## Paper Artifacts
 
