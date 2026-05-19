@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "Labour (2024–)"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,122 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 3.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2024–present",
+    "status": "governing",
+    "evidenceQuality": "moderate",
+    "declared": {
+      "Cultural": 6.9,
+      "Economic": 5,
+      "Military": 8.1,
+      "Sovereignty": 3.1,
+      "Governance": 6.3,
+      "Class": 5.6
+    },
+    "structural": {
+      "Cultural": 6.3,
+      "Economic": 5,
+      "Military": 8.1,
+      "Sovereignty": 3.1,
+      "Governance": 6.3,
+      "Class": 5.6
+    },
+    "delta": {
+      "Cultural": -0.6,
+      "Economic": 0,
+      "Military": 0,
+      "Sovereignty": 0,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.85,
+        "structural": 0.75,
+        "note": "~22 months governing record; Employment Rights Act provides evidence"
+      },
+      "Economic": {
+        "declared": 0.9,
+        "structural": 0.85,
+        "note": "October 2024 Budget + fiscal rules confirm continuity"
+      },
+      "Military": {
+        "declared": 0.85,
+        "structural": 0.8,
+        "note": "Strategic Defence Review 2025 confirms interventionist posture"
+      },
+      "Sovereignty": {
+        "declared": 0.85,
+        "structural": 0.8,
+        "note": "EU relationship reset, no rejoin; ECHR retention"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.8,
+        "note": "State reform agenda moderate"
+      },
+      "Class": {
+        "declared": 0.85,
+        "structural": 0.8,
+        "note": "Employment Rights Act + growth mission confirm class-harmony"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Labour Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Labour Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "Starmer conference speeches 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Starmer conference speeches 2024–2026"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Employment Rights Act 2025",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Employment Rights Act 2025"
+        },
+        {
+          "type": "legislation",
+          "title": "October 2024 Budget",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "October 2024 Budget"
+        },
+        {
+          "type": "legislation",
+          "title": "Strategic Defence Review 2025",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Strategic Defence Review 2025"
+        },
+        {
+          "type": "legislation",
+          "title": "Border Security Command",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Border Security Command"
+        }
+      ]
     }
   }
 }

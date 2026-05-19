@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "Plaid Cymru"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,122 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 7.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2021–2026",
+    "status": "devolved_governing",
+    "evidenceQuality": "moderate",
+    "declared": {
+      "Cultural": 5.6,
+      "Economic": 5.6,
+      "Military": 2.5,
+      "Sovereignty": 5,
+      "Governance": 5.6,
+      "Class": 6.9
+    },
+    "structural": {
+      "Cultural": 5.6,
+      "Economic": 5.6,
+      "Military": 2.5,
+      "Sovereignty": 4.4,
+      "Governance": 5.6,
+      "Class": 6.9
+    },
+    "delta": {
+      "Cultural": 0,
+      "Economic": 0,
+      "Military": 0,
+      "Sovereignty": -0.6,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Co-operation Agreement 2021–2024 provides partial governing record; 2026 election win brand new"
+      },
+      "Economic": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Centrist Welsh economic development focus"
+      },
+      "Military": {
+        "declared": 0.75,
+        "structural": 0.6,
+        "note": "Non-interventionist; reserved matter limits evidence"
+      },
+      "Sovereignty": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Independence commitment; EU relationship similar to SNP"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Welsh civic nationalist model"
+      },
+      "Class": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Working-class Welsh communities base"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Plaid Cymru Westminster Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Plaid Cymru Westminster Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "2026 Senedd manifesto",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "2026 Senedd manifesto"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Co-operation Agreement with Welsh Labour 2021–2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Co-operation Agreement with Welsh Labour 2021–2024"
+        },
+        {
+          "type": "legislation",
+          "title": "Westminster voting record 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Westminster voting record 2024–2026"
+        },
+        {
+          "type": "legislation",
+          "title": "Senedd voting record",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Senedd voting record"
+        },
+        {
+          "type": "legislation",
+          "title": "2026 election outcome (43 seats, forming government)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "2026 election outcome (43 seats, forming government)"
+        }
+      ]
     }
   }
 }

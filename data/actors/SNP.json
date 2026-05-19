@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "SNP"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,106 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 7.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2007–2026 (Holyrood)",
+    "status": "devolved_governing",
+    "evidenceQuality": "strong",
+    "declared": {
+      "Cultural": 5,
+      "Economic": 5,
+      "Military": 3.8,
+      "Sovereignty": 5,
+      "Governance": 5.6,
+      "Class": 7.5
+    },
+    "structural": {
+      "Cultural": 5,
+      "Economic": 5.6,
+      "Military": 3.8,
+      "Sovereignty": 4.4,
+      "Governance": 5.6,
+      "Class": 7.5
+    },
+    "delta": {
+      "Cultural": 0,
+      "Economic": 0.6,
+      "Military": 0,
+      "Sovereignty": -0.6,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.9,
+        "structural": 0.85,
+        "note": "19 years Holyrood government provides strong structural record"
+      },
+      "Economic": {
+        "declared": 0.85,
+        "structural": 0.85,
+        "note": "Centrist economic management record"
+      },
+      "Military": {
+        "declared": 0.8,
+        "structural": 0.75,
+        "note": "Non-interventionist inclination; reserved matter limits structural evidence"
+      },
+      "Sovereignty": {
+        "declared": 0.95,
+        "structural": 0.85,
+        "note": "Independence referendum commitment + EU rejoin position clear"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.85,
+        "note": "Civic nationalist governance model"
+      },
+      "Class": {
+        "declared": 0.85,
+        "structural": 0.85,
+        "note": "Nordic model orientation + public investment"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "SNP Westminster Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "SNP Westminster Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "Holyrood programme 2021–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Holyrood programme 2021–2026"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Holyrood governing record 2007–2026 (5 consecutive terms)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Holyrood governing record 2007–2026 (5 consecutive terms)"
+        },
+        {
+          "type": "legislation",
+          "title": "Westminster voting record 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Westminster voting record 2024–2026"
+        }
+      ]
     }
   }
 }

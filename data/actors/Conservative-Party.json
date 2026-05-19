@@ -11,7 +11,8 @@
     "curator": "A Common Enemy Project",
     "contributors": [
       "Ruari Mears"
-    ]
+    ],
+    "displayName": "Conservative (2010–24)"
   },
   "scores": {
     "Cultural": {
@@ -288,6 +289,122 @@
       "confidence": "high",
       "rationale": "Inferred from Class axis score of 1.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2010–2024",
+    "status": "governing",
+    "evidenceQuality": "strong",
+    "declared": {
+      "Cultural": 10,
+      "Economic": 0,
+      "Military": 8.1,
+      "Sovereignty": 8.8,
+      "Governance": 8.8,
+      "Class": 2.5
+    },
+    "structural": {
+      "Cultural": 9.4,
+      "Economic": 0,
+      "Military": 10,
+      "Sovereignty": 8.1,
+      "Governance": 8.8,
+      "Class": 2.5
+    },
+    "delta": {
+      "Cultural": -0.6,
+      "Economic": 0,
+      "Military": 1.9,
+      "Sovereignty": -0.7,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.95,
+        "structural": 0.9,
+        "note": "14-year governing record provides exceptionally rich structural evidence"
+      },
+      "Economic": {
+        "declared": 0.95,
+        "structural": 0.95,
+        "note": "Washington Consensus alignment consistent across Cameron–Sunak"
+      },
+      "Military": {
+        "declared": 0.85,
+        "structural": 0.95,
+        "note": "Strong structural record: Libya intervention, Syria votes, Afghanistan continuity"
+      },
+      "Sovereignty": {
+        "declared": 0.9,
+        "structural": 0.9,
+        "note": "Brexit delivery + retained EU law framework"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.9,
+        "note": "State-centric authority model consistent"
+      },
+      "Class": {
+        "declared": 0.9,
+        "structural": 0.9,
+        "note": "Class-harmony orientation toward capital consistent"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Conservative Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Conservative Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "Conservative Manifestos 2010–2019",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Conservative Manifestos 2010–2019"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Governing record 2010–2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Governing record 2010–2024"
+        },
+        {
+          "type": "legislation",
+          "title": "Lowe 2025",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lowe 2025"
+        },
+        {
+          "type": "legislation",
+          "title": "ONS migration statistics",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "ONS migration statistics"
+        },
+        {
+          "type": "legislation",
+          "title": "Treasury fiscal records",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Treasury fiscal records"
+        }
+      ]
     }
   }
 }

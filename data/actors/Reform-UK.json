@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "Reform UK"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,114 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 2.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2024–present",
+    "status": "opposition",
+    "evidenceQuality": "constrained",
+    "declared": {
+      "Cultural": 10,
+      "Economic": 1.3,
+      "Military": 4.4,
+      "Sovereignty": 8.8,
+      "Governance": 8.8,
+      "Class": 1.9
+    },
+    "structural": {
+      "Cultural": 7.5,
+      "Economic": 0.6,
+      "Military": 4.4,
+      "Sovereignty": 8.1,
+      "Governance": 8.8,
+      "Class": 1.9
+    },
+    "delta": {
+      "Cultural": -2.5,
+      "Economic": -0.7,
+      "Military": 0,
+      "Sovereignty": -0.7,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.9,
+        "structural": 0.6,
+        "note": "CONSTRAINED: 5–8 MPs, no governing record; council governance emerging"
+      },
+      "Economic": {
+        "declared": 0.8,
+        "structural": 0.55,
+        "note": "CONSTRAINED: Tax cuts declared; voting record limited"
+      },
+      "Military": {
+        "declared": 0.75,
+        "structural": 0.6,
+        "note": "CONSTRAINED: Non-interventionist rhetoric; limited voting record"
+      },
+      "Sovereignty": {
+        "declared": 0.9,
+        "structural": 0.65,
+        "note": "CONSTRAINED: ECHR withdrawal declared; no governing test"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.6,
+        "note": "CONSTRAINED: Populist authority model clear; untested in government"
+      },
+      "Class": {
+        "declared": 0.85,
+        "structural": 0.6,
+        "note": "CONSTRAINED: Class-harmony orientation declared"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Reform UK Manifesto 2024 (Our Contract With You)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Reform UK Manifesto 2024 (Our Contract With You)"
+        },
+        {
+          "type": "manifesto",
+          "title": "reformparty.uk policies 2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "reformparty.uk policies 2026"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Westminster voting record 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Westminster voting record 2024–2026"
+        },
+        {
+          "type": "legislation",
+          "title": "Council governance (10+ councils from May 2025)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Council governance (10+ councils from May 2025)"
+        },
+        {
+          "type": "legislation",
+          "title": "Leadership statements",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Leadership statements"
+        }
+      ]
     }
   }
 }

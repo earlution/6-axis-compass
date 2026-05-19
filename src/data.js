@@ -109,7 +109,8 @@ export const ACTORS = typeof __ACTORS !== 'undefined' ? __ACTORS : _FALLBACK_ACT
 export const ACTOR_GROUPS = {
   '2024–2029 UK Parliament': [
     'Conservative Party', 'Labour Party', 'Reform UK',
-    'Liberal Democrats', 'Green Party', 'SNP', 'Plaid Cymru'
+    'Liberal Democrats', 'Green Party', 'SNP', 'Plaid Cymru',
+    'Restore Britain'
   ],
   'US Congress (current cycle)': ['US Democrats', 'US Republicans'],
   'Thatcher / Reagan era': ['Thatcher government 1979–90'],

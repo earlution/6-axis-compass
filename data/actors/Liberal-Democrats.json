@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "Liberal Democrats"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,114 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 4.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2020–2026 (Davey era)",
+    "status": "opposition",
+    "evidenceQuality": "moderate",
+    "declared": {
+      "Cultural": 2.5,
+      "Economic": 1.3,
+      "Military": 8.1,
+      "Sovereignty": 0.6,
+      "Governance": 3.1,
+      "Class": 4.4
+    },
+    "structural": {
+      "Cultural": 2.5,
+      "Economic": 1.3,
+      "Military": 8.1,
+      "Sovereignty": 0.6,
+      "Governance": 3.1,
+      "Class": 4.4
+    },
+    "delta": {
+      "Cultural": 0,
+      "Economic": 0,
+      "Military": 0,
+      "Sovereignty": 0,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.9,
+        "structural": 0.7,
+        "note": "Opposition throughout Davey era; voting record consistent"
+      },
+      "Economic": {
+        "declared": 0.9,
+        "structural": 0.7,
+        "note": "Pro-market internationalism clear in manifesto"
+      },
+      "Military": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Interventionist voting record"
+      },
+      "Sovereignty": {
+        "declared": 0.95,
+        "structural": 0.75,
+        "note": "EU rejoin + single market most explicit pro-supranational position"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Liberal democratic reform agenda"
+      },
+      "Class": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Professional-class base + market liberalism"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Lib Dem Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lib Dem Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "Davey conference speeches 2020–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Davey conference speeches 2020–2026"
+        },
+        {
+          "type": "manifesto",
+          "title": "Youth Mobility Scheme policy",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Youth Mobility Scheme policy"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Westminster voting record 2020–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Westminster voting record 2020–2026"
+        },
+        {
+          "type": "legislation",
+          "title": "Council governance (Lib Dem controlled)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Council governance (Lib Dem controlled)"
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,281 @@
+{
+  "schemaVersion": "1.1.0",
+  "actor": {
+    "name": "Restore Britain",
+    "slug": "restore-britain-2025-2026",
+    "category": "UK Political Party",
+    "activePeriod": "2025–present",
+    "color": "#8B0000",
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-19",
+    "curator": "A Common Enemy Project",
+    "contributors": [
+      "Ruari Mears"
+    ]
+  },
+  "scores": {
+    "Cultural": 7.5,
+    "Economic": 0,
+    "Military": 4.4,
+    "Sovereignty": 9.4,
+    "Governance": 9.4,
+    "Class": 0
+  },
+  "responses": {
+    "Q1": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q2": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from structural axis scores for Restore Britain.",
+      "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2025–present",
+    "status": "opposition",
+    "evidenceQuality": "very_constrained",
+    "declared": {
+      "Cultural": 10,
+      "Economic": 0,
+      "Military": 4.4,
+      "Sovereignty": 9.4,
+      "Governance": 9.4,
+      "Class": 0
+    },
+    "structural": {
+      "Cultural": 7.5,
+      "Economic": 0,
+      "Military": 4.4,
+      "Sovereignty": 9.4,
+      "Governance": 9.4,
+      "Class": 0
+    },
+    "delta": {
+      "Cultural": -2.5,
+      "Economic": 0,
+      "Military": 0,
+      "Sovereignty": 0,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "cultural": {
+        "declared": 0.75,
+        "structural": 0.4,
+        "note": "VERY CONSTRAINED: No elections stood; Lowe's individual record only"
+      },
+      "economic": {
+        "declared": 0.8,
+        "structural": 0.5,
+        "note": "VERY CONSTRAINED: Lowe's 1980s London finance nostalgia documented; no party governing record"
+      },
+      "military": {
+        "declared": 0.6,
+        "structural": 0.4,
+        "note": "VERY CONSTRAINED: Limited statements"
+      },
+      "sovereignty": {
+        "declared": 0.85,
+        "structural": 0.45,
+        "note": "VERY CONSTRAINED: ECHR/Refugee Convention withdrawal declared; untested"
+      },
+      "governance": {
+        "declared": 0.85,
+        "structural": 0.45,
+        "note": "VERY CONSTRAINED: Courts/treaty override rhetoric; boundary of right/extreme per taxonomy note"
+      },
+      "class": {
+        "declared": 0.8,
+        "structural": 0.45,
+        "note": "VERY CONSTRAINED: Class-harmony orientation inferred from economic position"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Restore Britain website 2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Restore Britain website 2026"
+        },
+        {
+          "type": "manifesto",
+          "title": "Lowe statements February 2026 launch",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lowe statements February 2026 launch"
+        },
+        {
+          "type": "manifesto",
+          "title": "Lowe parliamentary speeches",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lowe parliamentary speeches"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Lowe voting record as independent MP 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lowe voting record as independent MP 2024–2026"
+        },
+        {
+          "type": "legislation",
+          "title": "Lowe statements on mass deportation",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Lowe statements on mass deportation"
+        }
+      ]
+    }
+  },
+  "_researchNotes": {
+    "taxonomyNote": "Restore Britain sits at the extreme boundary of 'the right' per the Trilling criterion. Core policy (mass deportation requiring ECHR/Human Rights Act withdrawal) constitutes serious challenge to judicial independence and rule of law. Party has attracted neo-fascist support. Classification held as interpretive question, not settled finding. See sourced-reform-uk-and-restore-britain-v0_1_0.md CRITICAL TAXONOMY NOTE."
+  }
+}

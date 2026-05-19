@@ -8,7 +8,8 @@
     "version": "1.0.0",
     "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
-    "contributors": []
+    "contributors": [],
+    "displayName": "Green Party"
   },
   "scores": {
     "Cultural": {
@@ -192,6 +193,114 @@
       "confidence": "medium",
       "rationale": "Inferred from Class axis score of 8.",
       "sources": []
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2024–present",
+    "status": "opposition",
+    "evidenceQuality": "moderate",
+    "declared": {
+      "Cultural": 0,
+      "Economic": 6.3,
+      "Military": 1.3,
+      "Sovereignty": 1.3,
+      "Governance": 2.5,
+      "Class": 9.4
+    },
+    "structural": {
+      "Cultural": 2.5,
+      "Economic": 6.9,
+      "Military": 1.3,
+      "Sovereignty": 1.3,
+      "Governance": 2.5,
+      "Class": 9.4
+    },
+    "delta": {
+      "Cultural": 2.5,
+      "Economic": 0.6,
+      "Military": 0,
+      "Sovereignty": 0,
+      "Governance": 0,
+      "Class": 0
+    },
+    "confidence": {
+      "Cultural": {
+        "declared": 0.9,
+        "structural": 0.65,
+        "note": "4 MPs + 900+ councillors; council governance provides some structural evidence"
+      },
+      "Economic": {
+        "declared": 0.9,
+        "structural": 0.7,
+        "note": "Anti-Washington Consensus position clear; council budgets show constraints"
+      },
+      "Military": {
+        "declared": 0.9,
+        "structural": 0.65,
+        "note": "Non-interventionist voting record"
+      },
+      "Sovereignty": {
+        "declared": 0.8,
+        "structural": 0.65,
+        "note": "EU membership + devolution support creates ambivalent position"
+      },
+      "Governance": {
+        "declared": 0.85,
+        "structural": 0.7,
+        "note": "Broad governance conception (private coercion included)"
+      },
+      "Class": {
+        "declared": 0.9,
+        "structural": 0.75,
+        "note": "Class-conflict orientation clearest in UK party landscape"
+      }
+    },
+    "sources": {
+      "declared": [
+        {
+          "type": "manifesto",
+          "title": "Green Party Manifesto 2024",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Green Party Manifesto 2024"
+        },
+        {
+          "type": "manifesto",
+          "title": "Green Party policies 2024–2026",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Green Party policies 2024–2026"
+        }
+      ],
+      "structural": [
+        {
+          "type": "legislation",
+          "title": "Westminster voting record 2024–2026 (4→5 MPs)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Westminster voting record 2024–2026 (4→5 MPs)"
+        },
+        {
+          "type": "legislation",
+          "title": "Council governance (30+ councils in control/coalition)",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Council governance (30+ councils in control/coalition)"
+        },
+        {
+          "type": "legislation",
+          "title": "Membership growth 150k→230k",
+          "url": "",
+          "date": "",
+          "relevantText": "",
+          "citation": "Membership growth 150k→230k"
+        }
+      ]
     }
   }
 }

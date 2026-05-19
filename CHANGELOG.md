@@ -34,6 +34,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.5] - 2026-05-19
+
+### Added
+- **Dual-register research data integration** (`data/research/compass-data-v0.1.0.json`).
+  - Moved research-grade dual-register dataset to `data/research/`.
+  - New migration script `scripts/migrate-dual-register.js` that:
+    - Adds `dualRegister` field (declared/structural/delta scores + numeric confidence + sources) to 7 existing UK party actor JSONs.
+    - Creates new `data/actors/restore-britain-2025-2026.json` with structural scores as primary.
+  - `scripts/sync-actor-data.js` now preserves `dualRegister` into `src/actors-generated.js`.
+  - Added **Restore Britain** to the '2024–2029 UK Parliament' actor group.
+
 ## [2.5.4] - 2026-05-19
 
 ### Added

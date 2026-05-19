@@ -48,6 +48,10 @@ function loadActors() {
       }
     }
 
+    if (raw.dualRegister) {
+      actor.dualRegister = raw.dualRegister;
+    }
+
     actors.push(actor);
   }
 
