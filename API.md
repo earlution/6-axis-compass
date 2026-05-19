@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.4.0 | 2026-05-19 | Added `dualRegister` field to Actor Data Schema. Documented declared/structural/delta scores, numeric confidence, and dual-register source sets. |
 | 1.3.0 | 2026-05-19 | Added "Actor Data Schema" section documenting the full JSON structure for `data/actors/*.json`. |
 | 1.2.0 | 2026-05-19 | Added "CI/CD Dispatch API" section documenting `repository_dispatch` event types for selective generation and upload. |
 | 1.1.0 | 2026-05-19 | Added "Shareable Web URL" section documenting the parameterised hash URL format. |
@@ -222,6 +223,7 @@ Every political actor in the dataset is defined by a single JSON file in `data/a
 | `actor` | `object` | **Yes** | Metadata block. See [Actor Metadata](#actor-metadata). |
 | `scores` | `object` | **Yes** | Map of six axis names to [Score objects](#score-object). |
 | `responses` | `object` | No | Map of `Q1`…`Q24` to [Response objects](#response-object). Optional; inferred from axis scores when absent. |
+| `dualRegister` | `object` | No | [Dual-register object](#dual-register-object) capturing declared vs structural scores. Optional. |
 
 ### Actor Metadata
 
@@ -270,6 +272,45 @@ Each key under `responses` is `Q1` through `Q24`, mapping to the 24 questionnair
 | `rationale` | `string` | No | Why this response was assigned. |
 | `sources` | `Source[]` | No | Array of [Source objects](#source-object). |
 
+### Dual-Register Object
+
+Optional. Captures the gap between what an actor *declares* (manifestos, speeches, stated positions) and what it actually *does* in practice (governing record, voting behaviour, policy outcomes). Inspired by the Dual-Register Sourcing Protocol.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `protocol` | `string` | No | Protocol version, e.g. `"Dual-Register Sourcing Protocol v0.2.0"`. |
+| `period` | `string` | No | Time range the scores apply to, e.g. `"2010–2024"`. |
+| `status` | `string` | No | Actor status during the period, e.g. `"governing"`, `"opposition"`, `"devolved_governing"`. |
+| `evidenceQuality` | `string` | No | Overall evidence strength: `"strong"`, `"moderate"`, `"constrained"`, `"very_constrained"`. |
+| `declared` | `object` | **Yes** | [Dual-register score set](#dual-register-score-set) from manifestos and speeches. |
+| `structural` | `object` | **Yes** | [Dual-register score set](#dual-register-score-set) from votes and governing record. |
+| `delta` | `object` | **Yes** | [Dual-register score set](#dual-register-score-set): `declared − structural`. Positive = more nationalist/authoritarian in practice. |
+| `confidence` | `object` | No | [Dual-register confidence object](#dual-register-confidence). Per-axis per-register confidence, `0.0–1.0`. |
+| `sources` | `object` | No | `{ "declared": Source[], "structural": Source[] }`. |
+
+### Dual-Register Score Set
+
+A flat map of the six axes to numeric scores, identical in structure to the top-level `scores` values but without the nested `confidence`, `rationale`, and `sources` fields.
+
+| Axis | Type | Range |
+|------|------|-------|
+| `Cultural` | `number` | `0–10` |
+| `Economic` | `number` | `0–10` |
+| `Military` | `number` | `0–10` |
+| `Sovereignty` | `number` | `0–10` |
+| `Governance` | `number` | `0–10` |
+| `Class` | `number` | `0–10` |
+
+### Dual-Register Confidence
+
+Per-axis object holding separate confidence values for the declared and structural registers.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `declared` | `number` | Curator confidence in the declared score, `0.0–1.0`. |
+| `structural` | `number` | Curator confidence in the structural score, `0.0–1.0`. |
+| `note` | `string` | Free-text explanation of evidence limitations. |
+
 ### Example Actor JSON
 
 ```json
@@ -311,6 +352,26 @@ Each key under `responses` is `Q1` through `Q24`, mapping to the 24 questionnair
   "responses": {
     "Q1": { "value": 1, "confidence": "high", "rationale": "Inferred from Cultural axis score of 7.", "sources": [] },
     "Q2": { "value": 0, "confidence": "high", "rationale": "Inferred from Cultural axis score of 7.", "sources": [] }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2010–2024",
+    "status": "governing",
+    "evidenceQuality": "strong",
+    "declared": { "Cultural": 10, "Economic": 0, "Military": 8.1, "Sovereignty": 8.8, "Governance": 8.8, "Class": 2.5 },
+    "structural": { "Cultural": 9.4, "Economic": 0, "Military": 10, "Sovereignty": 8.1, "Governance": 8.8, "Class": 2.5 },
+    "delta": { "Cultural": -0.6, "Economic": 0, "Military": 1.9, "Sovereignty": -0.7, "Governance": 0, "Class": 0 },
+    "confidence": {
+      "Cultural": { "declared": 0.95, "structural": 0.90, "note": "14-year governing record provides exceptionally rich structural evidence" }
+    },
+    "sources": {
+      "declared": [
+        { "type": "manifesto", "title": "Conservative Manifesto 2024", "url": "", "citation": "Conservative Manifesto 2024" }
+      ],
+      "structural": [
+        { "type": "legislation", "title": "Governing record 2010–2024", "url": "", "citation": "Governing record 2010–2024" }
+      ]
+    }
   }
 }
 ```

@@ -37,6 +37,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.7] - 2026-05-19
+
+### Added
+- **Dual-register schema documentation** across API, README, and JSON Schema.
+  - `API.md` v1.4.0: new `dualRegister` field documented in Actor Data Schema with full sub-object definitions (declared/structural/delta scores, numeric confidence, dual-register source sets).
+  - `README.md` data schema example now includes `dualRegister`.
+  - `data/schema.json` updated with `dualRegister`, `dualRegisterScores`, `dualRegisterConfidence`, and `source` definitions.
+- **`api/lib/actor-store.js`** now loads `dualRegister` into actor objects (returned as `dualRegister` on full actor records).
+
 ## [2.5.6] - 2026-05-19
 
 ### Added

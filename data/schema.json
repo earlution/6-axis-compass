@@ -99,6 +99,27 @@
         "Q24": { "$ref": "#/definitions/response" }
       },
       "additionalProperties": false
+    },
+    "dualRegister": {
+      "type": "object",
+      "description": "Optional dual-register scores: declared (what actors say) vs structural (what actors do).",
+      "properties": {
+        "protocol": { "type": "string", "description": "Protocol version, e.g. 'Dual-Register Sourcing Protocol v0.2.0'" },
+        "period": { "type": "string" },
+        "status": { "type": "string" },
+        "evidenceQuality": { "type": "string" },
+        "declared": { "$ref": "#/definitions/dualRegisterScores" },
+        "structural": { "$ref": "#/definitions/dualRegisterScores" },
+        "delta": { "$ref": "#/definitions/dualRegisterScores" },
+        "confidence": { "$ref": "#/definitions/dualRegisterConfidence" },
+        "sources": {
+          "type": "object",
+          "properties": {
+            "declared": { "type": "array", "items": { "$ref": "#/definitions/source" } },
+            "structural": { "type": "array", "items": { "$ref": "#/definitions/source" } }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -122,20 +143,47 @@
         },
         "sources": {
           "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["type", "title"],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["policy", "legislation", "vote", "speech", "manifesto", "book", "academic", "other"]
-              },
-              "title": { "type": "string" },
-              "date": { "type": "string", "format": "date" },
-              "url": { "type": "string", "format": "uri" },
-              "relevantText": { "type": "string" },
-              "citation": { "type": "string" }
-            }
+          "items": { "$ref": "#/definitions/source" }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["type", "title"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["policy", "legislation", "vote", "speech", "manifesto", "book", "academic", "other"]
+        },
+        "title": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "url": { "type": "string", "format": "uri" },
+        "relevantText": { "type": "string" },
+        "citation": { "type": "string" }
+      }
+    },
+    "dualRegisterScores": {
+      "type": "object",
+      "description": "Map of axis name to 0–10 score",
+      "properties": {
+        "Cultural": { "type": "number", "minimum": 0, "maximum": 10 },
+        "Economic": { "type": "number", "minimum": 0, "maximum": 10 },
+        "Military": { "type": "number", "minimum": 0, "maximum": 10 },
+        "Sovereignty": { "type": "number", "minimum": 0, "maximum": 10 },
+        "Governance": { "type": "number", "minimum": 0, "maximum": 10 },
+        "Class": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "dualRegisterConfidence": {
+      "type": "object",
+      "description": "Per-axis per-register confidence (0.0–1.0)",
+      "patternProperties": {
+        "^(Cultural|Economic|Military|Sovereignty|Governance|Class)$": {
+          "type": "object",
+          "properties": {
+            "declared": { "type": "number", "minimum": 0, "maximum": 1 },
+            "structural": { "type": "number", "minimum": 0, "maximum": 1 },
+            "note": { "type": "string" }
           }
         }
       }

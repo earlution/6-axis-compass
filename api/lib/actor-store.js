@@ -27,6 +27,7 @@ export function loadActors() {
       color: raw.actor.color,
       scores,
       responses: raw.responses || null,
+      dualRegister: raw.dualRegister || null,
       _meta: {
         category: raw.actor.category,
         version: raw.actor.version,

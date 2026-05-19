@@ -35,8 +35,11 @@ Every political actor in the compass is defined by a standalone JSON file in `da
 - **Metadata** — name, slug, category, colour, active period, curator, version, last-updated date
 - **Scores** — a 0–10 value on each of the six axes
 - **Traceability** — per-axis confidence level, rationale, and a list of cited sources
+- **Dual-register** *(optional)* — declared scores (what actors say) vs structural scores (what actors do), plus delta and per-register confidence
 
 Sources can be manifestos, legislation, parliamentary votes, speeches, academic papers, or policy documents. Each source includes a title, date, URL, quoted relevant text, and a full citation.
+
+The dual-register layer is maintained in `data/research/` as part of the **A Common Enemy** research programme. Files there follow the Dual-Register Sourcing Protocol and can be migrated into individual actor JSONs via `scripts/migrate-dual-register.js`.
 
 ### Contributing New Actors or Improved Scores
 
@@ -193,7 +196,7 @@ Requires `jsdom` (installed via `npm install`).
 
 ```json
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "actor": {
     "name": "...",
     "slug": "...",
@@ -219,6 +222,22 @@ Requires `jsdom` (installed via `npm install`).
           "citation": "Full citation..."
         }
       ]
+    }
+  },
+  "dualRegister": {
+    "protocol": "Dual-Register Sourcing Protocol v0.2.0",
+    "period": "2010–2024",
+    "status": "governing",
+    "evidenceQuality": "strong",
+    "declared": { "Cultural": 10, "Economic": 0, "Military": 8.1, "Sovereignty": 8.8, "Governance": 8.8, "Class": 2.5 },
+    "structural": { "Cultural": 9.4, "Economic": 0, "Military": 10, "Sovereignty": 8.1, "Governance": 8.8, "Class": 2.5 },
+    "delta": { "Cultural": -0.6, "Economic": 0, "Military": 1.9, "Sovereignty": -0.7, "Governance": 0, "Class": 0 },
+    "confidence": {
+      "Cultural": { "declared": 0.95, "structural": 0.90, "note": "14-year governing record" }
+    },
+    "sources": {
+      "declared": [{ "type": "manifesto", "title": "...", "url": "...", "citation": "..." }],
+      "structural": [{ "type": "legislation", "title": "...", "url": "...", "citation": "..." }]
     }
   }
 }
