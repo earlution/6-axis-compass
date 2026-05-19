@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   repository_dispatch:
-    types: [paper-revised]
+    types: [paper-revised, generate-radar, upload-asset]
 
 jobs:
   generate-and-upload:
@@ -19,10 +19,40 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run generate-artifacts
-
-      - name: Checkout common-enemy for paper PDF
+      # ── Dispatch token verification ─────────────────────────────────────
+      - name: Verify dispatch token
         if: github.event_name == 'repository_dispatch'
+        env:
+          DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+          CLIENT_TOKEN: ${{ github.event.client_payload.token }}
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then
+            echo "Error: DISPATCH_TOKEN secret not configured in this repository."
+            exit 1
+          fi
+          if [ "$DISPATCH_TOKEN" != "$CLIENT_TOKEN" ]; then
+            echo "Unauthorized dispatch request: token mismatch."
+            exit 1
+          fi
+          echo "Dispatch token verified."
+
+      # ── Generation: push or paper-revised ────────────────────────────────
+      - name: Generate all paper artifacts
+        if: github.event_name == 'push' || github.event.action == 'paper-revised'
+        run: npm run generate-artifacts
+
+      # ── Generation: generate-radar ─────────────────────────────────────
+      - name: Generate specific actor radars
+        if: github.event.action == 'generate-radar'
+        run: |
+          ACTORS='${{ github.event.client_payload.actors }}'
+          # Convert JSON array to comma-separated string
+          ACTOR_LIST=$(echo "$ACTORS" | jq -r 'join(",")')
+          node scripts/generate-radar.mjs --actors "$ACTOR_LIST" --output-dir paper-artifacts
+
+      # ── Common-enemy paper PDF (paper-revised only) ──────────────────
+      - name: Checkout common-enemy for paper PDF
+        if: github.event.action == 'paper-revised'
         uses: actions/checkout@v4
         with:
           repository: earlution/common-enemy
@@ -31,13 +61,47 @@ jobs:
           ref: ${{ github.event.client_payload.commit_hash }}
 
       - name: Copy paper PDF to artifacts
-        if: github.event_name == 'repository_dispatch'
+        if: github.event.action == 'paper-revised'
         run: |
           mkdir -p paper-artifacts/paper
           cp "common-enemy/${{ github.event.client_payload.paper_path }}" paper-artifacts/paper/
 
-      - name: Upload paper artifacts to OSF
+      # ── Upload: push or paper-revised ──────────────────────────────────
+      - name: Upload all paper artifacts to OSF
+        if: github.event_name == 'push' || github.event.action == 'paper-revised'
         env:
           OSF_PAN: ${{ secrets.OSF_PAN }}
           OSF_NODE_ID: ${{ vars.OSF_NODE_ID }}
         run: node scripts/upload-to-osf.mjs
+
+      # ── Upload: generate-radar (conditional) ───────────────────────────
+      - name: Upload generated radars to OSF
+        if: github.event.action == 'generate-radar' && github.event.client_payload.upload_to_osf != false
+        env:
+          OSF_PAN: ${{ secrets.OSF_PAN }}
+          OSF_NODE_ID: ${{ vars.OSF_NODE_ID }}
+        run: |
+          ACTORS='${{ github.event.client_payload.actors }}'
+          OSFCOMPONENT='${{ github.event.client_payload.osf_component || 'actors' }}'
+          for name in $(echo "$ACTORS" | jq -r '.[]'); do
+            slug=$(echo "$name" | sed 's/[^a-zA-Z0-9]/-/g; s/^-//; s/-$//')
+            file="paper-artifacts/actors/${slug}.svg"
+            if [ -f "$file" ]; then
+              node scripts/upload-asset-to-osf.mjs \
+                --file "$file" \
+                --component "$OSFCOMPONENT" \
+                --filename "${slug}-Declared-Radar-v1.0.0.svg"
+            fi
+          done
+
+      # ── Upload: upload-asset ───────────────────────────────────────────
+      - name: Upload specific asset to OSF
+        if: github.event.action == 'upload-asset'
+        env:
+          OSF_PAN: ${{ secrets.OSF_PAN }}
+          OSF_NODE_ID: ${{ vars.OSF_NODE_ID }}
+        run: |
+          node scripts/upload-asset-to-osf.mjs \
+            --file "${{ github.event.client_payload.asset_path }}" \
+            --component "${{ github.event.client_payload.osf_component }}" \
+            --filename "${{ github.event.client_payload.osf_filename }}"

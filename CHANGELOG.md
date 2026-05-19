@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.4.5]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.5
 [2.4.4]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.4
 [2.4.3]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.3
 [2.4.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.2
@@ -24,6 +25,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.4.5] - 2026-05-19
+
+### Added
+- **`repository_dispatch` event types `generate-radar` and `upload-asset`** in `.github/workflows/osf-upload.yml`.
+  - `generate-radar`: selectively generates JSON, TEX, and SVG artifacts for specified actors via `scripts/generate-radar.mjs`.
+    - Accepts `actors` array, `output_format`, `upload_to_osf`, `osf_component`, and `requested_by` in `client_payload`.
+  - `upload-asset`: uploads a single file from the repo to a specific OSF component via `scripts/upload-asset-to-osf.mjs`.
+    - Accepts `asset_path`, `osf_component`, `osf_filename`, and `requested_by` in `client_payload`.
+- **Dispatch token authentication** (`DISPATCH_TOKEN` secret) for all `repository_dispatch` events. Unauthorized requests are rejected before any generation or upload.
+- **`scripts/generate-radar.mjs`**: selective radar generation script.
+  - `--actors "Name1,Name2"` generates individual actor artifacts.
+  - `--comparison group-id` generates a comparison group artifact.
+  - `--output-dir` overrides the default `paper-artifacts/`.
+- **`scripts/upload-asset-to-osf.mjs`**: single-file upload script.
+  - `--file`, `--component`, and `--filename` flags target a specific OSF folder.
+- **New npm run targets**: `npm run generate-radar` and `npm run upload-asset-to-osf`.
 
 ## [2.4.4] - 2026-05-19
 

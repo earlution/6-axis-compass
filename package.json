@@ -1,6 +1,6 @@
 {
   "name": "six-axis-compass",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "A zero-dependency political compass mapping six axes: Cultural, Economic, Military, Sovereignty, Governance, and Class.",
   "main": "dist/index.html",
   "scripts": {
@@ -8,7 +8,9 @@
     "build": "npm run sync-actors && node scripts/build.js",
     "dev": "npm run sync-actors && node scripts/build.js --watch",
     "generate-artifacts": "node scripts/generate-paper-artifacts.mjs",
+    "generate-radar": "node scripts/generate-radar.mjs",
     "upload-osf": "node scripts/upload-to-osf.mjs",
+    "upload-asset-to-osf": "node scripts/upload-asset-to-osf.mjs",
     "api": "node api/server.js",
     "test": "node tests/quiz.test.js && node tests/api.test.js"
   },
