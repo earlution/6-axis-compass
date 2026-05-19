@@ -82,6 +82,18 @@ curl -H "Authorization: Bearer $API_SECRET" \
 
 Full endpoint documentation, request/response schemas, and error reference: [`API.md`](./API.md).
 
+### CI/CD Dispatch API (GitHub Actions)
+
+External repositories (such as `common-enemy`) can trigger selective generation and OSF upload via `repository_dispatch` events.
+
+| Event type | What it does |
+|-----------|--------------|
+| `paper-revised` | Regenerate all artifacts and upload the full set. |
+| `generate-radar` | Generate artifacts for specific actors only, optionally upload to OSF. |
+| `upload-asset` | Upload a single pre-built file to a specific OSF component. |
+
+All dispatch events require a shared `DISPATCH_TOKEN` secret for authentication. See [`API.md`](./API.md) for full payload schemas and triggering examples from another repository.
+
 ### Shareable Web URL (Client-side)
 
 The live UI supports generating maps directly via a **parameterised hash URL**—no API key or server required. Everything is rendered client-side.

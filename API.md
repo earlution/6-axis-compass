@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2026-05-19 | Added "CI/CD Dispatch API" section documenting `repository_dispatch` event types for selective generation and upload. |
 | 1.1.0 | 2026-05-19 | Added "Shareable Web URL" section documenting the parameterised hash URL format. |
 | 1.0.0 | 2026-05-18 | Initial release. Endpoints: `GET /health`, `GET /actors`, `POST /chart`. |
 
@@ -286,3 +287,110 @@ https://earlution.github.io/6-axis-compass/#v2;c=9.0,e=8.0,m=1.0,s=7.0,l=5.0,a=4
 - Actor overlays are not encoded in the URL; the user toggles them manually in the results screen.
 - The URL updates automatically when the user changes orientation or axis order, so copying the browser address bar always captures the current view.
 - `v1` URLs are backwards-compatible: the app auto-detects legacy hashes and applies the correct Governance-axis polarity correction.
+
+---
+
+## CI/CD Dispatch API
+
+For automated pipelines and external systems (e.g. the `common-enemy` project), the repository accepts `repository_dispatch` events. These are triggered via the GitHub API and run inside GitHub Actions rather than hitting a local server.
+
+All dispatch events require a shared secret.
+
+### Authentication
+
+Every `repository_dispatch` payload must include:
+
+```json
+{
+  "token": "${{ secrets.COMPASS_DISPATCH_TOKEN }}"
+}
+```
+
+The `DISPATCH_TOKEN` secret is configured in the 6-axis-compass repository settings. Requests with a missing or mismatched token are rejected before any work begins.
+
+### Event Types
+
+| Event type | Purpose |
+|-----------|---------|
+| `paper-revised` | Regenerate **all** artifacts and upload the full set to OSF. Optionally copies a companion PDF from the `common-enemy` repo. |
+| `generate-radar` | Selectively generate artifacts for one or more actors, then optionally upload them to OSF. |
+| `upload-asset` | Upload a single pre-built file from the repo to a specific OSF component. |
+
+### `generate-radar` Payload
+
+```json
+{
+  "event_type": "generate-radar",
+  "client_payload": {
+    "token": "${{ secrets.COMPASS_DISPATCH_TOKEN }}",
+    "actors": ["SNP", "Plaid Cymru"],
+    "upload_to_osf": true,
+    "osf_component": "actors",
+    "requested_by": "common-enemy-ci"
+  }
+}
+```
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `token` | `string` | **Yes** | — | Must match the `DISPATCH_TOKEN` secret. |
+| `actors` | `string[]` | **Yes** | — | Actor names exactly as they appear in `data/actors/*.json`. |
+| `upload_to_osf` | `boolean` | No | `true` | Whether to upload generated SVGs to OSF after generation. |
+| `osf_component` | `string` | No | `"actors"` | OSF folder name (e.g. `actors`, `comparisons`, `archive`). |
+| `requested_by` | `string` | No | `"manual"` | Audit-trail identifier for the calling system. |
+
+**Workflow behaviour**
+- Runs `npm ci`.
+- Runs `scripts/generate-radar.mjs --actors "Name1,Name2"` to produce JSON, TEX, and SVG files in `paper-artifacts/`.
+- If `upload_to_osf` is not `false`, uploads each actor's SVG to the specified OSF component.
+
+### `upload-asset` Payload
+
+```json
+{
+  "event_type": "upload-asset",
+  "client_payload": {
+    "token": "${{ secrets.COMPASS_DISPATCH_TOKEN }}",
+    "asset_path": "paper-artifacts/actors/SNP.svg",
+    "osf_component": "actors",
+    "osf_filename": "SNP-Declared-Radar-v1.0.0.svg",
+    "requested_by": "common-enemy-ci"
+  }
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `token` | `string` | **Yes** | Must match the `DISPATCH_TOKEN` secret. |
+| `asset_path` | `string` | **Yes** | Repository-relative path to the file. |
+| `osf_component` | `string` | **Yes** | Target OSF folder name. |
+| `osf_filename` | `string` | **Yes** | Filename to use on OSF. |
+| `requested_by` | `string` | No | Audit-trail identifier. |
+
+**Workflow behaviour**
+- Verifies `DISPATCH_TOKEN`.
+- Runs `scripts/upload-asset-to-osf.mjs` with the provided path, component, and filename.
+
+### Triggering from another repository
+
+Use `peter-evans/repository-dispatch@v3` (or any GitHub API client) from the calling repo:
+
+```yaml
+- name: Trigger selective radar generation
+  uses: peter-evans/repository-dispatch@v3
+  with:
+    token: ${{ secrets.COMPASS_REPO_PAT }}
+    repository: earlution/6-axis-compass
+    event-type: generate-radar
+    client-payload: |
+      {
+        "token": "${{ secrets.COMPASS_DISPATCH_TOKEN }}",
+        "actors": ["SNP"],
+        "upload_to_osf": true,
+        "requested_by": "common-enemy-ci"
+      }
+```
+
+**Required secrets in the calling repository:**
+- `COMPASS_REPO_PAT` — GitHub PAT with `repo` scope for `earlution/6-axis-compass`.
+- `COMPASS_DISPATCH_TOKEN` — Shared secret matching the `DISPATCH_TOKEN` in 6-axis-compass.

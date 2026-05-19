@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.4.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.6
 [2.4.5]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.5
 [2.4.4]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.4
 [2.4.3]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.3
@@ -25,6 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.4.6] - 2026-05-19
+
+### Added
+- **CI/CD Dispatch API documentation** in `API.md` (v1.2.0).
+  - New section covering `repository_dispatch` event types: `paper-revised`, `generate-radar`, `upload-asset`.
+  - Authentication requirements (`DISPATCH_TOKEN` secret).
+  - Full payload schemas for `generate-radar` and `upload-asset`.
+  - Example dispatch YAML using `peter-evans/repository-dispatch@v3`.
+- **README.md API section** now includes a summary of the CI/CD Dispatch API with a link to `API.md`.
 
 ## [2.4.5] - 2026-05-19
 
