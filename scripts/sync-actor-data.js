@@ -25,7 +25,7 @@ function loadActors() {
       };
     }
 
-    actors.push({
+    const actor = {
       name: raw.actor.name,
       scores,
       color: raw.actor.color,
@@ -39,7 +39,16 @@ function loadActors() {
         contributors: raw.actor.contributors
       },
       _scoreMeta: scoreMeta
-    });
+    };
+
+    if (raw.responses) {
+      actor.responses = {};
+      for (const [qid, data] of Object.entries(raw.responses)) {
+        actor.responses[qid] = data.value;
+      }
+    }
+
+    actors.push(actor);
   }
 
   return actors;

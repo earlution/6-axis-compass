@@ -1,10 +1,9 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.2.0",
-  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
-  "generated": "2026-05-18T13:44:41.323Z",
+  "version": "2.2.3",
+  "gitCommit": "76548cba7849e851938b9bd62b6adf23acbdf64c",
+  "generated": "2026-05-19T10:45:46.188Z",
   "actor": "Brexit Intersection",
-  "slug": "brexit-intersection",
   "category": "Meta-Map",
   "color": "#800080",
   "axes": {
@@ -21,6 +20,11 @@
       "rationale": "Geometric intersection (minimum overlap) of Hard Brexit, Soft Brexit, and People's Vote positions on the cultural axis. Represents the common ground across all Brexit factions.",
       "sources": []
     },
+    "Economic": {
+      "confidence": "low",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    },
     "Military": {
       "confidence": "low",
       "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the military axis. Represents the common ground across all Brexit factions.",
@@ -31,19 +35,160 @@
       "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the sovereignty axis. Represents the common ground across all Brexit factions.",
       "sources": []
     },
-    "Economic": {
+    "Governance": {
       "confidence": "low",
-      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
       "sources": []
     },
     "Class": {
       "confidence": "low",
       "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
       "sources": []
-    },
-    "Governance": {
+    }
+  },
+  "responses": {
+    "Q1": {
+      "value": 0,
       "confidence": "low",
-      "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q2": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 1,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 1,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
       "sources": []
     }
   }

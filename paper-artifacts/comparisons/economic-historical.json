@@ -1,14 +1,13 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.2.0",
-  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
-  "generated": "2026-05-18T13:44:41.323Z",
+  "version": "2.2.3",
+  "gitCommit": "76548cba7849e851938b9bd62b6adf23acbdf64c",
+  "generated": "2026-05-19T10:45:46.188Z",
   "groupId": "economic-historical",
   "title": "Economic Historical Figures",
   "actors": [
     {
       "name": "John Maynard Keynes",
-      "slug": "John-Maynard-Keynes",
       "color": "#607D8B",
       "axes": {
         "Cultural": 4,
@@ -18,8 +17,159 @@
         "Class": 3,
         "Governance": 5
       },
+      "responses": {
+        "Q1": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 4.",
+          "sources": []
+        },
+        "Q2": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 4.",
+          "sources": []
+        },
+        "Q3": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 4.",
+          "sources": []
+        },
+        "Q4": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 4.",
+          "sources": []
+        },
+        "Q5": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 7.",
+          "sources": []
+        },
+        "Q6": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 7.",
+          "sources": []
+        },
+        "Q7": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 7.",
+          "sources": []
+        },
+        "Q8": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 7.",
+          "sources": []
+        },
+        "Q9": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 2.",
+          "sources": []
+        },
+        "Q10": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 2.",
+          "sources": []
+        },
+        "Q11": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 2.",
+          "sources": []
+        },
+        "Q12": {
+          "value": 3,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 2.",
+          "sources": []
+        },
+        "Q13": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 5.",
+          "sources": []
+        },
+        "Q14": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 5.",
+          "sources": []
+        },
+        "Q15": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 5.",
+          "sources": []
+        },
+        "Q16": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 5.",
+          "sources": []
+        },
+        "Q17": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 5.",
+          "sources": []
+        },
+        "Q18": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 5.",
+          "sources": []
+        },
+        "Q19": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 5.",
+          "sources": []
+        },
+        "Q20": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 5.",
+          "sources": []
+        },
+        "Q21": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 3.",
+          "sources": []
+        },
+        "Q22": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 3.",
+          "sources": []
+        },
+        "Q23": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 3.",
+          "sources": []
+        },
+        "Q24": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 3.",
+          "sources": []
+        }
+      },
       "traceability": {
         "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -34,7 +184,7 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Economic": {
+        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -43,17 +193,11 @@
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
-        },
-        "Governance": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
         }
       }
     },
     {
       "name": "Milton Friedman",
-      "slug": "Milton-Friedman",
       "color": "#8D6E63",
       "axes": {
         "Cultural": 3,
@@ -63,8 +207,159 @@
         "Class": 2,
         "Governance": 2
       },
+      "responses": {
+        "Q1": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 3.",
+          "sources": []
+        },
+        "Q2": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 3.",
+          "sources": []
+        },
+        "Q3": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 3.",
+          "sources": []
+        },
+        "Q4": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Cultural axis score of 3.",
+          "sources": []
+        },
+        "Q5": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 2.",
+          "sources": []
+        },
+        "Q6": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 2.",
+          "sources": []
+        },
+        "Q7": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 2.",
+          "sources": []
+        },
+        "Q8": {
+          "value": 3,
+          "confidence": "medium",
+          "rationale": "Inferred from Economic axis score of 2.",
+          "sources": []
+        },
+        "Q9": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 6.",
+          "sources": []
+        },
+        "Q10": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 6.",
+          "sources": []
+        },
+        "Q11": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 6.",
+          "sources": []
+        },
+        "Q12": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Military axis score of 6.",
+          "sources": []
+        },
+        "Q13": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 4.",
+          "sources": []
+        },
+        "Q14": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 4.",
+          "sources": []
+        },
+        "Q15": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 4.",
+          "sources": []
+        },
+        "Q16": {
+          "value": 1,
+          "confidence": "medium",
+          "rationale": "Inferred from Sovereignty axis score of 4.",
+          "sources": []
+        },
+        "Q17": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 2.",
+          "sources": []
+        },
+        "Q18": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 2.",
+          "sources": []
+        },
+        "Q19": {
+          "value": 3,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 2.",
+          "sources": []
+        },
+        "Q20": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Governance axis score of 2.",
+          "sources": []
+        },
+        "Q21": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 2.",
+          "sources": []
+        },
+        "Q22": {
+          "value": 2,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 2.",
+          "sources": []
+        },
+        "Q23": {
+          "value": 0,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 2.",
+          "sources": []
+        },
+        "Q24": {
+          "value": 3,
+          "confidence": "medium",
+          "rationale": "Inferred from Class axis score of 2.",
+          "sources": []
+        }
+      },
       "traceability": {
         "Cultural": {
+          "confidence": "medium",
+          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+          "sources": []
+        },
+        "Economic": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
@@ -79,17 +374,12 @@
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
-        "Economic": {
+        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []
         },
         "Class": {
-          "confidence": "medium",
-          "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
-          "sources": []
-        },
-        "Governance": {
           "confidence": "medium",
           "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
           "sources": []

@@ -1,14 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Six-Axis Political Compass — Actor Definition",
-  "description": "Forkable, traceable actor data for the Six-Axis Political Compass. Each file defines one political actor with evidence-backed scores.",
+  "description": "Forkable, traceable actor data for the Six-Axis Political Compass. Each file defines one political actor with evidence-backed scores and optional per-question responses.",
   "type": "object",
   "required": ["schemaVersion", "actor", "scores"],
   "properties": {
     "schemaVersion": {
       "type": "string",
-      "description": "Schema version in SemVer. Current: 1.0.0",
-      "enum": ["1.0.0"]
+      "description": "Schema version in SemVer. Current: 1.1.0",
+      "enum": ["1.0.0", "1.1.0"]
     },
     "actor": {
       "type": "object",
@@ -64,6 +64,77 @@
                 "relevantText": { "type": "string", "description": "Quoted excerpt supporting the score" },
                 "citation": { "type": "string", "description": "Full academic or parliamentary citation" }
               }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "type": "object",
+      "description": "Per-question Likert responses (0–4). Optional: when absent, responses are inferred from axis scores.",
+      "properties": {
+        "Q1": { "$ref": "#/definitions/response" },
+        "Q2": { "$ref": "#/definitions/response" },
+        "Q3": { "$ref": "#/definitions/response" },
+        "Q4": { "$ref": "#/definitions/response" },
+        "Q5": { "$ref": "#/definitions/response" },
+        "Q6": { "$ref": "#/definitions/response" },
+        "Q7": { "$ref": "#/definitions/response" },
+        "Q8": { "$ref": "#/definitions/response" },
+        "Q9": { "$ref": "#/definitions/response" },
+        "Q10": { "$ref": "#/definitions/response" },
+        "Q11": { "$ref": "#/definitions/response" },
+        "Q12": { "$ref": "#/definitions/response" },
+        "Q13": { "$ref": "#/definitions/response" },
+        "Q14": { "$ref": "#/definitions/response" },
+        "Q15": { "$ref": "#/definitions/response" },
+        "Q16": { "$ref": "#/definitions/response" },
+        "Q17": { "$ref": "#/definitions/response" },
+        "Q18": { "$ref": "#/definitions/response" },
+        "Q19": { "$ref": "#/definitions/response" },
+        "Q20": { "$ref": "#/definitions/response" },
+        "Q21": { "$ref": "#/definitions/response" },
+        "Q22": { "$ref": "#/definitions/response" },
+        "Q23": { "$ref": "#/definitions/response" },
+        "Q24": { "$ref": "#/definitions/response" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "response": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4,
+          "description": "Likert response: 0=Strongly disagree, 4=Strongly agree"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "very-high"]
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Why this response was assigned"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "title"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["policy", "legislation", "vote", "speech", "manifesto", "book", "academic", "other"]
+              },
+              "title": { "type": "string" },
+              "date": { "type": "string", "format": "date" },
+              "url": { "type": "string", "format": "uri" },
+              "relevantText": { "type": "string" },
+              "citation": { "type": "string" }
             }
           }
         }

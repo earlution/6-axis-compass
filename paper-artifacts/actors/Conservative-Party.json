@@ -1,10 +1,9 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.2.0",
-  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
-  "generated": "2026-05-18T13:44:41.323Z",
+  "version": "2.2.3",
+  "gitCommit": "76548cba7849e851938b9bd62b6adf23acbdf64c",
+  "generated": "2026-05-19T10:45:46.188Z",
   "actor": "Conservative Party",
-  "slug": "conservative-party",
   "category": "UK Political Party",
   "color": "#1A75BB",
   "axes": {
@@ -43,6 +42,28 @@
           "url": "https://hansard.parliament.uk/commons/2023-07-17/division/D123",
           "relevantText": "Division No. 123: Ayes 289 (Conservative), Noes 179",
           "citation": "HC Deb 17 July 2023, col. 1234"
+        }
+      ]
+    },
+    "Economic": {
+      "confidence": "high",
+      "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
+      "sources": [
+        {
+          "type": "policy",
+          "title": "UK-Australia Free Trade Agreement",
+          "date": "2021-12-17",
+          "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
+          "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
+          "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
+        },
+        {
+          "type": "legislation",
+          "title": "Subsidy Control Act 2022",
+          "date": "2022-04-28",
+          "url": "https://www.legislation.gov.uk/ukpga/2022/23",
+          "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
+          "citation": "Subsidy Control Act 2022, c. 23 (UK)"
         }
       ]
     },
@@ -90,27 +111,10 @@
         }
       ]
     },
-    "Economic": {
-      "confidence": "high",
-      "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
-      "sources": [
-        {
-          "type": "policy",
-          "title": "UK-Australia Free Trade Agreement",
-          "date": "2021-12-17",
-          "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
-          "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
-          "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
-        },
-        {
-          "type": "legislation",
-          "title": "Subsidy Control Act 2022",
-          "date": "2022-04-28",
-          "url": "https://www.legislation.gov.uk/ukpga/2022/23",
-          "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
-          "citation": "Subsidy Control Act 2022, c. 23 (UK)"
-        }
-      ]
+    "Governance": {
+      "confidence": "medium",
+      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
     },
     "Class": {
       "confidence": "high",
@@ -133,10 +137,151 @@
           "citation": "HC Deb 16 January 2023, col. 9012"
         }
       ]
+    }
+  },
+  "responses": {
+    "Q1": {
+      "value": 1,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 7.",
+      "sources": []
     },
-    "Governance": {
+    "Q2": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 7.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 2,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 7.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 7.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Economic axis score of 3.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 1,
+      "confidence": "high",
+      "rationale": "Inferred from Economic axis score of 3.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Economic axis score of 3.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 2,
+      "confidence": "high",
+      "rationale": "Inferred from Economic axis score of 3.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Military axis score of 8.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 2,
+      "confidence": "high",
+      "rationale": "Inferred from Military axis score of 8.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Military axis score of 8.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Military axis score of 8.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 1,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 6.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 6.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 1,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 6.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 6.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 0,
       "confidence": "medium",
-      "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "rationale": "Inferred from Governance axis score of 5.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 5.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 5.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 5.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Class axis score of 1.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Class axis score of 1.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Class axis score of 1.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Class axis score of 1.",
       "sources": []
     }
   }

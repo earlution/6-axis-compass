@@ -1,10 +1,9 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.2.0",
-  "gitCommit": "2e29fe1351050cfb4a287c8d6d0e0b394863c3d5",
-  "generated": "2026-05-18T13:44:41.323Z",
+  "version": "2.2.3",
+  "gitCommit": "76548cba7849e851938b9bd62b6adf23acbdf64c",
+  "generated": "2026-05-19T10:45:46.188Z",
   "actor": "Soft Brexit",
-  "slug": "soft-brexit",
   "category": "Brexit Faction",
   "color": "#FF8C00",
   "axes": {
@@ -21,6 +20,11 @@
       "rationale": "Moderate cultural nationalism; acceptance of controlled immigration balanced with integration. To be documented.",
       "sources": []
     },
+    "Economic": {
+      "confidence": "medium",
+      "rationale": "Desire to maintain close economic ties with EU, possibly via customs union or single market alignment. To be documented.",
+      "sources": []
+    },
     "Military": {
       "confidence": "medium",
       "rationale": "Continued support for NATO and Western alliances, pragmatic on EU defence cooperation. To be documented.",
@@ -31,19 +35,160 @@
       "rationale": "Acceptance of Brexit outcome but with significant continued regulatory alignment and shared institutions. To be documented.",
       "sources": []
     },
-    "Economic": {
+    "Governance": {
       "confidence": "medium",
-      "rationale": "Desire to maintain close economic ties with EU, possibly via customs union or single market alignment. To be documented.",
+      "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
       "sources": []
     },
     "Class": {
       "confidence": "medium",
       "rationale": "Concerned about economic impact on workers; emphasis on protecting labour rights post-Brexit. To be documented.",
       "sources": []
-    },
-    "Governance": {
+    }
+  },
+  "responses": {
+    "Q1": {
+      "value": 0,
       "confidence": "medium",
-      "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
+      "rationale": "Inferred from Cultural axis score of 5.",
+      "sources": []
+    },
+    "Q2": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Cultural axis score of 5.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Cultural axis score of 5.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Cultural axis score of 5.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 4.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 4.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 4.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 4.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 5.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 5.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 5.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 5.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Sovereignty axis score of 5.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Sovereignty axis score of 5.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Sovereignty axis score of 5.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Sovereignty axis score of 5.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 4.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 4.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 4.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 4.",
       "sources": []
     }
   }

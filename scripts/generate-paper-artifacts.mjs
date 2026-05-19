@@ -75,6 +75,16 @@ for (const actor of ACTORS) {
       }])
     )
   };
+  if (actor.responses) {
+    json.responses = Object.fromEntries(
+      Object.entries(actor.responses).map(([qid, data]) => [qid, {
+        value: data.value,
+        confidence: data.confidence,
+        rationale: data.rationale,
+        sources: data.sources || []
+      }])
+    );
+  }
   writeFileSync(join(OUT, 'actors', `${slug}.json`), JSON.stringify(json, null, 2) + '\n');
 
   // LaTeX command definitions
@@ -155,6 +165,7 @@ for (const [groupId, group] of Object.entries(paperConfig.groups)) {
       slug: a._meta.slug,
       color: a.color,
       axes: a.scores,
+      responses: a.responses || null,
       traceability: Object.fromEntries(
         AXES.map(ax => [ax, {
           confidence: a._scoreMeta[ax].confidence,

@@ -26,6 +26,7 @@ export function loadActors() {
       slug: raw.actor.slug,
       color: raw.actor.color,
       scores,
+      responses: raw.responses || null,
       _meta: {
         category: raw.actor.category,
         version: raw.actor.version,

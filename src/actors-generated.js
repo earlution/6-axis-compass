@@ -16,7 +16,7 @@ const __ACTORS = [
       "slug": "Adolf-Hitler",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -51,6 +51,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 2,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 4,
+      "Q11": 4,
+      "Q12": 0,
+      "Q13": 4,
+      "Q14": 0,
+      "Q15": 4,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 3,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
     }
   },
   {
@@ -68,7 +94,7 @@ const __ACTORS = [
       "slug": "Anarcho-communism",
       "category": "Political Ideology",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -103,6 +129,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 4,
+      "Q7": 0,
+      "Q8": 4,
+      "Q9": 4,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 4,
+      "Q13": 0,
+      "Q14": 4,
+      "Q15": 0,
+      "Q16": 4,
+      "Q17": 0,
+      "Q18": 4,
+      "Q19": 0,
+      "Q20": 4,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
     }
   },
   {
@@ -120,7 +172,7 @@ const __ACTORS = [
       "slug": "Attlee-government-1945-51",
       "category": "Historical Government",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -155,6 +207,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 4,
+      "Q7": 0,
+      "Q8": 4,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
     }
   },
   {
@@ -172,7 +250,7 @@ const __ACTORS = [
       "slug": "Benito-Mussolini",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -207,6 +285,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 3,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 3,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
     }
   },
   {
@@ -225,7 +329,7 @@ const __ACTORS = [
       "category": "Meta-Map",
       "activePeriod": "2016–2020",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-17",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": [
         "Ruari Mears"
@@ -262,6 +366,32 @@ const __ACTORS = [
         "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
     }
   },
   {
@@ -279,7 +409,7 @@ const __ACTORS = [
       "slug": "Bush-Blair-Iraq-position",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -314,6 +444,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 4,
+      "Q11": 4,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
     }
   },
   {
@@ -331,7 +487,7 @@ const __ACTORS = [
       "slug": "Clement-Attlee",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -366,6 +522,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
     }
   },
   {
@@ -384,7 +566,7 @@ const __ACTORS = [
       "category": "UK Political Party",
       "activePeriod": "1834–present",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": [
         "Ruari Mears"
@@ -514,6 +696,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 2,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 3,
+      "Q23": 0,
+      "Q24": 3
     }
   },
   {
@@ -531,7 +739,7 @@ const __ACTORS = [
       "slug": "Enoch-Powell-1968",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -566,6 +774,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
     }
   },
   {
@@ -583,7 +817,7 @@ const __ACTORS = [
       "slug": "Fascism",
       "category": "Political Ideology",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -618,6 +852,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 2,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 4,
+      "Q23": 0,
+      "Q24": 4
     }
   },
   {
@@ -635,7 +895,7 @@ const __ACTORS = [
       "slug": "Federalist-EU-tradition",
       "category": "Political Ideology",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -670,6 +930,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 1,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 1,
+      "Q13": 4,
+      "Q14": 0,
+      "Q15": 4,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
     }
   },
   {
@@ -687,7 +973,7 @@ const __ACTORS = [
       "slug": "Franklin-D-Roosevelt",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -722,6 +1008,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 1,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
     }
   },
   {
@@ -739,7 +1051,7 @@ const __ACTORS = [
       "slug": "Green-Party",
       "category": "Political Party",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -774,6 +1086,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 2,
+      "Q3": 0,
+      "Q4": 3,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 2,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 2,
+      "Q22": 0,
+      "Q23": 3,
+      "Q24": 0
     }
   },
   {
@@ -792,7 +1130,7 @@ const __ACTORS = [
       "category": "Brexit Faction",
       "activePeriod": "2016–2020",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-17",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": [
         "Ruari Mears"
@@ -829,6 +1167,32 @@ const __ACTORS = [
         "rationale": "Mixed; emphasis on national self-determination but some acceptance of state authority. To be documented.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
     }
   },
   {
@@ -846,7 +1210,7 @@ const __ACTORS = [
       "slug": "John-Maynard-Keynes",
       "category": "Economic Theorist",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -881,6 +1245,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 1,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 2
     }
   },
   {
@@ -898,7 +1288,7 @@ const __ACTORS = [
       "slug": "Joseph-Stalin",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -933,6 +1323,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 2,
+      "Q4": 0,
+      "Q5": 3,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 4,
+      "Q19": 0,
+      "Q20": 4,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
     }
   },
   {
@@ -950,7 +1366,7 @@ const __ACTORS = [
       "slug": "Labour-Party",
       "category": "Political Party",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -985,6 +1401,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 2
     }
   },
   {
@@ -1002,7 +1444,7 @@ const __ACTORS = [
       "slug": "Leninism",
       "category": "Political Ideology",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1037,6 +1479,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 4,
+      "Q6": 0,
+      "Q7": 4,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
     }
   },
   {
@@ -1054,7 +1522,7 @@ const __ACTORS = [
       "slug": "Liberal-Democrats",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1089,6 +1557,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
     }
   },
   {
@@ -1106,7 +1600,7 @@ const __ACTORS = [
       "slug": "Milton-Friedman",
       "category": "Economic Theorist",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1141,6 +1635,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 2,
+      "Q7": 0,
+      "Q8": 3,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 2,
+      "Q18": 0,
+      "Q19": 3,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
     }
   },
   {
@@ -1159,7 +1679,7 @@ const __ACTORS = [
       "category": "National Government",
       "activePeriod": "2010–present",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1194,6 +1714,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 3,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
     }
   },
   {
@@ -1212,7 +1758,7 @@ const __ACTORS = [
       "category": "Brexit Faction",
       "activePeriod": "2018–2020",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-17",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": [
         "Ruari Mears"
@@ -1249,6 +1795,32 @@ const __ACTORS = [
         "rationale": "Emphasis on democratic participation, civil liberties, and rule of law at supranational level. To be documented.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 1,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 1,
+      "Q13": 0,
+      "Q14": 2,
+      "Q15": 0,
+      "Q16": 3,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
     }
   },
   {
@@ -1266,7 +1838,7 @@ const __ACTORS = [
       "slug": "Plaid-Cymru",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1301,6 +1873,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 1,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
     }
   },
   {
@@ -1318,7 +1916,7 @@ const __ACTORS = [
       "slug": "Reform-UK",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1353,6 +1951,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
     }
   },
   {
@@ -1370,7 +1994,7 @@ const __ACTORS = [
       "slug": "SNP",
       "category": "Political Party",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1405,6 +2029,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 1,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
     }
   },
   {
@@ -1423,7 +2073,7 @@ const __ACTORS = [
       "category": "Brexit Faction",
       "activePeriod": "2017–2019",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-17",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": [
         "Ruari Mears"
@@ -1460,6 +2110,32 @@ const __ACTORS = [
         "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
     }
   },
   {
@@ -1477,7 +2153,7 @@ const __ACTORS = [
       "slug": "Stop-the-War-Coalition",
       "category": "Political Party",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1512,6 +2188,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 4,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 4,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 1,
+      "Q18": 0,
+      "Q19": 1,
+      "Q20": 0,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
     }
   },
   {
@@ -1529,7 +2231,7 @@ const __ACTORS = [
       "slug": "Thatcher-government-1979-90",
       "category": "Historical Government",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1564,6 +2266,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 4,
+      "Q6": 0,
+      "Q7": 4,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 4,
+      "Q23": 0,
+      "Q24": 4
     }
   },
   {
@@ -1581,7 +2309,7 @@ const __ACTORS = [
       "slug": "US-Democrats",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1616,6 +2344,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
     }
   },
   {
@@ -1633,7 +2387,7 @@ const __ACTORS = [
       "slug": "US-Republicans",
       "category": "Political Actor",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1668,6 +2422,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 2,
+      "Q16": 0,
+      "Q17": 1,
+      "Q18": 0,
+      "Q19": 1,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 3,
+      "Q23": 0,
+      "Q24": 3
     }
   },
   {
@@ -1685,7 +2465,7 @@ const __ACTORS = [
       "slug": "Winston-Churchill",
       "category": "World War II Figure",
       "version": "1.0.0",
-      "lastUpdated": "2026-05-16",
+      "lastUpdated": "2026-05-19",
       "curator": "A Common Enemy Project",
       "contributors": []
     },
@@ -1720,6 +2500,32 @@ const __ACTORS = [
         "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
         "sources": []
       }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
     }
   }
 ];

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "actor": {
     "name": "Orbán's Hungary",
     "slug": "orbans-hungary",
@@ -7,7 +7,7 @@
     "activePeriod": "2010–present",
     "color": "#006600",
     "version": "1.0.0",
-    "lastUpdated": "2026-05-16",
+    "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
     "contributors": []
   },
@@ -46,6 +46,152 @@
       "value": 0,
       "confidence": "low",
       "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+      "sources": []
+    }
+  },
+  "responses": {
+    "Q1": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 9.",
+      "sources": []
+    },
+    "Q2": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 9.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 9.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Cultural axis score of 9.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 7.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 7.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 7.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Economic axis score of 7.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 6.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 6.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 6.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Military axis score of 6.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 2,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 8.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 8.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 3,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 8.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 0,
+      "confidence": "high",
+      "rationale": "Inferred from Sovereignty axis score of 8.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 4,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 0.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 0.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 4,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 0.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 0.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 1,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 7.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 7.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 2,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 7.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 0,
+      "confidence": "medium",
+      "rationale": "Inferred from Class axis score of 7.",
       "sources": []
     }
   }

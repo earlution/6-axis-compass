@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "actor": {
     "name": "Brexit Intersection",
     "slug": "brexit-intersection",
@@ -7,7 +7,7 @@
     "activePeriod": "2016–2020",
     "color": "#800080",
     "version": "1.0.0",
-    "lastUpdated": "2026-05-17",
+    "lastUpdated": "2026-05-19",
     "curator": "A Common Enemy Project",
     "contributors": [
       "Ruari Mears"
@@ -45,9 +45,155 @@
       "sources": []
     },
     "Governance": {
-      "value": 6.0,
+      "value": 6,
       "confidence": "low",
       "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
+      "sources": []
+    }
+  },
+  "responses": {
+    "Q1": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q2": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q3": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q4": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Cultural axis score of 5.3.",
+      "sources": []
+    },
+    "Q5": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q6": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q7": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q8": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Economic axis score of 4.7.",
+      "sources": []
+    },
+    "Q9": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q10": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q11": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q12": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Military axis score of 4.7.",
+      "sources": []
+    },
+    "Q13": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q14": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q15": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q16": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Sovereignty axis score of 5.3.",
+      "sources": []
+    },
+    "Q17": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q18": {
+      "value": 1,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q19": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q20": {
+      "value": 1,
+      "confidence": "low",
+      "rationale": "Inferred from Governance axis score of 6.",
+      "sources": []
+    },
+    "Q21": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q22": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q23": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
+      "sources": []
+    },
+    "Q24": {
+      "value": 0,
+      "confidence": "low",
+      "rationale": "Inferred from Class axis score of 4.7.",
       "sources": []
     }
   }

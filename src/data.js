@@ -28,35 +28,35 @@ export const RESPONSES = [
 
 export const QUESTIONS = [
   // Cultural
-  { axis: 'Cultural', text: "Preserving a nation's distinct cultural identity should be a primary concern of government.", reverse: false },
-  { axis: 'Cultural', text: 'Immigration enriches societies more than it disrupts them.', reverse: true },
-  { axis: 'Cultural', text: 'Rapid demographic change in communities is a legitimate concern deserving serious political attention.', reverse: false },
-  { axis: 'Cultural', text: 'People should be as free to settle in any country as to move within it.', reverse: true },
+  { id: 'Q1',  axis: 'Cultural',    text: "Preserving a nation's distinct cultural identity should be a primary concern of government.", reverse: false },
+  { id: 'Q2',  axis: 'Cultural',    text: 'Immigration enriches societies more than it disrupts them.', reverse: true },
+  { id: 'Q3',  axis: 'Cultural',    text: 'Rapid demographic change in communities is a legitimate concern deserving serious political attention.', reverse: false },
+  { id: 'Q4',  axis: 'Cultural',    text: 'People should be as free to settle in any country as to move within it.', reverse: true },
   // Economic
-  { axis: 'Economic', text: 'Governments should actively protect domestic industries from foreign competition.', reverse: false },
-  { axis: 'Economic', text: 'The free movement of capital across borders generally benefits the economies involved.', reverse: true },
-  { axis: 'Economic', text: 'Strategic industries such as energy and transport should be under national democratic control.', reverse: false },
-  { axis: 'Economic', text: 'Removing trade barriers between nations creates prosperity for all participants.', reverse: true },
+  { id: 'Q5',  axis: 'Economic',    text: 'Governments should actively protect domestic industries from foreign competition.', reverse: false },
+  { id: 'Q6',  axis: 'Economic',    text: 'The free movement of capital across borders generally benefits the economies involved.', reverse: true },
+  { id: 'Q7',  axis: 'Economic',    text: 'Strategic industries such as energy and transport should be under national democratic control.', reverse: false },
+  { id: 'Q8',  axis: 'Economic',    text: 'Removing trade barriers between nations creates prosperity for all participants.', reverse: true },
   // Military
-  { axis: 'Military', text: 'My country should withdraw from or significantly reduce its commitments to NATO.', reverse: true },
-  { axis: 'Military', text: 'Western military intervention in foreign states can be a legitimate and effective instrument of policy.', reverse: false },
-  { axis: 'Military', text: 'A nation should be willing to use military force to protect its strategic interests abroad.', reverse: false },
-  { axis: 'Military', text: 'Foreign military involvement should be avoided except in direct self-defence.', reverse: true },
+  { id: 'Q9',  axis: 'Military',    text: 'My country should withdraw from or significantly reduce its commitments to NATO.', reverse: true },
+  { id: 'Q10', axis: 'Military',    text: 'Western military intervention in foreign states can be a legitimate and effective instrument of policy.', reverse: false },
+  { id: 'Q11', axis: 'Military',    text: 'A nation should be willing to use military force to protect its strategic interests abroad.', reverse: false },
+  { id: 'Q12', axis: 'Military',    text: 'Foreign military involvement should be avoided except in direct self-defence.', reverse: true },
   // Sovereignty
-  { axis: 'Sovereignty', text: "A country's elected parliament should have the final say on all laws affecting its citizens.", reverse: false },
-  { axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
-  { axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
-  { axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
+  { id: 'Q13', axis: 'Sovereignty', text: "A country's elected parliament should have the final say on all laws affecting its citizens.", reverse: false },
+  { id: 'Q14', axis: 'Sovereignty', text: 'International institutions provide necessary constraints on national governments.', reverse: true },
+  { id: 'Q15', axis: 'Sovereignty', text: "A nation's democratic decisions should not be overridden by international legal obligations.", reverse: false },
+  { id: 'Q16', axis: 'Sovereignty', text: 'Sharing sovereignty with other nations can help solve problems that individual countries cannot address alone.', reverse: true },
   // Governance
-  { axis: 'Governance', text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: true },
-  { axis: 'Governance', text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: false },
-  { axis: 'Governance', text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: true },
-  { axis: 'Governance', text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: false },
+  { id: 'Q17', axis: 'Governance',  text: 'Clear chains of command and delegated authority are necessary for any large organisation to function effectively.', reverse: true },
+  { id: 'Q18', axis: 'Governance',  text: 'The most important collective decisions should be made through broad participatory consent rather than delegated to a small leadership group.', reverse: false },
+  { id: 'Q19', axis: 'Governance',  text: 'A well-ordered society requires that people generally accept and defer to legitimate authority.', reverse: true },
+  { id: 'Q20', axis: 'Governance',  text: 'Individuals and local communities should have the maximum feasible autonomy over decisions that directly affect their own lives.', reverse: false },
   // Class
-  { axis: 'Class', text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
-  { axis: 'Class', text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
-  { axis: 'Class', text: 'The wealth gap between rich and poor is a structural problem requiring political solutions.', reverse: false },
-  { axis: 'Class', text: 'What is good for business is generally good for the country as a whole.', reverse: true }
+  { id: 'Q21', axis: 'Class',       text: 'The interests of employers and employees are fundamentally in tension.', reverse: false },
+  { id: 'Q22', axis: 'Class',       text: 'Economic growth generally benefits both business owners and workers.', reverse: true },
+  { id: 'Q23', axis: 'Class',       text: 'The wealth gap between rich and poor is a structural problem requiring political solutions.', reverse: false },
+  { id: 'Q24', axis: 'Class',       text: 'What is good for business is generally good for the country as a whole.', reverse: true }
 ];
 
 const _FALLBACK_ACTORS = [
