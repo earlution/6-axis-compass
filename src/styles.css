@@ -154,6 +154,20 @@ body {
   color: var(--text3);
 }
 
+.data-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.data-link:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
 .intro-upload {
   margin-top: 1.5rem;
 }

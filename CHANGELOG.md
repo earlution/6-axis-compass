@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.5.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.1
 [2.5.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.0
 [2.4.9]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.9
 [2.4.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.8
@@ -30,6 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.5.1] - 2026-05-19
+
+### Added
+- **Link to actor dataset page** from the main compass app.
+  - Intro screen now shows "Browse the actor dataset →" link below the upload area.
+  - Site footer now includes a "Dataset" link visible on all screens (intro, quiz, results).
+  - New `.data-link` CSS class with muted colour and gold hover state.
 
 ## [2.5.0] - 2026-05-19
 
