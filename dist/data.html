@@ -205,6 +205,27 @@ tr.detail td {
 .conf-medium { background: rgba(212,160,23,0.15); color: var(--warn); }
 .conf-low { background: rgba(204,68,68,0.15); color: var(--bad); }
 
+.legend {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.legend-label {
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .detail-panel {
   padding: 1rem 1.25rem;
   display: grid;
@@ -295,6 +316,15 @@ footer a {
     <span class="count" id="count"></span>
   </div>
 
+  <div class="legend">
+    <span class="legend-label">Confidence:</span>
+    <span class="legend-item"><span class="conf conf-very-high">very high</span></span>
+    <span class="legend-item"><span class="conf conf-high">high</span></span>
+    <span class="legend-item"><span class="conf conf-medium">medium</span></span>
+    <span class="legend-item"><span class="conf conf-low">low</span></span>
+    <span>— indicates curator confidence in the score, based on source quality and quantity.</span>
+  </div>
+
   <div class="table-wrap">
     <table role="grid" aria-label="Actor dataset">
       <thead>
@@ -314,7 +344,7 @@ footer a {
   </div>
 
   <footer>
-    <p>Data version <strong>v2.4.9</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
+    <p>Data version <strong>v2.5.0</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
   </footer>
 </div>
 
