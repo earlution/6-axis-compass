@@ -167,6 +167,22 @@ tr:hover td { background: var(--surface-hover); }
 
 tr.expanded td { background: var(--surface-hover); border-bottom: none; }
 
+tr.group-header td {
+  background: var(--bg);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  border-top: 2px solid var(--border);
+}
+
+tr.group-header:first-child td {
+  border-top: none;
+}
+
 tr.detail td {
   padding: 0;
   border-bottom: 1px solid var(--border);
@@ -349,49 +365,79 @@ footer a {
 </div>
 
 <script>
-// ACTOR_DATA will be injected by build.js
+// ACTOR_DATA and ACTOR_GROUPS will be injected by build.js
 const ACTORS = __ACTORS || [];
 const AXES = ['Cultural','Economic','Military','Sovereignty','Governance','Class'];
 
 let currentSort = { col: 'name', dir: 'asc' };
 let expandedRow = null;
 
-function render(actors) {
+function groupActors(actors) {
+  const groups = [];
+  const grouped = new Set();
+
+  for (const [groupName, actorNames] of Object.entries(ACTOR_GROUPS || {})) {
+    const members = actors.filter(a => actorNames.includes(a.name));
+    if (members.length > 0) {
+      groups.push({ name: groupName, actors: members });
+      members.forEach(a => grouped.add(a.name));
+    }
+  }
+
+  const other = actors.filter(a => !grouped.has(a.name));
+  if (other.length > 0) {
+    groups.push({ name: 'Other', actors: other });
+  }
+
+  return groups;
+}
+
+function render(groups) {
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
 
-  if (actors.length === 0) {
+  let totalActors = 0;
+  for (const g of groups) totalActors += g.actors.length;
+
+  if (totalActors === 0) {
     tbody.innerHTML = '<tr><td colspan="8" class="empty">No actors match your search.</td></tr>';
     document.getElementById('count').textContent = '0 actors';
     return;
   }
 
-  document.getElementById('count').textContent = `${actors.length} actor${actors.length !== 1 ? 's' : ''}`;
+  document.getElementById('count').textContent = `${totalActors} actor${totalActors !== 1 ? 's' : ''}`;
 
-  for (const actor of actors) {
-    const meta = actor._actorMeta || {};
-    const scoreMeta = actor._scoreMeta || {};
+  for (const group of groups) {
+    const header = document.createElement('tr');
+    header.className = 'group-header';
+    header.innerHTML = `<td colspan="8">${escapeHtml(group.name)} <span style="color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;">(${group.actors.length})</span></td>`;
+    tbody.appendChild(header);
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>
-        <div class="actor-name">
-          <span class="color-dot" style="background:${actor.color}"></span>
-          ${escapeHtml(actor.name)}
-        </div>
-      </td>
-      <td>${escapeHtml(meta.category || '')}</td>
-      ${AXES.map(ax => {
-        const conf = scoreMeta[ax]?.confidence || 'medium';
-        return `<td class="score">
-          ${actor.scores[ax]?.toFixed(1)}
-          <span class="conf conf-${conf}">${conf.replace('-',' ')}</span>
-        </td>`;
-      }).join('')}
-    `;
+    for (const actor of group.actors) {
+      const meta = actor._actorMeta || {};
+      const scoreMeta = actor._scoreMeta || {};
 
-    tr.addEventListener('click', () => toggleDetail(tr, actor));
-    tbody.appendChild(tr);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="actor-name">
+            <span class="color-dot" style="background:${actor.color}"></span>
+            ${escapeHtml(actor.name)}
+          </div>
+        </td>
+        <td>${escapeHtml(meta.category || '')}</td>
+        ${AXES.map(ax => {
+          const conf = scoreMeta[ax]?.confidence || 'medium';
+          return `<td class="score">
+            ${actor.scores[ax]?.toFixed(1)}
+            <span class="conf conf-${conf}">${conf.replace('-',' ')}</span>
+          </td>`;
+        }).join('')}
+      `;
+
+      tr.addEventListener('click', () => toggleDetail(tr, actor));
+      tbody.appendChild(tr);
+    }
   }
 }
 
@@ -490,7 +536,8 @@ function filterActors(actors, q) {
 }
 
 // Init
-let displayed = sortActors(ACTORS, currentSort.col, currentSort.dir);
+const sortedAll = sortActors(ACTORS, currentSort.col, currentSort.dir);
+let displayed = groupActors(sortedAll);
 render(displayed);
 
 // Sort clicks
@@ -504,7 +551,9 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
     th.classList.add(dir);
 
     const q = document.getElementById('search').value;
-    displayed = sortActors(filterActors(ACTORS, q), col, dir);
+    const filtered = filterActors(ACTORS, q);
+    const sorted = sortActors(filtered, col, dir);
+    displayed = groupActors(sorted);
     render(displayed);
   });
 });
@@ -512,7 +561,9 @@ document.querySelectorAll('th[data-sort]').forEach(th => {
 // Search
 document.getElementById('search').addEventListener('input', e => {
   const q = e.target.value;
-  displayed = sortActors(filterActors(ACTORS, q), currentSort.col, currentSort.dir);
+  const filtered = filterActors(ACTORS, q);
+  const sorted = sortActors(filtered, currentSort.col, currentSort.dir);
+  displayed = groupActors(sorted);
   render(displayed);
 });
 </script>

@@ -68,6 +68,11 @@ function inlineModules() {
 function buildDataPage() {
   const html = fs.readFileSync(path.join(SRC, 'data.html'), 'utf-8');
   const actors = read('actors-generated.js');
+  const dataJs = read('data.js');
+
+  // Extract ACTOR_GROUPS definition from data.js
+  const groupsMatch = dataJs.match(/export const ACTOR_GROUPS = \{[\s\S]*?\};/);
+  const groupsJs = groupsMatch ? groupsMatch[0].replace('export const ', 'const ') : 'const ACTOR_GROUPS = {};';
 
   let version = '1.0.0';
   try {
@@ -77,7 +82,7 @@ function buildDataPage() {
 
   const output = html
     .replace(/\{\{VERSION\}\}/g, version)
-    .replace(/const ACTORS = __ACTORS \|\| \[\];/, actors.trim() + '\nconst ACTORS = __ACTORS || [];');
+    .replace(/const ACTORS = __ACTORS \|\| \[\];/, actors.trim() + '\n' + groupsJs + '\nconst ACTORS = __ACTORS || [];');
 
   fs.writeFileSync(path.join(DIST, 'data.html'), output, 'utf-8');
   console.log('Built dist/data.html');

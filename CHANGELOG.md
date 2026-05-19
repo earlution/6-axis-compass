@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.5.3]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.3
 [2.5.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.2
 [2.5.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.1
 [2.5.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.0
@@ -32,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.5.3] - 2026-05-19
+
+### Changed
+- **Actor dataset page** (`data.html`) now groups actors into the same categories as the graph page (e.g. "2024–2029 UK Parliament", "World War II figures", "Ideological anchors").
+  - `scripts/build.js` injects `ACTOR_GROUPS` from `src/data.js` into the data page at build time.
+  - Each group gets a labelled header row with an actor count.
+  - Ungrouped actors appear under "Other".
 
 ## [2.5.2] - 2026-05-19
 
