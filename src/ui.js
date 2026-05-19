@@ -130,6 +130,7 @@ export function renderResults(container, {
 }) {
   const allActors = [...ACTORS, ...(customActors || [])];
   const actors = allActors.filter(a => selectedActors.has(a.name));
+  const userColor = theme === 'light' ? '#000000' : '#ffffff';
 
   container.innerHTML = `
     <div class="wrap">
@@ -228,6 +229,7 @@ export function renderResults(container, {
     actors,
     uploadedMap,
     showUser,
+    userColor,
     invertedAxes
   });
 
@@ -291,9 +293,9 @@ export function renderResults(container, {
   userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
   userBtn.textContent = t('results.yourMap');
   if (showUser) {
-    userBtn.style.borderColor = '#c8a84b';
-    userBtn.style.color = '#c8a84b';
-    userBtn.style.background = 'rgba(200,168,75,0.1)';
+    userBtn.style.borderColor = userColor;
+    userBtn.style.color = userColor;
+    userBtn.style.background = userColor + '1a';
   }
   userBtn.addEventListener('click', onToggleUser);
   userBtnWrap.appendChild(userBtn);
@@ -369,14 +371,14 @@ export function renderResults(container, {
     item.append(dot, span);
     leg.appendChild(item);
   };
-  if (showUser) addLegend(t('results.you'), '#c8a84b', true, false);
+  if (showUser) addLegend(t('results.you'), userColor, true, false);
   actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
   if (uploadedMap) addLegend(uploadedMap.label || t('results.uploadedMap'), '#b478dc', false, true);
 
   // Score bars
   const bars = document.getElementById('score-bars');
   const profiles = [];
-  if (showUser) profiles.push({ name: t('results.you'), color: '#c8a84b', scores });
+  if (showUser) profiles.push({ name: t('results.you'), color: userColor, scores });
   actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
   if (uploadedMap) profiles.push({ name: uploadedMap.label || t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
 
