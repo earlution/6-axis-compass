@@ -227,80 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.9,
-        "structural": 0.65,
-        "note": "4 MPs + 900+ councillors; council governance provides some structural evidence"
+        "structural": 0.65
       },
       "Economic": {
         "declared": 0.9,
-        "structural": 0.7,
-        "note": "Anti-Washington Consensus position clear; council budgets show constraints"
+        "structural": 0.7
       },
       "Military": {
         "declared": 0.9,
-        "structural": 0.65,
-        "note": "Non-interventionist voting record"
+        "structural": 0.65
       },
       "Sovereignty": {
         "declared": 0.8,
-        "structural": 0.65,
-        "note": "EU membership + devolution support creates ambivalent position"
+        "structural": 0.65
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Broad governance conception (private coercion included)"
+        "structural": 0.7
       },
       "Class": {
         "declared": 0.9,
-        "structural": 0.75,
-        "note": "Class-conflict orientation clearest in UK party landscape"
+        "structural": 0.75
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Green Party Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Green Party Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "Green Party policies 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Green Party policies 2024–2026"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Westminster voting record 2024–2026 (4→5 MPs)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Westminster voting record 2024–2026 (4→5 MPs)"
-        },
-        {
-          "type": "legislation",
-          "title": "Council governance (30+ councils in control/coalition)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Council governance (30+ councils in control/coalition)"
-        },
-        {
-          "type": "legislation",
-          "title": "Membership growth 150k→230k",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Membership growth 150k→230k"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

@@ -11,7 +11,8 @@
     "curator": "A Common Enemy Project",
     "contributors": [
       "Ruari Mears"
-    ]
+    ],
+    "displayName": "Restore Britain"
   },
   "scores": {
     "Cultural": 7.5,
@@ -171,7 +172,7 @@
     "protocol": "Dual-Register Sourcing Protocol v0.2.0",
     "period": "2025–present",
     "status": "opposition",
-    "evidenceQuality": "very_constrained",
+    "evidenceQuality": "very-constrained",
     "declared": {
       "Cultural": 10,
       "Economic": 0,
@@ -197,82 +198,34 @@
       "Class": 0
     },
     "confidence": {
-      "cultural": {
+      "Cultural": {
         "declared": 0.75,
-        "structural": 0.4,
-        "note": "VERY CONSTRAINED: No elections stood; Lowe's individual record only"
+        "structural": 0.4
       },
-      "economic": {
+      "Economic": {
         "declared": 0.8,
-        "structural": 0.5,
-        "note": "VERY CONSTRAINED: Lowe's 1980s London finance nostalgia documented; no party governing record"
+        "structural": 0.5
       },
-      "military": {
+      "Military": {
         "declared": 0.6,
-        "structural": 0.4,
-        "note": "VERY CONSTRAINED: Limited statements"
+        "structural": 0.4
       },
-      "sovereignty": {
+      "Sovereignty": {
         "declared": 0.85,
-        "structural": 0.45,
-        "note": "VERY CONSTRAINED: ECHR/Refugee Convention withdrawal declared; untested"
+        "structural": 0.45
       },
-      "governance": {
+      "Governance": {
         "declared": 0.85,
-        "structural": 0.45,
-        "note": "VERY CONSTRAINED: Courts/treaty override rhetoric; boundary of right/extreme per taxonomy note"
+        "structural": 0.45
       },
-      "class": {
+      "Class": {
         "declared": 0.8,
-        "structural": 0.45,
-        "note": "VERY CONSTRAINED: Class-harmony orientation inferred from economic position"
+        "structural": 0.45
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Restore Britain website 2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Restore Britain website 2026"
-        },
-        {
-          "type": "manifesto",
-          "title": "Lowe statements February 2026 launch",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lowe statements February 2026 launch"
-        },
-        {
-          "type": "manifesto",
-          "title": "Lowe parliamentary speeches",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lowe parliamentary speeches"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Lowe voting record as independent MP 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lowe voting record as independent MP 2024–2026"
-        },
-        {
-          "type": "legislation",
-          "title": "Lowe statements on mass deportation",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lowe statements on mass deportation"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   },
   "_researchNotes": {

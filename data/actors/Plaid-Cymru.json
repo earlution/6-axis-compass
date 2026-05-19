@@ -198,7 +198,7 @@
   "dualRegister": {
     "protocol": "Dual-Register Sourcing Protocol v0.2.0",
     "period": "2021–2026",
-    "status": "devolved_governing",
+    "status": "devolved-governing",
     "evidenceQuality": "moderate",
     "declared": {
       "Cultural": 5.6,
@@ -227,88 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Co-operation Agreement 2021–2024 provides partial governing record; 2026 election win brand new"
+        "structural": 0.7
       },
       "Economic": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Centrist Welsh economic development focus"
+        "structural": 0.7
       },
       "Military": {
         "declared": 0.75,
-        "structural": 0.6,
-        "note": "Non-interventionist; reserved matter limits evidence"
+        "structural": 0.6
       },
       "Sovereignty": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Independence commitment; EU relationship similar to SNP"
+        "structural": 0.7
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Welsh civic nationalist model"
+        "structural": 0.7
       },
       "Class": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Working-class Welsh communities base"
+        "structural": 0.7
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Plaid Cymru Westminster Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Plaid Cymru Westminster Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "2026 Senedd manifesto",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "2026 Senedd manifesto"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Co-operation Agreement with Welsh Labour 2021–2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Co-operation Agreement with Welsh Labour 2021–2024"
-        },
-        {
-          "type": "legislation",
-          "title": "Westminster voting record 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Westminster voting record 2024–2026"
-        },
-        {
-          "type": "legislation",
-          "title": "Senedd voting record",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Senedd voting record"
-        },
-        {
-          "type": "legislation",
-          "title": "2026 election outcome (43 seats, forming government)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "2026 election outcome (43 seats, forming government)"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

@@ -198,7 +198,7 @@
   "dualRegister": {
     "protocol": "Dual-Register Sourcing Protocol v0.2.0",
     "period": "2007–2026 (Holyrood)",
-    "status": "devolved_governing",
+    "status": "devolved-governing",
     "evidenceQuality": "strong",
     "declared": {
       "Cultural": 5,
@@ -227,72 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.9,
-        "structural": 0.85,
-        "note": "19 years Holyrood government provides strong structural record"
+        "structural": 0.85
       },
       "Economic": {
         "declared": 0.85,
-        "structural": 0.85,
-        "note": "Centrist economic management record"
+        "structural": 0.85
       },
       "Military": {
         "declared": 0.8,
-        "structural": 0.75,
-        "note": "Non-interventionist inclination; reserved matter limits structural evidence"
+        "structural": 0.75
       },
       "Sovereignty": {
         "declared": 0.95,
-        "structural": 0.85,
-        "note": "Independence referendum commitment + EU rejoin position clear"
+        "structural": 0.85
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.85,
-        "note": "Civic nationalist governance model"
+        "structural": 0.85
       },
       "Class": {
         "declared": 0.85,
-        "structural": 0.85,
-        "note": "Nordic model orientation + public investment"
+        "structural": 0.85
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "SNP Westminster Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "SNP Westminster Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "Holyrood programme 2021–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Holyrood programme 2021–2026"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Holyrood governing record 2007–2026 (5 consecutive terms)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Holyrood governing record 2007–2026 (5 consecutive terms)"
-        },
-        {
-          "type": "legislation",
-          "title": "Westminster voting record 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Westminster voting record 2024–2026"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

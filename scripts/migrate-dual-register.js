@@ -1,22 +1,50 @@
 const fs = require('fs');
 const path = require('path');
 
-const RESEARCH_FILE = path.join(__dirname, '..', 'data', 'research', 'compass-data-v0.1.0.json');
+const RESEARCH_FILE = path.join(__dirname, '..', 'data', 'research', 'compass-data-v0.2.0.json');
 const ACTORS_DIR = path.join(__dirname, '..', 'data', 'actors');
 
-// Map dual-register actor names to existing actor file basenames
-const NAME_MAP = {
-  'Conservative Party': 'Conservative-Party',
-  'Labour Party': 'Labour-Party',
-  'Liberal Democrats': 'Liberal-Democrats',
-  'Reform UK': 'Reform-UK',
-  'Restore Britain': null, // new actor
-  'Green Party of England and Wales': 'Green-Party',
-  'Scottish National Party': 'SNP',
-  'Plaid Cymru': 'Plaid-Cymru'
+// Map dual-register actor identifiers to existing actor file basenames
+const ID_MAP = {
+  'conservative-2010-2024': 'Conservative-Party',
+  'conservative': 'Conservative-Party',
+  'labour-2024': 'Labour-Party',
+  'labour': 'Labour-Party',
+  'liberal-democrats-2020-2026': 'Liberal-Democrats',
+  'libdem': 'Liberal-Democrats',
+  'reform-uk-2024-2026': 'Reform-UK',
+  'reform': 'Reform-UK',
+  'restore-britain-2025-2026': 'restore-britain-2025-2026',
+  'restore-britain': 'restore-britain-2025-2026',
+  'green-party-2024-2026': 'Green-Party',
+  'green': 'Green-Party',
+  'snp-2007-2026': 'SNP',
+  'snp': 'SNP',
+  'plaid-cymru-2021-2026': 'Plaid-Cymru',
+  'plaid': 'Plaid-Cymru'
 };
 
 const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
+
+function normaliseActor(raw) {
+  // Supports both v0.1.0 (coordinates/declared) and v0.2.0 (scores/declared) schemas
+  const declared = raw.coordinates?.declared || raw.scores?.declared || {};
+  const structural = raw.coordinates?.structural || raw.scores?.structural || {};
+  const delta = raw.coordinates?.delta || raw.scores?.delta || {};
+  const name = raw.name || raw.label || raw.id;
+  return {
+    name,
+    display_name: raw.display_name || raw.label || name,
+    id: raw.id,
+    period: raw.period,
+    status: raw.status,
+    evidence_quality: raw.evidence_quality || raw.evidenceQuality,
+    coordinates: { declared, structural, delta },
+    confidence: raw.confidence || {},
+    sources: raw.sources || { declared: [], structural: [] },
+    taxonomy_note: raw.taxonomy_note || raw.taxonomyNote
+  };
+}
 
 function capitaliseAxis(axis) {
   return axis.charAt(0).toUpperCase() + axis.slice(1);
@@ -69,7 +97,7 @@ function augmentExistingActor(basename, dualActor) {
   sources.structural = makeSources(dualActor.sources.structural, 'legislation');
 
   raw.dualRegister = {
-    protocol: dualActor.coordinates ? 'Dual-Register Sourcing Protocol v0.2.0' : undefined,
+    protocol: 'Dual-Register Sourcing Protocol v0.2.0',
     period: dualActor.period,
     status: dualActor.status,
     evidenceQuality: dualActor.evidence_quality,
@@ -91,7 +119,7 @@ function augmentExistingActor(basename, dualActor) {
 
 function createNewActor(dualActor) {
   const slug = dualActor.id;
-  const basename = slug.replace(/-/g, '-');
+  const basename = slug;
   const filePath = path.join(ACTORS_DIR, `${basename}.json`);
 
   if (fs.existsSync(filePath)) {
@@ -181,10 +209,11 @@ function main() {
 
   const research = JSON.parse(fs.readFileSync(RESEARCH_FILE, 'utf-8'));
 
-  for (const dualActor of research.actors) {
-    const basename = NAME_MAP[dualActor.name];
+  for (const rawActor of research.actors) {
+    const dualActor = normaliseActor(rawActor);
+    const basename = ID_MAP[dualActor.id];
     if (basename === undefined) {
-      console.warn(`Unknown actor: ${dualActor.name}`);
+      console.warn(`Unknown actor id: ${dualActor.id}`);
       continue;
     }
     if (basename === null) {

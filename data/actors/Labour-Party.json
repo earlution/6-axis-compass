@@ -227,88 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.85,
-        "structural": 0.75,
-        "note": "~22 months governing record; Employment Rights Act provides evidence"
+        "structural": 0.75
       },
       "Economic": {
         "declared": 0.9,
-        "structural": 0.85,
-        "note": "October 2024 Budget + fiscal rules confirm continuity"
+        "structural": 0.85
       },
       "Military": {
         "declared": 0.85,
-        "structural": 0.8,
-        "note": "Strategic Defence Review 2025 confirms interventionist posture"
+        "structural": 0.8
       },
       "Sovereignty": {
         "declared": 0.85,
-        "structural": 0.8,
-        "note": "EU relationship reset, no rejoin; ECHR retention"
+        "structural": 0.8
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.8,
-        "note": "State reform agenda moderate"
+        "structural": 0.8
       },
       "Class": {
         "declared": 0.85,
-        "structural": 0.8,
-        "note": "Employment Rights Act + growth mission confirm class-harmony"
+        "structural": 0.8
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Labour Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Labour Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "Starmer conference speeches 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Starmer conference speeches 2024–2026"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Employment Rights Act 2025",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Employment Rights Act 2025"
-        },
-        {
-          "type": "legislation",
-          "title": "October 2024 Budget",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "October 2024 Budget"
-        },
-        {
-          "type": "legislation",
-          "title": "Strategic Defence Review 2025",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Strategic Defence Review 2025"
-        },
-        {
-          "type": "legislation",
-          "title": "Border Security Command",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Border Security Command"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

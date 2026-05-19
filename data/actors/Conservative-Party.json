@@ -323,88 +323,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.95,
-        "structural": 0.9,
-        "note": "14-year governing record provides exceptionally rich structural evidence"
+        "structural": 0.9
       },
       "Economic": {
         "declared": 0.95,
-        "structural": 0.95,
-        "note": "Washington Consensus alignment consistent across Cameron–Sunak"
+        "structural": 0.95
       },
       "Military": {
         "declared": 0.85,
-        "structural": 0.95,
-        "note": "Strong structural record: Libya intervention, Syria votes, Afghanistan continuity"
+        "structural": 0.95
       },
       "Sovereignty": {
         "declared": 0.9,
-        "structural": 0.9,
-        "note": "Brexit delivery + retained EU law framework"
+        "structural": 0.9
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.9,
-        "note": "State-centric authority model consistent"
+        "structural": 0.9
       },
       "Class": {
         "declared": 0.9,
-        "structural": 0.9,
-        "note": "Class-harmony orientation toward capital consistent"
+        "structural": 0.9
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Conservative Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Conservative Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "Conservative Manifestos 2010–2019",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Conservative Manifestos 2010–2019"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Governing record 2010–2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Governing record 2010–2024"
-        },
-        {
-          "type": "legislation",
-          "title": "Lowe 2025",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lowe 2025"
-        },
-        {
-          "type": "legislation",
-          "title": "ONS migration statistics",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "ONS migration statistics"
-        },
-        {
-          "type": "legislation",
-          "title": "Treasury fiscal records",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Treasury fiscal records"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

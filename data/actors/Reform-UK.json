@@ -227,80 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.9,
-        "structural": 0.6,
-        "note": "CONSTRAINED: 5–8 MPs, no governing record; council governance emerging"
+        "structural": 0.6
       },
       "Economic": {
         "declared": 0.8,
-        "structural": 0.55,
-        "note": "CONSTRAINED: Tax cuts declared; voting record limited"
+        "structural": 0.55
       },
       "Military": {
         "declared": 0.75,
-        "structural": 0.6,
-        "note": "CONSTRAINED: Non-interventionist rhetoric; limited voting record"
+        "structural": 0.6
       },
       "Sovereignty": {
         "declared": 0.9,
-        "structural": 0.65,
-        "note": "CONSTRAINED: ECHR withdrawal declared; no governing test"
+        "structural": 0.65
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.6,
-        "note": "CONSTRAINED: Populist authority model clear; untested in government"
+        "structural": 0.6
       },
       "Class": {
         "declared": 0.85,
-        "structural": 0.6,
-        "note": "CONSTRAINED: Class-harmony orientation declared"
+        "structural": 0.6
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Reform UK Manifesto 2024 (Our Contract With You)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Reform UK Manifesto 2024 (Our Contract With You)"
-        },
-        {
-          "type": "manifesto",
-          "title": "reformparty.uk policies 2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "reformparty.uk policies 2026"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Westminster voting record 2024–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Westminster voting record 2024–2026"
-        },
-        {
-          "type": "legislation",
-          "title": "Council governance (10+ councils from May 2025)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Council governance (10+ councils from May 2025)"
-        },
-        {
-          "type": "legislation",
-          "title": "Leadership statements",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Leadership statements"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }

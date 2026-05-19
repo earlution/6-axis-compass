@@ -227,80 +227,32 @@
     "confidence": {
       "Cultural": {
         "declared": 0.9,
-        "structural": 0.7,
-        "note": "Opposition throughout Davey era; voting record consistent"
+        "structural": 0.7
       },
       "Economic": {
         "declared": 0.9,
-        "structural": 0.7,
-        "note": "Pro-market internationalism clear in manifesto"
+        "structural": 0.7
       },
       "Military": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Interventionist voting record"
+        "structural": 0.7
       },
       "Sovereignty": {
         "declared": 0.95,
-        "structural": 0.75,
-        "note": "EU rejoin + single market most explicit pro-supranational position"
+        "structural": 0.75
       },
       "Governance": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Liberal democratic reform agenda"
+        "structural": 0.7
       },
       "Class": {
         "declared": 0.85,
-        "structural": 0.7,
-        "note": "Professional-class base + market liberalism"
+        "structural": 0.7
       }
     },
     "sources": {
-      "declared": [
-        {
-          "type": "manifesto",
-          "title": "Lib Dem Manifesto 2024",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Lib Dem Manifesto 2024"
-        },
-        {
-          "type": "manifesto",
-          "title": "Davey conference speeches 2020–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Davey conference speeches 2020–2026"
-        },
-        {
-          "type": "manifesto",
-          "title": "Youth Mobility Scheme policy",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Youth Mobility Scheme policy"
-        }
-      ],
-      "structural": [
-        {
-          "type": "legislation",
-          "title": "Westminster voting record 2020–2026",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Westminster voting record 2020–2026"
-        },
-        {
-          "type": "legislation",
-          "title": "Council governance (Lib Dem controlled)",
-          "url": "",
-          "date": "",
-          "relevantText": "",
-          "citation": "Council governance (Lib Dem controlled)"
-        }
-      ]
+      "declared": [],
+      "structural": []
     }
   }
 }
