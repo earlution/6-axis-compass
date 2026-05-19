@@ -235,3 +235,49 @@ curl -X POST \
      https://localhost:3000/api/chart \
      -o chart.png
 ```
+
+---
+
+## Shareable Web URL (No API Required)
+
+The live UI at `https://earlution.github.io/6-axis-compass/` supports generating maps directly via a **parameterised hash URL**. No API key or server call is required—everything is rendered client-side.
+
+### URL Format
+
+```
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemsla
+```
+
+| Segment | Meaning | Example |
+|---------|---------|---------|
+| `v2` | URL format version (`v1` for legacy maps, `v2` for current) | `v2` |
+| `c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0` | Axis scores (0–10). Keys: `c`=Cultural, `e`=Economic, `m`=Military, `s`=Sovereignty, `l`=Governance, `a`=Class | `c=7.0,e=3.0,m=8.0,s=6.0,l=5.0,a=1.0` |
+| `o=flat` | Chart orientation: `flat` (vertex at top) or `pointy` (flat edge at top) | `o=pointy` |
+| `x=cemsla` | Axis display order. The letters define clockwise order starting from the top-right. | `x=cemsla` |
+| `i=` *(optional)* | Inverted axes. Letters indicate which axes have swapped low/high poles. | `i=la` |
+
+### Constructing a URL Manually
+
+1. **Scores:** For each axis, assign `0–10` using the one-letter keys.
+2. **Orientation:** Pick `flat` or `pointy`.
+3. **Axis order:** Arrange the six letters in your preferred clockwise order. Default is `cemsla`.
+4. **Inverted axes** *(optional)*: Add `i=` followed by the letters of any axes you want to invert.
+
+**Example — Centrist profile, pointy orientation:**
+
+```
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemsla
+```
+
+**Example — Strong cultural nationalist, economic nationalist, non-interventionist:**
+
+```
+https://earlution.github.io/6-axis-compass/#v2;c=9.0,e=8.0,m=1.0,s=7.0,l=5.0,a=4.0;o=flat;x=cemsla
+```
+
+### Behaviour
+
+- Visiting a valid hash URL **skips the quiz** and renders the results screen immediately.
+- Actor overlays are not encoded in the URL; the user toggles them manually in the results screen.
+- The URL updates automatically when the user changes orientation or axis order, so copying the browser address bar always captures the current view.
+- `v1` URLs are backwards-compatible: the app auto-detects legacy hashes and applies the correct Governance-axis polarity correction.

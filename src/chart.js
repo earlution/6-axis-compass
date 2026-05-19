@@ -66,14 +66,19 @@ export function drawRadar(svg, {
     }));
   });
 
-  // Actor overlays
-  for (const actor of actors) {
+  // User profile (drawn first so actors overlay it)
+  if (showUser) {
+    const disp = displayScores(scores);
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
-      fill: actor.color + '18',
-      stroke: actor.color + '80',
-      'stroke-width': '1.5'
+      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
+      fill: userColor + '1e',
+      stroke: userColor,
+      'stroke-width': '2.5'
     }));
+    axes.forEach((ax, i) => {
+      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
+      svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '4', fill: userColor }));
+    });
   }
 
   // Uploaded map overlay
@@ -92,19 +97,14 @@ export function drawRadar(svg, {
     });
   }
 
-  // User profile
-  if (showUser) {
-    const disp = displayScores(scores);
+  // Actor overlays (drawn last so they sit on top)
+  for (const actor of actors) {
     svg.appendChild(createSVGElement('polygon', {
-      points: polygonPoints(cx, cy, maxR, disp, axes, orientation),
-      fill: userColor + '1e',
-      stroke: userColor,
-      'stroke-width': '2.5'
+      points: polygonPoints(cx, cy, maxR, displayScores(actor.scores), axes, orientation),
+      fill: actor.color + '18',
+      stroke: actor.color + '80',
+      'stroke-width': '1.5'
     }));
-    axes.forEach((ax, i) => {
-      const [x, y] = axisPoint(cx, cy, maxR, i, disp[ax], orientation);
-      svg.appendChild(createSVGElement('circle', { cx: x, cy: y, r: '4', fill: userColor }));
-    });
   }
 
   // Axis labels

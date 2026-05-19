@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.4.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.2
 [2.4.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.1
 [2.4.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.0
 [2.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.3.0
@@ -21,6 +22,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.4.2] - 2026-05-19
+
+### Changed
+- **User map now renders behind actor overlays** in the radar chart (`src/chart.js`). Actors are drawn last so their strokes sit on top; user polygon remains visible underneath due to transparent fills.
+
+### Added
+- **Shareable Web URL documentation** added to `API.md`.
+  - Documents the parameterised hash URL format (`#v2;c=...,e=...,...;o=...;x=...;i=...`) used by `https://earlution.github.io/6-axis-compass/`.
+  - Explains how to construct URLs manually without API calls.
+  - Covers axis keys, orientation, axis order, inverted axes, and backwards-compatible `v1` URLs.
 
 ## [2.4.1] - 2026-05-19
 
