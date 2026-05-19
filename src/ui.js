@@ -125,6 +125,8 @@ export function renderResults(container, {
   onDeleteCustomActor,
   onSetTheme,
   onToggleInvertAxis,
+  onReorderGroups,
+  groupOrder,
   theme,
   language
 }) {
@@ -133,90 +135,96 @@ export function renderResults(container, {
   const userColor = theme === 'light' ? '#000000' : '#ffffff';
 
   container.innerHTML = `
-    <div class="wrap">
+    <div class="wrap wrap--wide">
       <div class="screen active" id="s-results" role="region" aria-label="${t('results.title')}" tabindex="-1">
         <p class="eyebrow">${t('results.eyebrow')}</p>
         <h2 class="results-title">${t('results.title')}</h2>
-        <div class="chart-wrap">
-          <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
-        </div>
-        <div class="actor-groups" id="actor-groups"></div>
-        <div class="legend" id="legend"></div>
-        <div class="score-bars" id="score-bars"></div>
-        <hr class="divider">
-        <div class="config-section">
-          <p class="config-heading">${t('config.language')}</p>
-          <div class="config-row">
-            <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
-              <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
-            </select>
-          </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('config.theme')}</p>
-          <div class="config-row">
-            <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
-            <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
-          </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.orientation')}</p>
-          <div class="config-row">
-            <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
-            <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
-          </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.download')}</p>
-          <div class="config-row">
-            <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
-            <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
-            <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
-          </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.share')}</p>
-          <div class="config-row">
-            <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
-          </div>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.addCustomActor')}</p>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
-            <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
-              <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
+        <div class="results-layout">
+          <div class="chart-pane">
+            <div class="chart-wrap">
+              <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-              ${AXES.map(ax => `
-                <div style="display:flex;flex-direction:column;gap:2px;">
-                  <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
-                  <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
+            <div class="legend" id="legend"></div>
+          </div>
+          <div class="content-pane">
+            <div class="actor-groups" id="actor-groups"></div>
+            <div class="score-bars" id="score-bars"></div>
+            <hr class="divider">
+            <div class="config-section">
+              <p class="config-heading">${t('config.language')}</p>
+              <div class="config-row">
+                <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
+                  <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
+                </select>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('config.theme')}</p>
+              <div class="config-row">
+                <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
+                <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.orientation')}</p>
+              <div class="config-row">
+                <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
+                <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.download')}</p>
+              <div class="config-row">
+                <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
+                <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
+                <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.share')}</p>
+              <div class="config-row">
+                <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
+              </div>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.addCustomActor')}</p>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
+                <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
+                  <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
                 </div>
-              `).join('')}
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+                  ${AXES.map(ax => `
+                    <div style="display:flex;flex-direction:column;gap:2px;">
+                      <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
+                      <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
+              </div>
             </div>
-            <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
+            <div class="config-section">
+              <p class="config-heading">${t('results.compareSaved')}</p>
+              <div class="config-row">
+                <label class="config-file-label">
+                  ${t('results.uploadLabel')}
+                  <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
+                </label>
+                <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
+              </div>
+              <p class="config-note">${t('results.uploadNote')}</p>
+            </div>
+            <div class="config-section">
+              <p class="config-heading">${t('results.axisOrder')}</p>
+              <div class="axis-list" id="axis-list"></div>
+            </div>
+            <hr class="divider">
+            <p class="footer-note">${t('results.footer')}</p>
+            <button class="btn" id="btn-restart">${t('results.retake')}</button>
           </div>
         </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.compareSaved')}</p>
-          <div class="config-row">
-            <label class="config-file-label">
-              ${t('results.uploadLabel')}
-              <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
-            </label>
-            <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
-          </div>
-          <p class="config-note">${t('results.uploadNote')}</p>
-        </div>
-        <div class="config-section">
-          <p class="config-heading">${t('results.axisOrder')}</p>
-          <div class="axis-list" id="axis-list"></div>
-        </div>
-        <hr class="divider">
-        <p class="footer-note">${t('results.footer')}</p>
-        <button class="btn" id="btn-restart">${t('results.retake')}</button>
       </div>
     </div>
   `;
@@ -302,25 +310,18 @@ export function renderResults(container, {
   userRow.append(userLabel, userBtnWrap);
   groupsEl.appendChild(userRow);
 
-  // Grouped preset actors
+  // Build ordered list of group entries
+  const groupEntries = [];
   const groupedNames = new Set();
+
+  // Preset groups
   Object.entries(ACTOR_GROUPS).forEach(([groupName, actorNames]) => {
     const groupActors = actorNames
       .map(name => allActors.find(a => a.name === name))
       .filter(Boolean);
     if (groupActors.length === 0) return;
     groupActors.forEach(a => groupedNames.add(a.name));
-
-    const groupRow = document.createElement('div');
-    groupRow.className = 'actor-group';
-    const groupLabel = document.createElement('span');
-    groupLabel.className = 'actor-group-label';
-    groupLabel.textContent = groupName;
-    const groupBtns = document.createElement('div');
-    groupBtns.className = 'actor-btns';
-    groupActors.forEach(actor => appendActorButton(actor, groupBtns));
-    groupRow.append(groupLabel, groupBtns);
-    groupsEl.appendChild(groupRow);
+    groupEntries.push({ name: groupName, actors: groupActors });
   });
 
   // Custom actors group
@@ -328,33 +329,72 @@ export function renderResults(container, {
     customActors && customActors.some(c => c.name === a.name)
   );
   if (customGroupActors.length > 0) {
-    const groupRow = document.createElement('div');
-    groupRow.className = 'actor-group';
-    const groupLabel = document.createElement('span');
-    groupLabel.className = 'actor-group-label';
-    groupLabel.textContent = 'Custom actors';
-    const groupBtns = document.createElement('div');
-    groupBtns.className = 'actor-btns';
-    customGroupActors.forEach(actor => appendActorButton(actor, groupBtns));
-    groupRow.append(groupLabel, groupBtns);
-    groupsEl.appendChild(groupRow);
+    groupEntries.push({ name: 'Custom actors', actors: customGroupActors });
     customGroupActors.forEach(a => groupedNames.add(a.name));
   }
 
   // Ungrouped fallback
   const ungrouped = allActors.filter(a => !groupedNames.has(a.name));
   if (ungrouped.length > 0) {
+    groupEntries.push({ name: 'Other', actors: ungrouped });
+  }
+
+  // Sort by groupOrder if provided
+  const defaultOrder = groupEntries.map(g => g.name);
+  const order = groupOrder && groupOrder.length > 0 ? groupOrder.filter(n => defaultOrder.includes(n)) : defaultOrder;
+  // Append any missing groups
+  defaultOrder.forEach(name => { if (!order.includes(name)) order.push(name); });
+
+  const orderedEntries = order.map(name => groupEntries.find(g => g.name === name)).filter(Boolean);
+
+  // Render groups with reorder controls
+  orderedEntries.forEach((entry, index) => {
     const groupRow = document.createElement('div');
     groupRow.className = 'actor-group';
+
+    const header = document.createElement('div');
+    header.className = 'group-header';
+
     const groupLabel = document.createElement('span');
     groupLabel.className = 'actor-group-label';
-    groupLabel.textContent = 'Other';
+    groupLabel.textContent = entry.name;
+
+    const reorder = document.createElement('span');
+    reorder.className = 'group-reorder';
+
+    const upBtn = document.createElement('button');
+    upBtn.textContent = '↑';
+    upBtn.setAttribute('aria-label', 'Move group up');
+    upBtn.disabled = index === 0;
+    if (!upBtn.disabled) {
+      upBtn.addEventListener('click', () => {
+        const newOrder = [...order];
+        [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
+        onReorderGroups && onReorderGroups(newOrder);
+      });
+    }
+
+    const downBtn = document.createElement('button');
+    downBtn.textContent = '↓';
+    downBtn.setAttribute('aria-label', 'Move group down');
+    downBtn.disabled = index === orderedEntries.length - 1;
+    if (!downBtn.disabled) {
+      downBtn.addEventListener('click', () => {
+        const newOrder = [...order];
+        [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
+        onReorderGroups && onReorderGroups(newOrder);
+      });
+    }
+
+    reorder.append(upBtn, downBtn);
+    header.append(groupLabel, reorder);
+
     const groupBtns = document.createElement('div');
     groupBtns.className = 'actor-btns';
-    ungrouped.forEach(actor => appendActorButton(actor, groupBtns));
-    groupRow.append(groupLabel, groupBtns);
+    entry.actors.forEach(actor => appendActorButton(actor, groupBtns));
+    groupRow.append(header, groupBtns);
     groupsEl.appendChild(groupRow);
-  }
+  });
 
   // Legend
   const leg = document.getElementById('legend');

@@ -26,7 +26,7 @@
   <span class="footer-ver">v{{VERSION}}</span>
 </footer>
 <script type="module">
-import { AXES } from './data.js';
+import { AXES, ACTOR_GROUPS } from './data.js';
 import { createQuiz } from './quiz.js';
 import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
@@ -48,6 +48,20 @@ let language = 'en';
 let theme = 'dark';
 let customActors = [];
 let invertedAxes = new Set();
+let actorGroupOrder = [];
+
+function loadActorGroupOrder() {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-actor-group-order');
+    if (stored) actorGroupOrder = JSON.parse(stored);
+  } catch (_) {}
+}
+
+function saveActorGroupOrder() {
+  try {
+    localStorage.setItem('six-axis-compass-actor-group-order', JSON.stringify(actorGroupOrder));
+  } catch (_) {}
+}
 
 function loadCustomActors() {
   try {
@@ -91,6 +105,7 @@ function saveInvertedAxes() {
 loadCustomActors();
 loadTheme();
 loadInvertedAxes();
+loadActorGroupOrder();
 document.documentElement.setAttribute('data-theme', theme);
 
 function announce(message) {
@@ -184,7 +199,9 @@ function showResults() {
       uploadedMap = null;
       selectedActors.clear();
       invertedAxes = new Set();
+      actorGroupOrder = [];
       saveInvertedAxes();
+      saveActorGroupOrder();
       window.location.hash = '';
       renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
     },
@@ -253,6 +270,12 @@ function showResults() {
       saveInvertedAxes();
       showResults();
     },
+    onReorderGroups: (newOrder) => {
+      actorGroupOrder = newOrder;
+      saveActorGroupOrder();
+      showResults();
+    },
+    groupOrder: actorGroupOrder,
     language,
     theme,
     onSetTheme: (t) => {
