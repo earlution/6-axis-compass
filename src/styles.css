@@ -50,7 +50,7 @@ body {
 
 .chart-pane {
   position: sticky;
-  top: 2rem;
+  top: 3rem;
   align-self: start;
 }
 

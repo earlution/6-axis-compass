@@ -137,10 +137,10 @@ export function renderResults(container, {
   container.innerHTML = `
     <div class="wrap wrap--wide">
       <div class="screen active" id="s-results" role="region" aria-label="${t('results.title')}" tabindex="-1">
-        <p class="eyebrow">${t('results.eyebrow')}</p>
-        <h2 class="results-title">${t('results.title')}</h2>
         <div class="results-layout">
           <div class="chart-pane">
+            <p class="eyebrow">${t('results.eyebrow')}</p>
+            <h2 class="results-title">${t('results.title')}</h2>
             <div class="chart-wrap">
               <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
             </div>
