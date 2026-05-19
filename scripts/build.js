@@ -65,7 +65,26 @@ function inlineModules() {
   console.log('Built dist/index.html');
 }
 
+function buildDataPage() {
+  const html = fs.readFileSync(path.join(SRC, 'data.html'), 'utf-8');
+  const actors = read('actors-generated.js');
+
+  let version = '1.0.0';
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf-8'));
+    version = pkg.version || version;
+  } catch (_) {}
+
+  const output = html
+    .replace(/\{\{VERSION\}\}/g, version)
+    .replace(/const ACTORS = __ACTORS \|\| \[\];/, actors.trim() + '\nconst ACTORS = __ACTORS || [];');
+
+  fs.writeFileSync(path.join(DIST, 'data.html'), output, 'utf-8');
+  console.log('Built dist/data.html');
+}
+
 inlineModules();
+buildDataPage();
 
 // Optional watch mode
 if (process.argv.includes('--watch')) {

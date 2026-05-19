@@ -53,6 +53,14 @@ In the results screen, every pre-loaded actor has an **information icon** ("i") 
 
 This makes the compass a living research instrument: users can inspect the evidence behind every score rather than taking it on trust.
 
+### Public Actor Dataset Page
+
+For a sortable, searchable table of **all actor scores** with per-axis confidence, rationale, and source links, see the dedicated data page:
+
+**[Browse the full dataset →](https://earlution.github.io/6-axis-compass/data.html)**
+
+The page lists every actor, their six-axis scores, confidence levels, and expandable detail panels showing curators, version history, rationales, and primary source links. You can sort by any axis or search by actor name, category, or source title.
+
 ## API
 
 ### REST API (Server-side)

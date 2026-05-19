@@ -1,0 +1,3021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actor Data — Six-Axis Political Compass</title>
+<meta name="description" content="Browse the complete dataset of political actor positions across six axes.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+:root {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --surface-hover: #2a2a2a;
+  --border: #333;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --accent: #c8a84b;
+  --accent-dim: #a08030;
+  --good: #4a9c5d;
+  --warn: #d4a017;
+  --bad: #c44;
+  --radius: 8px;
+  --gap: 1rem;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f5f5;
+    --surface: #fff;
+    --surface-hover: #f0f0f0;
+    --border: #ddd;
+    --text: #222;
+    --text-muted: #666;
+    --accent: #8b6914;
+    --accent-dim: #6b5010;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 2rem 1rem;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header { margin-bottom: 2rem; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.brand-icon {
+  width: 36px; height: 36px;
+  fill: none; stroke: var(--accent); stroke-width: 2;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(200,168,75,0.15);
+}
+
+.count {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th, td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+th:hover { color: var(--accent); }
+
+th .sort {
+  display: inline-block;
+  width: 0; height: 0;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 5px solid var(--text-muted);
+  opacity: 0.3;
+}
+
+th.asc .sort {
+  border-bottom: none;
+  border-top: 5px solid var(--accent);
+  opacity: 1;
+}
+
+th.desc .sort {
+  border-bottom: 5px solid var(--accent);
+  border-top: none;
+  opacity: 1;
+}
+
+tr:hover td { background: var(--surface-hover); }
+
+tr.expanded td { background: var(--surface-hover); border-bottom: none; }
+
+tr.detail td {
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.actor-name {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.score {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.conf {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.conf-high { background: rgba(74,156,93,0.15); color: var(--good); }
+.conf-very-high { background: rgba(74,156,93,0.2); color: var(--good); }
+.conf-medium { background: rgba(212,160,23,0.15); color: var(--warn); }
+.conf-low { background: rgba(204,68,68,0.15); color: var(--bad); }
+
+.detail-panel {
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.detail-group h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+}
+
+.detail-group p, .detail-group a {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.detail-group a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.detail-group a:hover { text-decoration: underline; }
+
+.rationale {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 600px;
+}
+
+.source-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.source-list li {
+  font-size: 0.82rem;
+  margin-bottom: 0.3rem;
+  color: var(--text-muted);
+}
+
+.source-list a { color: var(--accent-dim); }
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  body { padding: 1rem 0.5rem; }
+  th, td { padding: 0.5rem 0.4rem; font-size: 0.85rem; }
+  .detail-panel { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 36 36">
+        <polygon points="18,2 34,18 18,34 2,18" stroke-linejoin="round"/>
+      </svg>
+      <h1>Six-Axis Compass — Actor Dataset</h1>
+    </div>
+    <p class="subtitle">Browse all scored political actors. Every score is traceable to primary sources. Click a row to expand detail.</p>
+  </header>
+
+  <div class="controls">
+    <input type="text" class="search" id="search" placeholder="Search actors, categories, or sources..." aria-label="Search actors">
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table role="grid" aria-label="Actor dataset">
+      <thead>
+        <tr>
+          <th data-sort="name">Actor <span class="sort"></span></th>
+          <th data-sort="category">Category <span class="sort"></span></th>
+          <th data-sort="Cultural">Cultural <span class="sort"></span></th>
+          <th data-sort="Economic">Economic <span class="sort"></span></th>
+          <th data-sort="Military">Military <span class="sort"></span></th>
+          <th data-sort="Sovereignty">Sovereignty <span class="sort"></span></th>
+          <th data-sort="Governance">Governance <span class="sort"></span></th>
+          <th data-sort="Class">Class <span class="sort"></span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Data version <strong>v2.4.8</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
+  </footer>
+</div>
+
+<script>
+// ACTOR_DATA will be injected by build.js
+// AUTO-GENERATED by scripts/sync-actor-data.js
+// Do not edit directly. Edit files in data/actors/ instead.
+const __ACTORS = [
+  {
+    "name": "Adolf Hitler",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 10,
+      "Military": 10,
+      "Economic": 8,
+      "Class": 7,
+      "Governance": 9
+    },
+    "color": "#212121",
+    "_actorMeta": {
+      "slug": "Adolf-Hitler",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 2,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 4,
+      "Q11": 4,
+      "Q12": 0,
+      "Q13": 4,
+      "Q14": 0,
+      "Q15": 4,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 3,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Anarcho-communism",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 0,
+      "Military": 0,
+      "Economic": 0,
+      "Class": 10,
+      "Governance": 10
+    },
+    "color": "#9C27B0",
+    "_actorMeta": {
+      "slug": "Anarcho-communism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 4,
+      "Q7": 0,
+      "Q8": 4,
+      "Q9": 4,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 4,
+      "Q13": 0,
+      "Q14": 4,
+      "Q15": 0,
+      "Q16": 4,
+      "Q17": 0,
+      "Q18": 4,
+      "Q19": 0,
+      "Q20": 4,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Attlee government 1945–51",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 5,
+      "Economic": 0,
+      "Class": 10,
+      "Governance": 5
+    },
+    "color": "#D32F2F",
+    "_actorMeta": {
+      "slug": "Attlee-government-1945-51",
+      "category": "Historical Government",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 4,
+      "Q7": 0,
+      "Q8": 4,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Benito Mussolini",
+    "scores": {
+      "Cultural": 9,
+      "Sovereignty": 9,
+      "Military": 9,
+      "Economic": 7,
+      "Class": 6,
+      "Governance": 9
+    },
+    "color": "#424242",
+    "_actorMeta": {
+      "slug": "Benito-Mussolini",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 3,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 3,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Brexit Intersection",
+    "scores": {
+      "Cultural": 5.3,
+      "Economic": 4.7,
+      "Military": 4.7,
+      "Sovereignty": 5.3,
+      "Class": 4.7,
+      "Governance": 6
+    },
+    "color": "#800080",
+    "_actorMeta": {
+      "slug": "brexit-intersection",
+      "category": "Meta-Map",
+      "activePeriod": "2016–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "low",
+        "rationale": "Geometric intersection (minimum overlap) of Hard Brexit, Soft Brexit, and People's Vote positions on the cultural axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the economic axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the military axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the sovereignty axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the class axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "low",
+        "rationale": "Geometric intersection of Hard Brexit, Soft Brexit, and People's Vote positions on the governance axis. Represents the common ground across all Brexit factions.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Bush/Blair Iraq position",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 4,
+      "Military": 10,
+      "Economic": 5,
+      "Class": 4,
+      "Governance": 6
+    },
+    "color": "#6B8E23",
+    "_actorMeta": {
+      "slug": "Bush-Blair-Iraq-position",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 4,
+      "Q11": 4,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
+    }
+  },
+  {
+    "name": "Clement Attlee",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 7,
+      "Class": 6,
+      "Governance": 6
+    },
+    "color": "#E74C3C",
+    "_actorMeta": {
+      "slug": "Clement-Attlee",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Conservative Party",
+    "scores": {
+      "Cultural": 7,
+      "Economic": 3,
+      "Military": 8,
+      "Sovereignty": 6,
+      "Class": 1,
+      "Governance": 5
+    },
+    "color": "#1A75BB",
+    "_actorMeta": {
+      "slug": "conservative-party",
+      "category": "UK Political Party",
+      "activePeriod": "1834–present",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "high",
+        "rationale": "Consistent emphasis on controlled immigration, cultural preservation, and British values in manifestos and legislation since 2010.",
+        "sources": [
+          {
+            "type": "manifesto",
+            "title": "Conservative Party Manifesto 2024",
+            "date": "2024-06-12",
+            "url": "https://www.conservatives.com/manifesto2024",
+            "relevantText": "We will introduce an annual cap on work and family visas, ensuring that immigration is sustainable and serves the national interest.",
+            "citation": "Conservative Party, 'Clear Plan. Bold Action. Secure Future.', 2024, p. 23"
+          },
+          {
+            "type": "legislation",
+            "title": "Illegal Migration Act 2023",
+            "date": "2023-07-20",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/37",
+            "relevantText": "An Act to make provision for and in connection with the removal from the United Kingdom of persons who have entered or arrived in breach of immigration control.",
+            "citation": "Illegal Migration Act 2023, c. 37 (UK)"
+          },
+          {
+            "type": "vote",
+            "title": "Third Reading — Illegal Migration Bill",
+            "date": "2023-07-17",
+            "url": "https://hansard.parliament.uk/commons/2023-07-17/division/D123",
+            "relevantText": "Division No. 123: Ayes 289 (Conservative), Noes 179",
+            "citation": "HC Deb 17 July 2023, col. 1234"
+          }
+        ]
+      },
+      "Economic": {
+        "confidence": "high",
+        "rationale": "Post-Brexit trade liberalisation and free-market rhetoric, tempered by industrial strategy and state intervention during crises.",
+        "sources": [
+          {
+            "type": "policy",
+            "title": "UK-Australia Free Trade Agreement",
+            "date": "2021-12-17",
+            "url": "https://www.gov.uk/government/collections/uk-australia-free-trade-agreement",
+            "relevantText": "The agreement removes tariffs on 99.9% of goods, demonstrating the party's commitment to liberal trade.",
+            "citation": "Department for International Trade, 'UK-Australia FTA', 2021"
+          },
+          {
+            "type": "legislation",
+            "title": "Subsidy Control Act 2022",
+            "date": "2022-04-28",
+            "url": "https://www.legislation.gov.uk/ukpga/2022/23",
+            "relevantText": "An Act to make provision for the control of subsidies by public authorities.",
+            "citation": "Subsidy Control Act 2022, c. 23 (UK)"
+          }
+        ]
+      },
+      "Military": {
+        "confidence": "high",
+        "rationale": "Consistently pro-NATO, increased defence spending commitments, support for Ukraine, and interventionist foreign policy.",
+        "sources": [
+          {
+            "type": "manifesto",
+            "title": "Conservative Party Manifesto 2024",
+            "date": "2024-06-12",
+            "url": "https://www.conservatives.com/manifesto2024",
+            "relevantText": "We will increase defence spending to 2.5% of GDP by 2030 and maintain our unwavering support for NATO.",
+            "citation": "Conservative Party, 'Clear Plan. Bold Action. Secure Future.', 2024, p. 45"
+          },
+          {
+            "type": "vote",
+            "title": "Defence Spending Motion",
+            "date": "2024-03-18",
+            "url": "https://hansard.parliament.uk/commons/2024-03-18/division/D456",
+            "relevantText": "Motion to increase defence spending to 2.5% of GDP: Ayes 312, Noes 201",
+            "citation": "HC Deb 18 March 2024, col. 5678"
+          }
+        ]
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Brexit delivered under Conservative government, but ongoing engagement with international frameworks (CPTPP, NATO, UN).",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "European Union (Withdrawal) Act 2018",
+            "date": "2018-06-26",
+            "url": "https://www.legislation.gov.uk/ukpga/2018/16",
+            "relevantText": "An Act to repeal the European Communities Act 1972 and make other provision in connection with the withdrawal of the United Kingdom from the EU.",
+            "citation": "European Union (Withdrawal) Act 2018, c. 16 (UK)"
+          },
+          {
+            "type": "policy",
+            "title": "Accession to Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)",
+            "date": "2023-07-16",
+            "url": "https://www.gov.uk/government/news/uk-joins-cptpp",
+            "relevantText": "The UK becomes the first new member of CPTPP since its founding, demonstrating commitment to multilateral trade.",
+            "citation": "Department for Business and Trade press release, 16 July 2023"
+          }
+        ]
+      },
+      "Class": {
+        "confidence": "high",
+        "rationale": "Pro-business, anti-union legislation (Minimum Service Levels Act), reduction of worker protections, tax policies favouring capital over labour.",
+        "sources": [
+          {
+            "type": "legislation",
+            "title": "Strikes (Minimum Service Levels) Act 2023",
+            "date": "2023-07-20",
+            "url": "https://www.legislation.gov.uk/ukpga/2023/29",
+            "relevantText": "An Act to make provision about minimum levels of service that must be provided during strikes.",
+            "citation": "Strikes (Minimum Service Levels) Act 2023, c. 29 (UK)"
+          },
+          {
+            "type": "vote",
+            "title": "Second Reading — Strikes (Minimum Service Levels) Bill",
+            "date": "2023-01-16",
+            "url": "https://hansard.parliament.uk/commons/2023-01-16/division/D789",
+            "relevantText": "Division No. 789: Ayes 305 (Conservative), Noes 243",
+            "citation": "HC Deb 16 January 2023, col. 9012"
+          }
+        ]
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 2,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 3,
+      "Q23": 0,
+      "Q24": 3
+    }
+  },
+  {
+    "name": "Enoch Powell 1968",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 9,
+      "Military": 5,
+      "Economic": 7,
+      "Class": 6,
+      "Governance": 7
+    },
+    "color": "#8B0000",
+    "_actorMeta": {
+      "slug": "Enoch-Powell-1968",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Fascism",
+    "scores": {
+      "Cultural": 10,
+      "Sovereignty": 9,
+      "Military": 9,
+      "Economic": 8,
+      "Class": 0,
+      "Governance": 0
+    },
+    "color": "#8B4513",
+    "_actorMeta": {
+      "slug": "Fascism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 4,
+      "Q2": 0,
+      "Q3": 4,
+      "Q4": 0,
+      "Q5": 2,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 4,
+      "Q23": 0,
+      "Q24": 4
+    }
+  },
+  {
+    "name": "Federalist EU tradition",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 10,
+      "Military": 4,
+      "Economic": 3,
+      "Class": 4,
+      "Governance": 5
+    },
+    "color": "#003399",
+    "_actorMeta": {
+      "slug": "Federalist-EU-tradition",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 1,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 1,
+      "Q13": 4,
+      "Q14": 0,
+      "Q15": 4,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
+    }
+  },
+  {
+    "name": "Franklin D. Roosevelt",
+    "scores": {
+      "Cultural": 4,
+      "Sovereignty": 5,
+      "Military": 8,
+      "Economic": 7,
+      "Class": 5,
+      "Governance": 6
+    },
+    "color": "#1565C0",
+    "_actorMeta": {
+      "slug": "Franklin-D-Roosevelt",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 1,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Green Party",
+    "scores": {
+      "Cultural": 2,
+      "Sovereignty": 5,
+      "Military": 2,
+      "Economic": 7,
+      "Class": 8,
+      "Governance": 8
+    },
+    "color": "#5A9E3F",
+    "_actorMeta": {
+      "slug": "Green-Party",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 2,
+      "Q3": 0,
+      "Q4": 3,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 2,
+      "Q19": 0,
+      "Q20": 3,
+      "Q21": 2,
+      "Q22": 0,
+      "Q23": 3,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Hard Brexit",
+    "scores": {
+      "Cultural": 8,
+      "Economic": 7,
+      "Military": 5,
+      "Sovereignty": 9,
+      "Class": 5,
+      "Governance": 5
+    },
+    "color": "#8B0000",
+    "_actorMeta": {
+      "slug": "hard-brexit",
+      "category": "Brexit Faction",
+      "activePeriod": "2016–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Strong emphasis on British cultural identity, controlled immigration, and sovereignty over multicultural integration. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "Preference for protectionist trade policy and economic nationalism over EU single-market membership. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Mixed interventionism; strong on national defence but sceptical of EU defence integration. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Absolute priority on restoring full parliamentary sovereignty and ending ECJ jurisdiction. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Cross-class coalition with varied positions on workers' rights and regulation. To be documented.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "Mixed; emphasis on national self-determination but some acceptance of state authority. To be documented.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "John Maynard Keynes",
+    "scores": {
+      "Cultural": 4,
+      "Sovereignty": 5,
+      "Military": 2,
+      "Economic": 7,
+      "Class": 3,
+      "Governance": 5
+    },
+    "color": "#607D8B",
+    "_actorMeta": {
+      "slug": "John-Maynard-Keynes",
+      "category": "Economic Theorist",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 1,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 2
+    }
+  },
+  {
+    "name": "Joseph Stalin",
+    "scores": {
+      "Cultural": 7,
+      "Sovereignty": 6,
+      "Military": 9,
+      "Economic": 9,
+      "Class": 10,
+      "Governance": 10
+    },
+    "color": "#B71C1C",
+    "_actorMeta": {
+      "slug": "Joseph-Stalin",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 2,
+      "Q4": 0,
+      "Q5": 3,
+      "Q6": 0,
+      "Q7": 3,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 4,
+      "Q19": 0,
+      "Q20": 4,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Labour Party",
+    "scores": {
+      "Cultural": 5,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 3,
+      "Class": 3,
+      "Governance": 6
+    },
+    "color": "#c0392b",
+    "_actorMeta": {
+      "slug": "Labour-Party",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 2
+    }
+  },
+  {
+    "name": "Leninism",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 5,
+      "Military": 7,
+      "Economic": 10,
+      "Class": 10,
+      "Governance": 0
+    },
+    "color": "#CC0000",
+    "_actorMeta": {
+      "slug": "Leninism",
+      "category": "Political Ideology",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 4,
+      "Q6": 0,
+      "Q7": 4,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 4,
+      "Q22": 0,
+      "Q23": 4,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Liberal Democrats",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 5,
+      "Economic": 4,
+      "Class": 4,
+      "Governance": 7
+    },
+    "color": "#FAA61A",
+    "_actorMeta": {
+      "slug": "Liberal-Democrats",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
+    }
+  },
+  {
+    "name": "Milton Friedman",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 6,
+      "Economic": 2,
+      "Class": 2,
+      "Governance": 2
+    },
+    "color": "#8D6E63",
+    "_actorMeta": {
+      "slug": "Milton-Friedman",
+      "category": "Economic Theorist",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 2,
+      "Q7": 0,
+      "Q8": 3,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 2,
+      "Q18": 0,
+      "Q19": 3,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
+    }
+  },
+  {
+    "name": "Orbán's Hungary",
+    "scores": {
+      "Cultural": 9,
+      "Economic": 7,
+      "Military": 6,
+      "Sovereignty": 8,
+      "Class": 7,
+      "Governance": 0
+    },
+    "color": "#006600",
+    "_actorMeta": {
+      "slug": "orbans-hungary",
+      "category": "National Government",
+      "activePeriod": "2010–present",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "high",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "low",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 3,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 2,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 4,
+      "Q18": 0,
+      "Q19": 4,
+      "Q20": 0,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "People's Vote",
+    "scores": {
+      "Cultural": 3,
+      "Economic": 3,
+      "Military": 4,
+      "Sovereignty": 2,
+      "Class": 5,
+      "Governance": 7
+    },
+    "color": "#1E90FF",
+    "_actorMeta": {
+      "slug": "peoples-vote",
+      "category": "Brexit Faction",
+      "activePeriod": "2018–2020",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Pro-European cultural identity; emphasis on openness, diversity, and internationalism. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "high",
+        "rationale": "Strong preference for retaining EU single-market membership and free movement. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Support for EU defence cooperation and multilateralism; generally less hawkish. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "high",
+        "rationale": "Advocacy for shared sovereignty and supranational governance via EU membership. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Cross-class coalition; emphasis on protecting workers' rights via EU regulatory frameworks. To be documented.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "Emphasis on democratic participation, civil liberties, and rule of law at supranational level. To be documented.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 1,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 1,
+      "Q13": 0,
+      "Q14": 2,
+      "Q15": 0,
+      "Q16": 3,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 0,
+      "Q23": 0,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Plaid Cymru",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 2,
+      "Economic": 6,
+      "Class": 7,
+      "Governance": 7
+    },
+    "color": "#3CB371",
+    "_actorMeta": {
+      "slug": "Plaid-Cymru",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 1,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Reform UK",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 5,
+      "Economic": 5,
+      "Class": 2,
+      "Governance": 5
+    },
+    "color": "#12B6CF",
+    "_actorMeta": {
+      "slug": "Reform-UK",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 0,
+      "Q7": 0,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 0,
+      "Q19": 0,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
+    }
+  },
+  {
+    "name": "SNP",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 9,
+      "Military": 2,
+      "Economic": 6,
+      "Class": 7,
+      "Governance": 7
+    },
+    "color": "#FDF38E",
+    "_actorMeta": {
+      "slug": "SNP",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 1,
+      "Q6": 0,
+      "Q7": 1,
+      "Q8": 0,
+      "Q9": 2,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 3,
+      "Q13": 3,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 2,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Soft Brexit",
+    "scores": {
+      "Cultural": 5,
+      "Economic": 4,
+      "Military": 5,
+      "Sovereignty": 5,
+      "Class": 4,
+      "Governance": 6
+    },
+    "color": "#FF8C00",
+    "_actorMeta": {
+      "slug": "soft-brexit",
+      "category": "Brexit Faction",
+      "activePeriod": "2017–2019",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": [
+        "Ruari Mears"
+      ]
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "Moderate cultural nationalism; acceptance of controlled immigration balanced with integration. To be documented.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "Desire to maintain close economic ties with EU, possibly via customs union or single market alignment. To be documented.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "Continued support for NATO and Western alliances, pragmatic on EU defence cooperation. To be documented.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "Acceptance of Brexit outcome but with significant continued regulatory alignment and shared institutions. To be documented.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "Concerned about economic impact on workers; emphasis on protecting labour rights post-Brexit. To be documented.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "Moderate libertarian streak; emphasis on parliamentary process and rule of law in Brexit implementation. To be documented.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 0,
+      "Q3": 0,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
+    }
+  },
+  {
+    "name": "Stop the War Coalition",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 5,
+      "Military": 0,
+      "Economic": 4,
+      "Class": 6,
+      "Governance": 4
+    },
+    "color": "#FF4500",
+    "_actorMeta": {
+      "slug": "Stop-the-War-Coalition",
+      "category": "Political Party",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 4,
+      "Q10": 0,
+      "Q11": 0,
+      "Q12": 4,
+      "Q13": 0,
+      "Q14": 0,
+      "Q15": 0,
+      "Q16": 0,
+      "Q17": 1,
+      "Q18": 0,
+      "Q19": 1,
+      "Q20": 0,
+      "Q21": 1,
+      "Q22": 0,
+      "Q23": 1,
+      "Q24": 0
+    }
+  },
+  {
+    "name": "Thatcher government 1979–90",
+    "scores": {
+      "Cultural": 6,
+      "Sovereignty": 6,
+      "Military": 6,
+      "Economic": 10,
+      "Class": 0,
+      "Governance": 7
+    },
+    "color": "#00BFFF",
+    "_actorMeta": {
+      "slug": "Thatcher-government-1979-90",
+      "category": "Historical Government",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 1,
+      "Q2": 0,
+      "Q3": 1,
+      "Q4": 0,
+      "Q5": 4,
+      "Q6": 0,
+      "Q7": 4,
+      "Q8": 0,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 1,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 1,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 4,
+      "Q23": 0,
+      "Q24": 4
+    }
+  },
+  {
+    "name": "US Democrats",
+    "scores": {
+      "Cultural": 3,
+      "Sovereignty": 4,
+      "Military": 7,
+      "Economic": 4,
+      "Class": 4,
+      "Governance": 6
+    },
+    "color": "#3C6EC9",
+    "_actorMeta": {
+      "slug": "US-Democrats",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 0,
+      "Q2": 1,
+      "Q3": 0,
+      "Q4": 2,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 1,
+      "Q11": 2,
+      "Q12": 0,
+      "Q13": 0,
+      "Q14": 1,
+      "Q15": 0,
+      "Q16": 1,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 1,
+      "Q21": 0,
+      "Q22": 1,
+      "Q23": 0,
+      "Q24": 1
+    }
+  },
+  {
+    "name": "US Republicans",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 7,
+      "Military": 8,
+      "Economic": 4,
+      "Class": 1,
+      "Governance": 4
+    },
+    "color": "#C0392B",
+    "_actorMeta": {
+      "slug": "US-Republicans",
+      "category": "Political Actor",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 1,
+      "Q9": 0,
+      "Q10": 2,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 1,
+      "Q14": 0,
+      "Q15": 2,
+      "Q16": 0,
+      "Q17": 1,
+      "Q18": 0,
+      "Q19": 1,
+      "Q20": 0,
+      "Q21": 0,
+      "Q22": 3,
+      "Q23": 0,
+      "Q24": 3
+    }
+  },
+  {
+    "name": "Winston Churchill",
+    "scores": {
+      "Cultural": 8,
+      "Sovereignty": 8,
+      "Military": 9,
+      "Economic": 3,
+      "Class": 2,
+      "Governance": 7
+    },
+    "color": "#1A237E",
+    "_actorMeta": {
+      "slug": "Winston-Churchill",
+      "category": "World War II Figure",
+      "version": "1.0.0",
+      "lastUpdated": "2026-05-19",
+      "curator": "A Common Enemy Project",
+      "contributors": []
+    },
+    "_scoreMeta": {
+      "Cultural": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Military": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Economic": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Class": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      },
+      "Governance": {
+        "confidence": "medium",
+        "rationale": "To be documented. Researchers are invited to submit citations via pull request.",
+        "sources": []
+      }
+    },
+    "responses": {
+      "Q1": 2,
+      "Q2": 0,
+      "Q3": 3,
+      "Q4": 0,
+      "Q5": 0,
+      "Q6": 1,
+      "Q7": 0,
+      "Q8": 2,
+      "Q9": 0,
+      "Q10": 3,
+      "Q11": 3,
+      "Q12": 0,
+      "Q13": 2,
+      "Q14": 0,
+      "Q15": 3,
+      "Q16": 0,
+      "Q17": 0,
+      "Q18": 1,
+      "Q19": 0,
+      "Q20": 2,
+      "Q21": 0,
+      "Q22": 2,
+      "Q23": 0,
+      "Q24": 3
+    }
+  }
+];
+const ACTORS = __ACTORS || [];
+const AXES = ['Cultural','Economic','Military','Sovereignty','Governance','Class'];
+
+let currentSort = { col: 'name', dir: 'asc' };
+let expandedRow = null;
+
+function render(actors) {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  if (actors.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty">No actors match your search.</td></tr>';
+    document.getElementById('count').textContent = '0 actors';
+    return;
+  }
+
+  document.getElementById('count').textContent = `${actors.length} actor${actors.length !== 1 ? 's' : ''}`;
+
+  for (const actor of actors) {
+    const meta = actor._actorMeta || {};
+    const scoreMeta = actor._scoreMeta || {};
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="actor-name">
+          <span class="color-dot" style="background:${actor.color}"></span>
+          ${escapeHtml(actor.name)}
+        </div>
+      </td>
+      <td>${escapeHtml(meta.category || '')}</td>
+      ${AXES.map(ax => {
+        const conf = scoreMeta[ax]?.confidence || 'medium';
+        return `<td class="score">
+          ${actor.scores[ax]?.toFixed(1)}
+          <span class="conf conf-${conf}">${conf.replace('-',' ')}</span>
+        </td>`;
+      }).join('')}
+    `;
+
+    tr.addEventListener('click', () => toggleDetail(tr, actor));
+    tbody.appendChild(tr);
+  }
+}
+
+function toggleDetail(tr, actor) {
+  const meta = actor._actorMeta || {};
+  const scoreMeta = actor._scoreMeta || {};
+
+  if (expandedRow && expandedRow !== tr) {
+    const existing = expandedRow.nextElementSibling;
+    if (existing && existing.classList.contains('detail')) existing.remove();
+    expandedRow.classList.remove('expanded');
+  }
+
+  const next = tr.nextElementSibling;
+  if (next && next.classList.contains('detail')) {
+    next.remove();
+    tr.classList.remove('expanded');
+    expandedRow = null;
+    return;
+  }
+
+  tr.classList.add('expanded');
+  expandedRow = tr;
+
+  const detail = document.createElement('tr');
+  detail.className = 'detail';
+
+  const jsonUrl = `https://github.com/earlution/6-axis-compass/blob/main/data/actors/${meta.slug || ''}.json`;
+  const date = meta.lastUpdated ? new Date(meta.lastUpdated).toLocaleDateString('en-GB') : '';
+
+  const axisDetails = AXES.map(ax => {
+    const sm = scoreMeta[ax] || {};
+    const rationale = escapeHtml(sm.rationale || '');
+    const sources = (sm.sources || []).map(s =>
+      `<li><a href="${escapeHtml(s.url || '#')}" target="_blank" rel="noopener">${escapeHtml(s.title || s.type || 'Source')}</a></li>`
+    ).join('') || '<li>No sources on file.</li>';
+    return `
+      <div class="detail-group">
+        <h4>${ax} — ${actor.scores[ax]?.toFixed(1)}</h4>
+        <p class="rationale">${rationale}</p>
+        <ul class="source-list">${sources}</ul>
+      </div>
+    `;
+  }).join('');
+
+  detail.innerHTML = `
+    <td colspan="8">
+      <div class="detail-panel">
+        <div class="detail-group">
+          <h4>Metadata</h4>
+          <p>Version: ${escapeHtml(meta.version || '')}</p>
+          <p>Last updated: ${date}</p>
+          <p>Curator: ${escapeHtml(meta.curator || '')}</p>
+          <p><a href="${jsonUrl}" target="_blank" rel="noopener">View raw JSON ↗</a></p>
+        </div>
+        ${axisDetails}
+      </div>
+    </td>
+  `;
+
+  tr.after(detail);
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function sortActors(actors, col, dir) {
+  const sorted = [...actors];
+  sorted.sort((a, b) => {
+    let av, bv;
+    if (col === 'name') { av = a.name; bv = b.name; }
+    else if (col === 'category') { av = (a._actorMeta || {}).category || ''; bv = (b._actorMeta || {}).category || ''; }
+    else { av = a.scores[col] ?? -1; bv = b.scores[col] ?? -1; }
+    if (av < bv) return dir === 'asc' ? -1 : 1;
+    if (av > bv) return dir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  return sorted;
+}
+
+function filterActors(actors, q) {
+  if (!q) return actors;
+  const term = q.toLowerCase();
+  return actors.filter(a => {
+    const meta = a._actorMeta || {};
+    const sm = a._scoreMeta || {};
+    return a.name.toLowerCase().includes(term)
+      || (meta.category || '').toLowerCase().includes(term)
+      || Object.values(sm).some(v =>
+        (v.rationale || '').toLowerCase().includes(term)
+        || (v.sources || []).some(s => (s.title || '').toLowerCase().includes(term))
+      );
+  });
+}
+
+// Init
+let displayed = sortActors(ACTORS, currentSort.col, currentSort.dir);
+render(displayed);
+
+// Sort clicks
+document.querySelectorAll('th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.sort;
+    const dir = currentSort.col === col && currentSort.dir === 'asc' ? 'desc' : 'asc';
+    currentSort = { col, dir };
+
+    document.querySelectorAll('th').forEach(t => t.classList.remove('asc','desc'));
+    th.classList.add(dir);
+
+    const q = document.getElementById('search').value;
+    displayed = sortActors(filterActors(ACTORS, q), col, dir);
+    render(displayed);
+  });
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value;
+  displayed = sortActors(filterActors(ACTORS, q), currentSort.col, currentSort.dir);
+  render(displayed);
+});
+</script>
+</body>
+</html>

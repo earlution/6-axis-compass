@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.4.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.8
 [2.4.7]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.7
 [2.4.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.6
 [2.4.5]: https://github.com/earlution/six-axis-compass/releases/tag/v2.4.5
@@ -27,6 +28,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.4.8] - 2026-05-19
+
+### Added
+- **Public actor dataset page** (`src/data.html` → `dist/data.html`).
+  - Sortable, searchable table of all 31 actors with their six-axis scores.
+  - Per-axis confidence badges (low / medium / high / very-high).
+  - Expandable detail rows showing metadata (curator, version, last updated), per-axis rationale, and clickable source links.
+  - Search filters by actor name, category, rationale, and source titles.
+  - Responsive design with dark/light mode support via `prefers-color-scheme`.
+  - Links back to the main compass and to raw JSON files on GitHub.
+- **Build pipeline** updated (`scripts/build.js`) to generate `dist/data.html` alongside `dist/index.html`, embedding the full actor dataset at build time.
+- **README.md** now links to the dataset page under "Forkable, Traceable Actor Data".
 
 ## [2.4.7] - 2026-05-19
 
