@@ -1,0 +1,43 @@
+name: OSF Upload
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [paper-revised]
+
+jobs:
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci
+
+      - run: npm run generate-artifacts
+
+      - name: Checkout common-enemy for paper PDF
+        if: github.event_name == 'repository_dispatch'
+        uses: actions/checkout@v4
+        with:
+          repository: earlution/common-enemy
+          token: ${{ secrets.COMMON_ENEMY_PAT }}
+          path: common-enemy
+          ref: ${{ github.event.client_payload.commit_hash }}
+
+      - name: Copy paper PDF to artifacts
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          mkdir -p paper-artifacts/paper
+          cp "common-enemy/${{ github.event.client_payload.paper_path }}" paper-artifacts/paper/
+
+      - name: Upload paper artifacts to OSF
+        env:
+          OSF_PAN: ${{ secrets.OSF_PAN }}
+          OSF_NODE_ID: ${{ vars.OSF_NODE_ID }}
+        run: node scripts/upload-to-osf.mjs
