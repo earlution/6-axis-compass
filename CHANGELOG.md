@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.3.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.3.0
 [2.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.2.0
 [2.1.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.1.0
 [2.0.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.0.0
@@ -18,6 +19,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.3.0] - 2026-05-19
+
+### Added
+- **Per-question responses (Q1–Q24)** for all 31 actors.
+  - New `responses` field in actor schema v1.1.0 with `value` (0–4 Likert), `confidence`, `rationale`, and `sources` per question.
+  - `scripts/compute-responses.js` brute-force solver generates inferred responses that reproduce existing axis scores.
+  - `docs/QUESTIONNAIRE.md` — canonical reference mapping Q1–Q24 to axes, directionality, and compact actor-profile notation.
+  - Build pipeline (`sync-actor-data.js`, `actor-store.js`) propagates responses into `src/actors-generated.js` and the API.
+  - Paper artifacts include per-question responses in generated JSON.
+- **REST API** for programmatic chart generation.
+  - `api/server.js` with Bearer-auth middleware.
+  - `GET /api/health` — unauthenticated health check.
+  - `GET /api/actors` — list all preset actors with metadata.
+  - `POST /api/chart` — generate SVG or PNG radar charts with optional actor overlays.
+  - Shared `api/lib/chart-renderer.js` uses jsdom + sharp for server-side SVG/PNG rendering.
+  - `API.md` — full endpoint documentation with cURL examples.
+
+### Changed
+- **User map colour is now theme-aware:** white in dark mode, black in light mode.
+  - Replaces the previous gold (`#c8a84b`) which visually clashed with semantically coloured actors (SNP yellow, Liberal Democrats amber).
+  - User map remains toggleable; only the default colour changes.
+  - Applies to radar polygon, legend dot, score bars, and "Your map" button.
+
+### Fixed
+- **Governance axis pole inversion:** Actor data was internally using the old convention (high = hierarchy/authority) while the UI displayed the new labels (high = autonomy/democratic). All actor scores recomputed to align with the displayed pole labels.
+  - `data/actors/*.json` and `src/actors-generated.js` updated.
+
+### Removed
+- Legacy planning documents (`six-axis-compass-rebuild-guide-v1.0.0.md`, etc.) removed from project root in favour of `docs/` and `RESEARCH-MANIFEST.md`.
 
 ## [2.2.0] - 2026-05-18
 

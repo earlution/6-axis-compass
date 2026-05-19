@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.2.3",
-  "gitCommit": "76548cba7849e851938b9bd62b6adf23acbdf64c",
-  "generated": "2026-05-19T10:45:46.188Z",
+  "version": "2.3.0",
+  "gitCommit": "42cddf6e62f3696a4c958d453b4b11cbdceb4b28",
+  "generated": "2026-05-19T11:09:53.255Z",
   "actor": "US Democrats",
   "category": "Political Actor",
   "color": "#3C6EC9",
