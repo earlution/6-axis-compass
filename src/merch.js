@@ -1,3 +1,4 @@
+import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 import {
   GARMENTS,
@@ -30,6 +31,37 @@ export function buildMockupHTML(garmentId, garmentColor) {
   `;
 }
 
+/** Draw radar on the merch mockup SVG (trigram labels sized for ~52% scale). */
+export function renderMerchRadarChart({
+  scores,
+  axes,
+  orientation,
+  actors = [],
+  uploadedMap = null,
+  showUser = true,
+  userColor,
+  invertedAxes,
+  register = 'primary'
+}) {
+  const target = document.getElementById('radar-merch');
+  if (!target) return;
+  drawRadar(target, {
+    scores,
+    axes,
+    orientation,
+    actors,
+    uploadedMap,
+    showUser,
+    userColor,
+    invertedAxes,
+    register,
+    labelMode: 'trigram',
+    labelMerch: true
+  });
+  target.setAttribute('aria-hidden', 'true');
+}
+
+/** @deprecated Use renderMerchRadarChart — kept for backwards compatibility */
 export function syncMerchRadarFromMain() {
   const source = document.getElementById('radar');
   const target = document.getElementById('radar-merch');

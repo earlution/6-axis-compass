@@ -191,7 +191,9 @@ export function renderShop(container, state, handlers) {
       showUser,
       userColor,
       invertedAxes: inverted,
-      register
+      register,
+      labelMode: 'trigram',
+      labelMerch: true
     });
     svg.setAttribute('aria-label', t('chart.ariaLabel'));
     svg.removeAttribute('aria-hidden');

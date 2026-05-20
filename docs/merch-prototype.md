@@ -59,7 +59,7 @@ npm test   # includes tests/merch-url.test.js (v3 hash round-trip)
 
 ## Spoke labels
 
-Charts use uppercase **trigrams** on the rim (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) — better legibility on small mockups. Full axis names remain in the shop configurator. Brand spec: [`brand-trigrams.md`](brand-trigrams.md).
+Charts use uppercase **trigrams** on the rim (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`). Merch mockups use a larger trigram font (`labelMerch`) so labels stay legible when the SVG is scaled to ~52% on the garment preview. Full axis names remain in the score/config UI. Brand spec: [`brand-trigrams.md`](brand-trigrams.md).
 
 ## Shop map colour and key
 

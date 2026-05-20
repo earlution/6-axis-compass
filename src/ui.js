@@ -1,7 +1,7 @@
 import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES, getEffectiveScores } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
-import { buildMerchPreviewHTML, initMerchCarousel, syncMerchRadarFromMain } from './merch.js';
+import { buildMerchPreviewHTML, initMerchCarousel, renderMerchRadarChart } from './merch.js';
 
 export function renderIntro(container, { onStart, onUpload } = {}) {
   container.innerHTML = `
@@ -440,7 +440,20 @@ export function renderResults(container, {
       let garmentColor = merchGarmentColor;
       let chartTheme = garmentColor === 'black' ? 'dark' : 'light';
       mount.innerHTML = buildMerchPreviewHTML(garmentColor);
-      syncMerchRadarFromMain();
+      const drawMerchPreview = (ink) => {
+        renderMerchRadarChart({
+          scores,
+          axes,
+          orientation,
+          actors,
+          uploadedMap,
+          showUser,
+          userColor: ink,
+          invertedAxes,
+          register
+        });
+      };
+      drawMerchPreview(userColor);
       const carousel = initMerchCarousel(mount, {
         garment,
         garmentColor,
@@ -460,7 +473,7 @@ export function renderResults(container, {
             invertedAxes,
             register
           });
-          syncMerchRadarFromMain();
+          drawMerchPreview(ink);
         }
       });
       document.getElementById('btn-buy-merch')?.addEventListener('click', () => {

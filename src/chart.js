@@ -40,7 +40,8 @@ export function drawRadar(svg, {
   uploadedColor = '#b478dc',
   invertedAxes = new Set(),
   register = 'primary',
-  labelMode = 'trigram'
+  labelMode = 'trigram',
+  labelMerch = false
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
@@ -122,12 +123,13 @@ export function drawRadar(svg, {
     const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
     const fullName = t('axis.' + ax);
     const spokeText = labelMode === 'full' ? fullName : getAxisTrigram(ax);
+    const trigramFontSize = labelMerch ? '20' : '12';
     const labelEl = createSVGElement('text', {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
-      'font-size': labelMode === 'full' ? '11' : '12',
+      'font-size': labelMode === 'full' ? (labelMerch ? '14' : '11') : trigramFontSize,
       'font-weight': labelMode === 'full' ? '400' : '600',
-      'letter-spacing': labelMode === 'full' ? '0' : '0.12em',
+      'letter-spacing': labelMode === 'full' ? '0' : (labelMerch ? '0.08em' : '0.12em'),
       'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
       fill: 'var(--chart-label)',
       class: 'chart-spoke-label'
