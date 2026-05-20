@@ -1,0 +1,48 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Six-Axis Compass API",
+    "version": "2.0.0",
+    "description": "Public read API (unauthenticated by default). Private write under /api/admin/* requires ADMIN_SECRET (Phase 2)."
+  },
+  "servers": [{ "url": "/" }],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/actors": {
+      "get": {
+        "summary": "List actors",
+        "security": [],
+        "responses": { "200": { "description": "Actor index with meta" } }
+      }
+    },
+    "/api/actors/{slug}": {
+      "get": {
+        "summary": "Actor detail",
+        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Full actor record" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/api/chart": {
+      "post": {
+        "summary": "Render radar chart",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "image/svg+xml or image/png" },
+          "400": { "description": "Validation error" },
+          "429": { "description": "Rate limited" }
+        }
+      }
+    },
+    "/api/axes": {
+      "get": { "summary": "Canonical axes and pole labels", "responses": { "200": { "description": "Axis catalog" } } }
+    },
+    "/api/openapi.json": {
+      "get": { "summary": "OpenAPI document", "responses": { "200": { "description": "This document" } } }
+    }
+  }
+}

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.6.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.2
 [2.6.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.1
 [2.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.0
 [2.5.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.8
@@ -40,6 +41,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.6.2] - 2026-05-20
+
+### Added
+
+- **Public read API (v2.0.0, Phase 1 / FR v0.1.0):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Chart rate limit (60 req/min per IP). CORS on `/api/*`. Actors list includes `meta.axesOrder`. Spec: `docs/feature-request-public-private-api-v0.1.0.md`.
+
+### Changed
+
+- **`API.md` v2.0.0** — public vs private auth zones; legacy `API_SECRET` optional on read.
 
 ## [2.6.1] - 2026-05-20
 

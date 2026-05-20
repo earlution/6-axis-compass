@@ -1,6 +1,6 @@
 {
   "name": "six-axis-compass",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "A zero-dependency political compass mapping six axes: Cultural, Economic, Military, Sovereignty, Governance, and Class.",
   "main": "dist/index.html",
   "scripts": {

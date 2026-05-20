@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'fs';
+import { readdirSync, readFileSync, statSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -71,5 +71,27 @@ export function getActorBySlug(slug) {
 }
 
 export function listActors() {
-  return loadActors().map(a => ({ name: a.name, slug: a.slug, color: a.color }));
+  return loadActors().map(a => ({
+    name: a.name,
+    slug: a.slug,
+    color: a.color,
+    category: a._meta.category,
+    lastUpdated: a._meta.lastUpdated
+  }));
+}
+
+export function getActorFileStat(slug) {
+  const actor = getActorBySlug(slug);
+  if (!actor) return null;
+  for (const file of readdirSync(DATA_DIR).filter(f => f.endsWith('.json'))) {
+    try {
+      const raw = JSON.parse(readFileSync(join(DATA_DIR, file), 'utf-8'));
+      if (raw.actor?.slug === actor.slug || raw.actor?.name === actor.name) {
+        return statSync(join(DATA_DIR, file));
+      }
+    } catch {
+      /* skip invalid */
+    }
+  }
+  return null;
 }

@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.0.0 | 2026-05-20 | **Public read API (Phase 1):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Rate limit on chart. Optional legacy Bearer on read. `GET /api/health` adds `apiVersion`, `publicRead`. |
 | 1.5.0 | 2026-05-19 | Added `GET /api/actors/:slug` endpoint returning full actor record including dual-register data. |
 | 1.4.0 | 2026-05-19 | Added `dualRegister` field to Actor Data Schema. Documented declared/structural/delta scores, numeric confidence, and dual-register source sets. |
 | 1.3.0 | 2026-05-19 | Added "Actor Data Schema" section documenting the full JSON structure for `data/actors/*.json`. |
@@ -23,13 +24,32 @@ The server listens on `API_PORT` (default `3000`).
 
 ## Authentication
 
-All endpoints except `GET /health` require a Bearer token.
+### Public read (API v2.0.0+, default)
+
+When `API_PUBLIC_READ=true` (default), these routes require **no** `Authorization` header:
+
+- `GET /api/health`
+- `GET /api/actors`
+- `GET /api/actors/:slug`
+- `POST /api/chart` (rate-limited; see § Chart)
+- `GET /api/axes`
+- `GET /api/openapi.json`
+
+Clients may still send `Authorization: Bearer <API_SECRET>`; it is ignored for read routes.
+
+Set `API_PUBLIC_READ=false` to restore v1.x behaviour (all read routes except health require `API_SECRET`).
+
+### Legacy read secret (optional)
 
 ```http
 Authorization: Bearer <API_SECRET>
 ```
 
-The `API_SECRET` is configured server-side via the environment variable of the same name. Pass the exact shared secret in the `Authorization` header on every protected request.
+`API_SECRET` is optional for read after v2.0.0. It will be deprecated for read in a future major version.
+
+### Private write (Phase 2 — not yet implemented)
+
+`POST /api/admin/*` will require `ADMIN_SECRET`. See `docs/feature-request-public-private-api-v0.1.0.md`.
 
 ---
 

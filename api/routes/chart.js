@@ -1,7 +1,12 @@
 import { renderSVG, renderPNG } from '../lib/chart-renderer.js';
 import { loadActors } from '../lib/actor-store.js';
+import { CANONICAL_AXES } from '../lib/config.js';
 
-const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
+const AXES = CANONICAL_AXES;
+const MAX_ACTOR_OVERLAYS = 8;
+const MAX_TITLE_LEN = 200;
+const MAX_DIMENSION = 4096;
+const MAX_PIXELS = 16_777_216;
 
 function validateScores(scores) {
   if (!scores || typeof scores !== 'object') return 'scores must be an object';
@@ -45,6 +50,21 @@ export async function handleChart(req, res, body) {
     return;
   }
 
+  if (Array.isArray(body.actors) && body.actors.length > MAX_ACTOR_OVERLAYS) {
+    res.statusCode = 400;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ error: `At most ${MAX_ACTOR_OVERLAYS} actor overlays allowed` }));
+    return;
+  }
+
+  const title = body.title || 'Chart';
+  if (typeof title === 'string' && title.length > MAX_TITLE_LEN) {
+    res.statusCode = 400;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ error: `title must be at most ${MAX_TITLE_LEN} characters` }));
+    return;
+  }
+
   const register = ['primary', 'declared', 'structural'].includes(body.register)
     ? body.register
     : 'primary';
@@ -72,7 +92,7 @@ export async function handleChart(req, res, body) {
     actors,
     showUser: body.showUser !== false,
     userColor: body.colors?.user || '#c8a84b',
-    title: body.title || 'Chart',
+    title,
     register
   };
 
@@ -84,6 +104,14 @@ export async function handleChart(req, res, body) {
   } else if (format === 'png') {
     const width = body.width || 600;
     const height = body.height || 600;
+    if (width > MAX_DIMENSION || height > MAX_DIMENSION || width * height > MAX_PIXELS) {
+      res.statusCode = 400;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        error: `PNG dimensions must be ≤${MAX_DIMENSION} per side and width×height ≤ ${MAX_PIXELS}`
+      }));
+      return;
+    }
     const png = await renderPNG(config, width, height);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'image/png');

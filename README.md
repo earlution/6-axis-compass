@@ -74,13 +74,16 @@ A small HTTP API is available for generating radar charts programmatically. This
 API_SECRET=your-secret-here npm run api
 ```
 
-The server listens on `API_PORT` (default 3000). All endpoints except `/api/health` require authentication via the `Authorization: Bearer <API_SECRET>` header.
+The server listens on `API_PORT` (default 3000). **API v2.0.0:** public read routes (`GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`) require **no** auth when `API_PUBLIC_READ=true` (default). Set `API_PUBLIC_READ=false` to require `API_SECRET` on read. Private write (`ADMIN_SECRET`, `/api/admin/*`) is Phase 2 — see `docs/feature-request-public-private-api-v0.1.0.md`.
 
-| Endpoint | Auth | Description |
-|----------|------|-------------|
-| `GET /api/health` | No | Health check |
-| `GET /api/actors` | Bearer | List all preset actors |
-| `POST /api/chart` | Bearer | Generate SVG or PNG chart |
+| Endpoint | Auth (default) | Description |
+|----------|----------------|-------------|
+| `GET /api/health` | No | Health check (`apiVersion`, `publicRead`) |
+| `GET /api/actors` | Public | List actors + `meta.axesOrder` |
+| `GET /api/actors/:slug` | Public | Full actor record |
+| `POST /api/chart` | Public | Generate SVG or PNG chart (rate-limited) |
+| `GET /api/axes` | Public | Canonical axis order and pole labels |
+| `GET /api/openapi.json` | Public | OpenAPI 3.1 document |
 
 **Example:**
 

@@ -55,7 +55,7 @@ async function startServer() {
   return new Promise((resolve, reject) => {
     const serverPath = path.join(__dirname, '..', 'api', 'server.js');
     serverProc = spawn('node', [serverPath], {
-      env: { ...process.env, API_SECRET, API_PORT: '0' },
+      env: { ...process.env, API_SECRET, API_PUBLIC_READ: 'true', API_PORT: '0' },
       stdio: ['ignore', 'pipe', 'pipe']
     });
 
@@ -105,30 +105,25 @@ async function runTests() {
     const healthJson = JSON.parse(health.body.toString());
     assertEqual(healthJson.status, 'ok', 'Health status should be ok');
     assertTrue(healthJson.version, 'Health should have version');
+    assertEqual(healthJson.apiVersion, '2.0.0', 'Health should expose API 2.0.0');
+    assertEqual(healthJson.publicRead, true, 'Health should report public read enabled');
 
-    // Test 2: Actors without auth
+    // Test 2: Public read — actors without auth
     const actorsNoAuth = await sendRequest('GET', '/api/actors');
-    assertEqual(actorsNoAuth.statusCode, 401, 'Actors without auth should return 401');
+    assertEqual(actorsNoAuth.statusCode, 200, 'Actors without auth should return 200 (public read)');
+    const actorsPublic = JSON.parse(actorsNoAuth.body.toString());
+    assertTrue(Array.isArray(actorsPublic.actors), 'Public actors response should contain actors array');
+    assertTrue(actorsPublic.meta?.axesOrder?.length === 6, 'Actors meta should include axesOrder');
 
-    // Test 3: Actors with wrong auth
-    const actorsWrongAuth = await sendRequest('GET', '/api/actors', {
-      'Authorization': 'Bearer wrong-secret'
-    });
-    assertEqual(actorsWrongAuth.statusCode, 401, 'Actors with wrong auth should return 401');
-
-    // Test 4: Actors with correct auth
+    // Test 3: Actors with optional bearer still works
     const actorsOk = await sendRequest('GET', '/api/actors', {
       'Authorization': `Bearer ${API_SECRET}`
     });
-    assertEqual(actorsOk.statusCode, 200, 'Actors with auth should return 200');
-    const actorsJson = JSON.parse(actorsOk.body.toString());
-    assertTrue(Array.isArray(actorsJson.actors), 'Actors response should contain actors array');
-    assertTrue(actorsJson.actors.length > 0, 'Actors array should not be empty');
-    assertTrue(actorsJson.actors.some(a => a.name === 'Green Party'), 'Actors should include Green Party');
+    assertEqual(actorsOk.statusCode, 200, 'Actors with optional auth should return 200');
+    assertTrue(actorsOk.body.toString().includes('Green Party'), 'Actors should include Green Party');
 
-    // Test 5: Chart SVG with custom scores
+    // Test 4: Chart SVG without auth (public read)
     const chartSvg = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, Economic: 5, Military: 5, Sovereignty: 5, Governance: 5, Class: 5 },
@@ -140,9 +135,14 @@ async function runTests() {
     assertTrue(svgStr.includes('<svg'), 'Chart SVG should contain <svg tag');
     assertTrue(svgStr.includes('Cultural'), 'Chart SVG should contain Cultural label');
 
+    // Test 5: GET /api/axes
+    const axes = await sendRequest('GET', '/api/axes');
+    assertEqual(axes.statusCode, 200, 'Axes catalog should return 200');
+    const axesJson = JSON.parse(axes.body.toString());
+    assertEqual(axesJson.axesOrder[0], 'Cultural', 'First axis should be Cultural (OQ2)');
+
     // Test 6: Chart SVG with actor overlay
     const chartActors = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, Economic: 5, Military: 5, Sovereignty: 5, Governance: 5, Class: 5 },
@@ -155,7 +155,6 @@ async function runTests() {
 
     // Test 7: Chart PNG
     const chartPng = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, Economic: 5, Military: 5, Sovereignty: 5, Governance: 5, Class: 5 },
@@ -169,7 +168,6 @@ async function runTests() {
 
     // Test 8: Chart with invalid axis
     const chartBadAxis = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, InvalidAxis: 5 },
@@ -179,7 +177,6 @@ async function runTests() {
 
     // Test 9: Chart with out-of-range score
     const chartBadScore = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 15 },
@@ -189,7 +186,6 @@ async function runTests() {
 
     // Test 10: Chart with unknown actor
     const chartBadActor = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, Economic: 5, Military: 5, Sovereignty: 5, Governance: 5, Class: 5 },
@@ -200,7 +196,6 @@ async function runTests() {
 
     // Test 11: Chart with invalid format
     const chartBadFormat = await sendRequest('POST', '/api/chart', {
-      'Authorization': `Bearer ${API_SECRET}`,
       'Content-Type': 'application/json'
     }, {
       scores: { Cultural: 5, Economic: 5, Military: 5, Sovereignty: 5, Governance: 5, Class: 5 },
