@@ -275,6 +275,7 @@ Public read (default): no `Authorization` header.
 | `showUser` | `boolean` | No | `true` | Draw the user score polygon (`false` for actor-only charts). |
 | `colors.user` | `string` | No | `"#c8a84b"` | Hex colour for the user polygon. |
 | `title` | `string` | No | `"Chart"` | Chart title. **Max 200 characters.** |
+| `labelMode` | `string` | No | `"trigram"` | Spoke labels: `"trigram"` (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) or `"full"` axis names. See [`docs/brand-trigrams.md`](docs/brand-trigrams.md). |
 | `width` | `number` | No | `600` | PNG width (PNG only). Max **4096**; `width × height` ≤ **16_777_216**. |
 | `height` | `number` | No | `600` | PNG height (PNG only). Same limits as `width`. |
 
@@ -386,11 +387,26 @@ GET /api/axes
     "max": 10,
     "description": "0 = less-critical pole; 10 = more-critical pole (methodology §II)"
   },
+  "trigrams": {
+    "Cultural": "CUL",
+    "Economic": "ECO",
+    "Military": "MIL",
+    "Sovereignty": "SOV",
+    "Governance": "GOV",
+    "Class": "CLA"
+  },
   "axes": [
-    { "name": "Cultural", "low": "Cultural internationalism", "high": "Cultural nationalism" }
+    {
+      "name": "Cultural",
+      "trigram": "CUL",
+      "low": "Cultural internationalism",
+      "high": "Cultural nationalism"
+    }
   ]
 }
 ```
+
+Spoke codes are **uppercase trigrams** (brand IDs, not translated). Full names remain in the app UI outside the chart rim. Specification: [`docs/brand-trigrams.md`](docs/brand-trigrams.md).
 
 ---
 

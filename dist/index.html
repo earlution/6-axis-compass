@@ -1236,7 +1236,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.7.1</span>
+  <span class="footer-ver">v2.7.2</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -1301,6 +1301,13 @@ const TRANSLATIONS = {
     'axis.Sovereignty': 'Sovereignty',
     'axis.Governance': 'Governance',
     'axis.Class': 'Class',
+
+    'axis.Cultural.trigram': 'CUL',
+    'axis.Economic.trigram': 'ECO',
+    'axis.Military.trigram': 'MIL',
+    'axis.Sovereignty.trigram': 'SOV',
+    'axis.Governance.trigram': 'GOV',
+    'axis.Class.trigram': 'CLA',
 
     'axis.Cultural.low': 'Cultural internationalism',
     'axis.Cultural.high': 'Cultural nationalism',
@@ -5049,6 +5056,28 @@ const SPATIAL_AXES = ['Economic', 'Governance', 'Class', 'Cultural', 'Sovereignt
 /** Default display inversion so §II 0-pole “left/right” values extend toward the rim on the correct side. */
 const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sovereignty'];
 const PEDAGOGICAL_AXES = AXES;
+
+/**
+ * Uppercase three-letter spoke codes (brand / chart rim). Stable IDs — not translated.
+ * Cultural: CUL (not CTE). Full axis names remain in score bars, quiz, and dataset.
+ */
+const AXIS_TRIGRAMS = {
+  Cultural: 'CUL',
+  Economic: 'ECO',
+  Military: 'MIL',
+  Sovereignty: 'SOV',
+  Governance: 'GOV',
+  Class: 'CLA'
+};
+
+/** Pedagogical ring order as trigrams (clockwise, OQ2 / hash x=cemslg). */
+const TRIGRAM_RING_PEDAGOGICAL = PEDAGOGICAL_AXES.map(ax => AXIS_TRIGRAMS[ax]).join(' ');
+
+/** Spatial ring order as trigrams (clockwise, OQ5 / hash x=egacsm). */
+const TRIGRAM_RING_SPATIAL = SPATIAL_AXES.map(ax => AXIS_TRIGRAMS[ax]).join(' ');
+function getAxisTrigram(axis) {
+  return AXIS_TRIGRAMS[axis] || axis.slice(0, 3).toUpperCase();
+}
 const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },
@@ -5225,7 +5254,7 @@ function createQuiz() {
 
 const NS = 'http://www.w3.org/2000/svg';
 
-function createSVGElement(tag, attrs) {
+function createSVGElement(tag, attrs = {}) {
   const el = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
   return el;
@@ -5260,7 +5289,8 @@ function drawRadar(svg, {
   userColor = '#c8a84b',
   uploadedColor = '#b478dc',
   invertedAxes = new Set(),
-  register = 'primary'
+  register = 'primary',
+  labelMode = 'trigram'
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
@@ -5337,16 +5367,26 @@ function drawRadar(svg, {
     }));
   }
 
-  // Axis labels
+  // Axis labels (trigram on rim; full names in score bars / quiz)
   axes.forEach((ax, i) => {
     const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
+    const fullName = t('axis.' + ax);
+    const spokeText = labelMode === 'full' ? fullName : getAxisTrigram(ax);
     const labelEl = createSVGElement('text', {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
-      'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
-      fill: 'var(--chart-label)'
+      'font-size': labelMode === 'full' ? '11' : '12',
+      'font-weight': labelMode === 'full' ? '400' : '600',
+      'letter-spacing': labelMode === 'full' ? '0' : '0.12em',
+      'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
+      fill: 'var(--chart-label)',
+      class: 'chart-spoke-label'
     });
-    labelEl.textContent = t('axis.' + ax);
+    labelEl.textContent = spokeText;
+    labelEl.setAttribute('aria-label', fullName);
+    const titleEl = createSVGElement('title');
+    titleEl.textContent = fullName;
+    labelEl.appendChild(titleEl);
     svg.appendChild(labelEl);
   });
 }

@@ -28,6 +28,21 @@ Open `dist/index.html` in any modern browser. No build step, no server, no depen
 4. Your profile is plotted on a **hexagonal radar chart**.
 5. Optionally **compare your profile** against pre-loaded political parties or upload a saved map.
 
+### Axis trigrams (chart rim)
+
+Radar **spoke labels** use uppercase **three-letter trigrams**; full axis names and pole definitions appear in score bars, the quiz, and the dataset.
+
+| Axis | Trigram |
+|------|---------|
+| Cultural | **CUL** |
+| Economic | **ECO** |
+| Military | **MIL** |
+| Sovereignty | **SOV** |
+| Governance | **GOV** |
+| Class | **CLA** |
+
+Cultural is **CUL** (not CTE). Trigrams are stable brand IDs; merch and future products (e.g. mug rings) use the same codes. Full specification: [`docs/brand-trigrams.md`](docs/brand-trigrams.md).
+
 ## Forkable, Traceable Actor Data
 
 Every political actor in the compass is defined by a standalone JSON file in `data/actors/`. Each file contains:
@@ -180,7 +195,7 @@ The source is organised as ES modules under `src/`:
 
 | File | Purpose |
 |------|---------|
-| `src/data.js` | Axes, questions, response scales, and actor scores (with fallback) |
+| `src/data.js` | Axes, trigrams (`AXIS_TRIGRAMS`), questions, response scales, and actor scores (with fallback) |
 | `src/i18n.js` | Translation dictionary and `t()` helper |
 | `src/url.js` | Shareable URL encoding/decoding |
 | `src/quiz.js` | Quiz state management and scoring engine |

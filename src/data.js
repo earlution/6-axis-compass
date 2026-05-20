@@ -18,6 +18,29 @@ export const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sover
 
 export const PEDAGOGICAL_AXES = AXES;
 
+/**
+ * Uppercase three-letter spoke codes (brand / chart rim). Stable IDs — not translated.
+ * Cultural: CUL (not CTE). Full axis names remain in score bars, quiz, and dataset.
+ */
+export const AXIS_TRIGRAMS = {
+  Cultural: 'CUL',
+  Economic: 'ECO',
+  Military: 'MIL',
+  Sovereignty: 'SOV',
+  Governance: 'GOV',
+  Class: 'CLA'
+};
+
+/** Pedagogical ring order as trigrams (clockwise, OQ2 / hash x=cemslg). */
+export const TRIGRAM_RING_PEDAGOGICAL = PEDAGOGICAL_AXES.map(ax => AXIS_TRIGRAMS[ax]).join(' ');
+
+/** Spatial ring order as trigrams (clockwise, OQ5 / hash x=egacsm). */
+export const TRIGRAM_RING_SPATIAL = SPATIAL_AXES.map(ax => AXIS_TRIGRAMS[ax]).join(' ');
+
+export function getAxisTrigram(axis) {
+  return AXIS_TRIGRAMS[axis] || axis.slice(0, 3).toUpperCase();
+}
+
 export const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },

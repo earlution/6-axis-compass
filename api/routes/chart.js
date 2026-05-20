@@ -106,6 +106,8 @@ export async function handleChart(req, res, body) {
     invertedAxes = new Set();
   }
 
+  const labelMode = body.labelMode === 'full' ? 'full' : 'trigram';
+
   const config = {
     scores,
     axes,
@@ -115,7 +117,9 @@ export async function handleChart(req, res, body) {
     showUser: body.showUser !== false,
     userColor: body.colors?.user || '#c8a84b',
     title,
-    register
+    register,
+    labelMode,
+    layout
   };
 
   if (format === 'svg') {

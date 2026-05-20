@@ -57,6 +57,10 @@ Build: `scripts/build.js` emits `dist/shop.html` and copies merch assets.
 npm test   # includes tests/merch-url.test.js (v3 hash round-trip)
 ```
 
+## Spoke labels
+
+Charts use uppercase **trigrams** on the rim (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) — better legibility on small mockups. Full axis names remain in the shop configurator. Brand spec: [`brand-trigrams.md`](brand-trigrams.md).
+
 ## Production (not implemented)
 
 See [`merch-printful-integration.md`](merch-printful-integration.md) for Printful + Stripe + chart render pipeline.

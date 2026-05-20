@@ -23,14 +23,15 @@ function loadModule(file) {
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 global.document = dom.window.document;
 
-const { getEffectiveScores } = new Function(
-  loadModule('data.js') + '\nreturn { getEffectiveScores };'
+const { getEffectiveScores, getAxisTrigram } = new Function(
+  loadModule('data.js') + '\nreturn { getEffectiveScores, getAxisTrigram };'
 )();
 const modulesCode = loadModule('i18n.js') + '\n\n' + loadModule('chart.js');
 const moduleScope = new Function(
   'getEffectiveScores',
+  'getAxisTrigram',
   modulesCode + '\nreturn { drawRadar, setLanguage };'
-)(getEffectiveScores);
+)(getEffectiveScores, getAxisTrigram);
 const { drawRadar, setLanguage } = moduleScope;
 
 setLanguage('en');
@@ -129,7 +130,8 @@ export function renderSVG(config) {
     uploadedMap: config.uploadedMap || null,
     uploadedColor: config.uploadedColor || '#b478dc',
     invertedAxes,
-    register: config.register || 'primary'
+    register: config.register || 'primary',
+    labelMode: config.labelMode || 'trigram'
   });
   postProcessSVG(svg, config.title || 'Chart');
   return svg.outerHTML;

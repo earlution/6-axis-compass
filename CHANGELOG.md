@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.7.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.2
 [2.7.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.1
 [2.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.0
 [merch-prototype-v1.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/merch-prototype-v1.0.0
@@ -44,6 +45,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.7.2] - 2026-05-20
+
+### Added
+
+- **Axis trigrams (brand):** Radar spoke labels default to uppercase **CUL, ECO, MIL, SOV, GOV, CLA** (Cultural = **CUL**, not CTE). Full names in score bars / quiz; `aria-label` + SVG `<title>` on spokes. [`docs/brand-trigrams.md`](docs/brand-trigrams.md) captures UI layers, ring orders, and merch/mug extensions.
+- **`POST /api/chart` `labelMode`:** `"trigram"` (default) or `"full"`.
+- **`GET /api/axes`:** `trigram` per axis and `trigrams` map.
+- **`tests/trigrams.test.js`:** Uniqueness and ring-order smoke tests.
+
+### Changed
+
+- **`src/chart.js`:** `labelMode` parameter; trigram typography (12px, semibold, letter-spacing).
 
 ## [2.7.1] - 2026-05-20
 

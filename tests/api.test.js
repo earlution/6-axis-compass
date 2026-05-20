@@ -133,13 +133,15 @@ async function runTests() {
     assertEqual(chartSvg.headers['content-type'], 'image/svg+xml', 'Chart SVG content-type should be image/svg+xml');
     const svgStr = chartSvg.body.toString();
     assertTrue(svgStr.includes('<svg'), 'Chart SVG should contain <svg tag');
-    assertTrue(svgStr.includes('Cultural'), 'Chart SVG should contain Cultural label');
+    assertTrue(svgStr.includes('CUL'), 'Chart SVG should contain CUL trigram (default labelMode)');
 
     // Test 5: GET /api/axes
     const axes = await sendRequest('GET', '/api/axes');
     assertEqual(axes.statusCode, 200, 'Axes catalog should return 200');
     const axesJson = JSON.parse(axes.body.toString());
     assertEqual(axesJson.axesOrder[0], 'Cultural', 'First axis should be Cultural (OQ2)');
+    assertEqual(axesJson.trigrams?.Cultural, 'CUL', 'Axes catalog should include trigrams');
+    assertEqual(axesJson.axes[0]?.trigram, 'CUL', 'Axis entry should include trigram');
 
     // Test 6: Chart SVG with actor overlay
     const chartActors = await sendRequest('POST', '/api/chart', {

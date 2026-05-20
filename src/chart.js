@@ -1,9 +1,9 @@
-import { getEffectiveScores } from './data.js';
+import { getEffectiveScores, getAxisTrigram } from './data.js';
 import { t } from './i18n.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
-function createSVGElement(tag, attrs) {
+function createSVGElement(tag, attrs = {}) {
   const el = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
   return el;
@@ -39,7 +39,8 @@ export function drawRadar(svg, {
   userColor = '#c8a84b',
   uploadedColor = '#b478dc',
   invertedAxes = new Set(),
-  register = 'primary'
+  register = 'primary',
+  labelMode = 'trigram'
 }) {
   svg.innerHTML = '';
   const cx = 160, cy = 160, maxR = 108;
@@ -116,16 +117,26 @@ export function drawRadar(svg, {
     }));
   }
 
-  // Axis labels
+  // Axis labels (trigram on rim; full names in score bars / quiz)
   axes.forEach((ax, i) => {
     const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
+    const fullName = t('axis.' + ax);
+    const spokeText = labelMode === 'full' ? fullName : getAxisTrigram(ax);
     const labelEl = createSVGElement('text', {
       x: lx.toFixed(2), y: ly.toFixed(2),
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
-      'font-size': '11', 'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
-      fill: 'var(--chart-label)'
+      'font-size': labelMode === 'full' ? '11' : '12',
+      'font-weight': labelMode === 'full' ? '400' : '600',
+      'letter-spacing': labelMode === 'full' ? '0' : '0.12em',
+      'font-family': '-apple-system,BlinkMacSystemFont,sans-serif',
+      fill: 'var(--chart-label)',
+      class: 'chart-spoke-label'
     });
-    labelEl.textContent = t('axis.' + ax);
+    labelEl.textContent = spokeText;
+    labelEl.setAttribute('aria-label', fullName);
+    const titleEl = createSVGElement('title');
+    titleEl.textContent = fullName;
+    labelEl.appendChild(titleEl);
     svg.appendChild(labelEl);
   });
 }

@@ -61,6 +61,13 @@ const TRANSLATIONS = {
     'axis.Governance': 'Governance',
     'axis.Class': 'Class',
 
+    'axis.Cultural.trigram': 'CUL',
+    'axis.Economic.trigram': 'ECO',
+    'axis.Military.trigram': 'MIL',
+    'axis.Sovereignty.trigram': 'SOV',
+    'axis.Governance.trigram': 'GOV',
+    'axis.Class.trigram': 'CLA',
+
     'axis.Cultural.low': 'Cultural internationalism',
     'axis.Cultural.high': 'Cultural nationalism',
     'axis.Economic.low': 'Economic internationalism',
