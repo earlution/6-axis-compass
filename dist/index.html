@@ -1236,7 +1236,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.7.0</span>
+  <span class="footer-ver">v2.7.1</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -1519,7 +1519,6 @@ function copyToClipboard(text) {
     resolve();
   });
 }
-
 
 
 const DRAFT_KEY = 'six-axis-compass-merch-draft';
@@ -5177,7 +5176,6 @@ const ACTOR_GROUPS = {
 };
 
 
-
 /**
  * @param {Record<number, number>} answers — question index → response value
  * @returns {Record<string, number>} axis name → score 0–10
@@ -5223,8 +5221,6 @@ function createQuiz() {
     getScores() { return computeScores(answers); }
   };
 }
-
-
 
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -6186,18 +6182,6 @@ function parseUpload(fileContent, fileName) {
   return { scores, label };
 }
 
-
-
-
-
-
-
-
-import {
-  buildDraftFromResults,
-  saveMerchDraft,
-  encodeMerchHash
-} from './merch-url.js';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});

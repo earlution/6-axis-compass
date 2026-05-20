@@ -9,7 +9,9 @@ function read(file) {
   return fs.readFileSync(path.join(SRC, file), 'utf-8');
 }
 
-const stripImports = code => code.replace(/^\s*import\s+.*from\s+['"].*['"];?\s*$/gm, '');
+/** Remove single- and multi-line ES module imports (inlined bundle must not retain import syntax). */
+const stripImports = code =>
+  code.replace(/^\s*import\s+(?:[\s\S]*?)\s*from\s+['"][^'"]+['"];?\s*/gm, '');
 const stripExports = code => code.replace(/^\s*export\s+/gm, '');
 const inline = code => stripExports(stripImports(code));
 

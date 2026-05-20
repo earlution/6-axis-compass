@@ -28,6 +28,8 @@ jobs:
           grep -q '<style>' dist/index.html
           ! grep -q 'type="module"' dist/index.html
           ! grep -qE '<script[^>]*src=' dist/index.html
+          ! grep -qE '^\s*import\s' dist/index.html
+          ! grep -qE '^\s*import\s' dist/shop.html
           # Allow PWA manifest and apple-touch-icon links (local files only)
           ! grep -qE '<link[^>]*href="https?://' dist/index.html
       - run: npm install

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.7.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.1
 [2.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.0
 [merch-prototype-v1.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/merch-prototype-v1.0.0
 [2.6.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.2
@@ -43,6 +44,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.7.1] - 2026-05-20
+
+### Fixed
+
+- **GitHub Pages blank app** — `scripts/build.js` now strips multi-line `import` statements from inlined bundles; a surviving `import { … } from './merch-url.js'` caused a script syntax error so only the static footer rendered.
 
 ## [2.7.0] - 2026-05-20
 

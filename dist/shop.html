@@ -1237,7 +1237,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="index.html">Compass</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.7.0</span>
+  <span class="footer-ver">v2.7.1</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -1520,7 +1520,6 @@ function copyToClipboard(text) {
     resolve();
   });
 }
-
 
 
 const DRAFT_KEY = 'six-axis-compass-merch-draft';
@@ -5178,8 +5177,6 @@ const ACTOR_GROUPS = {
 };
 
 
-
-
 const NS = 'http://www.w3.org/2000/svg';
 
 function createSVGElement(tag, attrs) {
@@ -5308,19 +5305,6 @@ function drawRadar(svg, {
   });
 }
 
-
-
-
-
-import {
-  GARMENTS,
-  SIZES,
-  garmentImagePath,
-  chartInkColor,
-  formatPriceGBP,
-  buildMockupHTML,
-  openCheckoutStubModal
-} from './merch.js';
 
 const MAX_SHOP_ACTORS = 2;
 function resolveShopActors(state) {
@@ -5520,18 +5504,6 @@ function openShopCheckout(state) {
     resolvedActors: resolveShopActors(state)
   });
 }
-
-
-
-
-import {
-  decodeMerchHash,
-  loadMerchDraft,
-  saveMerchDraft,
-  mergeMerchState,
-  getActorSlug,
-  resolveActorBySlug
-} from './merch-url.js';
 
 
 const app = document.getElementById('app');
