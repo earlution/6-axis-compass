@@ -1,6 +1,7 @@
 import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES, getEffectiveScores } from './data.js';
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
+import { buildMerchPreviewHTML, initMerchCarousel, syncMerchRadarFromMain } from './merch.js';
 
 export function renderIntro(container, { onStart, onUpload } = {}) {
   container.innerHTML = `
@@ -127,6 +128,9 @@ export function renderResults(container, {
   onToggleInvertAxis,
   onReorderGroups,
   onSetRegister,
+  onBuyMerch,
+  merchGarment = 'tee',
+  merchGarmentColor = 'white',
   groupOrder,
   register = 'primary',
   theme,
@@ -147,6 +151,7 @@ export function renderResults(container, {
               <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
             </div>
             <div class="legend" id="legend"></div>
+            ${onBuyMerch ? `<div id="merch-preview-mount"></div>` : ''}
           </div>
           <div class="content-pane">
             <div class="actor-groups" id="actor-groups"></div>
@@ -426,6 +431,46 @@ export function renderResults(container, {
   if (showUser) addLegend(t('results.you'), userColor, true, false);
   actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
   if (uploadedMap) addLegend(uploadedMap.label || t('results.uploadedMap'), '#b478dc', false, true);
+
+  if (onBuyMerch) {
+    const mount = document.getElementById('merch-preview-mount');
+    if (mount) {
+      let garment = merchGarment;
+      let garmentColor = merchGarmentColor;
+      let chartTheme = garmentColor === 'black' ? 'dark' : 'light';
+      mount.innerHTML = buildMerchPreviewHTML(garmentColor);
+      syncMerchRadarFromMain();
+      const carousel = initMerchCarousel(mount, {
+        garment,
+        garmentColor,
+        onGarmentChange: (g) => { garment = g; },
+        onColorChange: (c, th) => {
+          garmentColor = c;
+          chartTheme = th;
+          const ink = chartTheme === 'dark' ? '#ffffff' : '#000000';
+          drawRadar(svg, {
+            scores,
+            axes,
+            orientation,
+            actors,
+            uploadedMap,
+            showUser,
+            userColor: ink,
+            invertedAxes,
+            register
+          });
+          syncMerchRadarFromMain();
+        }
+      });
+      document.getElementById('btn-buy-merch')?.addEventListener('click', () => {
+        onBuyMerch({
+          garment: carousel.getGarment(),
+          garmentColor: carousel.getGarmentColor(),
+          chartTheme
+        });
+      });
+    }
+  }
 
   // Score bars
   const bars = document.getElementById('score-bars');

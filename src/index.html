@@ -34,6 +34,11 @@ import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
 import { t, setLanguage } from './i18n.js';
 import { encodeHash, decodeHash, copyToClipboard } from './url.js';
+import {
+  buildDraftFromResults,
+  saveMerchDraft,
+  encodeMerchHash
+} from './merch-url.js';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -52,6 +57,8 @@ let customActors = [];
 let invertedAxes = new Set();
 let actorGroupOrder = [];
 let registerMode = 'primary';
+let merchGarment = 'tee';
+let merchGarmentColor = 'white';
 
 function loadActorGroupOrder() {
   try {
@@ -306,6 +313,38 @@ function showResults() {
       registerMode = r;
       saveRegisterMode();
       showResults();
+    },
+    merchGarment,
+    merchGarmentColor,
+    onBuyMerch: ({ garment, garmentColor, chartTheme }) => {
+      const scores = quiz.getScores();
+      const draft = buildDraftFromResults({
+        scores,
+        orientation,
+        axesOrder,
+        invertedAxes,
+        selectedActorNames: [...selectedActors],
+        customActors,
+        uploadedMap,
+        showUser,
+        register: registerMode,
+        garment,
+        garmentColor,
+        chartTheme
+      });
+      saveMerchDraft(draft);
+      const hash = encodeMerchHash({
+        scores,
+        orientation,
+        axesOrder,
+        invertedAxes,
+        actorSlugs: draft.actorSlugs,
+        garment,
+        garmentColor,
+        chartTheme,
+        register: registerMode
+      });
+      window.location.href = 'shop.html' + hash;
     }
   });
 }
@@ -333,8 +372,20 @@ function handleIntroUpload(e) {
   e.target.value = '';
 }
 
+function showShopNeedsResultsBanner() {
+  if (new URLSearchParams(window.location.search).get('shop') !== 'needs-results') return;
+  const banner = document.createElement('p');
+  banner.className = 'shop-intro-banner';
+  banner.setAttribute('role', 'status');
+  banner.textContent = t('shop.needsResults');
+  app.prepend(banner);
+}
+
 if (!loadFromHash()) {
   renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
+  showShopNeedsResultsBanner();
+} else {
+  showShopNeedsResultsBanner();
 }
 </script>
 </body>

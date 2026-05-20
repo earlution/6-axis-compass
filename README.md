@@ -145,6 +145,23 @@ https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5
 
 Visiting a valid hash URL skips the quiz and renders the results screen immediately. The URL auto-updates when orientation or axis order changes, so copying the address bar always captures the current view. `v1` URLs are backwards-compatible.
 
+### Merch shop prototype (`merch-shop` branch)
+
+Custom apparel flow (Printful-ready UI, **checkout stubbed**): results → garment mockup carousel → [`shop.html`](./src/shop.html) configurator → stub checkout modal.
+
+| Output | Description |
+|--------|-------------|
+| `dist/shop.html` | Shop configurator (same styles as main app) |
+| `dist/assets/merch/` | Placeholder garment mockup SVGs |
+
+**Demo locally:** `npm run build` then serve `dist/` (see [`docs/merch-prototype.md`](./docs/merch-prototype.md)).
+
+- **v3 hash** on shop URLs carries scores, comparisons (actor slugs), garment, colour, and chart ink theme.
+- **sessionStorage** draft preserves custom actors and uploaded maps.
+- Future Printful/Stripe wiring: [`docs/merch-printful-integration.md`](./docs/merch-printful-integration.md).
+
+Tagged releases for this prototype use `merch-prototype-v*` (see git tags).
+
 ## Paper Artifacts
 
 For academic publication, `npm run generate-artifacts` produces static, versioned files in `paper-artifacts/`:
@@ -170,6 +187,11 @@ The source is organised as ES modules under `src/`:
 | `src/chart.js` | SVG radar chart renderer |
 | `src/ui.js` | Intro, quiz, and results screen rendering (including actor modal) |
 | `src/export.js` | PNG, JSON, and XML export; JSON/XML import |
+| `src/merch-url.js` | Merch v3 URL hash and sessionStorage draft |
+| `src/merch-catalog.js` | Garment catalogue and placeholder prices |
+| `src/merch.js` | Merch mockup carousel and stub checkout modal |
+| `src/shop-ui.js` | Shop page renderer |
+| `src/shop.html` | Merch shop shell |
 | `src/styles.css` | Full component stylesheet |
 | `src/index.html` | Shell that imports and wires the modules |
 
@@ -181,7 +203,7 @@ Actor data is loaded at build time from `data/actors/*.json` into `src/actors-ge
 npm run build
 ```
 
-This runs `scripts/sync-actor-data.js` (regenerates `src/actors-generated.js` from `data/actors/`) followed by `scripts/build.js` (inlines all modules into `dist/index.html`).
+This runs `scripts/sync-actor-data.js` (regenerates `src/actors-generated.js` from `data/actors/`) followed by `scripts/build.js`, which inlines modules into `dist/index.html`, `dist/shop.html`, and `dist/data.html`, and copies `src/assets/merch/` to `dist/assets/merch/`.
 
 ### Watch mode
 

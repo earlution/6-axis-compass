@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print your map — Six-Axis Political Compass</title>
+<meta name="description" content="Configure and order custom apparel with your six-axis compass radar chart.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<style>
+/* styles.css will be inlined here by build.js */
+</style>
+</head>
+<body>
+<a href="#app" class="skip-link">Skip to main content</a>
+<div id="app" role="main"></div>
+<div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 Ruari Mears</span>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="data.html">Dataset</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="index.html">Compass</a>
+  <span class="footer-sep">·</span>
+  <span class="footer-ver">v{{VERSION}}</span>
+</footer>
+<script type="module">
+import { AXES } from './data.js';
+import { t, setLanguage } from './i18n.js';
+import {
+  decodeMerchHash,
+  loadMerchDraft,
+  saveMerchDraft,
+  mergeMerchState,
+  getActorSlug,
+  resolveActorBySlug
+} from './merch-url.js';
+import { encodeHash } from './url.js';
+import { renderShop, pushShopHash, openShopCheckout } from './shop-ui.js';
+
+const app = document.getElementById('app');
+
+function redirectNeedsResults() {
+  window.location.replace('index.html?shop=needs-results');
+}
+
+function loadState() {
+  const hashDecoded = decodeMerchHash(window.location.hash);
+  const draft = loadMerchDraft();
+  const merged = mergeMerchState(hashDecoded, draft);
+  if (!merged.scores || Object.keys(merged.scores).length === 0) {
+    return null;
+  }
+  if (!merged.axesOrder || merged.axesOrder.length !== 6) {
+    merged.axesOrder = [...AXES];
+  }
+  return merged;
+}
+
+let state = loadState();
+if (!state) {
+  redirectNeedsResults();
+}
+
+function compassHashForBack() {
+  return encodeHash(
+    state.scores,
+    state.orientation,
+    state.axesOrder,
+    new Set(state.invertedAxes || [])
+  );
+}
+
+function persist() {
+  saveMerchDraft(state);
+  pushShopHash(state);
+}
+
+function syncActorSlugsFromNames() {
+  const custom = state.customActors || [];
+  state.actorSlugs = (state.selectedActorNames || [])
+    .map(name => {
+      const actor = [...ACTORS, ...custom].find(a => a.name === name);
+      return actor ? getActorSlug(actor) : null;
+    })
+    .filter(Boolean)
+    .slice(0, 2);
+}
+
+if (state.selectedActorNames?.length && !state.actorSlugs?.length) {
+  syncActorSlugsFromNames();
+}
+
+function render() {
+  renderShop(app, {
+    scores: state.scores,
+    axesOrder: state.axesOrder,
+    orientation: state.orientation,
+    invertedAxes: state.invertedAxes,
+    showUser: state.showUser,
+    uploadedMap: state.uploadedMap,
+    register: state.register,
+    garment: state.garment,
+    garmentColor: state.garmentColor,
+    chartTheme: state.chartTheme,
+    size: state.size,
+    customActors: state.customActors,
+    actorSlugs: state.actorSlugs,
+    compassHash: compassHashForBack(),
+    onGarmentChange: (id) => {
+      state.garment = id;
+      persist();
+      render();
+    },
+    onGarmentColorChange: (c) => {
+      state.garmentColor = c;
+      state.chartTheme = c === 'black' ? 'dark' : 'light';
+      persist();
+      render();
+    },
+    onSizeChange: (s) => {
+      state.size = s;
+      persist();
+      render();
+    },
+    onToggleActor: (slug) => {
+      const slugs = [...(state.actorSlugs || [])];
+      const idx = slugs.indexOf(slug);
+      if (idx >= 0) {
+        slugs.splice(idx, 1);
+      } else if (slugs.length < 2) {
+        slugs.push(slug);
+      }
+      state.actorSlugs = slugs;
+      const custom = state.customActors || [];
+      state.selectedActorNames = slugs
+        .map(s => resolveActorBySlug(s, custom)?.name)
+        .filter(Boolean);
+      persist();
+      render();
+    },
+    onCheckout: () => openShopCheckout(state)
+  });
+}
+
+document.documentElement.setAttribute('data-theme', (() => {
+  try {
+    const stored = localStorage.getItem('six-axis-compass-theme');
+    if (stored === 'light' || stored === 'dark') return stored;
+  } catch (_) {}
+  return 'dark';
+})());
+
+setLanguage('en');
+persist();
+render();
+</script>
+</body>
+</html>

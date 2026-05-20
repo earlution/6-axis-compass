@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[merch-prototype-v1.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/merch-prototype-v1.0.0
 [2.6.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.2
 [2.6.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.1
 [2.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.0
@@ -46,6 +47,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`API.md` v2.0.0 (complete)** — trust zones, configuration, CORS, public read on all endpoints, `meta` on actors list, chart rate limits and caps, `GET /api/axes` / `GET /api/openapi.json`, error `304`/`429`, public cURL examples.
 - **`README.md`** — API section aligned with public read (default `npm run api` without secret; env table; public chart example).
+
+## [merch-prototype-v1.0.0] - 2026-05-20
+
+Branch **`merch-shop`**. UI-only merch funnel; checkout not connected to Printful or Stripe.
+
+### Added
+
+- **Results merch preview** — garment carousel (tee / sweatshirt / hoodie), white/black mockup, dynamic **Buy this …** CTA (`src/ui.js`, `src/merch.js`).
+- **`shop.html`** — configurator: comparisons (max 2 actor slugs), garment, colour, size, placeholder GBP prices, breadcrumb back to results (`src/shop-ui.js`).
+- **v3 share hash** and **`sessionStorage`** merch draft (`src/merch-url.js`); guard redirect `?shop=needs-results`.
+- **Stub checkout modal** with order summary and copy (`src/merch.js`).
+- **Placeholder garment SVGs** in `src/assets/merch/` (copied to `dist/assets/merch/` on build).
+- **`docs/merch-prototype.md`** — local demo and file map.
+- **`docs/merch-printful-integration.md`** — future Printful + Stripe pipeline.
+- **`api/lib/printful-stub.js`** — throws until integration.
+- **`tests/merch-url.test.js`** — v3 hash round-trip.
+
+### Changed
+
+- **`scripts/build.js`** — builds `dist/shop.html`, copies merch assets; watch list extended.
+- **`package.json`** — test script includes merch-url tests.
 
 ## [2.6.2] - 2026-05-20
 

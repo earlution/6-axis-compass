@@ -12,7 +12,7 @@
     "upload-osf": "node scripts/upload-to-osf.mjs",
     "upload-asset-to-osf": "node scripts/upload-asset-to-osf.mjs",
     "api": "node api/server.js",
-    "test": "node tests/quiz.test.js && node tests/axes-order.test.js && node tests/api.test.js"
+    "test": "node tests/quiz.test.js && node tests/axes-order.test.js && node tests/merch-url.test.js && node tests/api.test.js"
   },
   "keywords": [
     "political-compass",

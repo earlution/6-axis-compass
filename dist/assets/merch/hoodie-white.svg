@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" role="img" aria-label="Hoodie white">
+  <rect width="400" height="520" fill="#f4f4f2"/>
+  <path fill="#e4e4e2" stroke="#c4c4c0" stroke-width="2" d="M105 95 L150 60 L200 88 L250 60 L295 95 L335 145 L318 455 L82 455 L65 145 Z"/>
+  <path fill="#d0d0ce" d="M150 60 Q200 20 250 60 L245 130 Q200 155 155 130 Z"/>
+  <ellipse cx="200" cy="220" rx="102" ry="118" fill="#fafaf8" opacity="0.5"/>
+</svg>

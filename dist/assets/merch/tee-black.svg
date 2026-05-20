@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" role="img" aria-label="T-shirt black">
+  <rect width="400" height="480" fill="#1a1a1a"/>
+  <path fill="#252525" stroke="#3a3a3a" stroke-width="2" d="M120 72 L160 48 L200 72 L240 48 L280 72 L320 120 L300 420 L100 420 L80 120 Z"/>
+  <ellipse cx="200" cy="200" rx="95" ry="110" fill="#2e2e2e" opacity="0.5"/>
+</svg>

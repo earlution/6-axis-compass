@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Six-Axis Political Compass</title>
-<meta name="description" content="Map your position across six political axes: Cultural, Economic, Military, Sovereignty, Governance, and Class.">
+<title>Print your map — Six-Axis Political Compass</title>
+<meta name="description" content="Configure and order custom apparel with your six-axis compass radar chart.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <style>
 :root {
   --bg: #0f0f0f;
@@ -1235,6 +1234,8 @@ body {
   <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="index.html">Compass</a>
   <span class="footer-sep">·</span>
   <span class="footer-ver">v2.6.2</span>
 </footer>
@@ -5170,54 +5171,6 @@ const ACTOR_GROUPS = {
 
 
 
-/**
- * @param {Record<number, number>} answers — question index → response value
- * @returns {Record<string, number>} axis name → score 0–10
- */
-function computeScores(answers) {
-  const scores = {};
-  for (const axis of AXES) {
-    const axisQuestions = QUESTIONS
-      .map((q, i) => ({ ...q, index: i }))
-      .filter(q => q.axis === axis);
-    let total = 0;
-    for (const q of axisQuestions) {
-      const v = answers[q.index] !== undefined ? answers[q.index] : 2; // default to neutral
-      total += q.reverse ? (4 - v) : v;
-    }
-    scores[axis] = parseFloat(((total / 16) * 10).toFixed(1));
-  }
-  return scores;
-}
-function createQuiz() {
-  let current = 0;
-  const answers = {};
-
-  return {
-    get current() { return current; },
-    get total() { return QUESTIONS.length; },
-    get isComplete() { return current >= QUESTIONS.length; },
-    get question() { return QUESTIONS[current]; },
-    get progress() { return Math.round((current / QUESTIONS.length) * 100); },
-    get stepLabel() { return `${current + 1} / ${QUESTIONS.length}`; },
-
-    answer(value) {
-      answers[current] = value;
-      current++;
-      return this.isComplete;
-    },
-
-    back() {
-      if (current > 0) current--;
-    },
-
-    getAnswers() { return { ...answers }; },
-    getScores() { return computeScores(answers); }
-  };
-}
-
-
-
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -5342,1194 +5295,347 @@ function drawRadar(svg, {
 }
 
 
-function renderIntro(container, { onStart, onUpload } = {}) {
-  container.innerHTML = `
-    <div class="wrap">
-      <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
-        <p class="eyebrow">${t('intro.eyebrow')}</p>
-        <h1 class="intro-title">${t('intro.title')}</h1>
-        <p class="intro-body">${t('intro.body')}</p>
-        <p class="intro-meta">${t('intro.meta')}</p>
-        <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
-        <div class="intro-upload">
-          <label class="intro-file-label">
-            ${t('intro.uploadLabel')}
-            <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
-          </label>
-        </div>
-        <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
-      </div>
-    </div>
-  `;
-  document.getElementById('btn-start').addEventListener('click', onStart);
-  if (onUpload) {
-    document.getElementById('intro-file-upload').addEventListener('change', onUpload);
-  }
-}
-function renderQuiz(container, { question, progress, stepLabel, axis, onAnswer, onBack, canGoBack }) {
-  container.innerHTML = `
-    <div class="wrap">
-      <div class="screen active" id="s-quiz" role="region" aria-label="${t('quiz.back').replace('← ', '')}" tabindex="-1">
-        <div class="progress-wrap">
-          <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
-          <span class="progress-label">${stepLabel}</span>
-        </div>
-        <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
-        <p class="q-text">${question.text}</p>
-        <div class="responses" id="responses" role="radiogroup" aria-label="${t('response.stronglyAgree')} – ${t('response.stronglyDisagree')}"></div>
-        <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
-          <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
-        </div>
-      </div>
-    </div>
-  `;
 
-  const responsesEl = document.getElementById('responses');
-  const labels = [
-    t('response.stronglyAgree'),
-    t('response.agree'),
-    t('response.neutral'),
-    t('response.disagree'),
-    t('response.stronglyDisagree')
-  ];
-  const buttons = [];
-  labels.forEach((label, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'response-btn';
-    btn.setAttribute('role', 'radio');
-    btn.setAttribute('aria-checked', 'false');
-    btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
-    btn.textContent = label;
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        b.setAttribute('aria-checked', 'false');
-        b.setAttribute('tabindex', '-1');
+
+
+import {
+  GARMENTS,
+  SIZES,
+  garmentImagePath,
+  chartInkColor,
+  formatPriceGBP,
+  buildMockupHTML,
+  openCheckoutStubModal
+} from './merch.js';
+
+const MAX_SHOP_ACTORS = 2;
+function resolveShopActors(state) {
+  const custom = state.customActors || [];
+  const slugs = state.actorSlugs || [];
+  const resolved = [];
+  for (const slug of slugs.slice(0, MAX_SHOP_ACTORS)) {
+    const actor = resolveActorBySlug(slug, custom);
+    if (actor) {
+      resolved.push({
+        ...actor,
+        scores: getEffectiveScores(actor, state.register || 'primary')
       });
-      btn.setAttribute('aria-checked', 'true');
-      btn.setAttribute('tabindex', '0');
-      onAnswer(4 - i);
-    });
-    responsesEl.appendChild(btn);
-    buttons.push(btn);
-  });
-
-  responsesEl.addEventListener('keydown', (e) => {
-    const idx = buttons.findIndex(b => b.getAttribute('tabindex') === '0');
-    if (idx < 0) return;
-    let next = idx;
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-      e.preventDefault();
-      next = (idx + 1) % buttons.length;
-    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-      e.preventDefault();
-      next = (idx - 1 + buttons.length) % buttons.length;
-    } else if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      buttons[idx].click();
-      return;
     }
-    if (next !== idx) {
-      buttons[idx].setAttribute('tabindex', '-1');
-      buttons[next].setAttribute('tabindex', '0');
-      buttons[next].focus();
-    }
-  });
-
-  if (canGoBack) {
-    document.getElementById('back-btn').addEventListener('click', onBack);
   }
+  return resolved;
 }
-function renderResults(container, {
-  scores,
-  axes,
-  orientation,
-  showUser,
-  selectedActors,
-  uploadedMap,
-  customActors,
-  invertedAxes,
-  onToggleActor,
-  onRestart,
-  onDownloadChart,
-  onDownloadData,
-  onUpload,
-  onClearUpload,
-  onToggleUser,
-  onSetOrientation,
-  onReorder,
-  onSetLanguage,
-  onCopyLink,
-  onAddCustomActor,
-  onDeleteCustomActor,
-  onSetTheme,
-  onToggleInvertAxis,
-  onReorderGroups,
-  onSetRegister,
-  onBuyMerch,
-  merchGarment = 'tee',
-  merchGarmentColor = 'white',
-  groupOrder,
-  register = 'primary',
-  theme,
-  language
-}) {
-  const allActors = [...ACTORS, ...(customActors || [])];
-  const actors = allActors.filter(a => selectedActors.has(a.name));
-  const userColor = theme === 'light' ? '#000000' : '#ffffff';
+function renderShop(container, state, handlers) {
+  const {
+    scores,
+    axesOrder,
+    orientation,
+    invertedAxes,
+    showUser,
+    uploadedMap,
+    register,
+    garment,
+    garmentColor,
+    chartTheme,
+    size,
+    customActors,
+    onGarmentChange,
+    onGarmentColorChange,
+    onSizeChange,
+    onToggleActor,
+    onCheckout,
+    compassHash
+  } = state;
+
+  const axes = axesOrder || [...AXES];
+  const inverted = new Set(invertedAxes || []);
+  const userColor = chartInkColor(chartTheme);
+  const resolvedActors = resolveShopActors(state);
 
   container.innerHTML = `
     <div class="wrap wrap--wide">
-      <div class="screen active" id="s-results" role="region" aria-label="${t('results.title')}" tabindex="-1">
-        <div class="results-layout">
-          <div class="chart-pane">
-            <p class="eyebrow">${t('results.eyebrow')}</p>
-            <h2 class="results-title">${t('results.title')}</h2>
-            <div class="chart-wrap">
-              <svg id="radar" width="320" height="320" viewBox="0 0 320 320" aria-label="${t('chart.ariaLabel')}"></svg>
-            </div>
-            <div class="legend" id="legend"></div>
-            ${onBuyMerch ? `<div id="merch-preview-mount"></div>` : ''}
+      <nav class="shop-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html${compassHash || ''}">${t('shop.breadcrumbResults')}</a>
+        <span aria-hidden="true"> › </span>
+        <span>${t('shop.breadcrumbShop')}</span>
+      </nav>
+      <p class="merch-badge shop-page-badge">${t('merch.prototypeBadge')}</p>
+      <h1 class="shop-title">${t('shop.title')}</h1>
+      <div class="shop-layout results-layout">
+        <div class="chart-pane shop-preview-pane">
+          <div class="merch-mockup-wrap shop-mockup-wrap">
+            ${buildMockupHTML(garment, garmentColor)}
           </div>
-          <div class="content-pane">
-            <div class="actor-groups" id="actor-groups"></div>
-            <a class="data-link" href="data.html">Browse the full actor dataset &rarr;</a>
-            <div class="score-bars" id="score-bars"></div>
-            <hr class="divider">
-            <div class="config-section">
-              <p class="config-heading">${t('config.language')}</p>
-              <div class="config-row">
-                <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
-                  <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
-                </select>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('config.theme')}</p>
-              <div class="config-row">
-                <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
-                <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.orientation')}</p>
-              <div class="config-row">
-                <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
-                <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.register')}</p>
-              <div class="config-row">
-                <button class="config-btn ${register === 'primary' ? 'active' : ''}" id="btn-reg-primary">${t('results.primary')}</button>
-                <button class="config-btn ${register === 'declared' ? 'active' : ''}" id="btn-reg-declared">${t('results.declared')}</button>
-                <button class="config-btn ${register === 'structural' ? 'active' : ''}" id="btn-reg-structural">${t('results.structural')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.download')}</p>
-              <div class="config-row">
-                <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
-                <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
-                <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.share')}</p>
-              <div class="config-row">
-                <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.addCustomActor')}</p>
-              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
-                <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
-                  <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
-                </div>
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-                  ${AXES.map(ax => `
-                    <div style="display:flex;flex-direction:column;gap:2px;">
-                      <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
-                      <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
-                    </div>
-                  `).join('')}
-                </div>
-                <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.compareSaved')}</p>
-              <div class="config-row">
-                <label class="config-file-label">
-                  ${t('results.uploadLabel')}
-                  <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
-                </label>
-                <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
-              </div>
-              <p class="config-note">${t('results.uploadNote')}</p>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.axisOrder')}</p>
-              <div class="axis-list" id="axis-list"></div>
-            </div>
-            <hr class="divider">
-            <p class="footer-note">${t('results.footer')}</p>
-            <button class="btn" id="btn-restart">${t('results.retake')}</button>
-          </div>
+          <p class="shop-price-display">${formatPriceGBP(garment)} <span class="shop-price-note">${t('shop.priceNote')}</span></p>
+        </div>
+        <div class="content-pane shop-config-pane">
+          <section class="config-section">
+            <p class="config-heading">${t('shop.yourMap')}</p>
+            <p class="config-note">${t('shop.yourMapNote')}</p>
+            <div class="shop-score-pills" id="shop-score-pills"></div>
+            <a class="data-link" href="index.html${compassHash || ''}">${t('shop.editOnCompass')} →</a>
+          </section>
+          <section class="config-section">
+            <p class="config-heading">${t('shop.comparisons')}</p>
+            <p class="config-note">${t('shop.overlayCap')}</p>
+            <div class="shop-actor-btns actor-btns" id="shop-actor-btns"></div>
+          </section>
+          <section class="config-section">
+            <p class="config-heading">${t('shop.garment')}</p>
+            <div class="config-row" id="shop-garment-btns"></div>
+          </section>
+          <section class="config-section">
+            <p class="config-heading">${t('merch.garmentColour')}</p>
+            <div class="config-row" id="shop-color-btns"></div>
+          </section>
+          <section class="config-section">
+            <p class="config-heading">${t('shop.size')}</p>
+            <p class="config-note">${t('shop.sizeNote')}</p>
+            <div class="config-row shop-size-row" id="shop-size-btns"></div>
+          </section>
+          <button type="button" class="btn shop-checkout-btn" id="btn-shop-checkout">${t('shop.checkout')}</button>
         </div>
       </div>
     </div>
   `;
 
-  const svg = document.getElementById('radar');
-  drawRadar(svg, {
-    scores,
-    axes,
-    orientation,
-    actors,
-    uploadedMap,
-    showUser,
-    userColor,
-    invertedAxes,
-    register
+  const svg = document.getElementById('radar-merch');
+  if (svg) {
+    drawRadar(svg, {
+      scores,
+      axes,
+      orientation,
+      actors: resolvedActors,
+      uploadedMap,
+      showUser,
+      userColor,
+      invertedAxes: inverted,
+      register
+    });
+    svg.setAttribute('aria-label', t('chart.ariaLabel'));
+    svg.removeAttribute('aria-hidden');
+  }
+
+  const imgEl = container.querySelector('.merch-garment-img');
+  if (imgEl) imgEl.src = garmentImagePath(garment, garmentColor);
+
+  const pills = document.getElementById('shop-score-pills');
+  axes.forEach(ax => {
+    const pill = document.createElement('span');
+    pill.className = 'shop-score-pill';
+    pill.textContent = `${t('axis.' + ax)}: ${(scores[ax] ?? 0).toFixed(1)}`;
+    pills.appendChild(pill);
   });
 
-  // Actor toggle buttons
-  const groupsEl = document.getElementById('actor-groups');
-
-  function appendActorButton(actor, container) {
-    const isCustom = customActors && customActors.some(c => c.name === actor.name);
-    const hasMeta = actor._scoreMeta && actor._actorMeta;
-    const wrapper = document.createElement('div');
-    wrapper.className = 'actor-btn-wrap';
-
+  const garmentBtns = document.getElementById('shop-garment-btns');
+  GARMENTS.forEach(g => {
     const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'config-btn' + (garment === g.id ? ' active' : '');
+    btn.textContent = t(g.labelKey);
+    btn.addEventListener('click', () => onGarmentChange(g.id));
+    garmentBtns.appendChild(btn);
+  });
+
+  const colorBtns = document.getElementById('shop-color-btns');
+  ['white', 'black'].forEach(c => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'config-btn' + (garmentColor === c ? ' active' : '');
+    btn.textContent = c === 'white' ? t('merch.colourWhite') : t('merch.colourBlack');
+    btn.addEventListener('click', () => onGarmentColorChange(c));
+    colorBtns.appendChild(btn);
+  });
+
+  const sizeBtns = document.getElementById('shop-size-btns');
+  SIZES.forEach(s => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'config-btn shop-size-btn' + (size === s ? ' active' : '');
+    btn.textContent = s;
+    btn.addEventListener('click', () => onSizeChange(s));
+    sizeBtns.appendChild(btn);
+  });
+
+  const actorBtnsEl = document.getElementById('shop-actor-btns');
+  const allActors = [...ACTORS, ...(customActors || [])];
+  const popular = ['Green Party', 'Labour Party', 'Conservative Party', 'Reform UK', 'Liberal Democrats'];
+  const shopActors = popular
+    .map(name => allActors.find(a => a.name === name))
+    .filter(Boolean);
+
+  const selectedSlugs = new Set(state.actorSlugs || []);
+
+  shopActors.forEach(actor => {
+    const slug = getActorSlug(actor);
+    const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'btn btn-sm';
-    btn.setAttribute('aria-pressed', selectedActors.has(actor.name) ? 'true' : 'false');
+    const on = selectedSlugs.has(slug);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     btn.textContent = t('actor.' + actor.name);
-    if (selectedActors.has(actor.name)) {
+    if (on) {
       btn.style.borderColor = actor.color;
       btn.style.color = actor.color;
       btn.style.background = actor.color + '1a';
     }
-    btn.addEventListener('click', () => onToggleActor(actor.name));
-    wrapper.appendChild(btn);
-
-    if (hasMeta) {
-      const info = document.createElement('button');
-      info.className = 'actor-info-btn';
-      info.setAttribute('aria-label', t('actor.browseData') + ': ' + t('actor.' + actor.name));
-      info.textContent = 'i';
-      info.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openActorModal(actor);
-      });
-      wrapper.appendChild(info);
-    }
-
-    if (isCustom && onDeleteCustomActor) {
-      const del = document.createElement('button');
-      del.textContent = '×';
-      del.className = 'actor-del-btn';
-      del.addEventListener('click', (e) => {
-        e.stopPropagation();
-        onDeleteCustomActor(actor.name);
-      });
-      wrapper.appendChild(del);
-    }
-
-    container.appendChild(wrapper);
-  }
-
-  // Your map toggle
-  const userRow = document.createElement('div');
-  userRow.className = 'actor-row';
-  const userLabel = document.createElement('span');
-  userLabel.className = 'actor-label';
-  userLabel.textContent = t('results.compare');
-  const userBtnWrap = document.createElement('div');
-  userBtnWrap.className = 'actor-btns';
-  const userBtn = document.createElement('button');
-  userBtn.className = 'btn btn-sm';
-  userBtn.setAttribute('aria-pressed', showUser ? 'true' : 'false');
-  userBtn.textContent = t('results.yourMap');
-  if (showUser) {
-    userBtn.style.borderColor = userColor;
-    userBtn.style.color = userColor;
-    userBtn.style.background = userColor + '1a';
-  }
-  userBtn.addEventListener('click', onToggleUser);
-  userBtnWrap.appendChild(userBtn);
-  userRow.append(userLabel, userBtnWrap);
-  groupsEl.appendChild(userRow);
-
-  // Build ordered list of group entries
-  const groupEntries = [];
-  const groupedNames = new Set();
-
-  // Preset groups
-  Object.entries(ACTOR_GROUPS).forEach(([groupName, actorNames]) => {
-    const groupActors = actorNames
-      .map(name => allActors.find(a => a.name === name))
-      .filter(Boolean);
-    if (groupActors.length === 0) return;
-    groupActors.forEach(a => groupedNames.add(a.name));
-    groupEntries.push({ name: groupName, actors: groupActors });
+    btn.addEventListener('click', () => onToggleActor(slug));
+    actorBtnsEl.appendChild(btn);
   });
 
-  // Custom actors group
-  const customGroupActors = allActors.filter(a =>
-    customActors && customActors.some(c => c.name === a.name)
-  );
-  if (customGroupActors.length > 0) {
-    groupEntries.push({ name: 'Custom actors', actors: customGroupActors });
-    customGroupActors.forEach(a => groupedNames.add(a.name));
-  }
-
-  // Ungrouped fallback
-  const ungrouped = allActors.filter(a => !groupedNames.has(a.name));
-  if (ungrouped.length > 0) {
-    groupEntries.push({ name: 'Other', actors: ungrouped });
-  }
-
-  // Sort by groupOrder if provided
-  const defaultOrder = groupEntries.map(g => g.name);
-  const order = groupOrder && groupOrder.length > 0 ? groupOrder.filter(n => defaultOrder.includes(n)) : defaultOrder;
-  // Append any missing groups
-  defaultOrder.forEach(name => { if (!order.includes(name)) order.push(name); });
-
-  const orderedEntries = order.map(name => groupEntries.find(g => g.name === name)).filter(Boolean);
-
-  // Render groups with reorder controls
-  orderedEntries.forEach((entry, index) => {
-    const groupRow = document.createElement('div');
-    groupRow.className = 'actor-group';
-
-    const header = document.createElement('div');
-    header.className = 'group-header';
-
-    const groupLabel = document.createElement('span');
-    groupLabel.className = 'actor-group-label';
-    groupLabel.textContent = entry.name;
-
-    const reorder = document.createElement('span');
-    reorder.className = 'group-reorder';
-
-    const upBtn = document.createElement('button');
-    upBtn.textContent = '↑';
-    upBtn.setAttribute('aria-label', 'Move group up');
-    upBtn.disabled = index === 0;
-    if (!upBtn.disabled) {
-      upBtn.addEventListener('click', () => {
-        const newOrder = [...order];
-        [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
-        onReorderGroups && onReorderGroups(newOrder);
-      });
-    }
-
-    const downBtn = document.createElement('button');
-    downBtn.textContent = '↓';
-    downBtn.setAttribute('aria-label', 'Move group down');
-    downBtn.disabled = index === orderedEntries.length - 1;
-    if (!downBtn.disabled) {
-      downBtn.addEventListener('click', () => {
-        const newOrder = [...order];
-        [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
-        onReorderGroups && onReorderGroups(newOrder);
-      });
-    }
-
-    reorder.append(upBtn, downBtn);
-    header.append(groupLabel, reorder);
-
-    const groupBtns = document.createElement('div');
-    groupBtns.className = 'actor-btns';
-    entry.actors.forEach(actor => appendActorButton(actor, groupBtns));
-    groupRow.append(header, groupBtns);
-    groupsEl.appendChild(groupRow);
+  document.getElementById('btn-shop-checkout').addEventListener('click', onCheckout);
+}
+function pushShopHash(state) {
+  const hash = encodeMerchHash({
+    scores: state.scores,
+    orientation: state.orientation,
+    axesOrder: state.axesOrder,
+    invertedAxes: new Set(state.invertedAxes || []),
+    actorSlugs: state.actorSlugs,
+    garment: state.garment,
+    garmentColor: state.garmentColor,
+    chartTheme: state.chartTheme,
+    register: state.register
   });
-
-  // Legend
-  const leg = document.getElementById('legend');
-  const addLegend = (name, color, solid, dashed) => {
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    const dot = document.createElement('div');
-    dot.className = 'legend-dot';
-    dot.style.background = solid ? color : color + '50';
-    dot.style.border = (dashed ? '1.5px dashed ' : '1.5px solid ') + color;
-    const span = document.createElement('span');
-    span.className = 'legend-name';
-    span.textContent = name;
-    item.append(dot, span);
-    leg.appendChild(item);
-  };
-  if (showUser) addLegend(t('results.you'), userColor, true, false);
-  actors.forEach(a => addLegend(t('actor.' + a.name), a.color, false, false));
-  if (uploadedMap) addLegend(uploadedMap.label || t('results.uploadedMap'), '#b478dc', false, true);
-
-  if (onBuyMerch) {
-    const mount = document.getElementById('merch-preview-mount');
-    if (mount) {
-      let garment = merchGarment;
-      let garmentColor = merchGarmentColor;
-      let chartTheme = garmentColor === 'black' ? 'dark' : 'light';
-      mount.innerHTML = buildMerchPreviewHTML(garmentColor);
-      syncMerchRadarFromMain();
-      const carousel = initMerchCarousel(mount, {
-        garment,
-        garmentColor,
-        onGarmentChange: (g) => { garment = g; },
-        onColorChange: (c, th) => {
-          garmentColor = c;
-          chartTheme = th;
-          const ink = chartTheme === 'dark' ? '#ffffff' : '#000000';
-          drawRadar(svg, {
-            scores,
-            axes,
-            orientation,
-            actors,
-            uploadedMap,
-            showUser,
-            userColor: ink,
-            invertedAxes,
-            register
-          });
-          syncMerchRadarFromMain();
-        }
-      });
-      document.getElementById('btn-buy-merch')?.addEventListener('click', () => {
-        onBuyMerch({
-          garment: carousel.getGarment(),
-          garmentColor: carousel.getGarmentColor(),
-          chartTheme
-        });
-      });
-    }
-  }
-
-  // Score bars
-  const bars = document.getElementById('score-bars');
-  const profiles = [];
-  if (showUser) profiles.push({ name: t('results.you'), color: userColor, scores });
-  actors.forEach(a => profiles.push({ name: t('actor.' + a.name), color: a.color, scores: a.scores }));
-  if (uploadedMap) profiles.push({ name: uploadedMap.label || t('results.uploadedMap'), color: '#b478dc', scores: uploadedMap.scores });
-
-  if (profiles.length === 0) {
-    bars.innerHTML = `<p class="config-note" style="text-align:center;padding:1rem 0;">${t('results.emptyScores')}</p>`;
-  } else {
-    axes.forEach(ax => {
-      const meta = AXIS_META[ax];
-      const isInverted = invertedAxes && invertedAxes.has(ax);
-      const div = document.createElement('div');
-      div.className = 'score-row';
-      let rowsHtml = '';
-      profiles.forEach(p => {
-        const sc = p.scores[ax];
-        const displaySc = isInverted ? 10 - sc : sc;
-        rowsHtml += `
-          <div class="actor-bar-row">
-            <span class="actor-bar-name">${p.name}</span>
-            <div class="actor-bar-track">
-              <div class="actor-bar-fill" style="width:${displaySc * 10}%;background:${p.color}"></div>
-            </div>
-            <span class="actor-bar-val">${displaySc.toFixed(1)}</span>
-          </div>
-        `;
-      });
-      const lowLabel = t('axis.' + ax + '.low');
-      const highLabel = t('axis.' + ax + '.high');
-      div.innerHTML = `
-        <div class="score-header">
-          <span class="score-name">${t('axis.' + ax)}</span>
-        </div>
-        ${rowsHtml}
-        <div class="score-ends">
-          <span class="score-end">${isInverted ? highLabel : lowLabel}</span>
-          <span class="score-end">${isInverted ? lowLabel : highLabel}</span>
-        </div>
-      `;
-      bars.appendChild(div);
-    });
-  }
-
-  document.getElementById('btn-restart').addEventListener('click', onRestart);
-
-  if (onDownloadChart) {
-    document.getElementById('btn-dl-png').addEventListener('click', onDownloadChart);
-  }
-  if (onDownloadData) {
-    document.getElementById('btn-dl-json').addEventListener('click', () => onDownloadData('json'));
-    document.getElementById('btn-dl-xml').addEventListener('click', () => onDownloadData('xml'));
-  }
-  if (onUpload) {
-    document.getElementById('file-upload').addEventListener('change', onUpload);
-  }
-  if (onClearUpload) {
-    const clearBtn = document.getElementById('btn-clear-upload');
-    if (clearBtn) clearBtn.addEventListener('click', onClearUpload);
-  }
-  if (onCopyLink) {
-    document.getElementById('btn-copy-link').addEventListener('click', onCopyLink);
-  }
-  if (onSetTheme) {
-    document.getElementById('btn-theme-dark').addEventListener('click', () => onSetTheme('dark'));
-    document.getElementById('btn-theme-light').addEventListener('click', () => onSetTheme('light'));
-  }
-  if (onSetOrientation) {
-    document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
-    document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
-  }
-  if (onSetRegister) {
-    document.getElementById('btn-reg-primary').addEventListener('click', () => onSetRegister('primary'));
-    document.getElementById('btn-reg-declared').addEventListener('click', () => onSetRegister('declared'));
-    document.getElementById('btn-reg-structural').addEventListener('click', () => onSetRegister('structural'));
-  }
-  if (onSetLanguage) {
-    document.getElementById('lang-select').addEventListener('change', (e) => {
-      onSetLanguage(e.target.value);
-    });
-  }
-  if (onAddCustomActor) {
-    document.getElementById('btn-add-actor').addEventListener('click', () => {
-      const name = document.getElementById('ca-name').value.trim();
-      const color = document.getElementById('ca-color').value;
-      if (!name) return;
-      const actorScores = {};
-      AXES.forEach(ax => {
-        const val = parseFloat(document.getElementById('ca-' + ax).value);
-        actorScores[ax] = isNaN(val) ? 5.0 : Math.max(0, Math.min(10, val));
-      });
-      onAddCustomActor({ name, color, scores: actorScores });
-    });
-  }
-  if (onReorder) {
-    const list = document.getElementById('axis-list');
-    axes.forEach((ax, i) => {
-      const item = document.createElement('div');
-      item.className = 'axis-item';
-      item.draggable = true;
-      item.dataset.idx = i;
-      const isInverted = invertedAxes && invertedAxes.has(ax);
-      item.innerHTML = `
-        <span class="axis-grip">⠿</span>
-        <span class="axis-name">${t('axis.' + ax)}</span>
-        ${onToggleInvertAxis ? `<button class="axis-invert ${isInverted ? 'active' : ''}" data-axis="${ax}" title="${t('results.invertPoles')}" draggable="false">⇄</button>` : ''}
-        <span class="axis-position">${t('axis.position', { n: i + 1 })}</span>
-      `;
-      list.appendChild(item);
-    });
-    let dragSrcIdx = null;
-    list.querySelectorAll('.axis-item').forEach(item => {
-      item.addEventListener('dragstart', (e) => {
-        dragSrcIdx = parseInt(item.dataset.idx);
-        item.classList.add('dragging');
-        e.dataTransfer.effectAllowed = 'move';
-      });
-      item.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-      });
-      item.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const targetIdx = parseInt(item.dataset.idx);
-        if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
-        const newOrder = [...axes];
-        const moved = newOrder.splice(dragSrcIdx, 1)[0];
-        newOrder.splice(targetIdx, 0, moved);
-        dragSrcIdx = null;
-        onReorder(newOrder);
-      });
-      item.addEventListener('dragend', () => {
-        item.classList.remove('dragging');
-      });
-    });
-    if (onToggleInvertAxis) {
-      list.querySelectorAll('.axis-invert').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          onToggleInvertAxis(btn.dataset.axis);
-        });
-      });
-    }
+  if (window.location.hash !== hash) {
+    history.replaceState(null, '', 'shop.html' + hash);
   }
 }
-
-function openActorModal(actor) {
-  const existing = document.getElementById('actor-modal');
-  if (existing) existing.remove();
-
-  const overlay = document.createElement('div');
-  overlay.id = 'actor-modal';
-  overlay.className = 'modal-overlay';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', t('actor.browseData'));
-
-  const meta = actor._actorMeta || {};
-  const scoreMeta = actor._scoreMeta || {};
-
-  const sourceTypeLabel = type => t('actor.source.type.' + type) || type;
-
-  const axesHtml = AXES.map(ax => {
-    const sm = scoreMeta[ax] || {};
-    const confidence = sm.confidence || 'low';
-    const rationale = sm.rationale || '';
-    const sources = sm.sources || [];
-    const score = (actor.scores[ax] ?? 0).toFixed(1);
-
-    const sourcesHtml = sources.length === 0
-      ? `<p class="modal-no-sources">${t('actor.noSources')}</p>`
-      : sources.map(s => `
-        <div class="modal-source">
-          <div class="source-header">
-            <span class="source-type">${sourceTypeLabel(s.type)}</span>
-            <a class="source-link" href="${s.url || '#'}" target="_blank" rel="noopener">${s.title || s.url}</a>
-            ${s.date ? `<span class="source-date">${s.date}</span>` : ''}
-          </div>
-          ${s.relevantText ? `<blockquote class="source-quote">"${s.relevantText}"</blockquote>` : ''}
-          ${s.citation ? `<cite class="source-cite">${s.citation}</cite>` : ''}
-        </div>
-      `).join('');
-
-    return `
-      <div class="modal-axis">
-        <div class="modal-axis-header">
-          <span class="modal-axis-name">${t('axis.' + ax)}</span>
-          <span class="modal-axis-score">${score}</span>
-          <span class="confidence-badge confidence-${confidence}">${t('actor.confidence.' + confidence)}</span>
-        </div>
-        ${rationale ? `<p class="modal-rationale">${rationale}</p>` : ''}
-        <div class="modal-sources">
-          <p class="modal-sources-heading">${t('actor.sources')}</p>
-          ${sourcesHtml}
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  overlay.innerHTML = `
-    <div class="modal-content">
-      <button class="modal-close" aria-label="${t('actor.close')}">&times;</button>
-      <div class="modal-header">
-        <div class="modal-color" style="background:${actor.color}"></div>
-        <div>
-          <h3 class="modal-title">${t('actor.' + actor.name)}</h3>
-          ${meta.category ? `<span class="modal-category">${meta.category}</span>` : ''}
-        </div>
-      </div>
-      ${meta.curator || meta.version || meta.lastUpdated ? `
-        <div class="modal-meta">
-          ${meta.curator ? `<span>${t('actor.curator')}: ${meta.curator}</span>` : ''}
-          ${meta.version ? `<span>${t('actor.version')}: ${meta.version}</span>` : ''}
-          ${meta.lastUpdated ? `<span>${t('actor.lastUpdated')}: ${meta.lastUpdated}</span>` : ''}
-        </div>
-      ` : ''}
-      <div class="modal-axes">
-        ${axesHtml}
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-
-  const close = () => overlay.remove();
-  overlay.querySelector('.modal-close').addEventListener('click', close);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) close();
+function openShopCheckout(state) {
+  openCheckoutStubModal({
+    ...state,
+    resolvedActors: resolveShopActors(state)
   });
-  document.addEventListener('keydown', function escHandler(e) {
-    if (e.key === 'Escape') {
-      close();
-      document.removeEventListener('keydown', escHandler);
-    }
-  });
-  overlay.querySelector('.modal-close').focus();
 }
-
-
-function downloadChart(svgElement, filename = 'my-six-axis-compass.png') {
-  const svg = svgElement.cloneNode(true);
-  svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  const serializer = new XMLSerializer();
-  const svgStr = serializer.serializeToString(svg);
-  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
-
-  const img = new Image();
-  const canvas = document.createElement('canvas');
-  canvas.width = 640;
-  canvas.height = 640;
-  const ctx = canvas.getContext('2d');
-
-  img.onload = () => {
-    ctx.drawImage(img, 0, 0, 640, 640);
-    const a = document.createElement('a');
-    a.download = filename;
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  };
-
-  img.onerror = () => {
-    const a = document.createElement('a');
-    a.download = filename.replace('.png', '.svg');
-    a.href = url;
-    a.click();
-  };
-
-  img.src = url;
-}
-function downloadMapData(scores, format = 'json') {
-  const payload = {
-    source: 'Six-Axis Political Compass',
-    version: '2.2.2',
-    generated: new Date().toISOString(),
-    axes: scores
-  };
-
-  let content, mime, ext;
-  if (format === 'json') {
-    content = JSON.stringify(payload, null, 2);
-    mime = 'application/json';
-    ext = 'json';
-  } else {
-    content = `<?xml version="1.0" encoding="UTF-8"?>\n<compass source="${payload.source}" version="${payload.version}" generated="${payload.generated}">\n` +
-      Object.entries(scores).map(([k, v]) => `  <axis name="${k}" score="${v}"/>`).join('\n') +
-      '\n</compass>';
-    mime = 'application/xml';
-    ext = 'xml';
-  }
-
-  const blob = new Blob([content], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.download = `my-six-axis-compass.${ext}`;
-  a.href = url;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-function parseUpload(fileContent, fileName) {
-  let scores = {};
-  let isOld = false;
-  let p = null;
-  let versionAttr = null;
-
-  if (fileName.endsWith('.json')) {
-    p = JSON.parse(fileContent);
-    if (!p.axes) throw new Error('No axes field');
-    scores = p.axes;
-    const oldVersion = p.version && p.version.startsWith('0.0.');
-    const oldSource = p.source && p.source.includes('Common Enemy');
-    if (oldVersion || oldSource) isOld = true;
-  } else if (fileName.endsWith('.xml')) {
-    const dom = new DOMParser().parseFromString(fileContent, 'application/xml');
-    const axisEls = dom.querySelectorAll('axis');
-    if (!axisEls.length) throw new Error('No axis elements');
-    axisEls.forEach(el => {
-      scores[el.getAttribute('name')] = parseFloat(el.getAttribute('score'));
-    });
-    versionAttr = dom.documentElement.getAttribute('version');
-    const sourceAttr = dom.documentElement.getAttribute('source');
-    if ((versionAttr && versionAttr.startsWith('0.0.')) || (sourceAttr && sourceAttr.includes('Common Enemy'))) {
-      isOld = true;
-    }
-  } else {
-    throw new Error('Unsupported file format');
-  }
-
-  // Backwards compatibility: map old Libertarian/Authoritarian axis to Liberty
-  if (scores['Libertarian/Authoritarian'] !== undefined) {
-    scores.Liberty = scores['Libertarian/Authoritarian'];
-    delete scores['Libertarian/Authoritarian'];
-  }
-
-  // Backwards compatibility: invert old Liberty scores from pre-v1.2.0 exports
-  // prior to v1.2.0 (old convention: 0=libertarian, 10=authoritarian)
-  let invertedAxis = false;
-  if (scores.Liberty !== undefined) {
-    const needsInvert = isOld || (p && p.version && p.version === '1.1.0') || (versionAttr && versionAttr === '1.1.0');
-    if (needsInvert) {
-      scores.Liberty = parseFloat((10 - scores.Liberty).toFixed(1));
-      invertedAxis = true;
-    }
-  }
-
-  // Backwards compatibility: map old Liberty axis to Governance
-  if (scores.Liberty !== undefined) {
-    scores.Governance = scores.Liberty;
-    delete scores.Liberty;
-  }
-
-  const labelParts = [];
-  if (isOld) labelParts.push('earlier version');
-  if (invertedAxis) labelParts.push('Liberty score inverted for v1.2.0 convention');
-  const label = labelParts.length > 0
-    ? 'Uploaded map (' + labelParts.join('; ') + ')'
-    : 'Uploaded map';
-
-  return { scores, label };
-}
-
-
-
-
 
 
 
 
 import {
-  buildDraftFromResults,
+  decodeMerchHash,
+  loadMerchDraft,
   saveMerchDraft,
-  encodeMerchHash
+  mergeMerchState,
+  getActorSlug,
+  resolveActorBySlug
 } from './merch-url.js';
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
 
 const app = document.getElementById('app');
-let quiz;
-let selectedActors = new Set();
-let orientation = 'flat';
-let axesOrder = [...AXES];
-let showUser = true;
-let uploadedMap = null;
-let language = 'en';
-let theme = 'dark';
-let customActors = [];
-let invertedAxes = new Set();
-let actorGroupOrder = [];
-let registerMode = 'primary';
-let merchGarment = 'tee';
-let merchGarmentColor = 'white';
 
-function loadActorGroupOrder() {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-actor-group-order');
-    if (stored) actorGroupOrder = JSON.parse(stored);
-  } catch (_) {}
+function redirectNeedsResults() {
+  window.location.replace('index.html?shop=needs-results');
 }
 
-function saveActorGroupOrder() {
-  try {
-    localStorage.setItem('six-axis-compass-actor-group-order', JSON.stringify(actorGroupOrder));
-  } catch (_) {}
+function loadState() {
+  const hashDecoded = decodeMerchHash(window.location.hash);
+  const draft = loadMerchDraft();
+  const merged = mergeMerchState(hashDecoded, draft);
+  if (!merged.scores || Object.keys(merged.scores).length === 0) {
+    return null;
+  }
+  if (!merged.axesOrder || merged.axesOrder.length !== 6) {
+    merged.axesOrder = [...AXES];
+  }
+  return merged;
 }
 
-function loadCustomActors() {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-custom-actors');
-    if (stored) customActors = JSON.parse(stored);
-  } catch (_) {}
+let state = loadState();
+if (!state) {
+  redirectNeedsResults();
 }
 
-function saveCustomActors() {
-  try {
-    localStorage.setItem('six-axis-compass-custom-actors', JSON.stringify(customActors));
-  } catch (_) {}
+function compassHashForBack() {
+  return encodeHash(
+    state.scores,
+    state.orientation,
+    state.axesOrder,
+    new Set(state.invertedAxes || [])
+  );
 }
 
-function loadTheme() {
+function persist() {
+  saveMerchDraft(state);
+  pushShopHash(state);
+}
+
+function syncActorSlugsFromNames() {
+  const custom = state.customActors || [];
+  state.actorSlugs = (state.selectedActorNames || [])
+    .map(name => {
+      const actor = [...ACTORS, ...custom].find(a => a.name === name);
+      return actor ? getActorSlug(actor) : null;
+    })
+    .filter(Boolean)
+    .slice(0, 2);
+}
+
+if (state.selectedActorNames?.length && !state.actorSlugs?.length) {
+  syncActorSlugsFromNames();
+}
+
+function render() {
+  renderShop(app, {
+    scores: state.scores,
+    axesOrder: state.axesOrder,
+    orientation: state.orientation,
+    invertedAxes: state.invertedAxes,
+    showUser: state.showUser,
+    uploadedMap: state.uploadedMap,
+    register: state.register,
+    garment: state.garment,
+    garmentColor: state.garmentColor,
+    chartTheme: state.chartTheme,
+    size: state.size,
+    customActors: state.customActors,
+    actorSlugs: state.actorSlugs,
+    compassHash: compassHashForBack(),
+    onGarmentChange: (id) => {
+      state.garment = id;
+      persist();
+      render();
+    },
+    onGarmentColorChange: (c) => {
+      state.garmentColor = c;
+      state.chartTheme = c === 'black' ? 'dark' : 'light';
+      persist();
+      render();
+    },
+    onSizeChange: (s) => {
+      state.size = s;
+      persist();
+      render();
+    },
+    onToggleActor: (slug) => {
+      const slugs = [...(state.actorSlugs || [])];
+      const idx = slugs.indexOf(slug);
+      if (idx >= 0) {
+        slugs.splice(idx, 1);
+      } else if (slugs.length < 2) {
+        slugs.push(slug);
+      }
+      state.actorSlugs = slugs;
+      const custom = state.customActors || [];
+      state.selectedActorNames = slugs
+        .map(s => resolveActorBySlug(s, custom)?.name)
+        .filter(Boolean);
+      persist();
+      render();
+    },
+    onCheckout: () => openShopCheckout(state)
+  });
+}
+
+document.documentElement.setAttribute('data-theme', (() => {
   try {
     const stored = localStorage.getItem('six-axis-compass-theme');
-    if (stored === 'light' || stored === 'dark') theme = stored;
+    if (stored === 'light' || stored === 'dark') return stored;
   } catch (_) {}
-}
+  return 'dark';
+})());
 
-function saveTheme() {
-  try {
-    localStorage.setItem('six-axis-compass-theme', theme);
-  } catch (_) {}
-}
-
-function loadInvertedAxes() {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-inverted-axes');
-    if (stored) invertedAxes = new Set(JSON.parse(stored));
-  } catch (_) {}
-}
-
-function saveInvertedAxes() {
-  try {
-    localStorage.setItem('six-axis-compass-inverted-axes', JSON.stringify([...invertedAxes]));
-  } catch (_) {}
-}
-
-function loadRegisterMode() {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-register-mode');
-    if (stored && ['primary', 'declared', 'structural'].includes(stored)) registerMode = stored;
-  } catch (_) {}
-}
-
-function saveRegisterMode() {
-  try {
-    localStorage.setItem('six-axis-compass-register-mode', registerMode);
-  } catch (_) {}
-}
-
-loadCustomActors();
-loadTheme();
-loadInvertedAxes();
-loadActorGroupOrder();
-loadRegisterMode();
-document.documentElement.setAttribute('data-theme', theme);
-
-function announce(message) {
-  const el = document.getElementById('announcer');
-  if (el) el.textContent = message;
-}
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.add('active');
-    el.focus();
-    const label = el.getAttribute('aria-label');
-    if (label) announce(label);
-  }
-  window.scrollTo(0, 0);
-}
-
-function startQuiz() {
-  quiz = createQuiz();
-  renderQuizScreen();
-}
-
-function renderQuizScreen() {
-  renderQuiz(app, {
-    question: quiz.question,
-    progress: quiz.progress,
-    stepLabel: quiz.stepLabel,
-    axis: quiz.question.axis,
-    onAnswer: handleAnswer,
-    onBack: goBack,
-    canGoBack: quiz.current > 0
-  });
-}
-
-function handleAnswer(value) {
-  const complete = quiz.answer(value);
-  if (complete) {
-    showResults();
-  } else {
-    renderQuizScreen();
-  }
-}
-
-function goBack() {
-  quiz.back();
-  renderQuizScreen();
-}
-
-function loadFromHash() {
-  const decoded = decodeHash(window.location.hash);
-  if (!decoded) return false;
-  orientation = decoded.orientation;
-  if (decoded.axesOrder && decoded.axesOrder.length === 6) {
-    axesOrder = decoded.axesOrder;
-  }
-  if (decoded.invertedAxes && decoded.invertedAxes.length > 0) {
-    invertedAxes = new Set(decoded.invertedAxes);
-  }
-  quiz = {
-    getScores: () => decoded.scores,
-    getAnswers: () => ({}),
-    current: 24,
-    total: 24,
-    isComplete: true
-  };
-  showResults();
-  return true;
-}
-
-function showResults() {
-  const scores = quiz.getScores();
-  window.location.hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
-  renderResults(app, {
-    scores,
-    axes: axesOrder,
-    orientation,
-    showUser,
-    selectedActors,
-    uploadedMap,
-    invertedAxes,
-    onToggleActor: name => {
-      selectedActors.has(name) ? selectedActors.delete(name) : selectedActors.add(name);
-      showResults();
-    },
-    onRestart: () => {
-      orientation = 'flat';
-      axesOrder = [...AXES];
-      showUser = true;
-      uploadedMap = null;
-      selectedActors.clear();
-      invertedAxes = new Set();
-      actorGroupOrder = [];
-      saveInvertedAxes();
-      saveActorGroupOrder();
-      window.location.hash = '';
-      renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
-    },
-    onDownloadChart: () => {
-      const svg = document.getElementById('radar');
-      if (svg) downloadChart(svg);
-    },
-    onDownloadData: (format) => {
-      downloadMapData(scores, format);
-    },
-    onUpload: (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        try {
-          uploadedMap = parseUpload(evt.target.result, file.name);
-          showResults();
-        } catch (err) {
-          alert(t('error.upload') + err.message);
-        }
-      };
-      reader.readAsText(file);
-      e.target.value = '';
-    },
-    onClearUpload: () => {
-      uploadedMap = null;
-      showResults();
-    },
-    onToggleUser: () => {
-      showUser = !showUser;
-      showResults();
-    },
-    onSetOrientation: (o) => {
-      orientation = o;
-      showResults();
-    },
-    onReorder: (newOrder) => {
-      axesOrder = newOrder;
-      showResults();
-    },
-    onSetLanguage: (lang) => {
-      language = lang;
-      setLanguage(lang);
-      showResults();
-    },
-    onCopyLink: () => {
-      copyToClipboard(window.location.href);
-    },
-    register: registerMode,
-    customActors,
-    onAddCustomActor: (actor) => {
-      if (customActors.some(c => c.name === actor.name)) return;
-      customActors.push(actor);
-      selectedActors.add(actor.name);
-      saveCustomActors();
-      showResults();
-    },
-    onDeleteCustomActor: (name) => {
-      customActors = customActors.filter(c => c.name !== name);
-      selectedActors.delete(name);
-      saveCustomActors();
-      showResults();
-    },
-    onToggleInvertAxis: (ax) => {
-      invertedAxes.has(ax) ? invertedAxes.delete(ax) : invertedAxes.add(ax);
-      saveInvertedAxes();
-      showResults();
-    },
-    onReorderGroups: (newOrder) => {
-      actorGroupOrder = newOrder;
-      saveActorGroupOrder();
-      showResults();
-    },
-    groupOrder: actorGroupOrder,
-    language,
-    theme,
-    onSetTheme: (t) => {
-      theme = t;
-      saveTheme();
-      document.documentElement.setAttribute('data-theme', theme);
-      showResults();
-    },
-    onSetRegister: (r) => {
-      registerMode = r;
-      saveRegisterMode();
-      showResults();
-    },
-    merchGarment,
-    merchGarmentColor,
-    onBuyMerch: ({ garment, garmentColor, chartTheme }) => {
-      const scores = quiz.getScores();
-      const draft = buildDraftFromResults({
-        scores,
-        orientation,
-        axesOrder,
-        invertedAxes,
-        selectedActorNames: [...selectedActors],
-        customActors,
-        uploadedMap,
-        showUser,
-        register: registerMode,
-        garment,
-        garmentColor,
-        chartTheme
-      });
-      saveMerchDraft(draft);
-      const hash = encodeMerchHash({
-        scores,
-        orientation,
-        axesOrder,
-        invertedAxes,
-        actorSlugs: draft.actorSlugs,
-        garment,
-        garmentColor,
-        chartTheme,
-        register: registerMode
-      });
-      window.location.href = 'shop.html' + hash;
-    }
-  });
-}
-
-function handleIntroUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (evt) => {
-    try {
-      const result = parseUpload(evt.target.result, file.name);
-      quiz = {
-        getScores: () => result.scores,
-        getAnswers: () => ({}),
-        current: 24,
-        total: 24,
-        isComplete: true
-      };
-      showResults();
-    } catch (err) {
-      alert(t('error.upload') + err.message);
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-}
-
-function showShopNeedsResultsBanner() {
-  if (new URLSearchParams(window.location.search).get('shop') !== 'needs-results') return;
-  const banner = document.createElement('p');
-  banner.className = 'shop-intro-banner';
-  banner.setAttribute('role', 'status');
-  banner.textContent = t('shop.needsResults');
-  app.prepend(banner);
-}
-
-if (!loadFromHash()) {
-  renderIntro(app, { onStart: startQuiz, onUpload: handleIntroUpload });
-  showShopNeedsResultsBanner();
-} else {
-  showShopNeedsResultsBanner();
-}
+setLanguage('en');
+persist();
+render();
 
 </script>
 </body>

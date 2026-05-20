@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Sweatshirt black">
+  <rect width="400" height="500" fill="#1a1a1a"/>
+  <path fill="#242424" stroke="#383838" stroke-width="2" d="M110 80 L155 52 L200 78 L245 52 L290 80 L330 130 L315 440 L85 440 L70 130 Z"/>
+  <rect x="155" y="78" width="90" height="36" rx="8" fill="#303030"/>
+  <ellipse cx="200" cy="210" rx="100" ry="115" fill="#2a2a2a" opacity="0.5"/>
+</svg>
