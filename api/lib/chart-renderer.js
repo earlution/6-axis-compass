@@ -18,8 +18,14 @@ function loadModule(file) {
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 global.document = dom.window.document;
 
+const { getEffectiveScores } = new Function(
+  loadModule('data.js') + '\nreturn { getEffectiveScores };'
+)();
 const modulesCode = loadModule('i18n.js') + '\n\n' + loadModule('chart.js');
-const moduleScope = new Function(modulesCode + '\nreturn { drawRadar, setLanguage };')();
+const moduleScope = new Function(
+  'getEffectiveScores',
+  modulesCode + '\nreturn { drawRadar, setLanguage };'
+)(getEffectiveScores);
 const { drawRadar, setLanguage } = moduleScope;
 
 setLanguage('en');
@@ -106,7 +112,8 @@ export function renderSVG(config) {
     userColor: config.userColor || '#c8a84b',
     uploadedMap: config.uploadedMap || null,
     uploadedColor: config.uploadedColor || '#b478dc',
-    invertedAxes: config.invertedAxes || new Set()
+    invertedAxes: config.invertedAxes || new Set(),
+    register: config.register || 'primary'
   });
   postProcessSVG(svg, config.title || 'Chart');
   return svg.outerHTML;

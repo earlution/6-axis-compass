@@ -171,7 +171,9 @@ Content-Type: application/json
 | `scores` | `object` | No | All axes `0` | Six-axis scores. Each key must be one of: `Cultural`, `Economic`, `Military`, `Sovereignty`, `Governance`, `Class`. Each value must be a number `0–10`. |
 | `actors` | `string[]` | No | `[]` | Names of actors to overlay on the chart. Must match the `name` field from `/api/actors`. |
 | `format` | `string` | No | `"svg"` | Output format: `"svg"` or `"png"`. |
-| `orientation` | `string` | No | `"flat"` | Chart orientation. |
+| `orientation` | `string` | No | `"flat"` | Chart orientation: `"flat"` (edge-up hexagon; **Cultural** at the top flat edge) or `"pointy"`. |
+| `axes` | `string[]` | No | Canonical order (below) | Clockwise spoke order. Must be a permutation of the six axis names. |
+| `register` | `string` | No | `"primary"` | Actor overlay score register: `"primary"`, `"declared"`, or `"structural"` (uses `dualRegister` when present). |
 | `showUser` | `boolean` | No | `true` | Whether to draw the user’s own score polygon. |
 | `colors.user` | `string` | No | `"#c8a84b"` | Hex colour for the user polygon. |
 | `title` | `string` | No | `"Chart"` | Chart title (embedded in SVG/PNG metadata). |
@@ -270,6 +272,14 @@ Returns raw PNG bytes with `Content-Type: image/png`.
 | **Sovereignty** | Globalist / pooled authority | Nationalist / self-determination |
 | **Governance** | Libertarian / minimal state | Authoritarian / strong state |
 | **Class** | Egalitarian / classless | Hierarchical / stratified |
+
+### Canonical spoke order (v2.6.0+)
+
+Default **clockwise** order (index 0 first), identical for tables, quiz UI, and `POST /api/chart` when `axes` is omitted:
+
+`Cultural` → `Economic` → `Military` → `Sovereignty` → `Governance` → `Class`
+
+With default `orientation: "flat"`, **Cultural** occupies the top flat edge (Chart.js start angle −60° at index 0). Clients may pass an explicit `axes` array (any valid permutation); omission must use the order above.
 
 ---
 

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.0
 [2.5.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.8
 [2.5.7]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.7
 [2.5.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.6
@@ -38,6 +39,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.6.0] - 2026-05-20
+
+### Changed
+
+- **Default axis order (OQ2 / WB-032):** `AXES` in `src/data.js` aligned to **Cultural → Economic → Military → Sovereignty → Governance → Class** (pedagogical, tabular, and clockwise spoke order). Replaces the interim spatial-layout order (`Cultural, Military, Sovereignty, Economic, Class, Governance`). Quiz UI, drag-and-drop reset, shareable URL default (`x=cemslg`), and built `dist/` bundles now match the [A Common Enemy](https://github.com/earlution/common-enemy) methodology §II(a).
+
+### Added
+
+- **`tests/axes-order.test.js`** — asserts canonical `AXES` and Cultural at flat-top spoke (index 0, `orientation: flat`).
+- **`POST /api/chart` `register` field** — `primary` (default), `declared`, or `structural` for actor overlays when `dualRegister` data exists.
+- **`POST /api/chart` optional `axes`** — explicit permutation of the six axis names; omission uses the canonical default.
+
+### Fixed
+
+- **`api/lib/chart-renderer.js`** — loads `getEffectiveScores` from `data.js` so actor overlays resolve declared/structural registers correctly in server-side PNG/SVG renders.
 
 ## [2.5.8] - 2026-05-19
 

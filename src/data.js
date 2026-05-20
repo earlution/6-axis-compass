@@ -7,7 +7,8 @@
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
 
-export const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Governance'];
+/** OQ2 canonical order — pedagogical, tabular, and clockwise spoke order (WB-031 / A Common Enemy). */
+export const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
 
 export const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },

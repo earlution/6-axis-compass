@@ -12,14 +12,25 @@ function validateScores(scores) {
   return null;
 }
 
-function resolveActors(names) {
+function resolveActors(names, register = 'primary') {
   if (!names) return [];
   const all = loadActors();
   const resolved = [];
   for (const name of names) {
     const actor = all.find(a => a.name === name);
     if (!actor) throw new Error(`Unknown actor: ${name}`);
-    resolved.push({ name: actor.name, scores: actor.scores, color: actor.color });
+    let scores = actor.scores;
+    if (register === 'structural' && actor.dualRegister?.structural) {
+      scores = actor.dualRegister.structural;
+    } else if (register === 'declared' && actor.dualRegister?.declared) {
+      scores = actor.dualRegister.declared;
+    }
+    resolved.push({
+      name: actor.name,
+      scores,
+      color: actor.color,
+      dualRegister: actor.dualRegister || null
+    });
   }
   return resolved;
 }
@@ -34,9 +45,13 @@ export async function handleChart(req, res, body) {
     return;
   }
 
+  const register = ['primary', 'declared', 'structural'].includes(body.register)
+    ? body.register
+    : 'primary';
+
   let actors;
   try {
-    actors = resolveActors(body.actors);
+    actors = resolveActors(body.actors, register);
   } catch (err) {
     res.statusCode = 400;
     res.setHeader('Content-Type', 'application/json');
@@ -45,14 +60,20 @@ export async function handleChart(req, res, body) {
   }
 
   const format = body.format || 'svg';
+  const axes = Array.isArray(body.axes) && body.axes.length === 6 &&
+    body.axes.every(a => AXES.includes(a)) && new Set(body.axes).size === 6
+    ? body.axes
+    : AXES;
+
   const config = {
     scores,
-    axes: AXES,
+    axes,
     orientation: body.orientation || 'flat',
     actors,
     showUser: body.showUser !== false,
     userColor: body.colors?.user || '#c8a84b',
-    title: body.title || 'Chart'
+    title: body.title || 'Chart',
+    register
   };
 
   if (format === 'svg') {

@@ -996,7 +996,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.5.8</span>
+  <span class="footer-ver">v2.6.0</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -4327,7 +4327,9 @@ const __ACTORS = [
  * - Raw total 0–16 normalised to 0–10:
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
-const AXES = ['Cultural', 'Military', 'Sovereignty', 'Economic', 'Class', 'Governance'];
+
+/** OQ2 canonical order — pedagogical, tabular, and clockwise spoke order (WB-031 / A Common Enemy). */
+const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
 const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },
