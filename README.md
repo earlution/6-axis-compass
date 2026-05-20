@@ -93,6 +93,8 @@ curl -H "Authorization: Bearer $API_SECRET" \
 
 Full endpoint documentation, request/response schemas, and error reference: [`API.md`](./API.md).
 
+**Canonical spoke order (v2.6.0+):** Cultural → Economic → Military → Sovereignty → Governance → Class (clockwise; Cultural at flat-top with default `orientation: flat`). Omission of `axes` in `POST /api/chart` and the default hash order `x=cemslg` use this order. See [`API.md` § Canonical spoke order](./API.md#canonical-spoke-order-v260).
+
 ### CI/CD Dispatch API (GitHub Actions)
 
 External repositories (such as `common-enemy`) can trigger selective generation and OSF upload via `repository_dispatch` events.
@@ -110,7 +112,7 @@ All dispatch events require a shared `DISPATCH_TOKEN` secret for authentication.
 The live UI supports generating maps directly via a **parameterised hash URL**—no API key or server required. Everything is rendered client-side.
 
 ```
-https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemsla
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemslg
 ```
 
 | Segment | Meaning | Example |
@@ -118,12 +120,12 @@ https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5
 | `v2` | URL format version (`v1` legacy, `v2` current) | `v2` |
 | `c=5.0,e=5.0,...` | Axis scores (0–10). Keys: `c`=Cultural, `e`=Economic, `m`=Military, `s`=Sovereignty, `l`=Governance, `a`=Class | `c=7.0,e=3.0,m=8.0,s=6.0,l=5.0,a=1.0` |
 | `o=flat` | Chart orientation: `flat` or `pointy` | `o=pointy` |
-| `x=cemsla` | Axis display order (clockwise from top-right) | `x=cemsla` |
+| `x=cemslg` | Axis display order (clockwise; default OQ2 order) | `x=cemslg` |
 | `i=` *(optional)* | Inverted axes (swapped poles) | `i=la` |
 
 **Example — Centrist profile:**
 ```
-https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemsla
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemslg
 ```
 
 Visiting a valid hash URL skips the quiz and renders the results screen immediately. The URL auto-updates when orientation or axis order changes, so copying the address bar always captures the current view. `v1` URLs are backwards-compatible.

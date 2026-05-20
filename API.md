@@ -498,7 +498,7 @@ The live UI at `https://earlution.github.io/6-axis-compass/` supports generating
 ### URL Format
 
 ```
-https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemsla
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=flat;x=cemslg
 ```
 
 | Segment | Meaning | Example |
@@ -506,26 +506,26 @@ https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5
 | `v2` | URL format version (`v1` for legacy maps, `v2` for current) | `v2` |
 | `c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0` | Axis scores (0–10). Keys: `c`=Cultural, `e`=Economic, `m`=Military, `s`=Sovereignty, `l`=Governance, `a`=Class | `c=7.0,e=3.0,m=8.0,s=6.0,l=5.0,a=1.0` |
 | `o=flat` | Chart orientation: `flat` (vertex at top) or `pointy` (flat edge at top) | `o=pointy` |
-| `x=cemsla` | Axis display order. The letters define clockwise order starting from the top-right. | `x=cemsla` |
+| `x=cemslg` | Axis display order (clockwise). Default OQ2 order: Cultural → Economic → Military → Sovereignty → Governance → Class. | `x=cemslg` |
 | `i=` *(optional)* | Inverted axes. Letters indicate which axes have swapped low/high poles. | `i=la` |
 
 ### Constructing a URL Manually
 
 1. **Scores:** For each axis, assign `0–10` using the one-letter keys.
 2. **Orientation:** Pick `flat` or `pointy`.
-3. **Axis order:** Arrange the six letters in your preferred clockwise order. Default is `cemsla`.
+3. **Axis order:** Arrange the six letters in your preferred clockwise order. Default is `cemslg` (see [Canonical spoke order](#canonical-spoke-order-v260)).
 4. **Inverted axes** *(optional)*: Add `i=` followed by the letters of any axes you want to invert.
 
 **Example — Centrist profile, pointy orientation:**
 
 ```
-https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemsla
+https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5.0;o=pointy;x=cemslg
 ```
 
 **Example — Strong cultural nationalist, economic nationalist, non-interventionist:**
 
 ```
-https://earlution.github.io/6-axis-compass/#v2;c=9.0,e=8.0,m=1.0,s=7.0,l=5.0,a=4.0;o=flat;x=cemsla
+https://earlution.github.io/6-axis-compass/#v2;c=9.0,e=8.0,m=1.0,s=7.0,l=5.0,a=4.0;o=flat;x=cemslg
 ```
 
 ### Behaviour

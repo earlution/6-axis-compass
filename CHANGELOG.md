@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **`api/lib/chart-renderer.js`** — loads `getEffectiveScores` from `data.js` so actor overlays resolve declared/structural registers correctly in server-side PNG/SVG renders.
+- **Docs:** `README.md` and shareable-URL section in `API.md` use default hash order `x=cemslg` (was stale `x=cemsla`).
 
 ## [2.5.8] - 2026-05-19
 
