@@ -1,8 +1,8 @@
 {
   "source": "Six-Axis Political Compass",
-  "version": "2.4.0",
-  "gitCommit": "ba8f8a5745ee16e539aad8afa34298d2f2ec77e0",
-  "generated": "2026-05-19T11:40:02.406Z",
+  "version": "2.6.1",
+  "gitCommit": "718eeae82bd1affecdcba27103e5bc453b327cfe",
+  "generated": "2026-05-20T13:05:52.110Z",
   "actor": "SNP",
   "category": "Political Party",
   "color": "#FDF38E",

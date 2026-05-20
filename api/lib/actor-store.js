@@ -17,8 +17,23 @@ export function loadActors() {
   for (const file of files.sort()) {
     const raw = JSON.parse(readFileSync(join(DATA_DIR, file), 'utf-8'));
     const scores = {};
+    const scoreMeta = {};
     for (const [axis, data] of Object.entries(raw.scores)) {
-      scores[axis] = data.value;
+      if (typeof data === 'number') {
+        scores[axis] = data;
+        scoreMeta[axis] = {
+          confidence: 'medium',
+          rationale: 'Axis score stored as a bare number (migrated structural register).',
+          sources: []
+        };
+      } else {
+        scores[axis] = data.value;
+        scoreMeta[axis] = {
+          confidence: data.confidence,
+          rationale: data.rationale,
+          sources: data.sources || []
+        };
+      }
     }
 
     actors.push({
@@ -35,13 +50,7 @@ export function loadActors() {
         curator: raw.actor.curator,
         contributors: raw.actor.contributors || []
       },
-      _scoreMeta: Object.fromEntries(
-        Object.entries(raw.scores).map(([axis, data]) => [axis, {
-          confidence: data.confidence,
-          rationale: data.rationale,
-          sources: data.sources || []
-        }])
-      )
+      _scoreMeta: scoreMeta
     });
   }
 

@@ -2950,7 +2950,14 @@ const __ACTORS = [
   },
   {
     "name": "Restore Britain",
-    "scores": {},
+    "scores": {
+      "Cultural": 7.5,
+      "Economic": 0,
+      "Military": 4.4,
+      "Sovereignty": 9.4,
+      "Governance": 9.4,
+      "Class": 0
+    },
     "color": "#8B0000",
     "_actorMeta": {
       "slug": "restore-britain-2025-2026",
@@ -2965,21 +2972,33 @@ const __ACTORS = [
     },
     "_scoreMeta": {
       "Cultural": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       },
       "Economic": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       },
       "Military": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       },
       "Sovereignty": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       },
       "Governance": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       },
       "Class": {
+        "confidence": "medium",
+        "rationale": "Axis score stored as a bare number (migrated structural register).",
         "sources": []
       }
     },

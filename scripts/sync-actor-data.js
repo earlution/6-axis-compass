@@ -17,12 +17,21 @@ function loadActors() {
     const scoreMeta = {};
 
     for (const [axis, data] of Object.entries(raw.scores)) {
-      scores[axis] = data.value;
-      scoreMeta[axis] = {
-        confidence: data.confidence,
-        rationale: data.rationale,
-        sources: data.sources || []
-      };
+      if (typeof data === 'number') {
+        scores[axis] = data;
+        scoreMeta[axis] = {
+          confidence: 'medium',
+          rationale: 'Axis score stored as a bare number (migrated structural register).',
+          sources: []
+        };
+      } else {
+        scores[axis] = data.value;
+        scoreMeta[axis] = {
+          confidence: data.confidence,
+          rationale: data.rationale,
+          sources: data.sources || []
+        };
+      }
     }
 
     const actor = {
