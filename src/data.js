@@ -7,8 +7,16 @@
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
 
-/** OQ2 canonical order — pedagogical, tabular, and clockwise spoke order (WB-031 / A Common Enemy). */
+/** OQ2 — pedagogical / tabular order (WB-031 / A Common Enemy §II(a)). */
 export const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
+
+/** OQ5 — spatial radar circuit, clockwise from ~7:30 (§II(b)). */
+export const SPATIAL_AXES = ['Economic', 'Governance', 'Class', 'Cultural', 'Sovereignty', 'Military'];
+
+/** Default display inversion so §II 0-pole “left/right” values extend toward the rim on the correct side. */
+export const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sovereignty'];
+
+export const PEDAGOGICAL_AXES = AXES;
 
 export const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },

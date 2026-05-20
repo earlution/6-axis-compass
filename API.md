@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.0.1 | 2026-05-20 | **Spatial radar (app v2.7.0):** `POST /api/chart` default `layout: spatial` (OQ5); `orientation: spatial`; `invertedAxes`; pedagogical OQ2 via `layout: pedagogical`. |
 | 2.0.0 | 2026-05-20 | **Public read API (Phase 1):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Rate limit on chart. Optional legacy Bearer on read. `GET /api/health` adds `apiVersion`, `publicRead`. |
 | 1.5.0 | 2026-05-19 | Added `GET /api/actors/:slug` endpoint returning full actor record including dual-register data. |
 | 1.4.0 | 2026-05-19 | Added `dualRegister` field to Actor Data Schema. Documented declared/structural/delta scores, numeric confidence, and dual-register source sets. |
@@ -266,8 +267,10 @@ Public read (default): no `Authorization` header.
 | `scores` | `object` | No | All axes `0` | Six-axis scores. Each key must be one of: `Cultural`, `Economic`, `Military`, `Sovereignty`, `Governance`, `Class`. Each value must be a number `0–10`. |
 | `actors` | `string[]` | No | `[]` | Actor overlays by `name` from `/api/actors`. **Max 8.** |
 | `format` | `string` | No | `"svg"` | `"svg"` or `"png"`. |
-| `orientation` | `string` | No | `"flat"` | `"flat"` (**Cultural** at top flat edge) or `"pointy"`. |
-| `axes` | `string[]` | No | Canonical order (below) | Clockwise spoke permutation of the six axis names. |
+| `layout` | `string` | No | `"spatial"` | `"spatial"` (OQ5 left/right map) or `"pedagogical"` (OQ2 table order). |
+| `orientation` | `string` | No | `"spatial"` if `layout: spatial`, else `"flat"` | `"spatial"` (~7:30 start), `"flat"` (Cultural top), or `"pointy"`. |
+| `axes` | `string[]` | No | Layout default (below) | Clockwise spoke permutation of the six axis names. |
+| `invertedAxes` | `string[]` | No | Spatial defaults (below) | Display-only: `10 − score` on listed axes so left/right poles extend toward the rim. |
 | `register` | `string` | No | `"primary"` | `"primary"`, `"declared"`, or `"structural"` for overlays when `dualRegister` exists. |
 | `showUser` | `boolean` | No | `true` | Draw the user score polygon (`false` for actor-only charts). |
 | `colors.user` | `string` | No | `"#c8a84b"` | Hex colour for the user polygon. |
@@ -277,7 +280,7 @@ Public read (default): no `Authorization` header.
 
 **Rate limiting (public read):** Default **60** requests per client IP per minute (`API_CHART_RATE_LIMIT`). Excess requests return **429** with `Retry-After` (seconds).
 
-**Permutation coverage:** Any valid combination of actor set (0–8), register, custom `scores`, `axes` order, `orientation`, and `format` supported by the table above.
+**Permutation coverage:** Any valid combination of actor set (0–8), register, `layout`, custom `scores`, `axes`, `orientation`, `invertedAxes`, and `format` supported by the table above.
 
 **Example Request — SVG**
 
@@ -429,13 +432,22 @@ GET /api/openapi.json
 | **Governance** | Libertarian / minimal state | Authoritarian / strong state |
 | **Class** | Egalitarian / classless | Hierarchical / stratified |
 
-### Canonical spoke order (v2.6.0+)
+### Radar layouts (v2.7.0+)
 
-Default **clockwise** order (index 0 first), identical for tables, quiz UI, and `POST /api/chart` when `axes` is omitted:
+**Default (`layout: spatial`, OQ5):** `POST /api/chart` uses the spatial circuit when `layout` is omitted.
 
-`Cultural` → `Economic` → `Military` → `Sovereignty` → `Governance` → `Class`
+| Setting | Value |
+|---------|--------|
+| **Spoke order** | `Economic` → `Governance` → `Class` → `Cultural` → `Sovereignty` → `Military` |
+| **Orientation** | `spatial` (start angle 120° at index 0 — Economic at lower-left) |
+| **Default `invertedAxes`** | `Economic`, `Governance`, `Class`, `Sovereignty` |
+| **Hash axis code** | `x=egacsm` |
 
-With default `orientation: "flat"`, **Cultural** occupies the top flat edge (Chart.js start angle −60° at index 0). Clients may pass an explicit `axes` array (any valid permutation); omission must use the order above.
+Aligns with [A Common Enemy](https://github.com/earlution/common-enemy) *Axis Scale Specification and Radar Methodology* **v0.0.4** §II(b).
+
+**Pedagogical (`layout: pedagogical`, OQ2):** table / episode order — `Cultural` → `Economic` → `Military` → `Sovereignty` → `Governance` → `Class`; default `orientation: flat` (**Cultural** at top flat edge, start −60°); `x=cemslg`; no default inversion.
+
+Clients may pass explicit `axes`, `orientation`, and `invertedAxes` to override either layout.
 
 ---
 

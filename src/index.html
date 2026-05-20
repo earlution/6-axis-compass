@@ -28,7 +28,7 @@
   <span class="footer-ver">v{{VERSION}}</span>
 </footer>
 <script type="module">
-import { AXES, ACTOR_GROUPS } from './data.js';
+import { AXES, SPATIAL_AXES, SPATIAL_DISPLAY_INVERT, ACTOR_GROUPS } from './data.js';
 import { createQuiz } from './quiz.js';
 import { renderIntro, renderQuiz, renderResults } from './ui.js';
 import { downloadChart, downloadMapData, parseUpload } from './export.js';
@@ -47,8 +47,8 @@ if ('serviceWorker' in navigator) {
 const app = document.getElementById('app');
 let quiz;
 let selectedActors = new Set();
-let orientation = 'flat';
-let axesOrder = [...AXES];
+let orientation = 'spatial';
+let axesOrder = [...SPATIAL_AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
@@ -102,8 +102,14 @@ function saveTheme() {
 function loadInvertedAxes() {
   try {
     const stored = localStorage.getItem('six-axis-compass-inverted-axes');
-    if (stored) invertedAxes = new Set(JSON.parse(stored));
-  } catch (_) {}
+    if (stored) {
+      invertedAxes = new Set(JSON.parse(stored));
+    } else {
+      invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+    }
+  } catch (_) {
+    invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+  }
 }
 
 function saveInvertedAxes() {
@@ -217,12 +223,12 @@ function showResults() {
       showResults();
     },
     onRestart: () => {
-      orientation = 'flat';
-      axesOrder = [...AXES];
+      orientation = 'spatial';
+      axesOrder = [...SPATIAL_AXES];
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
-      invertedAxes = new Set();
+      invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
       actorGroupOrder = [];
       saveInvertedAxes();
       saveActorGroupOrder();

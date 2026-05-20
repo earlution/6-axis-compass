@@ -1,6 +1,10 @@
 import { renderSVG, renderPNG } from '../lib/chart-renderer.js';
 import { loadActors } from '../lib/actor-store.js';
-import { CANONICAL_AXES } from '../lib/config.js';
+import {
+  CANONICAL_AXES,
+  SPATIAL_AXES,
+  SPATIAL_DISPLAY_INVERT
+} from '../lib/config.js';
 
 const AXES = CANONICAL_AXES;
 const MAX_ACTOR_OVERLAYS = 8;
@@ -80,15 +84,33 @@ export async function handleChart(req, res, body) {
   }
 
   const format = body.format || 'svg';
+  const layout = body.layout === 'pedagogical' ? 'pedagogical' : 'spatial';
+
+  const defaultAxes = layout === 'pedagogical' ? CANONICAL_AXES : SPATIAL_AXES;
   const axes = Array.isArray(body.axes) && body.axes.length === 6 &&
     body.axes.every(a => AXES.includes(a)) && new Set(body.axes).size === 6
     ? body.axes
-    : AXES;
+    : defaultAxes;
+
+  const defaultOrientation = layout === 'pedagogical' ? 'flat' : 'spatial';
+  const orientation = ['flat', 'pointy', 'spatial'].includes(body.orientation)
+    ? body.orientation
+    : defaultOrientation;
+
+  let invertedAxes;
+  if (Array.isArray(body.invertedAxes)) {
+    invertedAxes = new Set(body.invertedAxes.filter(a => AXES.includes(a)));
+  } else if (layout === 'spatial') {
+    invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+  } else {
+    invertedAxes = new Set();
+  }
 
   const config = {
     scores,
     axes,
-    orientation: body.orientation || 'flat',
+    orientation,
+    invertedAxes,
     actors,
     showUser: body.showUser !== false,
     userColor: body.colors?.user || '#c8a84b',

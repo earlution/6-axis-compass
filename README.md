@@ -108,7 +108,7 @@ Paper-style actor-only PNG: [`docs/examples/api/chart-public-read.sh`](docs/exam
 
 Full trust zones, limits, CORS, errors, and cURL recipes: [`API.md`](./API.md).
 
-**Canonical spoke order (v2.6.0+):** Cultural → Economic → Military → Sovereignty → Governance → Class (clockwise; Cultural at flat-top with default `orientation: flat`). Omission of `axes` in `POST /api/chart` and the default hash order `x=cemslg` use this order. See [`API.md` § Canonical spoke order](./API.md#canonical-spoke-order-v260).
+**Default radar layout (v2.7.0+, OQ5 spatial):** Economic → Governance → Class → Cultural → Sovereignty → Military (`layout: spatial`, `orientation: spatial`, hash `x=egacsm`). **Pedagogical order (OQ2):** Cultural → Economic → Military → Sovereignty → Governance → Class (`layout: pedagogical`, `x=cemslg`). See [`API.md` § Radar layouts](./API.md#radar-layouts-v270).
 
 ### CI/CD Dispatch API (GitHub Actions)
 

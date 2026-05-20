@@ -1236,7 +1236,7 @@ body {
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
-  <span class="footer-ver">v2.6.2</span>
+  <span class="footer-ver">v2.7.0</span>
 </footer>
 <script>
 const TRANSLATIONS = {
@@ -1263,8 +1263,9 @@ const TRANSLATIONS = {
     'results.compare': 'Compare:',
     'results.yourMap': 'Your map',
     'results.orientation': 'Orientation',
-    'results.edgeUp': 'Edge up',
-    'results.vertexUp': 'Vertex up',
+    'results.spatialMap': 'Left / right map',
+    'results.edgeUp': 'Edge up (pedagogical)',
+    'results.vertexUp': 'Vertex up (pedagogical)',
     'results.register': 'Register',
     'results.primary': 'Primary',
     'results.declared': 'Declared',
@@ -5040,8 +5041,15 @@ const __ACTORS = [
  *   score = (total / 16) * 10, rounded to 1 decimal place
  */
 
-/** OQ2 canonical order — pedagogical, tabular, and clockwise spoke order (WB-031 / A Common Enemy). */
+/** OQ2 — pedagogical / tabular order (WB-031 / A Common Enemy §II(a)). */
 const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
+
+/** OQ5 — spatial radar circuit, clockwise from ~7:30 (§II(b)). */
+const SPATIAL_AXES = ['Economic', 'Governance', 'Class', 'Cultural', 'Sovereignty', 'Military'];
+
+/** Default display inversion so §II 0-pole “left/right” values extend toward the rim on the correct side. */
+const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sovereignty'];
+const PEDAGOGICAL_AXES = AXES;
 const AXIS_META = {
   Cultural:    { low: 'Cultural internationalism', high: 'Cultural nationalism' },
   Economic:    { low: 'Economic internationalism', high: 'Economic nationalism' },
@@ -5227,8 +5235,14 @@ function createSVGElement(tag, attrs) {
   return el;
 }
 
+function startAngleForOrientation(orientation) {
+  if (orientation === 'spatial') return 120;
+  if (orientation === 'pointy') return -90;
+  return -60;
+}
+
 function axisPoint(cx, cy, maxR, index, value, orientation) {
-  const start = orientation === 'flat' ? -60 : -90;
+  const start = startAngleForOrientation(orientation);
   const angle = (index * 60 + start) * (Math.PI / 180);
   const dist = (value / 10) * maxR;
   return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];
@@ -5513,6 +5527,7 @@ function renderResults(container, {
             <div class="config-section">
               <p class="config-heading">${t('results.orientation')}</p>
               <div class="config-row">
+                <button class="config-btn ${orientation === 'spatial' ? 'active' : ''}" id="btn-orient-spatial">${t('results.spatialMap')}</button>
                 <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
                 <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
               </div>
@@ -5878,6 +5893,7 @@ function renderResults(container, {
     document.getElementById('btn-theme-light').addEventListener('click', () => onSetTheme('light'));
   }
   if (onSetOrientation) {
+    document.getElementById('btn-orient-spatial').addEventListener('click', () => onSetOrientation('spatial'));
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
   }
@@ -6190,8 +6206,8 @@ if ('serviceWorker' in navigator) {
 const app = document.getElementById('app');
 let quiz;
 let selectedActors = new Set();
-let orientation = 'flat';
-let axesOrder = [...AXES];
+let orientation = 'spatial';
+let axesOrder = [...SPATIAL_AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
@@ -6245,8 +6261,14 @@ function saveTheme() {
 function loadInvertedAxes() {
   try {
     const stored = localStorage.getItem('six-axis-compass-inverted-axes');
-    if (stored) invertedAxes = new Set(JSON.parse(stored));
-  } catch (_) {}
+    if (stored) {
+      invertedAxes = new Set(JSON.parse(stored));
+    } else {
+      invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+    }
+  } catch (_) {
+    invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+  }
 }
 
 function saveInvertedAxes() {
@@ -6360,12 +6382,12 @@ function showResults() {
       showResults();
     },
     onRestart: () => {
-      orientation = 'flat';
-      axesOrder = [...AXES];
+      orientation = 'spatial';
+      axesOrder = [...SPATIAL_AXES];
       showUser = true;
       uploadedMap = null;
       selectedActors.clear();
-      invertedAxes = new Set();
+      invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
       actorGroupOrder = [];
       saveInvertedAxes();
       saveActorGroupOrder();

@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.0
 [merch-prototype-v1.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/merch-prototype-v1.0.0
-[2.6.2]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.2
-[2.6.1]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.1
-[2.6.0]: https://github.com/earlution/six-axis-compass/releases/tag/v2.6.0
+[2.6.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.2
+[2.6.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.1
+[2.6.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.0
 [2.5.8]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.8
 [2.5.7]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.7
 [2.5.6]: https://github.com/earlution/six-axis-compass/releases/tag/v2.5.6
@@ -43,14 +44,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-05-20
+
 ### Changed
 
-- **`API.md` v2.0.0 (complete)** — trust zones, configuration, CORS, public read on all endpoints, `meta` on actors list, chart rate limits and caps, `GET /api/axes` / `GET /api/openapi.json`, error `304`/`429`, public cURL examples.
-- **`README.md`** — API section aligned with public read (default `npm run api` without secret; env table; public chart example).
+- **Spatial radar layout (OQ5):** Default `POST /api/chart` and quiz results use **left/right hemisphere** spoke order: Economic → Governance → Class → Cultural → Sovereignty → Military (`orientation: spatial`, start 120°). Default display inversion: Economic, Governance, Class, Sovereignty. Pedagogical OQ2 order retained as `layout: pedagogical` / `AXES` for tables and legacy URLs.
+- **`src/data.js`:** `SPATIAL_AXES`, `SPATIAL_DISPLAY_INVERT`; `AXES` remains OQ2 pedagogical order.
+- **UI:** "Left / right map" orientation button (spatial default).
+- **`API.md` v2.0.1** — `layout`, `invertedAxes`, spatial vs pedagogical radar layouts.
+
+### Added
+
+- **`layout` field** on `POST /api/chart` — `spatial` (default) or `pedagogical`.
+- **`invertedAxes` field** on `POST /api/chart` — explicit display inversion list.
 
 ## [merch-prototype-v1.0.0] - 2026-05-20
 
-Branch **`merch-shop`**. UI-only merch funnel; checkout not connected to Printful or Stripe.
+UI-only merch funnel on `main`; checkout not connected to Printful or Stripe. Tagged at commit `4ed8642`.
 
 ### Added
 
@@ -77,7 +87,8 @@ Branch **`merch-shop`**. UI-only merch funnel; checkout not connected to Printfu
 
 ### Changed
 
-- **`API.md` v2.0.0** — public vs private auth zones; legacy `API_SECRET` optional on read.
+- **`API.md` v2.0.0 (complete)** — trust zones, configuration, CORS, public read, chart limits, `GET /api/axes` / `GET /api/openapi.json`, error `304`/`429`, public cURL examples.
+- **`README.md`** — API section aligned with public read.
 
 ## [2.6.1] - 2026-05-20
 
@@ -100,7 +111,6 @@ Branch **`merch-shop`**. UI-only merch funnel; checkout not connected to Printfu
 ### Fixed
 
 - **`api/lib/chart-renderer.js`** — loads `getEffectiveScores` from `data.js` so actor overlays resolve declared/structural registers correctly in server-side PNG/SVG renders.
-- **Docs:** `README.md` and shareable-URL section in `API.md` use default hash order `x=cemslg` (was stale `x=cemsla`).
 
 ## [2.5.8] - 2026-05-19
 

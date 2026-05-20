@@ -9,8 +9,14 @@ function createSVGElement(tag, attrs) {
   return el;
 }
 
+function startAngleForOrientation(orientation) {
+  if (orientation === 'spatial') return 120;
+  if (orientation === 'pointy') return -90;
+  return -60;
+}
+
 function axisPoint(cx, cy, maxR, index, value, orientation) {
-  const start = orientation === 'flat' ? -60 : -90;
+  const start = startAngleForOrientation(orientation);
   const angle = (index * 60 + start) * (Math.PI / 180);
   const dist = (value / 10) * maxR;
   return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];

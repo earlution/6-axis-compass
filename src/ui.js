@@ -176,6 +176,7 @@ export function renderResults(container, {
             <div class="config-section">
               <p class="config-heading">${t('results.orientation')}</p>
               <div class="config-row">
+                <button class="config-btn ${orientation === 'spatial' ? 'active' : ''}" id="btn-orient-spatial">${t('results.spatialMap')}</button>
                 <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
                 <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
               </div>
@@ -541,6 +542,7 @@ export function renderResults(container, {
     document.getElementById('btn-theme-light').addEventListener('click', () => onSetTheme('light'));
   }
   if (onSetOrientation) {
+    document.getElementById('btn-orient-spatial').addEventListener('click', () => onSetOrientation('spatial'));
     document.getElementById('btn-orient-flat').addEventListener('click', () => onSetOrientation('flat'));
     document.getElementById('btn-orient-pointy').addEventListener('click', () => onSetOrientation('pointy'));
   }

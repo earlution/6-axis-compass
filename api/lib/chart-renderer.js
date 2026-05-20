@@ -3,6 +3,11 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import sharp from 'sharp';
+import {
+  CANONICAL_AXES,
+  SPATIAL_AXES,
+  SPATIAL_DISPLAY_INVERT
+} from './config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -102,17 +107,28 @@ function postProcessSVG(svg, title) {
 }
 
 export function renderSVG(config) {
+  const layout = config.layout === 'pedagogical' ? 'pedagogical' : 'spatial';
+  const axes = config.axes || (layout === 'pedagogical' ? CANONICAL_AXES : SPATIAL_AXES);
+  const orientation = config.orientation || (layout === 'pedagogical' ? 'flat' : 'spatial');
+  const invertedAxes = config.invertedAxes instanceof Set
+    ? config.invertedAxes
+    : new Set(
+      config.invertedAxes?.length
+        ? config.invertedAxes
+        : (layout === 'spatial' ? SPATIAL_DISPLAY_INVERT : [])
+    );
+
   const svg = createPrintSVG();
   drawRadar(svg, {
     scores: config.scores || {},
-    axes: config.axes || ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'],
-    orientation: config.orientation || 'flat',
+    axes,
+    orientation,
     actors: config.actors || [],
     showUser: config.showUser !== false,
     userColor: config.userColor || '#c8a84b',
     uploadedMap: config.uploadedMap || null,
     uploadedColor: config.uploadedColor || '#b478dc',
-    invertedAxes: config.invertedAxes || new Set(),
+    invertedAxes,
     register: config.register || 'primary'
   });
   postProcessSVG(svg, config.title || 'Chart');
