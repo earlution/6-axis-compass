@@ -3,6 +3,13 @@ import { t } from './i18n.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
+/** Outermost grid ring (score units). */
+const GRID_MAX = 10;
+/** Spacing between grid rings; axes extend half a segment beyond the last zone. */
+const GRID_STEP = 2;
+const AXIS_OUTER_SCORE = GRID_MAX + GRID_STEP / 2;
+const LABEL_PAD_PX = 26;
+
 function createSVGElement(tag, attrs = {}) {
   const el = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
@@ -18,8 +25,14 @@ function startAngleForOrientation(orientation) {
 function axisPoint(cx, cy, maxR, index, value, orientation) {
   const start = startAngleForOrientation(orientation);
   const angle = (index * 60 + start) * (Math.PI / 180);
-  const dist = (value / 10) * maxR;
+  const dist = (value / GRID_MAX) * maxR;
   return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];
+}
+
+function axisPointRadius(cx, cy, index, radius, orientation) {
+  const start = startAngleForOrientation(orientation);
+  const angle = (index * 60 + start) * (Math.PI / 180);
+  return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
 }
 
 function polygonPoints(cx, cy, maxR, scores, axes, orientation) {
@@ -56,8 +69,10 @@ export function drawRadar(svg, {
     return out;
   }
 
+  const axisOuterR = (AXIS_OUTER_SCORE / GRID_MAX) * maxR;
+
   // Grid polygons at levels 2, 4, 6, 8, 10
-  for (const level of [2, 4, 6, 8, 10]) {
+  for (const level of [2, 4, 6, 8, GRID_MAX]) {
     const gridScores = Object.fromEntries(axes.map(a => [a, level]));
     svg.appendChild(createSVGElement('polygon', {
       points: polygonPoints(cx, cy, maxR, gridScores, axes, orientation),
@@ -67,9 +82,9 @@ export function drawRadar(svg, {
     }));
   }
 
-  // Axis lines
+  // Axis lines — extend ½ grid segment beyond outermost zone
   axes.forEach((_, i) => {
-    const [x, y] = axisPoint(cx, cy, maxR, i, 10, orientation);
+    const [x, y] = axisPointRadius(cx, cy, i, axisOuterR, orientation);
     svg.appendChild(createSVGElement('line', {
       x1: cx, y1: cy, x2: x, y2: y,
       stroke: 'var(--chart-axis)', 'stroke-width': '1'
@@ -120,7 +135,7 @@ export function drawRadar(svg, {
 
   // Axis labels (trigram on rim; full names in score bars / quiz)
   axes.forEach((ax, i) => {
-    const [lx, ly] = axisPoint(cx, cy, maxR + 26, i, 10, orientation);
+    const [lx, ly] = axisPointRadius(cx, cy, i, axisOuterR + LABEL_PAD_PX, orientation);
     const fullName = t('axis.' + ax);
     const spokeText = labelMode === 'full' ? fullName : getAxisTrigram(ax);
     const trigramFontSize = labelMerch ? '20' : '12';

@@ -123,7 +123,7 @@ Paper-style actor-only PNG: [`docs/examples/api/chart-public-read.sh`](docs/exam
 
 Full trust zones, limits, CORS, errors, and cURL recipes: [`API.md`](./API.md).
 
-**Default radar layout (v2.7.0+, OQ5 spatial):** Economic → Governance → Class → Cultural → Sovereignty → Military (`layout: spatial`, `orientation: spatial`, hash `x=egacsm`). **Pedagogical order (OQ2):** Cultural → Economic → Military → Sovereignty → Governance → Class (`layout: pedagogical`, `x=cemslg`). See [`API.md` § Radar layouts](./API.md#radar-layouts-v270).
+**Default radar layout (v3.1.0+, OQ5 spatial):** Economic → Governance → Class → Cultural → Sovereignty → Military (`layout: spatial`, `orientation: spatial`, hash `x=egacsm`). **Pedagogical order (OQ2):** Cultural → Economic → Military → Sovereignty → Governance → Class (`layout: pedagogical`, `x=cemslg`). See [`API.md` § Radar layouts](./API.md#radar-layouts-v310).
 
 ### CI/CD Dispatch API (GitHub Actions)
 
@@ -175,7 +175,7 @@ Custom apparel flow (Printful-ready UI, **checkout stubbed**): results → garme
 - **sessionStorage** draft preserves custom actors and uploaded maps.
 - Future Printful/Stripe wiring: [`docs/merch-printful-integration.md`](./docs/merch-printful-integration.md).
 
-Tagged releases for this prototype use `merch-prototype-v*` (see git tags).
+Merch-line releases use **`v3.x.x`** tags (`v3.0.0` = first shop prototype). Compass core remains **`v2.x.x`** through `v2.6.2`.
 
 ## Paper Artifacts
 

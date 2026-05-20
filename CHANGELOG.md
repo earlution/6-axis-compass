@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[2.7.4]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.4
-[2.7.3]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.3
-[2.7.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.2
-[2.7.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.1
-[2.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.0
-[merch-prototype-v1.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/merch-prototype-v1.0.0
+[3.5.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.5.0
+[3.4.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.4.0
+[3.3.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.3.0
+[3.2.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.2.0
+[3.1.1]: https://github.com/earlution/6-axis-compass/releases/tag/v3.1.1
+[3.1.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.1.0
+[3.0.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.0.0
 [2.6.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.2
 [2.6.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.1
 [2.6.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.6.0
@@ -48,7 +49,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.7.4] - 2026-05-20
+## [3.5.0] - 2026-05-20
+
+### Changed
+
+- **Radar axes:** Spokes extend **½ grid segment** (1 score unit) beyond the outermost zone; trigram labels follow the new tips.
+- **Release tags:** Post-merch line renumbered from mistaken `v2.7.x` / `merch-prototype-v1.0.0` to `v3.0.0`–`v3.4.0` on the same commits (see entries below).
+
+## [3.4.0] - 2026-05-20
+
+*Formerly tagged `v2.7.4`.*
 
 ### Added
 
@@ -58,7 +68,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`scripts/build.js`:** Bundle `chart.js` before `merch.js` (merch imports `drawRadar`).
 
-## [2.7.3] - 2026-05-20
+## [3.3.0] - 2026-05-20
+
+*Formerly tagged `v2.7.3`.*
 
 ### Added
 
@@ -70,7 +82,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`scripts/build.js`:** Bundle `merch-catalog.js` before `merch-url.js` (import order).
 - **Results → shop:** Passes map colour from results theme when opening shop.
 
-## [2.7.2] - 2026-05-20
+## [3.2.0] - 2026-05-20
+
+*Formerly tagged `v2.7.2`.*
 
 ### Added
 
@@ -83,13 +97,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`src/chart.js`:** `labelMode` parameter; trigram typography (12px, semibold, letter-spacing).
 
-## [2.7.1] - 2026-05-20
+## [3.1.1] - 2026-05-20
+
+*Formerly tagged `v2.7.1`.*
 
 ### Fixed
 
 - **GitHub Pages blank app** — `scripts/build.js` now strips multi-line `import` statements from inlined bundles; a surviving `import { … } from './merch-url.js'` caused a script syntax error so only the static footer rendered.
 
-## [2.7.0] - 2026-05-20
+## [3.1.0] - 2026-05-20
+
+*Formerly tagged `v2.7.0`.*
 
 ### Changed
 
@@ -103,9 +121,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`layout` field** on `POST /api/chart` — `spatial` (default) or `pedagogical`.
 - **`invertedAxes` field** on `POST /api/chart` — explicit display inversion list.
 
-## [merch-prototype-v1.0.0] - 2026-05-20
+## [3.0.0] - 2026-05-20
 
-UI-only merch funnel on `main`; checkout not connected to Printful or Stripe. Tagged at commit `4ed8642`.
+*Formerly tagged `merch-prototype-v1.0.0` at commit `4ed8642`.*
+
+UI-only merch funnel on `main`; checkout not connected to Printful or Stripe.
 
 ### Added
 

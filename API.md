@@ -2,7 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 2.0.1 | 2026-05-20 | **Spatial radar (app v2.7.0):** `POST /api/chart` default `layout: spatial` (OQ5); `orientation: spatial`; `invertedAxes`; pedagogical OQ2 via `layout: pedagogical`. |
+| 2.0.1 | 2026-05-20 | **Spatial radar (app v3.1.0):** `POST /api/chart` default `layout: spatial` (OQ5); `orientation: spatial`; `invertedAxes`; pedagogical OQ2 via `layout: pedagogical`. |
 | 2.0.0 | 2026-05-20 | **Public read API (Phase 1):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Rate limit on chart. Optional legacy Bearer on read. `GET /api/health` adds `apiVersion`, `publicRead`. |
 | 1.5.0 | 2026-05-19 | Added `GET /api/actors/:slug` endpoint returning full actor record including dual-register data. |
 | 1.4.0 | 2026-05-19 | Added `dualRegister` field to Actor Data Schema. Documented declared/structural/delta scores, numeric confidence, and dual-register source sets. |
@@ -448,7 +448,7 @@ GET /api/openapi.json
 | **Governance** | Libertarian / minimal state | Authoritarian / strong state |
 | **Class** | Egalitarian / classless | Hierarchical / stratified |
 
-### Radar layouts (v2.7.0+)
+### Radar layouts (v3.1.0+)
 
 **Default (`layout: spatial`, OQ5):** `POST /api/chart` uses the spatial circuit when `layout` is omitted.
 
