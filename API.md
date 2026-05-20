@@ -20,6 +20,63 @@ https://<host>:<port>/api
 
 The server listens on `API_PORT` (default `3000`).
 
+Production chart API hosting is maintainer-operated (not served from GitHub Pages). The static app lives at `https://earlution.github.io/6-axis-compass/`; run `npm run api` locally or deploy `api/server.js` behind HTTPS.
+
+### API vs app versioning
+
+| Semver | What it tracks | Current |
+|--------|----------------|---------|
+| **API** (`apiVersion` in `/api/health`) | REST contract (auth zones, routes, limits) | **2.0.0** |
+| **App** (`version` in `/api/health`) | Compass package / Pages bundle | See `package.json` (e.g. **2.6.2**) |
+
+---
+
+## Trust zones (v2.0.0)
+
+| Zone | Auth | Routes |
+|------|------|--------|
+| **Public read** | None (default) | `GET /api/health`, `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` |
+| **Private write** | `ADMIN_SECRET` (Phase 2) | `POST /api/admin/*` — not implemented yet |
+
+Specification: [`docs/feature-request-public-private-api-v0.1.0.md`](docs/feature-request-public-private-api-v0.1.0.md).
+
+---
+
+## Configuration
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `API_PORT` | `3000` | HTTP listen port |
+| `API_PUBLIC_READ` | `true` | When true, read routes need no `Authorization` header |
+| `API_SECRET` | *(unset)* | Legacy Bearer for read when `API_PUBLIC_READ=false`; optional when public read is on |
+| `ADMIN_SECRET` | *(unset)* | Future private write API (Phase 2) |
+| `API_CHART_RATE_LIMIT` | `60` | Max `POST /api/chart` requests per client IP per minute |
+
+Copy `.env.example` to `.env.local` for local development.
+
+### Secret naming (integrations)
+
+| Name | Use | Required for public chart fetch? |
+|------|-----|--------------------------------|
+| `API_SECRET` | Legacy read Bearer | **No** (v2.0.0+ with default `API_PUBLIC_READ`) |
+| `ADMIN_SECRET` | Private actor writes (Phase 2) | No |
+| `COMPASS_REPO_PAT` / `DISPATCH_TOKEN` | GitHub `repository_dispatch` only | No |
+| `OSF_PAT` | OSF uploads only | No |
+
+---
+
+## CORS
+
+Public read routes send:
+
+```http
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization
+```
+
+`OPTIONS` preflight on `/api/*` returns **204**. Admin routes (Phase 2) will not use permissive CORS.
+
 ---
 
 ## Authentication
@@ -68,7 +125,9 @@ GET /api/health
 ```json
 {
   "status": "ok",
-  "version": "2.2.3"
+  "version": "2.6.2",
+  "apiVersion": "2.0.0",
+  "publicRead": true
 }
 ```
 
@@ -80,8 +139,9 @@ Returns every political actor in the dataset with basic metadata.
 
 ```http
 GET /api/actors
-Authorization: Bearer <API_SECRET>
 ```
+
+Public read (default): no `Authorization` header. Optional Bearer is ignored.
 
 **Response — 200 OK**
 
@@ -91,18 +151,29 @@ Authorization: Bearer <API_SECRET>
     {
       "name": "Green Party",
       "slug": "Green-Party",
-      "color": "#4a9c5d"
+      "color": "#4a9c5d",
+      "category": "UK Political Party",
+      "lastUpdated": "2026-05-19"
     },
     {
       "name": "Conservative Party",
       "slug": "Conservative-Party",
-      "color": "#1a6bc4"
+      "color": "#1a6bc4",
+      "category": "UK Political Party",
+      "lastUpdated": "2026-05-19"
     }
-  ]
+  ],
+  "meta": {
+    "count": 32,
+    "schemaVersion": "1.1.0",
+    "axesOrder": ["Cultural", "Economic", "Military", "Sovereignty", "Governance", "Class"]
+  }
 }
 ```
 
-**Error — 401 Unauthorized**
+**Response headers:** `Cache-Control: public, max-age=300`
+
+**Error — 401 Unauthorized** (only when `API_PUBLIC_READ=false` and Bearer missing/invalid)
 
 ```json
 { "error": "Unauthorized" }
@@ -116,8 +187,9 @@ Returns the full record for a single actor, including metadata, scores, per-ques
 
 ```http
 GET /api/actors/:slug
-Authorization: Bearer <API_SECRET>
 ```
+
+Public read (default): no `Authorization` header.
 
 The `:slug` parameter is the URL-safe identifier from `data/actors/{slug}.json` (e.g. `conservative-party`, `restore-britain-2025-2026`).
 
@@ -160,13 +232,15 @@ The `:slug` parameter is the URL-safe identifier from `data/actors/{slug}.json` 
 }
 ```
 
+**Response headers:** `Cache-Control: public, max-age=300`, `ETag`, `Last-Modified`. Send `If-None-Match` with the prior `ETag` to receive **304 Not Modified** when the file is unchanged.
+
 **Error — 404 Not Found**
 
 ```json
 { "error": "Actor not found" }
 ```
 
-**Error — 401 Unauthorized**
+**Error — 401 Unauthorized** (only when `API_PUBLIC_READ=false`)
 
 ```json
 { "error": "Unauthorized" }
@@ -176,29 +250,34 @@ The `:slug` parameter is the URL-safe identifier from `data/actors/{slug}.json` 
 
 ### 4. Render Chart
 
-Generates a radar-chart image from your scores, optionally overlaying known actors.
+Generates a radar-chart image from your scores, optionally overlaying known actors. **Rate-limited** on public deployments (see below).
 
 ```http
 POST /api/chart
-Authorization: Bearer <API_SECRET>
 Content-Type: application/json
 ```
+
+Public read (default): no `Authorization` header.
 
 **Request Body**
 
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
 | `scores` | `object` | No | All axes `0` | Six-axis scores. Each key must be one of: `Cultural`, `Economic`, `Military`, `Sovereignty`, `Governance`, `Class`. Each value must be a number `0–10`. |
-| `actors` | `string[]` | No | `[]` | Names of actors to overlay on the chart. Must match the `name` field from `/api/actors`. |
-| `format` | `string` | No | `"svg"` | Output format: `"svg"` or `"png"`. |
-| `orientation` | `string` | No | `"flat"` | Chart orientation: `"flat"` (edge-up hexagon; **Cultural** at the top flat edge) or `"pointy"`. |
-| `axes` | `string[]` | No | Canonical order (below) | Clockwise spoke order. Must be a permutation of the six axis names. |
-| `register` | `string` | No | `"primary"` | Actor overlay score register: `"primary"`, `"declared"`, or `"structural"` (uses `dualRegister` when present). |
-| `showUser` | `boolean` | No | `true` | Whether to draw the user’s own score polygon. |
+| `actors` | `string[]` | No | `[]` | Actor overlays by `name` from `/api/actors`. **Max 8.** |
+| `format` | `string` | No | `"svg"` | `"svg"` or `"png"`. |
+| `orientation` | `string` | No | `"flat"` | `"flat"` (**Cultural** at top flat edge) or `"pointy"`. |
+| `axes` | `string[]` | No | Canonical order (below) | Clockwise spoke permutation of the six axis names. |
+| `register` | `string` | No | `"primary"` | `"primary"`, `"declared"`, or `"structural"` for overlays when `dualRegister` exists. |
+| `showUser` | `boolean` | No | `true` | Draw the user score polygon (`false` for actor-only charts). |
 | `colors.user` | `string` | No | `"#c8a84b"` | Hex colour for the user polygon. |
-| `title` | `string` | No | `"Chart"` | Chart title (embedded in SVG/PNG metadata). |
-| `width` | `number` | No | `600` | PNG width in pixels (PNG only). |
-| `height` | `number` | No | `600` | PNG height in pixels (PNG only). |
+| `title` | `string` | No | `"Chart"` | Chart title. **Max 200 characters.** |
+| `width` | `number` | No | `600` | PNG width (PNG only). Max **4096**; `width × height` ≤ **16_777_216**. |
+| `height` | `number` | No | `600` | PNG height (PNG only). Same limits as `width`. |
+
+**Rate limiting (public read):** Default **60** requests per client IP per minute (`API_CHART_RATE_LIMIT`). Excess requests return **429** with `Retry-After` (seconds).
+
+**Permutation coverage:** Any valid combination of actor set (0–8), register, custom `scores`, `axes` order, `orientation`, and `format` supported by the table above.
 
 **Example Request — SVG**
 
@@ -262,11 +341,65 @@ Returns raw PNG bytes with `Content-Type: image/png`.
 { "error": "Invalid format. Use svg or png." }
 ```
 
-**Error — 401 Unauthorized**
+```json
+{ "error": "At most 8 actor overlays allowed" }
+```
+
+```json
+{ "error": "Too many requests", "retryAfter": 42 }
+```
+
+**Error — 401 Unauthorized** (only when `API_PUBLIC_READ=false`)
 
 ```json
 { "error": "Unauthorized" }
 ```
+
+**Error — 429 Too Many Requests**
+
+```json
+{ "error": "Too many requests", "retryAfter": 42 }
+```
+
+Response header: `Retry-After: 42`
+
+---
+
+### 5. Axis catalog
+
+Canonical OQ2 axis order and pole labels (for clients building manifests without scraping this document).
+
+```http
+GET /api/axes
+```
+
+**Response — 200 OK**
+
+```json
+{
+  "axesOrder": ["Cultural", "Economic", "Military", "Sovereignty", "Governance", "Class"],
+  "scale": {
+    "min": 0,
+    "max": 10,
+    "description": "0 = less-critical pole; 10 = more-critical pole (methodology §II)"
+  },
+  "axes": [
+    { "name": "Cultural", "low": "Cultural internationalism", "high": "Cultural nationalism" }
+  ]
+}
+```
+
+---
+
+### 6. OpenAPI document
+
+Machine-readable OpenAPI 3.1 summary of public routes.
+
+```http
+GET /api/openapi.json
+```
+
+**Response — 200 OK** — `Content-Type: application/json` (see `api/openapi-v2.0.0.json` in the repository).
 
 ---
 
@@ -275,10 +408,13 @@ Returns raw PNG bytes with `Content-Type: image/png`.
 | Status | Meaning |
 |--------|---------|
 | `200` | Success |
-| `400` | Malformed request (bad axis, bad score, unknown actor, invalid format) |
-| `401` | Missing or incorrect `Authorization` header |
+| `304` | Actor detail unchanged (`If-None-Match` matched) |
+| `400` | Malformed request (bad axis, score, actor, format, title length, PNG size, overlay count) |
+| `401` | Missing or incorrect `Authorization` when `API_PUBLIC_READ=false` |
 | `404` | Unknown endpoint or actor slug not found |
-| `500` | Server error (e.g. `API_SECRET` not configured) |
+| `429` | Chart rate limit exceeded |
+| `500` | Server error |
+| `503` | Admin API not configured (`ADMIN_SECRET` missing on future write routes) |
 
 ---
 
@@ -475,38 +611,62 @@ Per-axis object holding separate confidence values for the declared and structur
 
 ## Quick cURL Examples
 
+Set `API_BASE` (default `http://localhost:3000`). With default `API_PUBLIC_READ=true`, read routes need **no** Bearer token.
+
 ### Health
 
 ```bash
-curl https://localhost:3000/api/health
+curl -sS "$API_BASE/api/health"
 ```
 
-### Actors (authenticated)
+### Actors (public read)
 
 ```bash
-curl -H "Authorization: Bearer <API_SECRET>" \
-     https://localhost:3000/api/actors
+curl -sS "$API_BASE/api/actors"
 ```
 
-### Chart SVG
+### Actor detail (public read)
 
 ```bash
-curl -X POST \
-     -H "Authorization: Bearer <API_SECRET>" \
-     -H "Content-Type: application/json" \
-     -d '{"scores":{"Cultural":5,"Economic":5,"Military":5,"Sovereignty":5,"Governance":5,"Class":5},"format":"svg"}' \
-     https://localhost:3000/api/chart
+curl -sS "$API_BASE/api/actors/restore-britain-2025-2026"
 ```
 
-### Chart PNG with actor overlay
+### Axis catalog
 
 ```bash
-curl -X POST \
-     -H "Authorization: Bearer <API_SECRET>" \
-     -H "Content-Type: application/json" \
-     -d '{"scores":{"Cultural":3,"Economic":7,"Military":2,"Sovereignty":8,"Governance":6,"Class":4},"actors":["Conservative Party"],"format":"png","width":800,"height":800}' \
-     https://localhost:3000/api/chart \
-     -o chart.png
+curl -sS "$API_BASE/api/axes"
+```
+
+### Chart SVG (public read)
+
+```bash
+curl -sS -X POST "$API_BASE/api/chart" \
+  -H "Content-Type: application/json" \
+  -d '{"scores":{"Cultural":5,"Economic":5,"Military":5,"Sovereignty":5,"Governance":5,"Class":5},"format":"svg"}'
+```
+
+### Chart PNG — paper figure (structural register, no user polygon)
+
+```bash
+curl -sS -X POST "$API_BASE/api/chart" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "actors": ["Reform UK", "Green Party"],
+    "register": "structural",
+    "showUser": false,
+    "format": "png",
+    "width": 1400,
+    "height": 1400,
+    "orientation": "flat"
+  }' -o figure.png
+```
+
+See also: [`docs/examples/api/chart-public-read.sh`](docs/examples/api/chart-public-read.sh).
+
+### Legacy mode (`API_PUBLIC_READ=false`)
+
+```bash
+curl -sS -H "Authorization: Bearer $API_SECRET" "$API_BASE/api/actors"
 ```
 
 ---

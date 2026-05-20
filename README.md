@@ -68,33 +68,45 @@ The page lists every actor, their six-axis scores, confidence levels, and expand
 
 ### REST API (Server-side)
 
-A small HTTP API is available for generating radar charts programmatically. This is useful for academic papers, build pipelines, or external tools that need to capture compass visual artifacts on demand.
+A small HTTP API generates radar charts programmatically (papers, CI, **A Common Enemy** figure pipelines). The static GitHub Pages app does **not** host this API — run it locally or deploy `api/server.js` behind HTTPS.
 
 ```bash
-API_SECRET=your-secret-here npm run api
+npm run api
 ```
 
-The server listens on `API_PORT` (default 3000). **API v2.0.0:** public read routes (`GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`) require **no** auth when `API_PUBLIC_READ=true` (default). Set `API_PUBLIC_READ=false` to require `API_SECRET` on read. Private write (`ADMIN_SECRET`, `/api/admin/*`) is Phase 2 — see `docs/feature-request-public-private-api-v0.1.0.md`.
+Copy `.env.example` to `.env.local` if you need non-default ports or legacy auth. The server listens on `API_PORT` (default **3000**).
+
+**API v2.0.0 (public read, Phase 1):** When `API_PUBLIC_READ=true` (default), these routes need **no** `Authorization` header:
 
 | Endpoint | Auth (default) | Description |
 |----------|----------------|-------------|
-| `GET /api/health` | No | Health check (`apiVersion`, `publicRead`) |
+| `GET /api/health` | No | Health check (`apiVersion`, `publicRead`, app `version`) |
 | `GET /api/actors` | Public | List actors + `meta.axesOrder` |
-| `GET /api/actors/:slug` | Public | Full actor record |
-| `POST /api/chart` | Public | Generate SVG or PNG chart (rate-limited) |
+| `GET /api/actors/:slug` | Public | Full actor record (ETag / 304) |
+| `POST /api/chart` | Public | SVG or PNG chart (rate-limited: 60/min/IP) |
 | `GET /api/axes` | Public | Canonical axis order and pole labels |
 | `GET /api/openapi.json` | Public | OpenAPI 3.1 document |
 
-**Example:**
+Set `API_PUBLIC_READ=false` to require `Authorization: Bearer $API_SECRET` on read routes (legacy v1.x). Private write (`ADMIN_SECRET`, `POST /api/admin/*`) is **Phase 2** — see [`docs/feature-request-public-private-api-v0.1.0.md`](docs/feature-request-public-private-api-v0.1.0.md).
+
+| Variable | Default | Role |
+|----------|---------|------|
+| `API_PUBLIC_READ` | `true` | Public read without Bearer |
+| `API_SECRET` | *(unset)* | Legacy read Bearer when public read is off |
+| `API_CHART_RATE_LIMIT` | `60` | Chart requests per IP per minute |
+
+**Example — public chart (no secret):**
 
 ```bash
-curl -H "Authorization: Bearer $API_SECRET" \
-     -H "Content-Type: application/json" \
-     -d '{"scores":{"Cultural":5,"Economic":3,"Military":7,"Sovereignty":5,"Governance":6,"Class":3},"actors":["Green Party","Labour Party"],"format":"png"}' \
-     http://localhost:3000/api/chart -o comparison.png
+curl -sS -X POST http://localhost:3000/api/chart \
+  -H "Content-Type: application/json" \
+  -d '{"scores":{"Cultural":5,"Economic":3,"Military":7,"Sovereignty":5,"Governance":6,"Class":3},"actors":["Green Party"],"format":"png"}' \
+  -o comparison.png
 ```
 
-Full endpoint documentation, request/response schemas, and error reference: [`API.md`](./API.md).
+Paper-style actor-only PNG: [`docs/examples/api/chart-public-read.sh`](docs/examples/api/chart-public-read.sh).
+
+Full trust zones, limits, CORS, errors, and cURL recipes: [`API.md`](./API.md).
 
 **Canonical spoke order (v2.6.0+):** Cultural → Economic → Military → Sovereignty → Governance → Class (clockwise; Cultural at flat-top with default `orientation: flat`). Omission of `axes` in `POST /api/chart` and the default hash order `x=cemslg` use this order. See [`API.md` § Canonical spoke order](./API.md#canonical-spoke-order-v260).
 

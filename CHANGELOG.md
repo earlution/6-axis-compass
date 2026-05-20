@@ -42,6 +42,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`API.md` v2.0.0 (complete)** — trust zones, configuration, CORS, public read on all endpoints, `meta` on actors list, chart rate limits and caps, `GET /api/axes` / `GET /api/openapi.json`, error `304`/`429`, public cURL examples.
+- **`README.md`** — API section aligned with public read (default `npm run api` without secret; env table; public chart example).
+
 ## [2.6.2] - 2026-05-20
 
 ### Added
