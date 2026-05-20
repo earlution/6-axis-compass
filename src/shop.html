@@ -107,6 +107,7 @@ function render() {
     garment: state.garment,
     garmentColor: state.garmentColor,
     chartTheme: state.chartTheme,
+    userMapColor: state.userMapColor,
     size: state.size,
     customActors: state.customActors,
     actorSlugs: state.actorSlugs,
@@ -119,6 +120,16 @@ function render() {
     onGarmentColorChange: (c) => {
       state.garmentColor = c;
       state.chartTheme = c === 'black' ? 'dark' : 'light';
+      persist();
+      render();
+    },
+    onUserMapColorChange: (hex) => {
+      state.userMapColor = hex;
+      persist();
+      render();
+    },
+    onMatchGarmentInk: () => {
+      state.userMapColor = state.chartTheme === 'dark' ? '#ffffff' : '#000000';
       persist();
       render();
     },

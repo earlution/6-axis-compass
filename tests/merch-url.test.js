@@ -16,7 +16,8 @@ const hash = encodeMerchHash({
   garment: 'hoodie',
   garmentColor: 'black',
   chartTheme: 'dark',
-  register: 'primary'
+  register: 'primary',
+  userMapColor: '#c8a84b'
 });
 
 assert(hash.startsWith('#v3'), 'merch hash v3');
@@ -26,6 +27,8 @@ assert(decoded.garment === 'hoodie', 'garment');
 assert(decoded.garmentColor === 'black', 'garmentColor');
 assert(decoded.actorSlugs[0] === 'Green-Party', 'actor slugs');
 assert(decoded.chartTheme === 'dark', 'chartTheme');
+assert(decoded.userMapColor === '#c8a84b', 'userMapColor');
+assert(hash.includes(';uc=c8a84b'), 'hash includes uc');
 
 const merged = mergeMerchState(decoded, { size: 'L' });
 assert(merged.size === 'L', 'merge draft size');

@@ -61,6 +61,12 @@ npm test   # includes tests/merch-url.test.js (v3 hash round-trip)
 
 Charts use uppercase **trigrams** on the rim (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) — better legibility on small mockups. Full axis names remain in the shop configurator. Brand spec: [`brand-trigrams.md`](brand-trigrams.md).
 
+## Shop map colour and key
+
+- **Your map colour** — colour picker plus “Match garment” and “Gold” presets; independent of garment white/black.
+- **Key** (under mockup) — **Me** (your polygon) plus each selected comparison by **real actor name** (e.g. Green Party, Reform UK), with matching swatches.
+- Persisted in v3 hash (`uc=rrggbb`) and `sessionStorage` draft.
+
 ## Production (not implemented)
 
 See [`merch-printful-integration.md`](merch-printful-integration.md) for Printful + Stripe + chart render pipeline.

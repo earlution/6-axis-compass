@@ -1,4 +1,5 @@
 import { encodeHash, decodeHash } from './url.js';
+import { chartInkColor, normalizeHexColor } from './merch-catalog.js';
 
 const DRAFT_KEY = 'six-axis-compass-merch-draft';
 const MAX_ACTOR_SLUGS = 2;
@@ -41,12 +42,16 @@ export function encodeMerchHash(state) {
     garment = 'tee',
     garmentColor = 'white',
     chartTheme = 'light',
-    register = 'primary'
+    register = 'primary',
+    userMapColor
   } = state;
   let hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
   hash = hash.replace('#v2', '#v3');
   if (actorSlugs.length) hash += `;a=${actorSlugs.join(',')}`;
   hash += `;g=${garment};gc=${garmentColor};th=${chartTheme};reg=${register}`;
+  if (userMapColor) {
+    hash += `;uc=${normalizeHexColor(userMapColor).replace(/^#/, '')}`;
+  }
   return hash;
 }
 
@@ -71,7 +76,7 @@ export function decodeMerchHash(hash) {
 
   const v2parts = parts.filter(p =>
     p && !p.startsWith('a=') && !p.startsWith('g=') && !p.startsWith('gc=') &&
-    !p.startsWith('th=') && !p.startsWith('reg=')
+    !p.startsWith('th=') && !p.startsWith('reg=') && !p.startsWith('uc=')
   );
   const decoded = decodeHash('#' + v2parts.join(';').replace(/^v3/, 'v2'));
   if (!decoded) return null;
@@ -81,6 +86,7 @@ export function decodeMerchHash(hash) {
   let garmentColor = 'white';
   let chartTheme = 'light';
   let register = 'primary';
+  let userMapColor = null;
 
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
@@ -93,6 +99,8 @@ export function decodeMerchHash(hash) {
       chartTheme = part.slice(3);
     } else if (part.startsWith('reg=')) {
       register = part.slice(4);
+    } else if (part.startsWith('uc=')) {
+      userMapColor = normalizeHexColor('#' + part.slice(3));
     } else if (part.startsWith('g=')) {
       garment = part.slice(2);
     }
@@ -104,7 +112,8 @@ export function decodeMerchHash(hash) {
     garment,
     garmentColor,
     chartTheme,
-    register
+    register,
+    userMapColor: userMapColor || chartInkColor(chartTheme)
   };
 }
 
@@ -145,8 +154,11 @@ export function buildDraftFromResults({
   register,
   garment,
   garmentColor,
-  chartTheme
+  chartTheme,
+  userMapColor
 }) {
+  const gc = garmentColor || 'white';
+  const th = chartTheme || (gc === 'black' ? 'dark' : 'light');
   return {
     scores,
     orientation,
@@ -159,8 +171,9 @@ export function buildDraftFromResults({
     showUser,
     register: register || 'primary',
     garment: garment || 'tee',
-    garmentColor: garmentColor || 'white',
-    chartTheme: chartTheme || (garmentColor === 'black' ? 'dark' : 'light'),
+    garmentColor: gc,
+    chartTheme: th,
+    userMapColor: normalizeHexColor(userMapColor, chartInkColor(th)),
     size: 'M'
   };
 }
@@ -182,6 +195,10 @@ export function mergeMerchState(hashDecoded, draft) {
     garment: d.garment || base.garment || 'tee',
     garmentColor: d.garmentColor || base.garmentColor || 'white',
     chartTheme: d.chartTheme || base.chartTheme || 'light',
+    userMapColor: normalizeHexColor(
+      d.userMapColor || base.userMapColor,
+      chartInkColor(d.chartTheme || base.chartTheme || 'light')
+    ),
     size: d.size || 'M'
   };
 }

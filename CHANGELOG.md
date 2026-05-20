@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[2.7.3]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.3
 [2.7.2]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.2
 [2.7.1]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.1
 [2.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v2.7.0
@@ -45,6 +46,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [2.7.3] - 2026-05-20
+
+### Added
+
+- **Merch shop map colour:** Colour picker on `shop.html` for your polygon (independent of garment colour), with “Match garment” and “Gold” presets; persisted in v3 hash (`uc=`) and session draft.
+- **Merch shop key:** Legend under mockup — **Me** plus comparison overlays by **actor name** (e.g. Green Party), with colour swatches.
+
+### Changed
+
+- **`scripts/build.js`:** Bundle `merch-catalog.js` before `merch-url.js` (import order).
+- **Results → shop:** Passes map colour from results theme when opening shop.
 
 ## [2.7.2] - 2026-05-20
 

@@ -20,6 +20,14 @@ export function chartInkColor(chartTheme) {
   return chartTheme === 'dark' ? '#ffffff' : '#000000';
 }
 
+/** Normalise hex colour from picker or hash (with or without #). */
+export function normalizeHexColor(value, fallback = '#c8a84b') {
+  if (!value || typeof value !== 'string') return fallback;
+  let hex = value.trim().replace(/^#/, '');
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return fallback;
+  return '#' + hex.toLowerCase();
+}
+
 export function formatPriceGBP(garmentId) {
   const n = STUB_PRICES_GBP[garmentId] ?? STUB_PRICES_GBP.tee;
   return '£' + n.toFixed(2);

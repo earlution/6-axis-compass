@@ -52,7 +52,7 @@ function inlineModules() {
   const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
-  const js = [i18n, url, merchUrl, merchCatalog, merch, actors, data, quiz, chart, ui, exp]
+  const js = [i18n, url, merchCatalog, merchUrl, merch, actors, data, quiz, chart, ui, exp]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');
@@ -95,7 +95,7 @@ function buildShopPage() {
   const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
-  const js = [i18n, url, merchUrl, merchCatalog, merch, actors, data, chart, shopUi]
+  const js = [i18n, url, merchCatalog, merchUrl, merch, actors, data, chart, shopUi]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');

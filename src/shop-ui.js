@@ -6,6 +6,7 @@ import {
   SIZES,
   garmentImagePath,
   chartInkColor,
+  normalizeHexColor,
   formatPriceGBP,
   buildMockupHTML,
   openCheckoutStubModal
@@ -13,6 +14,63 @@ import {
 import { resolveActorBySlug, encodeMerchHash, getActorSlug } from './merch-url.js';
 
 const MAX_SHOP_ACTORS = 2;
+const MAP_COLOR_GOLD = '#c8a84b';
+
+function appendLegendItem(parent, name, color, solid) {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  const dot = document.createElement('div');
+  dot.className = 'legend-dot';
+  dot.style.background = solid ? color : color + '50';
+  dot.style.border = (solid ? '1.5px solid ' : '1.5px dashed ') + color;
+  const span = document.createElement('span');
+  span.className = 'legend-name';
+  span.textContent = name;
+  item.append(dot, span);
+  parent.appendChild(item);
+}
+
+export function renderMapKeyLegend(container, {
+  showUser,
+  userMapColor,
+  resolvedActors,
+  uploadedMap
+}) {
+  container.innerHTML = '';
+  const heading = document.createElement('p');
+  heading.className = 'shop-key-heading';
+  heading.textContent = t('shop.mapKey');
+  container.appendChild(heading);
+
+  const items = document.createElement('div');
+  items.className = 'legend shop-map-key-items';
+  items.setAttribute('role', 'list');
+
+  if (showUser !== false) {
+    appendLegendItem(items, t('shop.legendMe'), userMapColor, true);
+  }
+  (resolvedActors || []).forEach(actor => {
+    appendLegendItem(items, t('actor.' + actor.name) || actor.name, actor.color, false);
+  });
+  if (uploadedMap) {
+    appendLegendItem(
+      items,
+      uploadedMap.label || t('results.uploadedMap'),
+      '#b478dc',
+      false
+    );
+  }
+
+  if (!items.children.length) {
+    const empty = document.createElement('p');
+    empty.className = 'config-note';
+    empty.textContent = t('shop.mapKeyEmpty');
+    container.appendChild(empty);
+    return;
+  }
+
+  container.appendChild(items);
+}
 
 export function resolveShopActors(state) {
   const custom = state.customActors || [];
@@ -44,8 +102,11 @@ export function renderShop(container, state, handlers) {
     chartTheme,
     size,
     customActors,
+    userMapColor,
     onGarmentChange,
     onGarmentColorChange,
+    onUserMapColorChange,
+    onMatchGarmentInk,
     onSizeChange,
     onToggleActor,
     onCheckout,
@@ -54,7 +115,7 @@ export function renderShop(container, state, handlers) {
 
   const axes = axesOrder || [...AXES];
   const inverted = new Set(invertedAxes || []);
-  const userColor = chartInkColor(chartTheme);
+  const userColor = normalizeHexColor(userMapColor, chartInkColor(chartTheme));
   const resolvedActors = resolveShopActors(state);
 
   container.innerHTML = `
@@ -71,6 +132,7 @@ export function renderShop(container, state, handlers) {
           <div class="merch-mockup-wrap shop-mockup-wrap">
             ${buildMockupHTML(garment, garmentColor)}
           </div>
+          <div class="shop-map-key" id="shop-map-key" role="region" aria-label="${t('shop.mapKey')}"></div>
           <p class="shop-price-display">${formatPriceGBP(garment)} <span class="shop-price-note">${t('shop.priceNote')}</span></p>
         </div>
         <div class="content-pane shop-config-pane">
@@ -79,6 +141,20 @@ export function renderShop(container, state, handlers) {
             <p class="config-note">${t('shop.yourMapNote')}</p>
             <div class="shop-score-pills" id="shop-score-pills"></div>
             <a class="data-link" href="index.html${compassHash || ''}">${t('shop.editOnCompass')} →</a>
+          </section>
+          <section class="config-section">
+            <p class="config-heading">${t('shop.mapColour')}</p>
+            <p class="config-note">${t('shop.mapColourNote')}</p>
+            <div class="config-row shop-map-color-row">
+              <label class="shop-color-picker-wrap">
+                <span class="shop-color-picker-label">${t('shop.pickColour')}</span>
+                <input type="color" id="shop-user-map-color" value="${userColor}" aria-label="${t('shop.mapColour')}">
+              </label>
+            </div>
+            <div class="config-row shop-map-color-presets">
+              <button type="button" class="config-btn" id="btn-map-color-garment">${t('shop.matchGarment')}</button>
+              <button type="button" class="config-btn" id="btn-map-color-gold">${t('shop.colourGold')}</button>
+            </div>
           </section>
           <section class="config-section">
             <p class="config-heading">${t('shop.comparisons')}</p>
@@ -123,6 +199,29 @@ export function renderShop(container, state, handlers) {
 
   const imgEl = container.querySelector('.merch-garment-img');
   if (imgEl) imgEl.src = garmentImagePath(garment, garmentColor);
+
+  const keyEl = document.getElementById('shop-map-key');
+  if (keyEl) {
+    renderMapKeyLegend(keyEl, {
+      showUser,
+      userMapColor: userColor,
+      resolvedActors,
+      uploadedMap
+    });
+  }
+
+  const colorInput = document.getElementById('shop-user-map-color');
+  if (colorInput && onUserMapColorChange) {
+    colorInput.addEventListener('input', (e) => {
+      onUserMapColorChange(normalizeHexColor(e.target.value, userColor));
+    });
+  }
+  document.getElementById('btn-map-color-garment')?.addEventListener('click', () => {
+    onMatchGarmentInk?.();
+  });
+  document.getElementById('btn-map-color-gold')?.addEventListener('click', () => {
+    onUserMapColorChange?.(MAP_COLOR_GOLD);
+  });
 
   const pills = document.getElementById('shop-score-pills');
   axes.forEach(ax => {
@@ -201,7 +300,8 @@ export function pushShopHash(state) {
     garment: state.garment,
     garmentColor: state.garmentColor,
     chartTheme: state.chartTheme,
-    register: state.register
+    register: state.register,
+    userMapColor: state.userMapColor
   });
   if (window.location.hash !== hash) {
     history.replaceState(null, '', 'shop.html' + hash);

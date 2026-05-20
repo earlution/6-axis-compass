@@ -324,6 +324,7 @@ function showResults() {
     merchGarmentColor,
     onBuyMerch: ({ garment, garmentColor, chartTheme }) => {
       const scores = quiz.getScores();
+      const userMapColor = theme === 'light' ? '#000000' : '#ffffff';
       const draft = buildDraftFromResults({
         scores,
         orientation,
@@ -336,7 +337,8 @@ function showResults() {
         register: registerMode,
         garment,
         garmentColor,
-        chartTheme
+        chartTheme,
+        userMapColor
       });
       saveMerchDraft(draft);
       const hash = encodeMerchHash({
@@ -348,7 +350,8 @@ function showResults() {
         garment,
         garmentColor,
         chartTheme,
-        register: registerMode
+        register: registerMode,
+        userMapColor
       });
       window.location.href = 'shop.html' + hash;
     }

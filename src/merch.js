@@ -1,7 +1,13 @@
 import { t } from './i18n.js';
-import { GARMENTS, garmentImagePath, chartInkColor, formatPriceGBP } from './merch-catalog.js';
+import {
+  GARMENTS,
+  garmentImagePath,
+  chartInkColor,
+  normalizeHexColor,
+  formatPriceGBP
+} from './merch-catalog.js';
 
-export { GARMENTS, garmentImagePath, chartInkColor, formatPriceGBP };
+export { GARMENTS, garmentImagePath, chartInkColor, normalizeHexColor, formatPriceGBP };
 
 export function getGarmentLabel(garmentId) {
   const g = GARMENTS.find(x => x.id === garmentId);
@@ -144,9 +150,13 @@ export function formatOrderSummary(state) {
   (state.resolvedActors || []).forEach(a => overlays.push(t('actor.' + a.name) || a.name));
   if (state.uploadedMap) overlays.push(state.uploadedMap.label || t('results.uploadedMap'));
   const price = formatPriceGBP(state.garment);
+  const mapColourLine = state.userMapColor
+    ? t('shop.summaryMapColour') + ': ' + state.userMapColor
+    : null;
   return {
     lines: [
       `${garment} (${colour}) — ${state.size || 'M'}`,
+      ...(mapColourLine ? [mapColourLine] : []),
       t('shop.summaryOverlays') + ': ' + (overlays.length ? overlays.join(', ') : '—'),
       t('shop.summaryPrice') + ': ' + price
     ],
