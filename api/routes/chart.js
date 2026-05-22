@@ -3,14 +3,11 @@ import { loadActors } from '../lib/actor-store.js';
 import {
   CANONICAL_AXES,
   SPATIAL_AXES,
-  SPATIAL_DISPLAY_INVERT
+  SPATIAL_DISPLAY_INVERT,
+  SPATIAL_STRUCTURAL_DISPLAY_INVERT
 } from '../lib/config.js';
 
 const AXES = CANONICAL_AXES;
-const MAX_ACTOR_OVERLAYS = 8;
-const MAX_TITLE_LEN = 200;
-const MAX_DIMENSION = 4096;
-const MAX_PIXELS = 16_777_216;
 
 function validateScores(scores) {
   if (!scores || typeof scores !== 'object') return 'scores must be an object';
@@ -54,21 +51,6 @@ export async function handleChart(req, res, body) {
     return;
   }
 
-  if (Array.isArray(body.actors) && body.actors.length > MAX_ACTOR_OVERLAYS) {
-    res.statusCode = 400;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ error: `At most ${MAX_ACTOR_OVERLAYS} actor overlays allowed` }));
-    return;
-  }
-
-  const title = body.title || 'Chart';
-  if (typeof title === 'string' && title.length > MAX_TITLE_LEN) {
-    res.statusCode = 400;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ error: `title must be at most ${MAX_TITLE_LEN} characters` }));
-    return;
-  }
-
   const register = ['primary', 'declared', 'structural'].includes(body.register)
     ? body.register
     : 'primary';
@@ -100,13 +82,13 @@ export async function handleChart(req, res, body) {
   let invertedAxes;
   if (Array.isArray(body.invertedAxes)) {
     invertedAxes = new Set(body.invertedAxes.filter(a => AXES.includes(a)));
+  } else if (layout === 'spatial' && register === 'structural') {
+    invertedAxes = new Set(SPATIAL_STRUCTURAL_DISPLAY_INVERT);
   } else if (layout === 'spatial') {
     invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
   } else {
     invertedAxes = new Set();
   }
-
-  const labelMode = body.labelMode === 'full' ? 'full' : 'trigram';
 
   const config = {
     scores,
@@ -116,10 +98,8 @@ export async function handleChart(req, res, body) {
     actors,
     showUser: body.showUser !== false,
     userColor: body.colors?.user || '#c8a84b',
-    title,
-    register,
-    labelMode,
-    layout
+    title: body.title || 'Chart',
+    register
   };
 
   if (format === 'svg') {
@@ -130,14 +110,6 @@ export async function handleChart(req, res, body) {
   } else if (format === 'png') {
     const width = body.width || 600;
     const height = body.height || 600;
-    if (width > MAX_DIMENSION || height > MAX_DIMENSION || width * height > MAX_PIXELS) {
-      res.statusCode = 400;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
-        error: `PNG dimensions must be ≤${MAX_DIMENSION} per side and width×height ≤ ${MAX_PIXELS}`
-      }));
-      return;
-    }
     const png = await renderPNG(config, width, height);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'image/png');

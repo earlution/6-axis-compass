@@ -28,21 +28,6 @@ Open `dist/index.html` in any modern browser. No build step, no server, no depen
 4. Your profile is plotted on a **hexagonal radar chart**.
 5. Optionally **compare your profile** against pre-loaded political parties or upload a saved map.
 
-### Axis trigrams (chart rim)
-
-Radar **spoke labels** use uppercase **three-letter trigrams**; full axis names and pole definitions appear in score bars, the quiz, and the dataset.
-
-| Axis | Trigram |
-|------|---------|
-| Cultural | **CUL** |
-| Economic | **ECO** |
-| Military | **MIL** |
-| Sovereignty | **SOV** |
-| Governance | **GOV** |
-| Class | **CLA** |
-
-Cultural is **CUL** (not CTE). Trigrams are stable brand IDs; merch and future products (e.g. mug rings) use the same codes. Full specification: [`docs/brand-trigrams.md`](docs/brand-trigrams.md).
-
 ## Forkable, Traceable Actor Data
 
 Every political actor in the compass is defined by a standalone JSON file in `data/actors/`. Each file contains:
@@ -102,7 +87,7 @@ Copy `.env.example` to `.env.local` if you need non-default ports or legacy auth
 | `GET /api/axes` | Public | Canonical axis order and pole labels |
 | `GET /api/openapi.json` | Public | OpenAPI 3.1 document |
 
-Set `API_PUBLIC_READ=false` to require `Authorization: Bearer $API_SECRET` on read routes (legacy v1.x). Private write (`ADMIN_SECRET`, `POST /api/admin/*`) is **Phase 2** — see [`docs/feature-request-public-private-api-v0.1.0.md`](docs/feature-request-public-private-api-v0.1.0.md).
+Set `API_PUBLIC_READ=false` to require `Authorization: Bearer $API_SECRET` on read routes (legacy v1.x). Private write (`ADMIN_SECRET`, `POST /api/admin/*`) is **Phase 2** — see [`docs.repo-sync/feature-request-public-private-api-v0.1.0.md`](docs.repo-sync/feature-request-public-private-api-v0.1.0.md).
 
 | Variable | Default | Role |
 |----------|---------|------|
@@ -119,11 +104,11 @@ curl -sS -X POST http://localhost:3000/api/chart \
   -o comparison.png
 ```
 
-Paper-style actor-only PNG: [`docs/examples/api/chart-public-read.sh`](docs/examples/api/chart-public-read.sh).
+Paper-style actor-only PNG: [`docs.repo-sync/examples/api/chart-public-read.sh`](docs.repo-sync/examples/api/chart-public-read.sh).
 
 Full trust zones, limits, CORS, errors, and cURL recipes: [`API.md`](./API.md).
 
-**Default radar layout (v3.1.0+, OQ5 spatial):** Economic → Governance → Class → Cultural → Sovereignty → Military (`layout: spatial`, `orientation: spatial`, hash `x=egacsm`). **Pedagogical order (OQ2):** Cultural → Economic → Military → Sovereignty → Governance → Class (`layout: pedagogical`, `x=cemslg`). See [`API.md` § Radar layouts](./API.md#radar-layouts-v310).
+**Default radar layout (v2.7.0+, OQ5 spatial):** Economic → Governance → Class → Cultural → Sovereignty → Military (`layout: spatial`, `orientation: spatial`, hash `x=egacsm`). **Pedagogical order (OQ2):** Cultural → Economic → Military → Sovereignty → Governance → Class (`layout: pedagogical`, `x=cemslg`). See [`API.md` § Radar layouts](./API.md#radar-layouts-v270).
 
 ### CI/CD Dispatch API (GitHub Actions)
 
@@ -169,13 +154,13 @@ Custom apparel flow (Printful-ready UI, **checkout stubbed**): results → garme
 | `dist/shop.html` | Shop configurator (same styles as main app) |
 | `dist/assets/merch/` | Placeholder garment mockup SVGs |
 
-**Demo locally:** `npm run build` then serve `dist/` (see [`docs/merch-prototype.md`](./docs/merch-prototype.md)).
+**Demo locally:** `npm run build` then serve `dist/` (see [`docs.repo-sync/merch-prototype.md`](./docs.repo-sync/merch-prototype.md)).
 
 - **v3 hash** on shop URLs carries scores, comparisons (actor slugs), garment, colour, and chart ink theme.
 - **sessionStorage** draft preserves custom actors and uploaded maps.
-- Future Printful/Stripe wiring: [`docs/merch-printful-integration.md`](./docs/merch-printful-integration.md).
+- Future Printful/Stripe wiring: [`docs.repo-sync/merch-printful-integration.md`](./docs.repo-sync/merch-printful-integration.md).
 
-Merch-line releases use **`v3.x.x`** tags (`v3.0.0` = first shop prototype). Compass core remains **`v2.x.x`** through `v2.6.2`.
+Tagged releases for this prototype use `merch-prototype-v*` (see git tags).
 
 ## Paper Artifacts
 
@@ -195,7 +180,7 @@ The source is organised as ES modules under `src/`:
 
 | File | Purpose |
 |------|---------|
-| `src/data.js` | Axes, trigrams (`AXIS_TRIGRAMS`), questions, response scales, and actor scores (with fallback) |
+| `src/data.js` | Axes, questions, response scales, and actor scores (with fallback) |
 | `src/i18n.js` | Translation dictionary and `t()` helper |
 | `src/url.js` | Shareable URL encoding/decoding |
 | `src/quiz.js` | Quiz state management and scoring engine |
@@ -299,6 +284,25 @@ Requires `jsdom` (installed via `npm install`).
 
 Confidence levels: `low`, `medium`, `high`, `very-high`.
 Source types: `manifesto`, `legislation`, `vote`, `policy`, `speech`, `book`, `academic`, `other`.
+
+## Documentation and Google Drive
+
+**Git is canonical** for releases. Day-to-day docs live on Google Drive (**`6-Axis Compass`**, mearsruari account):
+
+| Path | Role |
+|------|------|
+| **`google-drive/`** | Symlink → Drive project folder; **edit here** |
+| **`docs.repo-sync/`** | Git release mirror — `bash scripts/sync-docs-to-git.sh` before commit |
+| **`docs/`** | **Deprecated** — see [`docs/DEPRECATED.md`](docs/DEPRECATED.md) |
+| **`google-drive/handoff/for-common-enemy/`** | Outbound package for common-enemy |
+
+```bash
+bash scripts/link-google-drive-staging.sh
+bash scripts/consolidate-docs-to-drive.sh   # one-time / maintenance merge
+bash scripts/sync-docs-to-git.sh            # Drive → docs.repo-sync/
+```
+
+See [`docs.repo-sync/staging/README.md`](docs.repo-sync/staging/README.md). common-enemy mirror: Drive **`A Common Enemy/docs/`**.
 
 ## License
 

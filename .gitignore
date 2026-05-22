@@ -3,3 +3,7 @@ node_modules/
 *.log
 .env
 .env.local
+# Google Drive workspace (symlink at repo root)
+google-drive/
+docs.repo-backup-*/
+.staging-config/

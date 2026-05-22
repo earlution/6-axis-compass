@@ -1,4 +1,4 @@
-export const API_VERSION = '2.0.0';
+export const API_VERSION = '2.0.2';
 
 /** Public read routes skip Bearer auth when true (default). Set API_PUBLIC_READ=false for legacy mode. */
 export function isPublicReadEnabled() {
@@ -17,8 +17,9 @@ export const SPATIAL_AXES = [
   'Economic', 'Governance', 'Class', 'Cultural', 'Sovereignty', 'Military'
 ];
 
-export const SPATIAL_DISPLAY_INVERT = [
-  'Economic', 'Governance', 'Class', 'Sovereignty'
-];
+/** Default spatial: none (matches web UI / primary scores). */
+export const SPATIAL_DISPLAY_INVERT = [];
+
+export const SPATIAL_STRUCTURAL_DISPLAY_INVERT = ['Governance', 'Class'];
 
 export const ACTOR_SCHEMA_VERSION = '1.1.0';

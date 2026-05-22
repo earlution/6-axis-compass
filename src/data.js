@@ -13,8 +13,14 @@ export const AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governa
 /** OQ5 — spatial radar circuit, clockwise from ~7:30 (§II(b)). */
 export const SPATIAL_AXES = ['Economic', 'Governance', 'Class', 'Cultural', 'Sovereignty', 'Military'];
 
-/** Default display inversion so §II 0-pole “left/right” values extend toward the rim on the correct side. */
-export const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sovereignty'];
+/**
+ * Default spatial display: no rim inversion (matches quiz primary scores + AXIS_META).
+ * For Table 1 structural (S), use `SPATIAL_STRUCTURAL_DISPLAY_INVERT` or API `register: "structural"`.
+ */
+export const SPATIAL_DISPLAY_INVERT = [];
+
+/** When plotting `register: "structural"` (Table 1 / Protocol v0.2.0). */
+export const SPATIAL_STRUCTURAL_DISPLAY_INVERT = ['Governance', 'Class'];
 
 export const PEDAGOGICAL_AXES = AXES;
 

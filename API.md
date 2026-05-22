@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.0.2 | 2026-05-22 | **Spatial inversion (app v3.6.0):** default spatial charts use no rim inversion; `register: structural` inverts `Governance` + `Class` only. |
 | 2.0.1 | 2026-05-20 | **Spatial radar (app v3.1.0):** `POST /api/chart` default `layout: spatial` (OQ5); `orientation: spatial`; `invertedAxes`; pedagogical OQ2 via `layout: pedagogical`. |
 | 2.0.0 | 2026-05-20 | **Public read API (Phase 1):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Rate limit on chart. Optional legacy Bearer on read. `GET /api/health` adds `apiVersion`, `publicRead`. |
 | 1.5.0 | 2026-05-19 | Added `GET /api/actors/:slug` endpoint returning full actor record including dual-register data. |
@@ -27,7 +28,7 @@ Production chart API hosting is maintainer-operated (not served from GitHub Page
 
 | Semver | What it tracks | Current |
 |--------|----------------|---------|
-| **API** (`apiVersion` in `/api/health`) | REST contract (auth zones, routes, limits) | **2.0.0** |
+| **API** (`apiVersion` in `/api/health`) | REST contract (auth zones, routes, limits) | **2.0.2** |
 | **App** (`version` in `/api/health`) | Compass package / Pages bundle | See `package.json` (e.g. **2.6.2**) |
 
 ---
@@ -39,7 +40,7 @@ Production chart API hosting is maintainer-operated (not served from GitHub Page
 | **Public read** | None (default) | `GET /api/health`, `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` |
 | **Private write** | `ADMIN_SECRET` (Phase 2) | `POST /api/admin/*` — not implemented yet |
 
-Specification: [`docs/feature-request-public-private-api-v0.1.0.md`](docs/feature-request-public-private-api-v0.1.0.md).
+Specification: [`docs.repo-sync/feature-request-public-private-api-v0.1.0.md`](docs.repo-sync/feature-request-public-private-api-v0.1.0.md).
 
 ---
 
@@ -107,7 +108,7 @@ Authorization: Bearer <API_SECRET>
 
 ### Private write (Phase 2 — not yet implemented)
 
-`POST /api/admin/*` will require `ADMIN_SECRET`. See `docs/feature-request-public-private-api-v0.1.0.md`.
+`POST /api/admin/*` will require `ADMIN_SECRET`. See `docs.repo-sync/feature-request-public-private-api-v0.1.0.md`.
 
 ---
 
@@ -275,7 +276,7 @@ Public read (default): no `Authorization` header.
 | `showUser` | `boolean` | No | `true` | Draw the user score polygon (`false` for actor-only charts). |
 | `colors.user` | `string` | No | `"#c8a84b"` | Hex colour for the user polygon. |
 | `title` | `string` | No | `"Chart"` | Chart title. **Max 200 characters.** |
-| `labelMode` | `string` | No | `"trigram"` | Spoke labels: `"trigram"` (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) or `"full"` axis names. See [`docs/brand-trigrams.md`](docs/brand-trigrams.md). |
+| `labelMode` | `string` | No | `"trigram"` | Spoke labels: `"trigram"` (`CUL`, `ECO`, `MIL`, `SOV`, `GOV`, `CLA`) or `"full"` axis names. See [`docs.repo-sync/brand-trigrams.md`](docs.repo-sync/brand-trigrams.md). |
 | `width` | `number` | No | `600` | PNG width (PNG only). Max **4096**; `width × height` ≤ **16_777_216**. |
 | `height` | `number` | No | `600` | PNG height (PNG only). Same limits as `width`. |
 
@@ -406,7 +407,7 @@ GET /api/axes
 }
 ```
 
-Spoke codes are **uppercase trigrams** (brand IDs, not translated). Full names remain in the app UI outside the chart rim. Specification: [`docs/brand-trigrams.md`](docs/brand-trigrams.md).
+Spoke codes are **uppercase trigrams** (brand IDs, not translated). Full names remain in the app UI outside the chart rim. Specification: [`docs.repo-sync/brand-trigrams.md`](docs.repo-sync/brand-trigrams.md).
 
 ---
 
@@ -456,7 +457,7 @@ GET /api/openapi.json
 |---------|--------|
 | **Spoke order** | `Economic` → `Governance` → `Class` → `Cultural` → `Sovereignty` → `Military` |
 | **Orientation** | `spatial` (start angle 120° at index 0 — Economic at lower-left) |
-| **Default `invertedAxes`** | `Economic`, `Governance`, `Class`, `Sovereignty` |
+| **Default `invertedAxes`** | *(none)* for `register: primary`; `Governance`, `Class` for `register: structural` |
 | **Hash axis code** | `x=egacsm` |
 
 Aligns with [A Common Enemy](https://github.com/earlution/common-enemy) *Axis Scale Specification and Radar Methodology* **v0.0.4** §II(b).
@@ -689,7 +690,7 @@ curl -sS -X POST "$API_BASE/api/chart" \
   }' -o figure.png
 ```
 
-See also: [`docs/examples/api/chart-public-read.sh`](docs/examples/api/chart-public-read.sh).
+See also: [`docs.repo-sync/examples/api/chart-public-read.sh`](docs.repo-sync/examples/api/chart-public-read.sh).
 
 ### Legacy mode (`API_PUBLIC_READ=false`)
 

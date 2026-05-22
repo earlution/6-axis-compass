@@ -6,7 +6,8 @@ import sharp from 'sharp';
 import {
   CANONICAL_AXES,
   SPATIAL_AXES,
-  SPATIAL_DISPLAY_INVERT
+  SPATIAL_DISPLAY_INVERT,
+  SPATIAL_STRUCTURAL_DISPLAY_INVERT
 } from './config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -111,13 +112,18 @@ export function renderSVG(config) {
   const layout = config.layout === 'pedagogical' ? 'pedagogical' : 'spatial';
   const axes = config.axes || (layout === 'pedagogical' ? CANONICAL_AXES : SPATIAL_AXES);
   const orientation = config.orientation || (layout === 'pedagogical' ? 'flat' : 'spatial');
-  const invertedAxes = config.invertedAxes instanceof Set
-    ? config.invertedAxes
-    : new Set(
-      config.invertedAxes?.length
-        ? config.invertedAxes
-        : (layout === 'spatial' ? SPATIAL_DISPLAY_INVERT : [])
-    );
+  let invertedAxes;
+  if (config.invertedAxes instanceof Set) {
+    invertedAxes = config.invertedAxes;
+  } else if (Array.isArray(config.invertedAxes)) {
+    invertedAxes = new Set(config.invertedAxes);
+  } else if (layout === 'spatial' && config.register === 'structural') {
+    invertedAxes = new Set(SPATIAL_STRUCTURAL_DISPLAY_INVERT);
+  } else if (layout === 'spatial') {
+    invertedAxes = new Set(SPATIAL_DISPLAY_INVERT);
+  } else {
+    invertedAxes = new Set();
+  }
 
   const svg = createPrintSVG();
   drawRadar(svg, {

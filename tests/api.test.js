@@ -105,7 +105,7 @@ async function runTests() {
     const healthJson = JSON.parse(health.body.toString());
     assertEqual(healthJson.status, 'ok', 'Health status should be ok');
     assertTrue(healthJson.version, 'Health should have version');
-    assertEqual(healthJson.apiVersion, '2.0.0', 'Health should expose API 2.0.0');
+    assertEqual(healthJson.apiVersion, '2.0.2', 'Health should expose API 2.0.2');
     assertEqual(healthJson.publicRead, true, 'Health should report public read enabled');
 
     // Test 2: Public read — actors without auth

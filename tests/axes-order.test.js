@@ -3,7 +3,8 @@ const path = require('path');
 
 const PEDAGOGICAL_AXES = ['Cultural', 'Economic', 'Military', 'Sovereignty', 'Governance', 'Class'];
 const SPATIAL_AXES = ['Economic', 'Governance', 'Class', 'Cultural', 'Sovereignty', 'Military'];
-const SPATIAL_DISPLAY_INVERT = ['Economic', 'Governance', 'Class', 'Sovereignty'];
+const SPATIAL_DISPLAY_INVERT = [];
+const SPATIAL_STRUCTURAL_DISPLAY_INVERT = ['Governance', 'Class'];
 
 function loadModule(file) {
   const code = fs.readFileSync(path.join(__dirname, '..', 'src', file), 'utf-8');
@@ -13,7 +14,7 @@ function loadModule(file) {
 }
 
 const data = (() => {
-  const code = loadModule('data.js') + '; return { AXES, SPATIAL_AXES, SPATIAL_DISPLAY_INVERT };';
+  const code = loadModule('data.js') + '; return { AXES, SPATIAL_AXES, SPATIAL_DISPLAY_INVERT, SPATIAL_STRUCTURAL_DISPLAY_INVERT };';
   return new Function(code)();
 })();
 
@@ -28,7 +29,8 @@ function assertEqual(actual, expected, message) {
 
 assertEqual(data.AXES, PEDAGOGICAL_AXES, 'AXES must match OQ2 pedagogical order');
 assertEqual(data.SPATIAL_AXES, SPATIAL_AXES, 'SPATIAL_AXES must match OQ5 spatial circuit');
-assertEqual(data.SPATIAL_DISPLAY_INVERT, SPATIAL_DISPLAY_INVERT, 'SPATIAL_DISPLAY_INVERT must match OQ5 defaults');
+assertEqual(data.SPATIAL_DISPLAY_INVERT, SPATIAL_DISPLAY_INVERT, 'SPATIAL_DISPLAY_INVERT default empty (UI primary)');
+assertEqual(data.SPATIAL_STRUCTURAL_DISPLAY_INVERT, SPATIAL_STRUCTURAL_DISPLAY_INVERT, 'SPATIAL_STRUCTURAL_DISPLAY_INVERT');
 
 function spokeSin(i, start) {
   const angle = (i * 60 + start) * (Math.PI / 180);

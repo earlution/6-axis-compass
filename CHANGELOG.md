@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[3.6.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.6.0
 [3.5.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.5.0
 [3.4.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.4.0
 [3.3.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.3.0
@@ -48,6 +49,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [3.6.0] - 2026-05-22
+
+### Added
+
+- **Google Drive documentation workspace:** repo `google-drive/` symlinks to Drive **`6-Axis Compass`**; `docs.repo-sync/` is the git release mirror; `scripts/link-google-drive-staging.sh`, `consolidate-docs-to-drive.sh`, and `sync-docs-to-git.sh` wire mount → edit → commit.
+- **`SPATIAL_STRUCTURAL_DISPLAY_INVERT`** — register-aware spatial rim inversion when `register: "structural"` on `POST /api/chart` (Governance + Class only).
+
+### Changed
+
+- **Documentation layout:** repo `docs/` deprecated (`docs/DEPRECATED.md` stub); working docs on Drive; `for-common-enemy/` handoff lives under `google-drive/handoff/for-common-enemy/` only.
+- **Spatial default inversion:** primary spatial charts use no rim inversion (matches quiz UI); structural **(S)** scores invert Governance + Class only.
+- **README / API links** point at `docs.repo-sync/` for git-visible documentation paths.
 
 ## [3.5.0] - 2026-05-20
 
