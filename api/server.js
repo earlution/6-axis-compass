@@ -6,6 +6,11 @@ import { handleActorDetail } from './routes/actor-detail.js';
 import { handleChart } from './routes/chart.js';
 import { handleAxes } from './routes/axes.js';
 import { handleOpenApi } from './routes/openapi.js';
+import { handleCheckoutSession } from './routes/checkout.js';
+import { handleStripeWebhook } from './routes/webhooks-stripe.js';
+import { handleMerchPrices } from './routes/merch-prices.js';
+import { handleOrderStatus } from './routes/orders.js';
+import { handleArtwork } from './routes/artwork.js';
 import { checkReadAuth, sendJSON } from './lib/auth.js';
 import { applyPublicCors, handleOptions } from './lib/cors.js';
 import { checkChartRateLimit } from './lib/rate-limit.js';
@@ -19,7 +24,9 @@ const PUBLIC_READ_ROUTES = new Set([
   'GET /api/actors/',
   'GET /api/axes',
   'GET /api/openapi.json',
-  'POST /api/chart'
+  'POST /api/chart',
+  'GET /api/merch/prices',
+  'POST /api/checkout/session'
 ]);
 
 function parseBody(req) {
@@ -36,9 +43,24 @@ function parseBody(req) {
   });
 }
 
+function parseRawBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
 function routeKey(method, pathname) {
   if (pathname.startsWith('/api/actors/') && pathname !== '/api/actors') {
     return 'GET /api/actors/';
+  }
+  if (pathname.startsWith('/api/orders/')) {
+    return 'GET /api/orders/';
+  }
+  if (pathname.startsWith('/api/artwork/')) {
+    return 'GET /api/artwork/';
   }
   return `${method} ${pathname}`;
 }
@@ -81,6 +103,20 @@ const server = http.createServer(async (req, res) => {
     } else if (pathname === '/api/openapi.json' && req.method === 'GET') {
       if (!checkReadAuth(req, res)) return;
       await handleOpenApi(req, res);
+    } else if (pathname === '/api/merch/prices' && req.method === 'GET') {
+      await handleMerchPrices(req, res);
+    } else if (pathname === '/api/checkout/session' && req.method === 'POST') {
+      const body = await parseBody(req);
+      await handleCheckoutSession(req, res, body);
+    } else if (pathname === '/api/webhooks/stripe' && req.method === 'POST') {
+      const rawBody = await parseRawBody(req);
+      await handleStripeWebhook(req, res, rawBody);
+    } else if (pathname.startsWith('/api/orders/') && req.method === 'GET') {
+      const orderId = decodeURIComponent(pathname.slice('/api/orders/'.length));
+      await handleOrderStatus(req, res, orderId);
+    } else if (pathname.startsWith('/api/artwork/') && req.method === 'GET') {
+      const filename = decodeURIComponent(pathname.slice('/api/artwork/'.length));
+      await handleArtwork(req, res, filename);
     } else {
       sendJSON(res, 404, { error: 'Not found' });
     }

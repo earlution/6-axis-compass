@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "note": "Replace variant_id values with IDs from your Printful dashboard before going live.",
+    "fulfilment": "UK/EU",
+    "ethicalBaseline": "Printful audited partner facilities; EU/UK routing preferred",
+    "lastReviewed": "2026-05-22",
+    "productsReviewed": {
+      "tee": "Bella+Canvas 3001 (DTG) — verify in Printful EU catalogue",
+      "sweatshirt": "Gildan 18000 (DTG) — verify in Printful EU catalogue",
+      "hoodie": "Gildan 18500 (DTG) — verify in Printful EU catalogue",
+      "mug": "White Glossy Mug 11oz/15oz (sublimation) — verify in Printful EU catalogue"
+    }
+  },
+  "products": {
+    "tee": {
+      "label": "T-shirt",
+      "productType": "apparel",
+      "printArea": { "width": 4500, "height": 5400 },
+      "priceGBP": 24.99,
+      "variants": {
+        "white": {
+          "XS": 4012, "S": 4013, "M": 4014, "L": 4015, "XL": 4016, "XXL": 4017
+        },
+        "black": {
+          "XS": 4018, "S": 4019, "M": 4020, "L": 4021, "XL": 4022, "XXL": 4023
+        }
+      }
+    },
+    "sweatshirt": {
+      "label": "Sweatshirt",
+      "productType": "apparel",
+      "printArea": { "width": 4500, "height": 5400 },
+      "priceGBP": 34.99,
+      "variants": {
+        "white": {
+          "XS": 4024, "S": 4025, "M": 4026, "L": 4027, "XL": 4028, "XXL": 4029
+        },
+        "black": {
+          "XS": 4030, "S": 4031, "M": 4032, "L": 4033, "XL": 4034, "XXL": 4035
+        }
+      }
+    },
+    "hoodie": {
+      "label": "Hoodie",
+      "productType": "apparel",
+      "printArea": { "width": 4500, "height": 5400 },
+      "priceGBP": 39.99,
+      "variants": {
+        "white": {
+          "XS": 4036, "S": 4037, "M": 4038, "L": 4039, "XL": 4040, "XXL": 4041
+        },
+        "black": {
+          "XS": 4042, "S": 4043, "M": 4044, "L": 4045, "XL": 4046, "XXL": 4047
+        }
+      }
+    },
+    "mug": {
+      "label": "Mug",
+      "productType": "mug",
+      "printArea": { "width": 2700, "height": 1125 },
+      "layout": "mug",
+      "priceGBP": 14.99,
+      "variants": {
+        "white": {
+          "11oz": 9327,
+          "15oz": 9328
+        }
+      }
+    }
+  }
+}

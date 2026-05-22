@@ -34,6 +34,15 @@ function copyMerchAssets() {
   }
 }
 
+function copyMerchLegalPages() {
+  for (const f of ['merch-terms.html', 'merch-privacy.html']) {
+    const srcPath = path.join(SRC, f);
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, path.join(DIST, f));
+    }
+  }
+}
+
 function inlineModules() {
   const html = read('index.html');
   const css = read('styles.css');
@@ -86,6 +95,7 @@ function buildShopPage() {
   const url = read('url.js');
   const merchUrl = read('merch-url.js');
   const merchCatalog = read('merch-catalog.js');
+  const merchCheckout = read('merch-checkout.js');
   const merch = read('merch.js');
   const actors = read('actors-generated.js');
   const data = read('data.js');
@@ -95,16 +105,18 @@ function buildShopPage() {
   const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
-  const js = [i18n, url, merchCatalog, merchUrl, actors, data, chart, merch, shopUi]
+  const js = [i18n, url, merchCatalog, merchCheckout, merchUrl, actors, data, chart, merch, shopUi]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');
 
   const version = getVersion();
+  const merchApiBase = process.env.MERCH_API_BASE || '';
   const output = html
     .replace(/<style>[\s\S]*?<\/style>/, `<style>\n${css}\n</style>`)
     .replace(/<script type="module">[\s\S]*?<\/script>/, `<script>\n${js}\n</script>`)
-    .replace(/\{\{VERSION\}\}/g, version);
+    .replace(/\{\{VERSION\}\}/g, version)
+    .replace(/\{\{MERCH_API_BASE\}\}/g, merchApiBase);
 
   fs.mkdirSync(DIST, { recursive: true });
   fs.writeFileSync(path.join(DIST, 'shop.html'), output, 'utf-8');
@@ -138,12 +150,13 @@ inlineModules();
 buildShopPage();
 buildDataPage();
 copyMerchAssets();
+copyMerchLegalPages();
 
 // Optional watch mode
 if (process.argv.includes('--watch')) {
   const files = [
     'index.html', 'shop.html', 'styles.css', 'i18n.js', 'url.js', 'merch-url.js',
-    'merch-catalog.js', 'merch.js', 'shop-ui.js', 'actors-generated.js', 'data.js',
+    'merch-catalog.js', 'merch-checkout.js', 'merch.js', 'shop-ui.js', 'actors-generated.js', 'data.js',
     'quiz.js', 'chart.js', 'ui.js', 'export.js'
   ];
   files.forEach(f => {
@@ -153,6 +166,7 @@ if (process.argv.includes('--watch')) {
       buildShopPage();
       buildDataPage();
       copyMerchAssets();
+      copyMerchLegalPages();
     });
   });
 }

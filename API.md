@@ -37,7 +37,8 @@ Production chart API hosting is maintainer-operated (not served from GitHub Page
 
 | Zone | Auth | Routes |
 |------|------|--------|
-| **Public read** | None (default) | `GET /api/health`, `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` |
+| **Public read** | None (default) | `GET /api/health`, `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json`, `GET /api/merch/prices`, `POST /api/checkout/session` |
+| **Webhooks** | Stripe signature | `POST /api/webhooks/stripe` |
 | **Private write** | `ADMIN_SECRET` (Phase 2) | `POST /api/admin/*` — not implemented yet |
 
 Specification: [`docs.repo-sync/feature-request-public-private-api-v0.1.0.md`](docs.repo-sync/feature-request-public-private-api-v0.1.0.md).
@@ -53,8 +54,27 @@ Specification: [`docs.repo-sync/feature-request-public-private-api-v0.1.0.md`](d
 | `API_SECRET` | *(unset)* | Legacy Bearer for read when `API_PUBLIC_READ=false`; optional when public read is on |
 | `ADMIN_SECRET` | *(unset)* | Future private write API (Phase 2) |
 | `API_CHART_RATE_LIMIT` | `60` | Max `POST /api/chart` requests per client IP per minute |
+| `STRIPE_SECRET_KEY` | *(unset)* | Stripe Checkout (merch) |
+| `STRIPE_WEBHOOK_SECRET` | *(unset)* | Stripe webhook verification |
+| `PRINTFUL_API_KEY` | *(unset)* | Printful order submission |
+| `MERCH_SUCCESS_URL` | *(unset)* | Stripe success redirect |
+| `MERCH_CANCEL_URL` | *(unset)* | Stripe cancel redirect |
+| `MERCH_ARTWORK_PUBLIC_ORIGIN` | *(unset)* | Public origin for artwork URLs Printful fetches |
 
 Copy `.env.example` to `.env.local` for local development.
+
+### Merch endpoints
+
+See [`docs.repo-sync/merch-printful-integration.md`](docs.repo-sync/merch-printful-integration.md).
+
+**`POST /api/checkout/session`** — body: compass scores, product (`garment` or `productType: mug`), size, colours. Returns `{ url, orderId }` Stripe Checkout URL.
+
+**`GET /api/merch/prices`** — returns GBP prices from `api/config/printful-catalog.json`.
+
+**`GET /api/orders/:id`** — public order status after payment.
+
+**`POST /api/chart`** — additional fields: `background` (`white`|`transparent`|`dark`), `labelMerch` (boolean).
+
 
 ### Secret naming (integrations)
 

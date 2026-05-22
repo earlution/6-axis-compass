@@ -149,7 +149,7 @@ const TRANSLATIONS = {
 
     'results.invertPoles': 'Invert poles',
 
-    'merch.prototypeBadge': 'Merch preview — checkout not live',
+    'merch.fulfilmentBadge': 'Fulfilled by Printful (UK/EU)',
     'merch.heading': 'Wear your map',
     'merch.garmentColour': 'Garment colour',
     'merch.colourWhite': 'White',
@@ -161,6 +161,7 @@ const TRANSLATIONS = {
     'merch.garment.tee': 't-shirt',
     'merch.garment.sweatshirt': 'sweatshirt',
     'merch.garment.hoodie': 'hoodie',
+    'merch.garment.mug': 'mug',
 
     'shop.title': 'Print your compass',
     'shop.breadcrumbResults': 'Results',
@@ -170,10 +171,11 @@ const TRANSLATIONS = {
     'shop.editOnCompass': 'Edit on compass',
     'shop.comparisons': 'Comparisons on print',
     'shop.overlayCap': 'Up to 2 overlays recommended for legibility on clothing.',
-    'shop.garment': 'Garment',
+    'shop.garment': 'Product',
     'shop.size': 'Size',
-    'shop.sizeNote': 'Prototype sizing — final fit guide with Printful.',
-    'shop.priceNote': 'placeholder price',
+    'shop.mugSize': 'Mug size',
+    'shop.sizeNote': 'See Printful size guide for fit details.',
+    'shop.mugSizeNote': '11oz standard mug or 15oz large mug.',
     'shop.mapKey': 'Key',
     'shop.legendMe': 'Me',
     'shop.mapKeyEmpty': 'Add comparisons below to show overlays on the key.',
@@ -183,16 +185,20 @@ const TRANSLATIONS = {
     'shop.matchGarment': 'Match garment',
     'shop.colourGold': 'Gold',
     'shop.checkout': 'Checkout',
-    'shop.checkoutSoonTitle': 'Checkout coming soon',
-    'shop.checkoutSoonBody': 'Printful and Stripe are not connected yet. This prototype lets you preview your order. When we go live, checkout will fulfil via Printful from the UK/EU.',
+    'shop.checkoutLoading': 'Redirecting to secure checkout…',
+    'shop.checkoutError': 'Checkout unavailable. Try again later.',
+    'shop.paidConfirmation': 'Thank you — your order is being prepared.',
     'shop.orderSummary': 'Order summary',
     'shop.summaryMapColour': 'Your map colour',
     'shop.summaryOverlays': 'Overlays',
-    'shop.summaryPrice': 'Est. price',
+    'shop.summaryPrice': 'Price',
     'shop.modalClose': 'Close',
     'shop.copySummary': 'Copy summary',
     'shop.summaryCopied': 'Order summary copied',
-    'shop.needsResults': 'Complete the compass or open a shared results link before visiting the shop.'
+    'shop.needsResults': 'Complete the compass or open a shared results link before visiting the shop.',
+    'shop.legalNote': 'By checking out you agree to our',
+    'shop.termsLink': 'shop terms',
+    'shop.privacyLink': 'privacy notice'
   }
 };
 

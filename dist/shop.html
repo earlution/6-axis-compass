@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Print your map — Six-Axis Political Compass</title>
 <meta name="description" content="Configure and order custom apparel with your six-axis compass radar chart.">
+<meta name="merch-api-base" content="">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -1211,6 +1212,34 @@ body {
   margin-top: 0.5rem;
 }
 
+.shop-checkout-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.shop-mockup-wrap--mug .merch-chart-overlay {
+  top: 28%;
+  left: 50%;
+  width: 52%;
+  height: 42%;
+  transform: translate(-50%, -50%);
+}
+
+.shop-legal-note {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+
+.shop-legal-note a {
+  color: var(--accent);
+}
+
+.config-section[hidden] {
+  display: none;
+}
+
 .shop-modal-content {
   max-width: 420px;
 }
@@ -1279,6 +1308,10 @@ body {
   <span class="footer-copy">© 2026 Ruari Mears</span>
   <span class="footer-sep">·</span>
   <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="merch-terms.html">Shop terms</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="merch-privacy.html">Shop privacy</a>
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
@@ -1438,7 +1471,7 @@ const TRANSLATIONS = {
 
     'results.invertPoles': 'Invert poles',
 
-    'merch.prototypeBadge': 'Merch preview — checkout not live',
+    'merch.fulfilmentBadge': 'Fulfilled by Printful (UK/EU)',
     'merch.heading': 'Wear your map',
     'merch.garmentColour': 'Garment colour',
     'merch.colourWhite': 'White',
@@ -1450,6 +1483,7 @@ const TRANSLATIONS = {
     'merch.garment.tee': 't-shirt',
     'merch.garment.sweatshirt': 'sweatshirt',
     'merch.garment.hoodie': 'hoodie',
+    'merch.garment.mug': 'mug',
 
     'shop.title': 'Print your compass',
     'shop.breadcrumbResults': 'Results',
@@ -1459,10 +1493,11 @@ const TRANSLATIONS = {
     'shop.editOnCompass': 'Edit on compass',
     'shop.comparisons': 'Comparisons on print',
     'shop.overlayCap': 'Up to 2 overlays recommended for legibility on clothing.',
-    'shop.garment': 'Garment',
+    'shop.garment': 'Product',
     'shop.size': 'Size',
-    'shop.sizeNote': 'Prototype sizing — final fit guide with Printful.',
-    'shop.priceNote': 'placeholder price',
+    'shop.mugSize': 'Mug size',
+    'shop.sizeNote': 'See Printful size guide for fit details.',
+    'shop.mugSizeNote': '11oz standard mug or 15oz large mug.',
     'shop.mapKey': 'Key',
     'shop.legendMe': 'Me',
     'shop.mapKeyEmpty': 'Add comparisons below to show overlays on the key.',
@@ -1472,16 +1507,20 @@ const TRANSLATIONS = {
     'shop.matchGarment': 'Match garment',
     'shop.colourGold': 'Gold',
     'shop.checkout': 'Checkout',
-    'shop.checkoutSoonTitle': 'Checkout coming soon',
-    'shop.checkoutSoonBody': 'Printful and Stripe are not connected yet. This prototype lets you preview your order. When we go live, checkout will fulfil via Printful from the UK/EU.',
+    'shop.checkoutLoading': 'Redirecting to secure checkout…',
+    'shop.checkoutError': 'Checkout unavailable. Try again later.',
+    'shop.paidConfirmation': 'Thank you — your order is being prepared.',
     'shop.orderSummary': 'Order summary',
     'shop.summaryMapColour': 'Your map colour',
     'shop.summaryOverlays': 'Overlays',
-    'shop.summaryPrice': 'Est. price',
+    'shop.summaryPrice': 'Price',
     'shop.modalClose': 'Close',
     'shop.copySummary': 'Copy summary',
     'shop.summaryCopied': 'Order summary copied',
-    'shop.needsResults': 'Complete the compass or open a shared results link before visiting the shop.'
+    'shop.needsResults': 'Complete the compass or open a shared results link before visiting the shop.',
+    'shop.legalNote': 'By checking out you agree to our',
+    'shop.termsLink': 'shop terms',
+    'shop.privacyLink': 'privacy notice'
   }
 };
 
@@ -1586,33 +1625,117 @@ function copyToClipboard(text) {
 
 
 const GARMENTS = [
-  { id: 'tee', labelKey: 'merch.garment.tee' },
-  { id: 'sweatshirt', labelKey: 'merch.garment.sweatshirt' },
-  { id: 'hoodie', labelKey: 'merch.garment.hoodie' }
+  { id: 'tee', labelKey: 'merch.garment.tee', productType: 'apparel' },
+  { id: 'sweatshirt', labelKey: 'merch.garment.sweatshirt', productType: 'apparel' },
+  { id: 'hoodie', labelKey: 'merch.garment.hoodie', productType: 'apparel' },
+  { id: 'mug', labelKey: 'merch.garment.mug', productType: 'mug' }
 ];
+const APPAREL_IDS = ['tee', 'sweatshirt', 'hoodie'];
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const MUG_SIZES = ['11oz', '15oz'];
 const STUB_PRICES_GBP = {
   tee: 24.99,
   sweatshirt: 34.99,
-  hoodie: 39.99
+  hoodie: 39.99,
+  mug: 14.99
 };
+
+let livePrices = null;
+function setLivePrices(prices) {
+  livePrices = prices;
+}
+function getPriceGBP(productId) {
+  if (livePrices?.[productId]?.priceGBP != null) {
+    return livePrices[productId].priceGBP;
+  }
+  return STUB_PRICES_GBP[productId] ?? STUB_PRICES_GBP.tee;
+}
 function garmentImagePath(garmentId, garmentColor) {
+  if (garmentId === 'mug') {
+    return 'assets/merch/mug-white.svg';
+  }
   return `assets/merch/${garmentId}-${garmentColor}.svg`;
 }
 function chartInkColor(chartTheme) {
   return chartTheme === 'dark' ? '#ffffff' : '#000000';
 }
-
-/** Normalise hex colour from picker or hash (with or without #). */
 function normalizeHexColor(value, fallback = '#c8a84b') {
   if (!value || typeof value !== 'string') return fallback;
   let hex = value.trim().replace(/^#/, '');
   if (!/^[0-9a-fA-F]{6}$/.test(hex)) return fallback;
   return '#' + hex.toLowerCase();
 }
-function formatPriceGBP(garmentId) {
-  const n = STUB_PRICES_GBP[garmentId] ?? STUB_PRICES_GBP.tee;
+function formatPriceGBP(productId) {
+  const n = getPriceGBP(productId);
   return '£' + n.toFixed(2);
+}
+function isApparel(productId) {
+  return APPAREL_IDS.includes(productId);
+}
+function isMug(productId) {
+  return productId === 'mug';
+}
+async function fetchLivePrices(apiBase) {
+  if (!apiBase) return null;
+  try {
+    const res = await fetch(`${apiBase.replace(/\/$/, '')}/api/merch/prices`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.prices) setLivePrices(data.prices);
+    return data.prices;
+  } catch (_) {
+    return null;
+  }
+}
+function getApiBase() {
+  const meta = document.querySelector('meta[name="merch-api-base"]');
+  const fromMeta = meta?.getAttribute('content')?.trim();
+  if (fromMeta) return fromMeta.replace(/\/$/, '');
+  if (typeof window !== 'undefined' && window.MERCH_API_BASE) {
+    return String(window.MERCH_API_BASE).replace(/\/$/, '');
+  }
+  return 'http://localhost:3000';
+}
+
+
+function buildCheckoutPayload(state) {
+  const mug = isMug(state.garment);
+  const axesOrder = state.axesOrder?.length === 6
+    ? (state.axesOrder[0] === 'Cultural' && state.axesOrder[1] === 'Economic' ? 'cemslg' : 'egacsm')
+    : 'cemslg';
+
+  return {
+    productType: mug ? 'mug' : 'apparel',
+    scores: state.scores,
+    axesOrder,
+    orientation: state.orientation,
+    invertedAxes: [...(state.invertedAxes || [])],
+    actorSlugs: state.actorSlugs || [],
+    customActors: state.customActors || [],
+    uploadedMap: state.uploadedMap || null,
+    showUser: state.showUser !== false,
+    garment: state.garment,
+    garmentColor: mug ? 'white' : (state.garmentColor || 'white'),
+    chartTheme: state.chartTheme || (state.garmentColor === 'black' ? 'dark' : 'light'),
+    size: mug ? undefined : (state.size || 'M'),
+    mugSize: mug ? (state.mugSize || '11oz') : undefined,
+    userMapColor: state.userMapColor,
+    register: state.register || 'primary'
+  };
+}
+async function startCheckout(payload, apiBase) {
+  const base = (apiBase || 'http://localhost:3000').replace(/\/$/, '');
+  const res = await fetch(`${base}/api/checkout/session`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || `Checkout failed (${res.status})`);
+  }
+  if (!data.url) throw new Error('No checkout URL returned');
+  window.location.href = data.url;
 }
 
 
@@ -1654,12 +1777,14 @@ function encodeMerchHash(state) {
     garmentColor = 'white',
     chartTheme = 'light',
     register = 'primary',
-    userMapColor
+    userMapColor,
+    mugSize = '11oz'
   } = state;
   let hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
   hash = hash.replace('#v2', '#v3');
   if (actorSlugs.length) hash += `;a=${actorSlugs.join(',')}`;
   hash += `;g=${garment};gc=${garmentColor};th=${chartTheme};reg=${register}`;
+  if (garment === 'mug') hash += `;ms=${mugSize}`;
   if (userMapColor) {
     hash += `;uc=${normalizeHexColor(userMapColor).replace(/^#/, '')}`;
   }
@@ -1686,7 +1811,8 @@ function decodeMerchHash(hash) {
 
   const v2parts = parts.filter(p =>
     p && !p.startsWith('a=') && !p.startsWith('g=') && !p.startsWith('gc=') &&
-    !p.startsWith('th=') && !p.startsWith('reg=') && !p.startsWith('uc=')
+    !p.startsWith('th=') && !p.startsWith('reg=') && !p.startsWith('uc=') &&
+    !p.startsWith('ms=')
   );
   const decoded = decodeHash('#' + v2parts.join(';').replace(/^v3/, 'v2'));
   if (!decoded) return null;
@@ -1697,6 +1823,7 @@ function decodeMerchHash(hash) {
   let chartTheme = 'light';
   let register = 'primary';
   let userMapColor = null;
+  let mugSize = '11oz';
 
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
@@ -1711,6 +1838,8 @@ function decodeMerchHash(hash) {
       register = part.slice(4);
     } else if (part.startsWith('uc=')) {
       userMapColor = normalizeHexColor('#' + part.slice(3));
+    } else if (part.startsWith('ms=')) {
+      mugSize = part.slice(3);
     } else if (part.startsWith('g=')) {
       garment = part.slice(2);
     }
@@ -1723,6 +1852,7 @@ function decodeMerchHash(hash) {
     garmentColor,
     chartTheme,
     register,
+    mugSize,
     userMapColor: userMapColor || chartInkColor(chartTheme)
   };
 }
@@ -1780,7 +1910,8 @@ function buildDraftFromResults({
     garmentColor: gc,
     chartTheme: th,
     userMapColor: normalizeHexColor(userMapColor, chartInkColor(th)),
-    size: 'M'
+    size: 'M',
+    mugSize: '11oz'
   };
 }
 function mergeMerchState(hashDecoded, draft) {
@@ -1804,7 +1935,8 @@ function mergeMerchState(hashDecoded, draft) {
       d.userMapColor || base.userMapColor,
       chartInkColor(d.chartTheme || base.chartTheme || 'light')
     ),
-    size: d.size || 'M'
+    size: d.size || base.size || 'M',
+    mugSize: d.mugSize || base.mugSize || '11oz'
   };
 }
 
@@ -5233,7 +5365,19 @@ function drawRadar(svg, {
 }
 
 
-{ GARMENTS, garmentImagePath, chartInkColor, normalizeHexColor, formatPriceGBP };
+{
+  GARMENTS,
+  SIZES,
+  MUG_SIZES,
+  garmentImagePath,
+  chartInkColor,
+  normalizeHexColor,
+  formatPriceGBP,
+  isApparel,
+  isMug,
+  getApiBase,
+  fetchLivePrices
+} from './merch-catalog.js';
 function getGarmentLabel(garmentId) {
   const g = GARMENTS.find(x => x.id === garmentId);
   return g ? t(g.labelKey) : garmentId;
@@ -5374,7 +5518,7 @@ function buildMerchPreviewHTML(garmentColor) {
 
   return `
     <section class="merch-preview" aria-labelledby="merch-preview-heading">
-      <p class="merch-badge">${t('merch.prototypeBadge')}</p>
+      <p class="merch-badge">${t('merch.fulfilmentBadge')}</p>
       <h3 id="merch-preview-heading" class="merch-heading">${t('merch.heading')}</h3>
       <div class="merch-mockup-wrap" tabindex="0">
         ${buildMockupHTML('tee', garmentColor)}
@@ -5394,8 +5538,10 @@ function buildMerchPreviewHTML(garmentColor) {
   `;
 }
 function formatOrderSummary(state) {
+  const mug = state.garment === 'mug';
   const garment = getGarmentLabel(state.garment);
-  const colour = state.garmentColor === 'black' ? t('merch.colourBlack') : t('merch.colourWhite');
+  const colour = mug ? 'White' : (state.garmentColor === 'black' ? t('merch.colourBlack') : t('merch.colourWhite'));
+  const sizeLine = mug ? (state.mugSize || '11oz') : (state.size || 'M');
   const overlays = [];
   if (state.showUser !== false) overlays.push(t('results.you'));
   (state.resolvedActors || []).forEach(a => overlays.push(t('actor.' + a.name) || a.name));
@@ -5406,7 +5552,7 @@ function formatOrderSummary(state) {
     : null;
   return {
     lines: [
-      `${garment} (${colour}) — ${state.size || 'M'}`,
+      `${garment} (${colour}) — ${sizeLine}`,
       ...(mapColourLine ? [mapColourLine] : []),
       t('shop.summaryOverlays') + ': ' + (overlays.length ? overlays.join(', ') : '—'),
       t('shop.summaryPrice') + ': ' + price
@@ -5414,7 +5560,7 @@ function formatOrderSummary(state) {
     text: [
       garment,
       colour,
-      state.size || 'M',
+      sizeLine,
       overlays.join(', '),
       price
     ].join('\n')
@@ -5570,6 +5716,7 @@ function renderShop(container, state, handlers) {
     garmentColor,
     chartTheme,
     size,
+    mugSize,
     customActors,
     userMapColor,
     onGarmentChange,
@@ -5586,6 +5733,8 @@ function renderShop(container, state, handlers) {
   const inverted = new Set(invertedAxes || []);
   const userColor = normalizeHexColor(userMapColor, chartInkColor(chartTheme));
   const resolvedActors = resolveShopActors(state);
+  const mug = isMug(garment);
+  const priceId = garment;
 
   container.innerHTML = `
     <div class="wrap wrap--wide">
@@ -5594,15 +5743,15 @@ function renderShop(container, state, handlers) {
         <span aria-hidden="true"> › </span>
         <span>${t('shop.breadcrumbShop')}</span>
       </nav>
-      <p class="merch-badge shop-page-badge">${t('merch.prototypeBadge')}</p>
+      <p class="merch-badge shop-page-badge">${t('merch.fulfilmentBadge')}</p>
       <h1 class="shop-title">${t('shop.title')}</h1>
       <div class="shop-layout results-layout">
         <div class="chart-pane shop-preview-pane">
-          <div class="merch-mockup-wrap shop-mockup-wrap">
+          <div class="merch-mockup-wrap shop-mockup-wrap${mug ? ' shop-mockup-wrap--mug' : ''}">
             ${buildMockupHTML(garment, garmentColor)}
           </div>
           <div class="shop-map-key" id="shop-map-key" role="region" aria-label="${t('shop.mapKey')}"></div>
-          <p class="shop-price-display">${formatPriceGBP(garment)} <span class="shop-price-note">${t('shop.priceNote')}</span></p>
+          <p class="shop-price-display">${formatPriceGBP(priceId)}</p>
         </div>
         <div class="content-pane shop-config-pane">
           <section class="config-section">
@@ -5634,15 +5783,16 @@ function renderShop(container, state, handlers) {
             <p class="config-heading">${t('shop.garment')}</p>
             <div class="config-row" id="shop-garment-btns"></div>
           </section>
-          <section class="config-section">
+          <section class="config-section shop-apparel-only" id="shop-color-section"${mug ? ' hidden' : ''}>
             <p class="config-heading">${t('merch.garmentColour')}</p>
             <div class="config-row" id="shop-color-btns"></div>
           </section>
           <section class="config-section">
-            <p class="config-heading">${t('shop.size')}</p>
-            <p class="config-note">${t('shop.sizeNote')}</p>
+            <p class="config-heading">${mug ? t('shop.mugSize') : t('shop.size')}</p>
+            <p class="config-note">${mug ? t('shop.mugSizeNote') : t('shop.sizeNote')}</p>
             <div class="config-row shop-size-row" id="shop-size-btns"></div>
           </section>
+          <p class="shop-legal-note">${t('shop.legalNote')} <a href="merch-terms.html">${t('shop.termsLink')}</a> · <a href="merch-privacy.html">${t('shop.privacyLink')}</a></p>
           <button type="button" class="btn shop-checkout-btn" id="btn-shop-checkout">${t('shop.checkout')}</button>
         </div>
       </div>
@@ -5723,10 +5873,12 @@ function renderShop(container, state, handlers) {
   });
 
   const sizeBtns = document.getElementById('shop-size-btns');
-  SIZES.forEach(s => {
+  const sizeOptions = mug ? MUG_SIZES : SIZES;
+  const activeSize = mug ? (mugSize || '11oz') : (size || 'M');
+  sizeOptions.forEach(s => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'config-btn shop-size-btn' + (size === s ? ' active' : '');
+    btn.className = 'config-btn shop-size-btn' + (activeSize === s ? ' active' : '');
     btn.textContent = s;
     btn.addEventListener('click', () => onSizeChange(s));
     sizeBtns.appendChild(btn);
@@ -5771,17 +5923,33 @@ function pushShopHash(state) {
     garmentColor: state.garmentColor,
     chartTheme: state.chartTheme,
     register: state.register,
-    userMapColor: state.userMapColor
+    userMapColor: state.userMapColor,
+    mugSize: state.mugSize
   });
   if (window.location.hash !== hash) {
     history.replaceState(null, '', 'shop.html' + hash);
   }
 }
-function openShopCheckout(state) {
-  openCheckoutStubModal({
+async function openShopCheckout(state) {
+  const payload = buildCheckoutPayload({
     ...state,
     resolvedActors: resolveShopActors(state)
   });
+  const btn = document.getElementById('btn-shop-checkout');
+  const announcer = document.getElementById('announcer');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = t('shop.checkoutLoading');
+  }
+  try {
+    await startCheckout(payload, getApiBase());
+  } catch (err) {
+    if (announcer) announcer.textContent = err.message || t('shop.checkoutError');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = t('shop.checkout');
+    }
+  }
 }
 
 
@@ -5838,6 +6006,13 @@ if (state.selectedActorNames?.length && !state.actorSlugs?.length) {
   syncActorSlugsFromNames();
 }
 
+function showPaidBanner() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('paid') !== '1') return;
+  const announcer = document.getElementById('announcer');
+  if (announcer) announcer.textContent = t('shop.paidConfirmation');
+}
+
 function render() {
   renderShop(app, {
     scores: state.scores,
@@ -5852,11 +6027,16 @@ function render() {
     chartTheme: state.chartTheme,
     userMapColor: state.userMapColor,
     size: state.size,
+    mugSize: state.mugSize,
     customActors: state.customActors,
     actorSlugs: state.actorSlugs,
     compassHash: compassHashForBack(),
     onGarmentChange: (id) => {
       state.garment = id;
+      if (isMug(id)) {
+        state.garmentColor = 'white';
+        state.chartTheme = 'light';
+      }
       persist();
       render();
     },
@@ -5877,7 +6057,8 @@ function render() {
       render();
     },
     onSizeChange: (s) => {
-      state.size = s;
+      if (isMug(state.garment)) state.mugSize = s;
+      else state.size = s;
       persist();
       render();
     },
@@ -5910,6 +6091,8 @@ document.documentElement.setAttribute('data-theme', (() => {
 })());
 
 setLanguage('en');
+fetchLivePrices(getApiBase()).then(() => render());
+showPaidBanner();
 persist();
 render();
 

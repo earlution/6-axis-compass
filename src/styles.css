@@ -1199,6 +1199,34 @@ body {
   margin-top: 0.5rem;
 }
 
+.shop-checkout-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.shop-mockup-wrap--mug .merch-chart-overlay {
+  top: 28%;
+  left: 50%;
+  width: 52%;
+  height: 42%;
+  transform: translate(-50%, -50%);
+}
+
+.shop-legal-note {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+
+.shop-legal-note a {
+  color: var(--accent);
+}
+
+.config-section[hidden] {
+  display: none;
+}
+
 .shop-modal-content {
   max-width: 420px;
 }

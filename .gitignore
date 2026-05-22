@@ -3,6 +3,7 @@ node_modules/
 *.log
 .env
 .env.local
+api/data/
 # Google Drive mount (symlink → Drive "6-Axis Compass/") — not git
 /docs-gd-6-axis-compass
 docs-gd-6-axis-compass/

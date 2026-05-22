@@ -90,6 +90,11 @@ export async function handleChart(req, res, body) {
     invertedAxes = new Set();
   }
 
+  const labelMode = body.labelMode === 'full' ? 'full' : 'trigram';
+  const background = ['white', 'transparent', 'dark'].includes(body.background)
+    ? body.background
+    : 'white';
+
   const config = {
     scores,
     axes,
@@ -97,9 +102,13 @@ export async function handleChart(req, res, body) {
     invertedAxes,
     actors,
     showUser: body.showUser !== false,
-    userColor: body.colors?.user || '#c8a84b',
+    userColor: body.colors?.user || body.userMapColor || '#c8a84b',
     title: body.title || 'Chart',
-    register
+    register,
+    layout,
+    labelMode,
+    labelMerch: body.labelMerch === true,
+    background
   };
 
   if (format === 'svg') {

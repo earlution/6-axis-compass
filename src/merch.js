@@ -8,7 +8,19 @@ import {
   formatPriceGBP
 } from './merch-catalog.js';
 
-export { GARMENTS, garmentImagePath, chartInkColor, normalizeHexColor, formatPriceGBP };
+export {
+  GARMENTS,
+  SIZES,
+  MUG_SIZES,
+  garmentImagePath,
+  chartInkColor,
+  normalizeHexColor,
+  formatPriceGBP,
+  isApparel,
+  isMug,
+  getApiBase,
+  fetchLivePrices
+} from './merch-catalog.js';
 
 export function getGarmentLabel(garmentId) {
   const g = GARMENTS.find(x => x.id === garmentId);
@@ -154,7 +166,7 @@ export function buildMerchPreviewHTML(garmentColor) {
 
   return `
     <section class="merch-preview" aria-labelledby="merch-preview-heading">
-      <p class="merch-badge">${t('merch.prototypeBadge')}</p>
+      <p class="merch-badge">${t('merch.fulfilmentBadge')}</p>
       <h3 id="merch-preview-heading" class="merch-heading">${t('merch.heading')}</h3>
       <div class="merch-mockup-wrap" tabindex="0">
         ${buildMockupHTML('tee', garmentColor)}
@@ -175,8 +187,10 @@ export function buildMerchPreviewHTML(garmentColor) {
 }
 
 export function formatOrderSummary(state) {
+  const mug = state.garment === 'mug';
   const garment = getGarmentLabel(state.garment);
-  const colour = state.garmentColor === 'black' ? t('merch.colourBlack') : t('merch.colourWhite');
+  const colour = mug ? 'White' : (state.garmentColor === 'black' ? t('merch.colourBlack') : t('merch.colourWhite'));
+  const sizeLine = mug ? (state.mugSize || '11oz') : (state.size || 'M');
   const overlays = [];
   if (state.showUser !== false) overlays.push(t('results.you'));
   (state.resolvedActors || []).forEach(a => overlays.push(t('actor.' + a.name) || a.name));
@@ -187,7 +201,7 @@ export function formatOrderSummary(state) {
     : null;
   return {
     lines: [
-      `${garment} (${colour}) — ${state.size || 'M'}`,
+      `${garment} (${colour}) — ${sizeLine}`,
       ...(mapColourLine ? [mapColourLine] : []),
       t('shop.summaryOverlays') + ': ' + (overlays.length ? overlays.join(', ') : '—'),
       t('shop.summaryPrice') + ': ' + price
@@ -195,7 +209,7 @@ export function formatOrderSummary(state) {
     text: [
       garment,
       colour,
-      state.size || 'M',
+      sizeLine,
       overlays.join(', '),
       price
     ].join('\n')

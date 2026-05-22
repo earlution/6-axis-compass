@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Print your map — Six-Axis Political Compass</title>
 <meta name="description" content="Configure and order custom apparel with your six-axis compass radar chart.">
+<meta name="merch-api-base" content="{{MERCH_API_BASE}}">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -21,6 +22,10 @@
   <span class="footer-copy">© 2026 Ruari Mears</span>
   <span class="footer-sep">·</span>
   <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="merch-terms.html">Shop terms</a>
+  <span class="footer-sep">·</span>
+  <a class="footer-link" href="merch-privacy.html">Shop privacy</a>
   <span class="footer-sep">·</span>
   <a class="footer-link" href="data.html">Dataset</a>
   <span class="footer-sep">·</span>
@@ -40,6 +45,7 @@ import {
   resolveActorBySlug
 } from './merch-url.js';
 import { encodeHash } from './url.js';
+import { isMug, fetchLivePrices, getApiBase } from './merch-catalog.js';
 import { renderShop, pushShopHash, openShopCheckout } from './shop-ui.js';
 
 const app = document.getElementById('app');
@@ -95,6 +101,13 @@ if (state.selectedActorNames?.length && !state.actorSlugs?.length) {
   syncActorSlugsFromNames();
 }
 
+function showPaidBanner() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('paid') !== '1') return;
+  const announcer = document.getElementById('announcer');
+  if (announcer) announcer.textContent = t('shop.paidConfirmation');
+}
+
 function render() {
   renderShop(app, {
     scores: state.scores,
@@ -109,11 +122,16 @@ function render() {
     chartTheme: state.chartTheme,
     userMapColor: state.userMapColor,
     size: state.size,
+    mugSize: state.mugSize,
     customActors: state.customActors,
     actorSlugs: state.actorSlugs,
     compassHash: compassHashForBack(),
     onGarmentChange: (id) => {
       state.garment = id;
+      if (isMug(id)) {
+        state.garmentColor = 'white';
+        state.chartTheme = 'light';
+      }
       persist();
       render();
     },
@@ -134,7 +152,8 @@ function render() {
       render();
     },
     onSizeChange: (s) => {
-      state.size = s;
+      if (isMug(state.garment)) state.mugSize = s;
+      else state.size = s;
       persist();
       render();
     },
@@ -167,6 +186,8 @@ document.documentElement.setAttribute('data-theme', (() => {
 })());
 
 setLanguage('en');
+fetchLivePrices(getApiBase()).then(() => render());
+showPaidBanner();
 persist();
 render();
 </script>

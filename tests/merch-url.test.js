@@ -30,6 +30,22 @@ assert(decoded.chartTheme === 'dark', 'chartTheme');
 assert(decoded.userMapColor === '#c8a84b', 'userMapColor');
 assert(hash.includes(';uc=c8a84b'), 'hash includes uc');
 
+const mugHash = encodeMerchHash({
+  scores,
+  orientation: 'flat',
+  axesOrder: [...AXES],
+  invertedAxes: new Set(),
+  garment: 'mug',
+  garmentColor: 'white',
+  chartTheme: 'light',
+  mugSize: '15oz'
+});
+assert(mugHash.includes(';g=mug'), 'mug garment in hash');
+assert(mugHash.includes(';ms=15oz'), 'mug size in hash');
+const mugDecoded = decodeMerchHash(mugHash);
+assert(mugDecoded.garment === 'mug', 'mug decode');
+assert(mugDecoded.mugSize === '15oz', 'mug size decode');
+
 const merged = mergeMerchState(decoded, { size: 'L' });
 assert(merged.size === 'L', 'merge draft size');
 

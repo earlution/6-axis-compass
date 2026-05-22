@@ -145,22 +145,26 @@ https://earlution.github.io/6-axis-compass/#v2;c=5.0,e=5.0,m=5.0,s=5.0,l=5.0,a=5
 
 Visiting a valid hash URL skips the quiz and renders the results screen immediately. The URL auto-updates when orientation or axis order changes, so copying the address bar always captures the current view. `v1` URLs are backwards-compatible.
 
-### Merch shop prototype (`merch-shop` branch)
+### Merch shop (`feat/merch`)
 
-Custom apparel flow (Printful-ready UI, **checkout stubbed**): results → garment mockup carousel → [`shop.html`](./src/shop.html) configurator → stub checkout modal.
+Custom prints (apparel + mugs): results → [`shop.html`](./src/shop.html) → Stripe Checkout → Printful fulfilment (UK/EU).
 
 | Output | Description |
 |--------|-------------|
-| `dist/shop.html` | Shop configurator (same styles as main app) |
-| `dist/assets/merch/` | Placeholder garment mockup SVGs |
+| `dist/shop.html` | Shop configurator |
+| `dist/assets/merch/` | Garment and mug mockup SVGs |
+| `dist/merch-terms.html` | Shop terms |
+| `dist/merch-privacy.html` | Shop privacy notice |
 
-**Demo locally:** `npm run build` then serve `dist/` (see [`docs/merch-prototype.md`](./docs/merch-prototype.md)).
+**Demo locally:** `npm install && npm run build` then serve `dist/`; run `node api/server.js` with Stripe test keys (see [`docs.repo-sync/merch-prototype.md`](./docs.repo-sync/merch-prototype.md)).
 
-- **v3 hash** on shop URLs carries scores, comparisons (actor slugs), garment, colour, and chart ink theme.
-- **sessionStorage** draft preserves custom actors and uploaded maps.
-- Future Printful/Stripe wiring: [`docs/merch-printful-integration.md`](./docs/merch-printful-integration.md).
+- **v3 hash** — scores, comparisons, product, mug size (`;ms=`), map colour
+- **Checkout API** — `POST /api/checkout/session` (deploy separately from Pages)
+- **Docs** — [`docs.repo-sync/merch-printful-integration.md`](./docs.repo-sync/merch-printful-integration.md), [`merch-infrastructure.md`](./docs.repo-sync/merch-infrastructure.md), [`merch-deploy.md`](./docs.repo-sync/merch-deploy.md)
 
-Tagged releases for this prototype use `merch-prototype-v*` (see git tags).
+Build with API URL: `MERCH_API_BASE=https://api.6axiscompass.uk npm run build`
+
+Production domain: **6axiscompass.uk** (123-reg). Upload `dist/` to web hosting; API on `api.6axiscompass.uk`. See [`docs.repo-sync/hosting-123-reg.md`](./docs.repo-sync/hosting-123-reg.md).
 
 ## Paper Artifacts
 

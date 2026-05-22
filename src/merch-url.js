@@ -43,12 +43,14 @@ export function encodeMerchHash(state) {
     garmentColor = 'white',
     chartTheme = 'light',
     register = 'primary',
-    userMapColor
+    userMapColor,
+    mugSize = '11oz'
   } = state;
   let hash = encodeHash(scores, orientation, axesOrder, invertedAxes);
   hash = hash.replace('#v2', '#v3');
   if (actorSlugs.length) hash += `;a=${actorSlugs.join(',')}`;
   hash += `;g=${garment};gc=${garmentColor};th=${chartTheme};reg=${register}`;
+  if (garment === 'mug') hash += `;ms=${mugSize}`;
   if (userMapColor) {
     hash += `;uc=${normalizeHexColor(userMapColor).replace(/^#/, '')}`;
   }
@@ -76,7 +78,8 @@ export function decodeMerchHash(hash) {
 
   const v2parts = parts.filter(p =>
     p && !p.startsWith('a=') && !p.startsWith('g=') && !p.startsWith('gc=') &&
-    !p.startsWith('th=') && !p.startsWith('reg=') && !p.startsWith('uc=')
+    !p.startsWith('th=') && !p.startsWith('reg=') && !p.startsWith('uc=') &&
+    !p.startsWith('ms=')
   );
   const decoded = decodeHash('#' + v2parts.join(';').replace(/^v3/, 'v2'));
   if (!decoded) return null;
@@ -87,6 +90,7 @@ export function decodeMerchHash(hash) {
   let chartTheme = 'light';
   let register = 'primary';
   let userMapColor = null;
+  let mugSize = '11oz';
 
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
@@ -101,6 +105,8 @@ export function decodeMerchHash(hash) {
       register = part.slice(4);
     } else if (part.startsWith('uc=')) {
       userMapColor = normalizeHexColor('#' + part.slice(3));
+    } else if (part.startsWith('ms=')) {
+      mugSize = part.slice(3);
     } else if (part.startsWith('g=')) {
       garment = part.slice(2);
     }
@@ -113,6 +119,7 @@ export function decodeMerchHash(hash) {
     garmentColor,
     chartTheme,
     register,
+    mugSize,
     userMapColor: userMapColor || chartInkColor(chartTheme)
   };
 }
@@ -174,7 +181,8 @@ export function buildDraftFromResults({
     garmentColor: gc,
     chartTheme: th,
     userMapColor: normalizeHexColor(userMapColor, chartInkColor(th)),
-    size: 'M'
+    size: 'M',
+    mugSize: '11oz'
   };
 }
 
@@ -199,6 +207,7 @@ export function mergeMerchState(hashDecoded, draft) {
       d.userMapColor || base.userMapColor,
       chartInkColor(d.chartTheme || base.chartTheme || 'light')
     ),
-    size: d.size || 'M'
+    size: d.size || base.size || 'M',
+    mugSize: d.mugSize || base.mugSize || '11oz'
   };
 }

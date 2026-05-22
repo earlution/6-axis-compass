@@ -4,14 +4,17 @@ import { t } from './i18n.js';
 import {
   GARMENTS,
   SIZES,
+  MUG_SIZES,
   garmentImagePath,
   chartInkColor,
   normalizeHexColor,
   formatPriceGBP,
   buildMockupHTML,
-  openCheckoutStubModal
+  isMug,
+  getApiBase
 } from './merch.js';
 import { resolveActorBySlug, encodeMerchHash, getActorSlug } from './merch-url.js';
+import { buildCheckoutPayload, startCheckout } from './merch-checkout.js';
 
 const MAX_SHOP_ACTORS = 2;
 const MAP_COLOR_GOLD = '#c8a84b';
@@ -101,6 +104,7 @@ export function renderShop(container, state, handlers) {
     garmentColor,
     chartTheme,
     size,
+    mugSize,
     customActors,
     userMapColor,
     onGarmentChange,
@@ -117,6 +121,8 @@ export function renderShop(container, state, handlers) {
   const inverted = new Set(invertedAxes || []);
   const userColor = normalizeHexColor(userMapColor, chartInkColor(chartTheme));
   const resolvedActors = resolveShopActors(state);
+  const mug = isMug(garment);
+  const priceId = garment;
 
   container.innerHTML = `
     <div class="wrap wrap--wide">
@@ -125,15 +131,15 @@ export function renderShop(container, state, handlers) {
         <span aria-hidden="true"> › </span>
         <span>${t('shop.breadcrumbShop')}</span>
       </nav>
-      <p class="merch-badge shop-page-badge">${t('merch.prototypeBadge')}</p>
+      <p class="merch-badge shop-page-badge">${t('merch.fulfilmentBadge')}</p>
       <h1 class="shop-title">${t('shop.title')}</h1>
       <div class="shop-layout results-layout">
         <div class="chart-pane shop-preview-pane">
-          <div class="merch-mockup-wrap shop-mockup-wrap">
+          <div class="merch-mockup-wrap shop-mockup-wrap${mug ? ' shop-mockup-wrap--mug' : ''}">
             ${buildMockupHTML(garment, garmentColor)}
           </div>
           <div class="shop-map-key" id="shop-map-key" role="region" aria-label="${t('shop.mapKey')}"></div>
-          <p class="shop-price-display">${formatPriceGBP(garment)} <span class="shop-price-note">${t('shop.priceNote')}</span></p>
+          <p class="shop-price-display">${formatPriceGBP(priceId)}</p>
         </div>
         <div class="content-pane shop-config-pane">
           <section class="config-section">
@@ -165,15 +171,16 @@ export function renderShop(container, state, handlers) {
             <p class="config-heading">${t('shop.garment')}</p>
             <div class="config-row" id="shop-garment-btns"></div>
           </section>
-          <section class="config-section">
+          <section class="config-section shop-apparel-only" id="shop-color-section"${mug ? ' hidden' : ''}>
             <p class="config-heading">${t('merch.garmentColour')}</p>
             <div class="config-row" id="shop-color-btns"></div>
           </section>
           <section class="config-section">
-            <p class="config-heading">${t('shop.size')}</p>
-            <p class="config-note">${t('shop.sizeNote')}</p>
+            <p class="config-heading">${mug ? t('shop.mugSize') : t('shop.size')}</p>
+            <p class="config-note">${mug ? t('shop.mugSizeNote') : t('shop.sizeNote')}</p>
             <div class="config-row shop-size-row" id="shop-size-btns"></div>
           </section>
+          <p class="shop-legal-note">${t('shop.legalNote')} <a href="merch-terms.html">${t('shop.termsLink')}</a> · <a href="merch-privacy.html">${t('shop.privacyLink')}</a></p>
           <button type="button" class="btn shop-checkout-btn" id="btn-shop-checkout">${t('shop.checkout')}</button>
         </div>
       </div>
@@ -254,10 +261,12 @@ export function renderShop(container, state, handlers) {
   });
 
   const sizeBtns = document.getElementById('shop-size-btns');
-  SIZES.forEach(s => {
+  const sizeOptions = mug ? MUG_SIZES : SIZES;
+  const activeSize = mug ? (mugSize || '11oz') : (size || 'M');
+  sizeOptions.forEach(s => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'config-btn shop-size-btn' + (size === s ? ' active' : '');
+    btn.className = 'config-btn shop-size-btn' + (activeSize === s ? ' active' : '');
     btn.textContent = s;
     btn.addEventListener('click', () => onSizeChange(s));
     sizeBtns.appendChild(btn);
@@ -303,16 +312,32 @@ export function pushShopHash(state) {
     garmentColor: state.garmentColor,
     chartTheme: state.chartTheme,
     register: state.register,
-    userMapColor: state.userMapColor
+    userMapColor: state.userMapColor,
+    mugSize: state.mugSize
   });
   if (window.location.hash !== hash) {
     history.replaceState(null, '', 'shop.html' + hash);
   }
 }
 
-export function openShopCheckout(state) {
-  openCheckoutStubModal({
+export async function openShopCheckout(state) {
+  const payload = buildCheckoutPayload({
     ...state,
     resolvedActors: resolveShopActors(state)
   });
+  const btn = document.getElementById('btn-shop-checkout');
+  const announcer = document.getElementById('announcer');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = t('shop.checkoutLoading');
+  }
+  try {
+    await startCheckout(payload, getApiBase());
+  } catch (err) {
+    if (announcer) announcer.textContent = err.message || t('shop.checkoutError');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = t('shop.checkout');
+    }
+  }
 }
