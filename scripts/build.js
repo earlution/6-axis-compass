@@ -130,14 +130,14 @@ function buildDataPage() {
     version = pkg.version || version;
   } catch (_) {}
 
-  const moduleMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+  const moduleMatch = html.match(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/i);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
   const js = [inline(chrome), moduleScript].join('\n\n');
 
   const output = html
     .replace(/<style>[\s\S]*?<\/style>/, `<style>\n${css}\n</style>`)
-    .replace(/<script>[\s\S]*?<\/script>/, `<script>\n${js}\n</script>`)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/i, `<script>\n${js}\n</script>`)
     .replace(/\{\{VERSION\}\}/g, version)
     .replace(/const ACTORS = __ACTORS \|\| \[\];/, actors.trim() + '\n' + groupsJs + '\nconst ACTORS = __ACTORS || [];');
 
