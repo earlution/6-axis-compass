@@ -176,6 +176,19 @@ Comparison charts (multi-actor overlays) are also generated based on `scripts/pa
 
 ## Development
 
+### Branches
+
+| Branch | Role |
+|--------|------|
+| **`main`** | Production — what GitHub Pages deploys. Merge here only when a release is tested and ready. |
+| **`dev`** | Active development — branch feature work here; open PRs into `dev`, then promote `dev` → `main` for release. |
+
+```bash
+git checkout dev
+git pull origin dev
+git checkout -b feat/my-feature   # optional topic branch off dev
+```
+
 The source is organised as ES modules under `src/`:
 
 | File | Purpose |
