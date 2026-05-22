@@ -61,3 +61,20 @@ Build: `MERCH_API_BASE=http://localhost:3000 npm run build`
 ```bash
 npm test
 ```
+
+## Stripe CLI (webhook testing)
+
+With the API running locally and `STRIPE_WEBHOOK_SECRET` from the CLI:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Complete a test checkout in the shop; the API acknowledges the webhook immediately and fulfils asynchronously (see `api/lib/merch-fulfilment-queue.js`).
+
+Poll order status from the shop return URL (`shop.html?paid=1&session_id=…`) or:
+
+```bash
+curl -s http://localhost:3000/api/orders/session/cs_test_...
+```
+

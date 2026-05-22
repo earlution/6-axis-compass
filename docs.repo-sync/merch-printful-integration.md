@@ -38,6 +38,7 @@ sequenceDiagram
 | `/api/webhooks/stripe` | POST | Fulfil paid orders |
 | `/api/merch/prices` | GET | Live GBP prices from catalog |
 | `/api/orders/:id` | GET | Order status |
+| `/api/orders/session/:sessionId` | GET | Order status by Stripe session |
 | `/api/artwork/:file` | GET | Local artwork files (dev/small deploy) |
 | `/api/chart` | POST | Extended with `background`, `labelMerch` |
 
@@ -53,6 +54,10 @@ See [`.env.example`](../.env.example). Required for live checkout:
 | `MERCH_SUCCESS_URL` / `MERCH_CANCEL_URL` | Stripe redirect URLs |
 | `MERCH_ARTWORK_PUBLIC_ORIGIN` | Public base for Printful file fetch |
 | `MERCH_API_BASE` | Build-time: shop → API URL |
+| `MERCH_CORS_ORIGINS` | Comma-separated allowed browser origins (unset = `*`) |
+| `MERCH_CHECKOUT_RATE_LIMIT` | Checkout requests per IP per minute (default 20) |
+| `MERCH_FULFIL_RETRIES` | Async fulfilment retry attempts (default 3) |
+| `MERCH_AUTO_REFUND_ON_FAILURE` | `true` to refund Stripe payment after fulfilment exhaustion |
 
 ## Catalog
 

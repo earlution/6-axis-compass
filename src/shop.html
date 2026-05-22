@@ -45,7 +45,7 @@ import {
   resolveActorBySlug
 } from './merch-url.js';
 import { encodeHash } from './url.js';
-import { isMug, fetchLivePrices, getApiBase } from './merch-catalog.js';
+import { isMug, fetchLivePrices, getApiBase, fetchOrderBySession } from './merch-catalog.js';
 import { renderShop, pushShopHash, openShopCheckout } from './shop-ui.js';
 
 const app = document.getElementById('app');
@@ -101,11 +101,33 @@ if (state.selectedActorNames?.length && !state.actorSlugs?.length) {
   syncActorSlugsFromNames();
 }
 
-function showPaidBanner() {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function showPaidBanner() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('paid') !== '1') return;
   const announcer = document.getElementById('announcer');
+  const sessionId = params.get('session_id');
   if (announcer) announcer.textContent = t('shop.paidConfirmation');
+  if (!sessionId) return;
+
+  const api = getApiBase();
+  for (let attempt = 0; attempt < 12; attempt++) {
+    await sleep(attempt === 0 ? 500 : 2000);
+    const order = await fetchOrderBySession(sessionId, api);
+    if (!order) continue;
+    if (order.status === 'submitted' || order.status === 'awaiting_printful') {
+      if (announcer) announcer.textContent = t('shop.orderSubmitted');
+      return;
+    }
+    if (order.status === 'failed' || order.status === 'refunded') {
+      if (announcer) announcer.textContent = t('shop.orderFailed');
+      return;
+    }
+    if (announcer) announcer.textContent = t('shop.orderProcessing');
+  }
 }
 
 function render() {

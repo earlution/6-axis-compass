@@ -2,6 +2,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.1.0 | 2026-05-22 | **Merch API:** `POST /api/checkout/session`, `POST /api/webhooks/stripe`, `GET /api/merch/prices`, `GET /api/orders/*`, chart `background` / `labelMerch`. |
 | 2.0.2 | 2026-05-22 | **Spatial inversion (app v3.6.0):** default spatial charts use no rim inversion; `register: structural` inverts `Governance` + `Class` only. |
 | 2.0.1 | 2026-05-20 | **Spatial radar (app v3.1.0):** `POST /api/chart` default `layout: spatial` (OQ5); `orientation: spatial`; `invertedAxes`; pedagogical OQ2 via `layout: pedagogical`. |
 | 2.0.0 | 2026-05-20 | **Public read API (Phase 1):** `GET /api/actors`, `GET /api/actors/:slug`, `POST /api/chart`, `GET /api/axes`, `GET /api/openapi.json` unauthenticated when `API_PUBLIC_READ=true` (default). Rate limit on chart. Optional legacy Bearer on read. `GET /api/health` adds `apiVersion`, `publicRead`. |
@@ -28,7 +29,7 @@ Production chart API hosting is maintainer-operated (not served from GitHub Page
 
 | Semver | What it tracks | Current |
 |--------|----------------|---------|
-| **API** (`apiVersion` in `/api/health`) | REST contract (auth zones, routes, limits) | **2.0.2** |
+| **API** (`apiVersion` in `/api/health`) | REST contract (auth zones, routes, limits) | **2.1.0** |
 | **App** (`version` in `/api/health`) | Compass package / Pages bundle | See `package.json` (e.g. **2.6.2**) |
 
 ---

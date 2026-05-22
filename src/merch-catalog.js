@@ -84,3 +84,15 @@ export function getApiBase() {
   }
   return 'http://localhost:3000';
 }
+
+export async function fetchOrderBySession(sessionId, apiBase) {
+  if (!sessionId) return null;
+  const base = (apiBase || getApiBase()).replace(/\/$/, '');
+  try {
+    const res = await fetch(`${base}/api/orders/session/${encodeURIComponent(sessionId)}`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch (_) {
+    return null;
+  }
+}

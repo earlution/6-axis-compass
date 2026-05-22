@@ -1504,6 +1504,9 @@ const TRANSLATIONS = {
     'shop.checkoutLoading': 'Redirecting to secure checkout…',
     'shop.checkoutError': 'Checkout unavailable. Try again later.',
     'shop.paidConfirmation': 'Thank you — your order is being prepared.',
+    'shop.orderSubmitted': 'Order submitted for printing.',
+    'shop.orderFailed': 'There was a problem fulfilling your order. Contact support if you were charged.',
+    'shop.orderProcessing': 'Processing your order…',
     'shop.orderSummary': 'Order summary',
     'shop.summaryMapColour': 'Your map colour',
     'shop.summaryOverlays': 'Overlays',
@@ -1689,6 +1692,17 @@ function getApiBase() {
     return String(window.MERCH_API_BASE).replace(/\/$/, '');
   }
   return 'http://localhost:3000';
+}
+async function fetchOrderBySession(sessionId, apiBase) {
+  if (!sessionId) return null;
+  const base = (apiBase || getApiBase()).replace(/\/$/, '');
+  try {
+    const res = await fetch(`${base}/api/orders/session/${encodeURIComponent(sessionId)}`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch (_) {
+    return null;
+  }
 }
 
 

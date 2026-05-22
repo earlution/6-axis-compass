@@ -1,4 +1,4 @@
-export const API_VERSION = '2.0.2';
+export const API_VERSION = '2.1.0';
 
 /** Public read routes skip Bearer auth when true (default). Set API_PUBLIC_READ=false for legacy mode. */
 export function isPublicReadEnabled() {

@@ -48,7 +48,7 @@ export async function createMerchCheckoutSession(body) {
 
 export async function fulfilOrderFromStripeSession(session) {
   const existing = getOrderByStripeSession(session.id);
-  if (existing?.status === 'submitted' || existing?.status === 'fulfilled') {
+  if (['submitted', 'fulfilled', 'awaiting_printful', 'artwork_ready'].includes(existing?.status)) {
     return existing;
   }
 
@@ -129,6 +129,16 @@ export async function fulfilOrderFromStripeSession(session) {
 export function getPublicOrderStatus(orderId) {
   const order = getOrder(orderId);
   if (!order) return null;
+  return publicStatusFromOrder(order);
+}
+
+export function getPublicOrderStatusBySession(sessionId) {
+  const order = getOrderByStripeSession(sessionId);
+  if (!order) return null;
+  return publicStatusFromOrder(order);
+}
+
+function publicStatusFromOrder(order) {
   return {
     id: order.id,
     status: order.status,

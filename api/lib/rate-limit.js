@@ -1,5 +1,6 @@
 const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = parseInt(process.env.API_CHART_RATE_LIMIT || '60', 10);
+const MAX_CHART = parseInt(process.env.API_CHART_RATE_LIMIT || '60', 10);
+const MAX_CHECKOUT = parseInt(process.env.MERCH_CHECKOUT_RATE_LIMIT || '20', 10);
 const buckets = new Map();
 
 function clientKey(req) {
@@ -8,8 +9,8 @@ function clientKey(req) {
   return req.socket?.remoteAddress || 'unknown';
 }
 
-export function checkChartRateLimit(req, res) {
-  const key = clientKey(req);
+function checkLimit(req, res, scope, max) {
+  const key = `${scope}:${clientKey(req)}`;
   const now = Date.now();
   let bucket = buckets.get(key);
   if (!bucket || now >= bucket.resetAt) {
@@ -17,7 +18,7 @@ export function checkChartRateLimit(req, res) {
     buckets.set(key, bucket);
   }
   bucket.count += 1;
-  if (bucket.count > MAX_PER_WINDOW) {
+  if (bucket.count > max) {
     const retryAfter = Math.ceil((bucket.resetAt - now) / 1000);
     res.statusCode = 429;
     res.setHeader('Content-Type', 'application/json');
@@ -26,4 +27,12 @@ export function checkChartRateLimit(req, res) {
     return false;
   }
   return true;
+}
+
+export function checkChartRateLimit(req, res) {
+  return checkLimit(req, res, 'chart', MAX_CHART);
+}
+
+export function checkCheckoutRateLimit(req, res) {
+  return checkLimit(req, res, 'checkout', MAX_CHECKOUT);
 }

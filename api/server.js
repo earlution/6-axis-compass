@@ -9,11 +9,11 @@ import { handleOpenApi } from './routes/openapi.js';
 import { handleCheckoutSession } from './routes/checkout.js';
 import { handleStripeWebhook } from './routes/webhooks-stripe.js';
 import { handleMerchPrices } from './routes/merch-prices.js';
-import { handleOrderStatus } from './routes/orders.js';
+import { handleOrderStatus, handleOrderStatusBySession } from './routes/orders.js';
 import { handleArtwork } from './routes/artwork.js';
 import { checkReadAuth, sendJSON } from './lib/auth.js';
 import { applyPublicCors, handleOptions } from './lib/cors.js';
-import { checkChartRateLimit } from './lib/rate-limit.js';
+import { checkChartRateLimit, checkCheckoutRateLimit } from './lib/rate-limit.js';
 import { isPublicReadEnabled } from './lib/config.js';
 
 const PORT = process.env.API_PORT || 3000;
@@ -26,6 +26,8 @@ const PUBLIC_READ_ROUTES = new Set([
   'GET /api/openapi.json',
   'POST /api/chart',
   'GET /api/merch/prices',
+  'GET /api/orders/',
+  'GET /api/orders/session/',
   'POST /api/checkout/session'
 ]);
 
@@ -55,6 +57,9 @@ function parseRawBody(req) {
 function routeKey(method, pathname) {
   if (pathname.startsWith('/api/actors/') && pathname !== '/api/actors') {
     return 'GET /api/actors/';
+  }
+  if (pathname.startsWith('/api/orders/session/')) {
+    return 'GET /api/orders/session/';
   }
   if (pathname.startsWith('/api/orders/')) {
     return 'GET /api/orders/';
@@ -106,11 +111,15 @@ const server = http.createServer(async (req, res) => {
     } else if (pathname === '/api/merch/prices' && req.method === 'GET') {
       await handleMerchPrices(req, res);
     } else if (pathname === '/api/checkout/session' && req.method === 'POST') {
+      if (!checkCheckoutRateLimit(req, res)) return;
       const body = await parseBody(req);
       await handleCheckoutSession(req, res, body);
     } else if (pathname === '/api/webhooks/stripe' && req.method === 'POST') {
       const rawBody = await parseRawBody(req);
       await handleStripeWebhook(req, res, rawBody);
+    } else if (pathname.startsWith('/api/orders/session/') && req.method === 'GET') {
+      const sessionId = decodeURIComponent(pathname.slice('/api/orders/session/'.length));
+      await handleOrderStatusBySession(req, res, sessionId);
     } else if (pathname.startsWith('/api/orders/') && req.method === 'GET') {
       const orderId = decodeURIComponent(pathname.slice('/api/orders/'.length));
       await handleOrderStatus(req, res, orderId);
