@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[3.7.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.7.0
 [3.6.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.6.0
 [3.5.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.5.0
 [3.4.0]: https://github.com/earlution/6-axis-compass/releases/tag/v3.4.0
@@ -49,6 +50,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/earlution/six-axis-compass/releases/tag/v1.2.0
 
 ## [Unreleased]
+
+## [3.7.0] - 2026-05-22
+
+### Added
+
+- **Tailwind CSS build pipeline:** `src/input.css` → `src/styles.css` via PostCSS; brand tokens in `tailwind.config.js`.
+- **Shared chrome (`src/chrome.js`):** Site header, footer, theme toggle, and mobile drawer navigation across index, shop, and data pages.
+- **Device-class layouts:** Mobile-first intro, quiz, and results; horizontal Likert at `md+`; three-tier results; mobile config accordion; dataset card view on small screens.
+- **Shop responsive UX:** Sticky mobile checkout, segmented garment/size controls, carousel sizing.
+
+### Changed
+
+- **Build:** `npm run build` runs Tailwind before `scripts/build.js`; CI uses `npm install` + `npm run build`.
+- **README:** Documents Tailwind workflow, `build:css:watch`, and zero-**runtime**-dependency deploy artifacts.
 
 ## [3.6.0] - 2026-05-22
 

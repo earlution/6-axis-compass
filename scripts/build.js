@@ -52,7 +52,8 @@ function inlineModules() {
   const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
-  const js = [i18n, url, merchCatalog, merchUrl, actors, data, quiz, chart, merch, ui, exp]
+  const chrome = read('chrome.js');
+  const js = [i18n, url, merchCatalog, merchUrl, actors, data, quiz, chart, merch, chrome, ui, exp]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');
@@ -95,7 +96,8 @@ function buildShopPage() {
   const moduleMatch = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   const moduleScript = moduleMatch ? moduleMatch[1] : '';
 
-  const js = [i18n, url, merchCatalog, merchUrl, actors, data, chart, merch, shopUi]
+  const chrome = read('chrome.js');
+  const js = [i18n, url, merchCatalog, merchUrl, actors, data, chart, merch, chrome, shopUi]
     .map(inline)
     .concat(stripImports(moduleScript))
     .join('\n\n');
@@ -113,6 +115,8 @@ function buildShopPage() {
 
 function buildDataPage() {
   const html = fs.readFileSync(path.join(SRC, 'data.html'), 'utf-8');
+  const css = read('styles.css');
+  const chrome = read('chrome.js');
   const actors = read('actors-generated.js');
   const dataJs = read('data.js');
 
@@ -126,7 +130,14 @@ function buildDataPage() {
     version = pkg.version || version;
   } catch (_) {}
 
+  const moduleMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+  const moduleScript = moduleMatch ? moduleMatch[1] : '';
+
+  const js = [inline(chrome), moduleScript].join('\n\n');
+
   const output = html
+    .replace(/<style>[\s\S]*?<\/style>/, `<style>\n${css}\n</style>`)
+    .replace(/<script>[\s\S]*?<\/script>/, `<script>\n${js}\n</script>`)
     .replace(/\{\{VERSION\}\}/g, version)
     .replace(/const ACTORS = __ACTORS \|\| \[\];/, actors.trim() + '\n' + groupsJs + '\nconst ACTORS = __ACTORS || [];');
 
@@ -142,9 +153,9 @@ copyMerchAssets();
 // Optional watch mode
 if (process.argv.includes('--watch')) {
   const files = [
-    'index.html', 'shop.html', 'styles.css', 'i18n.js', 'url.js', 'merch-url.js',
-    'merch-catalog.js', 'merch.js', 'shop-ui.js', 'actors-generated.js', 'data.js',
-    'quiz.js', 'chart.js', 'ui.js', 'export.js'
+    'index.html', 'shop.html', 'data.html', 'input.css', 'styles.css', 'chrome.js',
+    'i18n.js', 'url.js', 'merch-url.js', 'merch-catalog.js', 'merch.js', 'shop-ui.js',
+    'actors-generated.js', 'data.js', 'quiz.js', 'chart.js', 'ui.js', 'export.js'
   ];
   files.forEach(f => {
     fs.watchFile(path.join(SRC, f), () => {

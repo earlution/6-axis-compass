@@ -12,6 +12,7 @@ import {
   openCheckoutStubModal
 } from './merch.js';
 import { resolveActorBySlug, encodeMerchHash, getActorSlug } from './merch-url.js';
+import { initResponsiveAccordions } from './chrome.js';
 
 const MAX_SHOP_ACTORS = 2;
 const MAP_COLOR_GOLD = '#c8a84b';
@@ -136,49 +137,72 @@ export function renderShop(container, state, handlers) {
           <p class="shop-price-display">${formatPriceGBP(garment)} <span class="shop-price-note">${t('shop.priceNote')}</span></p>
         </div>
         <div class="content-pane shop-config-pane">
-          <section class="config-section">
-            <p class="config-heading">${t('shop.yourMap')}</p>
-            <p class="config-note">${t('shop.yourMapNote')}</p>
-            <div class="shop-score-pills" id="shop-score-pills"></div>
-            <a class="data-link" href="index.html${compassHash || ''}">${t('shop.editOnCompass')} →</a>
-          </section>
-          <section class="config-section">
-            <p class="config-heading">${t('shop.mapColour')}</p>
-            <p class="config-note">${t('shop.mapColourNote')}</p>
-            <div class="config-row shop-map-color-row">
-              <label class="shop-color-picker-wrap">
-                <span class="shop-color-picker-label">${t('shop.pickColour')}</span>
-                <input type="color" id="shop-user-map-color" value="${userColor}" aria-label="${t('shop.mapColour')}">
-              </label>
+          <details class="config-accordion" open>
+            <summary>${t('shop.yourMap')}</summary>
+            <div class="config-accordion__body">
+              <section class="config-section">
+                <p class="config-note">${t('shop.yourMapNote')}</p>
+                <div class="shop-score-pills" id="shop-score-pills"></div>
+                <a class="data-link" href="index.html${compassHash || ''}">${t('shop.editOnCompass')} →</a>
+              </section>
             </div>
-            <div class="config-row shop-map-color-presets">
-              <button type="button" class="config-btn" id="btn-map-color-garment">${t('shop.matchGarment')}</button>
-              <button type="button" class="config-btn" id="btn-map-color-gold">${t('shop.colourGold')}</button>
+          </details>
+          <details class="config-accordion">
+            <summary>${t('shop.mapColour')}</summary>
+            <div class="config-accordion__body">
+              <section class="config-section">
+                <p class="config-note">${t('shop.mapColourNote')}</p>
+                <div class="config-row shop-map-color-row">
+                  <label class="shop-color-picker-wrap">
+                    <span class="shop-color-picker-label">${t('shop.pickColour')}</span>
+                    <input type="color" id="shop-user-map-color" value="${userColor}" aria-label="${t('shop.mapColour')}">
+                  </label>
+                </div>
+                <div class="config-row shop-map-color-presets">
+                  <button type="button" class="config-btn" id="btn-map-color-garment">${t('shop.matchGarment')}</button>
+                  <button type="button" class="config-btn" id="btn-map-color-gold">${t('shop.colourGold')}</button>
+                </div>
+              </section>
             </div>
-          </section>
-          <section class="config-section">
-            <p class="config-heading">${t('shop.comparisons')}</p>
-            <p class="config-note">${t('shop.overlayCap')}</p>
-            <div class="shop-actor-btns actor-btns" id="shop-actor-btns"></div>
-          </section>
-          <section class="config-section">
-            <p class="config-heading">${t('shop.garment')}</p>
-            <div class="config-row" id="shop-garment-btns"></div>
-          </section>
-          <section class="config-section">
-            <p class="config-heading">${t('merch.garmentColour')}</p>
-            <div class="config-row" id="shop-color-btns"></div>
-          </section>
-          <section class="config-section">
-            <p class="config-heading">${t('shop.size')}</p>
-            <p class="config-note">${t('shop.sizeNote')}</p>
-            <div class="config-row shop-size-row" id="shop-size-btns"></div>
-          </section>
+          </details>
+          <details class="config-accordion">
+            <summary>${t('shop.comparisons')}</summary>
+            <div class="config-accordion__body">
+              <section class="config-section">
+                <p class="config-note">${t('shop.overlayCap')}</p>
+                <div class="shop-actor-btns actor-btns" id="shop-actor-btns"></div>
+              </section>
+            </div>
+          </details>
+          <details class="config-accordion">
+            <summary>${t('shop.garment')} &amp; ${t('shop.size')}</summary>
+            <div class="config-accordion__body">
+              <section class="config-section">
+                <p class="config-heading">${t('shop.garment')}</p>
+                <div class="config-row config-row--segmented" id="shop-garment-btns"></div>
+              </section>
+              <section class="config-section">
+                <p class="config-heading">${t('merch.garmentColour')}</p>
+                <div class="config-row config-row--segmented" id="shop-color-btns"></div>
+              </section>
+              <section class="config-section">
+                <p class="config-heading">${t('shop.size')}</p>
+                <p class="config-note">${t('shop.sizeNote')}</p>
+                <div class="config-row config-row--segmented shop-size-row" id="shop-size-btns"></div>
+              </section>
+            </div>
+          </details>
           <button type="button" class="btn shop-checkout-btn" id="btn-shop-checkout">${t('shop.checkout')}</button>
         </div>
       </div>
     </div>
+    <div class="shop-sticky-checkout" id="shop-sticky-checkout">
+      <span class="shop-sticky-price">${formatPriceGBP(garment)}</span>
+      <button type="button" class="btn btn-primary" id="btn-shop-checkout-sticky">${t('shop.checkout')}</button>
+    </div>
   `;
+
+  initResponsiveAccordions(container);
 
   const svg = document.getElementById('radar-merch');
   if (svg) {
@@ -290,6 +314,7 @@ export function renderShop(container, state, handlers) {
   });
 
   document.getElementById('btn-shop-checkout').addEventListener('click', onCheckout);
+  document.getElementById('btn-shop-checkout-sticky')?.addEventListener('click', onCheckout);
 }
 
 export function pushShopHash(state) {

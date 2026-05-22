@@ -15,7 +15,7 @@ The standard left–right spectrum collapses six distinct political dimensions i
 
 ## Usage
 
-Open `dist/index.html` in any modern browser. No build step, no server, no dependencies.
+Open `dist/index.html` in any modern browser. The deployed site has **no runtime dependencies** — CSS and JavaScript are inlined into each HTML file.
 
 ## How it works
 
@@ -192,18 +192,23 @@ The source is organised as ES modules under `src/`:
 | `src/merch.js` | Merch mockup carousel and stub checkout modal |
 | `src/shop-ui.js` | Shop page renderer |
 | `src/shop.html` | Merch shop shell |
-| `src/styles.css` | Full component stylesheet |
+| `src/input.css` | Tailwind source stylesheet (edit this, not `styles.css`) |
+| `src/styles.css` | Generated CSS from Tailwind (committed for CI without Node) |
+| `src/chrome.js` | Shared site header, footer, and theme toggle |
 | `src/index.html` | Shell that imports and wires the modules |
 
-Actor data is loaded at build time from `data/actors/*.json` into `src/actors-generated.js`, which is then inlined into the deployable artifact. This preserves the zero-dependency constraint while making the data traceable and forkable.
+Actor data is loaded at build time from `data/actors/*.json` into `src/actors-generated.js`, which is then inlined into the deployable artifact. This preserves the zero-**runtime**-dependency constraint while making the data traceable and forkable.
 
 ### Build
 
 ```bash
+npm install
 npm run build
 ```
 
-This runs `scripts/sync-actor-data.js` (regenerates `src/actors-generated.js` from `data/actors/`) followed by `scripts/build.js`, which inlines modules into `dist/index.html`, `dist/shop.html`, and `dist/data.html`, and copies `src/assets/merch/` to `dist/assets/merch/`.
+This runs `scripts/sync-actor-data.js` (regenerates `src/actors-generated.js` from `data/actors/`), compiles `src/input.css` → `src/styles.css` via Tailwind CSS, then `scripts/build.js` inlines modules and CSS into `dist/index.html`, `dist/shop.html`, and `dist/data.html`, and copies `src/assets/merch/` to `dist/assets/merch/`.
+
+To edit styles, change [`src/input.css`](src/input.css) and run `npm run build:css` (or full `npm run build`).
 
 ### Watch mode
 
@@ -211,7 +216,7 @@ This runs `scripts/sync-actor-data.js` (regenerates `src/actors-generated.js` fr
 npm run dev
 ```
 
-Rebuilds on every source file change.
+Rebuilds on every source file change. For CSS-only iteration, run `npm run build:css:watch` in a second terminal.
 
 ### Paper artifacts
 

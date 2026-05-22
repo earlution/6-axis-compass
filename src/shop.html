@@ -15,19 +15,8 @@
 </head>
 <body>
 <a href="#app" class="skip-link">Skip to main content</a>
-<div id="app" role="main"></div>
+<div id="app" class="page-main" role="main"></div>
 <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<footer class="site-footer">
-  <span class="footer-copy">© 2026 Ruari Mears</span>
-  <span class="footer-sep">·</span>
-  <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
-  <span class="footer-sep">·</span>
-  <a class="footer-link" href="data.html">Dataset</a>
-  <span class="footer-sep">·</span>
-  <a class="footer-link" href="index.html">Compass</a>
-  <span class="footer-sep">·</span>
-  <span class="footer-ver">v{{VERSION}}</span>
-</footer>
 <script type="module">
 import { AXES } from './data.js';
 import { t, setLanguage } from './i18n.js';
@@ -41,6 +30,11 @@ import {
 } from './merch-url.js';
 import { encodeHash } from './url.js';
 import { renderShop, pushShopHash, openShopCheckout } from './shop-ui.js';
+import { initChrome, getStoredTheme, applyTheme } from './chrome.js';
+
+const APP_VERSION = '{{VERSION}}';
+initChrome({ page: 'shop', version: APP_VERSION });
+applyTheme(getStoredTheme());
 
 const app = document.getElementById('app');
 
@@ -158,13 +152,7 @@ function render() {
   });
 }
 
-document.documentElement.setAttribute('data-theme', (() => {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-theme');
-    if (stored === 'light' || stored === 'dark') return stored;
-  } catch (_) {}
-  return 'dark';
-})());
+document.documentElement.setAttribute('data-theme', getStoredTheme());
 
 setLanguage('en');
 persist();

@@ -16,17 +16,8 @@
 </head>
 <body>
 <a href="#app" class="skip-link">Skip to main content</a>
-<div id="app" role="main"></div>
+<div id="app" class="page-main" role="main"></div>
 <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<footer class="site-footer">
-  <span class="footer-copy">© 2026 Ruari Mears</span>
-  <span class="footer-sep">·</span>
-  <a class="footer-link" href="https://github.com/earlution/6-axis-compass/blob/main/LICENCE" target="_blank" rel="noopener">MIT Licence</a>
-  <span class="footer-sep">·</span>
-  <a class="footer-link" href="data.html">Dataset</a>
-  <span class="footer-sep">·</span>
-  <span class="footer-ver">v{{VERSION}}</span>
-</footer>
 <script type="module">
 import { AXES, SPATIAL_AXES, SPATIAL_DISPLAY_INVERT, ACTOR_GROUPS } from './data.js';
 import { createQuiz } from './quiz.js';
@@ -39,6 +30,10 @@ import {
   saveMerchDraft,
   encodeMerchHash
 } from './merch-url.js';
+import { initChrome, getStoredTheme, applyTheme } from './chrome.js';
+
+const APP_VERSION = '{{VERSION}}';
+initChrome({ page: 'compass', version: APP_VERSION });
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -52,7 +47,7 @@ let axesOrder = [...SPATIAL_AXES];
 let showUser = true;
 let uploadedMap = null;
 let language = 'en';
-let theme = 'dark';
+let theme = getStoredTheme();
 let customActors = [];
 let invertedAxes = new Set();
 let actorGroupOrder = [];
@@ -87,16 +82,11 @@ function saveCustomActors() {
 }
 
 function loadTheme() {
-  try {
-    const stored = localStorage.getItem('six-axis-compass-theme');
-    if (stored === 'light' || stored === 'dark') theme = stored;
-  } catch (_) {}
+  theme = getStoredTheme();
 }
 
 function saveTheme() {
-  try {
-    localStorage.setItem('six-axis-compass-theme', theme);
-  } catch (_) {}
+  applyTheme(theme);
 }
 
 function loadInvertedAxes() {
@@ -136,7 +126,13 @@ loadTheme();
 loadInvertedAxes();
 loadActorGroupOrder();
 loadRegisterMode();
-document.documentElement.setAttribute('data-theme', theme);
+applyTheme(theme);
+
+document.addEventListener('themechange', (e) => {
+  theme = e.detail.theme;
+  const resultsScreen = document.getElementById('s-results');
+  if (resultsScreen && resultsScreen.classList.contains('active')) showResults();
+});
 
 function announce(message) {
   const el = document.getElementById('announcer');
@@ -312,7 +308,6 @@ function showResults() {
     onSetTheme: (t) => {
       theme = t;
       saveTheme();
-      document.documentElement.setAttribute('data-theme', theme);
       showResults();
     },
     onSetRegister: (r) => {
