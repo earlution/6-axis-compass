@@ -7,7 +7,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-MOUNT_NAME="${MOUNT:-docs-google-drive}"
+MOUNT_NAME="${MOUNT:-docs-gd-6-axis-compass}"
 ROOT="$REPO_ROOT/$MOUNT_NAME"
 
 INNER="$ROOT/docs"

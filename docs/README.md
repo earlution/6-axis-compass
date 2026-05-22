@@ -2,7 +2,7 @@
 
 **`docs/` in this repo is the canonical source of truth** (git-tracked).
 
-Google Drive folder **`6-Axis Compass`** is mounted at **`docs-google-drive/`** (gitignored). You usually ignore that path — it exists so Cursor and Claude Desktop stay aligned without manually copying files.
+Google Drive folder **`6-Axis Compass`** is mounted at **`docs-gd-6-axis-compass/`** (gitignored). You usually ignore that path — it exists so Cursor and Claude Desktop stay aligned without manually copying files.
 
 ## Sync
 
@@ -14,12 +14,12 @@ Google Drive folder **`6-Axis Compass`** is mounted at **`docs-google-drive/`** 
 Then commit `docs/` as usual.
 
 ```bash
-bash scripts/link-docs-google-drive.sh   # once per machine
+bash scripts/link-docs-gd-6-axis-compass.sh   # once per machine
 ```
 
 ## On Drive only (not in git)
 
-These live under `docs-google-drive/` but are excluded from git sync:
+These live under `docs-gd-6-axis-compass/` but are excluded from git sync:
 
 - `handoff/for-common-enemy/` — outbound coordination for [common-enemy](https://github.com/earlution/common-enemy)
 - `_meta/` — manifests, inbox
@@ -27,4 +27,4 @@ These live under `docs-google-drive/` but are excluded from git sync:
 
 ## Cross-repo
 
-common-enemy working tree: Drive **`A Common Enemy`** (separate folder).
+common-enemy working tree: Drive **`A Common Enemy`** (separate folder). Shared protocol: **ADR-008** — [`docs/cross-repo/adr-008-git-canonical-docs-and-google-drive-sync-v0.0.1.md`](cross-repo/adr-008-git-canonical-docs-and-google-drive-sync-v0.0.1.md).

@@ -289,10 +289,10 @@ Source types: `manifesto`, `legislation`, `vote`, `policy`, `speech`, `book`, `a
 
 **`docs/` is git-tracked and canonical** — always commit this directory.
 
-**`docs-google-drive/`** symlinks to Google Drive **`6-Axis Compass`** (gitignored). It is infrastructure for keeping the repo and Claude Desktop in sync; you normally do not edit it directly.
+**`docs-gd-6-axis-compass/`** symlinks to Google Drive **`6-Axis Compass`** (gitignored). It is infrastructure for keeping the repo and Claude Desktop in sync; you normally do not edit it directly.
 
 ```bash
-bash scripts/link-docs-google-drive.sh     # once per machine
+bash scripts/link-docs-gd-6-axis-compass.sh     # once per machine
 bash scripts/sync-docs-from-drive.sh       # Drive → docs/ (before commit)
 bash scripts/sync-docs-to-drive.sh         # docs/ → Drive (after repo edits)
 git add docs/ && git commit
@@ -300,7 +300,7 @@ git add docs/ && git commit
 
 Drive-only paths (not synced into git): `handoff/`, `_meta/`, `archive/` under the Drive folder.
 
-common-enemy: separate Drive **`A Common Enemy`**; outbound handoff at **`docs-google-drive/handoff/for-common-enemy/`**.
+common-enemy: separate Drive **`A Common Enemy`**; outbound handoff at **`docs-gd-6-axis-compass/handoff/for-common-enemy/`**.
 
 ## License
 

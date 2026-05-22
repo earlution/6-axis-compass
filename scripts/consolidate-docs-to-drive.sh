@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Merge repo backup into docs-google-drive/ (flat layout).
+# Merge repo backup into docs-gd-6-axis-compass/ (flat layout).
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-GD="$REPO_ROOT/docs-google-drive"
+GD="$REPO_ROOT/docs-gd-6-axis-compass"
 
 if [[ ! -d "$GD" ]]; then
-  echo "ERROR: Run scripts/link-docs-google-drive.sh first." >&2
+  echo "ERROR: Run scripts/link-docs-gd-6-axis-compass.sh first." >&2
   exit 1
 fi
 
