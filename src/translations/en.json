@@ -111,6 +111,8 @@
   "axis.position": "position {n}",
   "config.language": "Language",
   "config.theme": "Theme",
+  "config.settings": "Settings",
+  "results.advanced": "Advanced",
   "results.dark": "Dark",
   "results.light": "Light",
 

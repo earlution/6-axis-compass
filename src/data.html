@@ -7,386 +7,39 @@
 <meta name="description" content="Browse the complete dataset of political actor positions across six axes.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
-:root {
-  --bg: #121212;
-  --surface: #1e1e1e;
-  --surface-hover: #2a2a2a;
-  --border: #333;
-  --text: #e0e0e0;
-  --text-muted: #888;
-  --accent: #c8a84b;
-  --accent-dim: #a08030;
-  --good: #4a9c5d;
-  --warn: #d4a017;
-  --bad: #c44;
-  --radius: 8px;
-  --gap: 1rem;
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f5f5f5;
-    --surface: #fff;
-    --surface-hover: #f0f0f0;
-    --border: #ddd;
-    --text: #222;
-    --text-muted: #666;
-    --accent: #8b6914;
-    --accent-dim: #6b5010;
-  }
-}
-
-* { box-sizing: border-box; margin: 0; }
-
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  padding: 2rem 1rem;
-}
-
-.wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-header { margin-bottom: 2rem; }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.brand-icon {
-  width: 36px; height: 36px;
-  fill: none; stroke: var(--accent); stroke-width: 2;
-}
-
-h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.subtitle {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.controls {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.search {
-  flex: 1;
-  min-width: 200px;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.95rem;
-}
-
-.search:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(200,168,75,0.15);
-}
-
-.count {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.table-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.92rem;
-}
-
-th, td {
-  padding: 0.6rem 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-th {
-  font-weight: 600;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
-}
-
-th:hover { color: var(--accent); }
-
-th .sort {
-  display: inline-block;
-  width: 0; height: 0;
-  margin-left: 0.3rem;
-  vertical-align: middle;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 5px solid var(--text-muted);
-  opacity: 0.3;
-}
-
-th.asc .sort {
-  border-bottom: none;
-  border-top: 5px solid var(--accent);
-  opacity: 1;
-}
-
-th.desc .sort {
-  border-bottom: 5px solid var(--accent);
-  border-top: none;
-  opacity: 1;
-}
-
-tr:hover td { background: var(--surface-hover); }
-
-tr.expanded td { background: var(--surface-hover); border-bottom: none; }
-
-tr.group-header td {
-  background: var(--bg);
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
-  border-top: 2px solid var(--border);
-}
-
-tr.group-header:first-child td {
-  border-top: none;
-}
-
-tr.group-header td {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.group-reorder {
-  display: flex;
-  gap: 2px;
-  margin-left: auto;
-}
-
-.group-reorder button {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 13px;
-  cursor: pointer;
-  padding: 2px 6px;
-  line-height: 1;
-  border-radius: 2px;
-  transition: color 0.15s, background 0.15s;
-}
-
-.group-reorder button:hover {
-  color: var(--text);
-  background: rgba(255,255,255,0.06);
-}
-
-.group-reorder button:disabled {
-  opacity: 0.25;
-  cursor: default;
-}
-
-@media (prefers-color-scheme: light) {
-  .group-reorder button:hover {
-    background: rgba(0,0,0,0.06);
-  }
-}
-
-tr.detail td {
-  padding: 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.actor-name {
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.color-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.score {
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-}
-
-.conf {
-  display: inline-block;
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.conf-high { background: rgba(74,156,93,0.15); color: var(--good); }
-.conf-very-high { background: rgba(74,156,93,0.2); color: var(--good); }
-.conf-medium { background: rgba(212,160,23,0.15); color: var(--warn); }
-.conf-low { background: rgba(204,68,68,0.15); color: var(--bad); }
-
-.legend {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.legend-label {
-  font-weight: 500;
-  margin-right: 0.25rem;
-}
-
-.legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.detail-panel {
-  padding: 1rem 1.25rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.detail-group h4 {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.04em;
-}
-
-.detail-group p, .detail-group a {
-  font-size: 0.85rem;
-  color: var(--text);
-}
-
-.detail-group a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.detail-group a:hover { text-decoration: underline; }
-
-.rationale {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-  max-width: 600px;
-}
-
-.source-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.source-list li {
-  font-size: 0.82rem;
-  margin-bottom: 0.3rem;
-  color: var(--text-muted);
-}
-
-.source-list a { color: var(--accent-dim); }
-
-.empty {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--text-muted);
-}
-
-footer {
-  margin-top: 3rem;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-@media (max-width: 700px) {
-  body { padding: 1rem 0.5rem; }
-  th, td { padding: 0.5rem 0.4rem; font-size: 0.85rem; }
-  .detail-panel { grid-template-columns: 1fr; }
-}
+/* styles.css will be inlined here by build.js */
 </style>
 </head>
-<body>
+<body class="data-page">
+<a href="#data-main" class="skip-link">Skip to main content</a>
+<div id="data-main" class="page-main">
 <div class="wrap">
-  <header>
-    <div class="brand">
-      <svg class="brand-icon" viewBox="0 0 36 36">
-        <polygon points="18,2 34,18 18,34 2,18" stroke-linejoin="round"/>
-      </svg>
-      <h1>Six-Axis Compass — Actor Dataset</h1>
-    </div>
-    <p class="subtitle">Browse all scored political actors. Every score is traceable to primary sources. Click a row to expand detail.</p>
+  <header class="data-page-header">
+    <h1>Actor Dataset</h1>
+    <p class="data-subtitle">Browse all scored political actors. Every score is traceable to primary sources. Tap a row or card to expand detail.</p>
   </header>
 
-  <div class="controls">
-    <input type="text" class="search" id="search" placeholder="Search actors, categories, or sources..." aria-label="Search actors">
-    <span class="count" id="count"></span>
+  <div class="data-controls">
+    <input type="text" class="data-search" id="search" placeholder="Search actors, categories, or sources..." aria-label="Search actors">
+    <span class="data-count" id="count"></span>
   </div>
 
-  <div class="legend">
-    <span class="legend-label">Confidence:</span>
+  <div class="data-legend">
+    <span class="data-legend-label">Confidence:</span>
     <span class="legend-item"><span class="conf conf-very-high">very high</span></span>
     <span class="legend-item"><span class="conf conf-high">high</span></span>
     <span class="legend-item"><span class="conf conf-medium">medium</span></span>
     <span class="legend-item"><span class="conf conf-low">low</span></span>
-    <span>— indicates curator confidence in the score, based on source quality and quantity.</span>
   </div>
 
-  <div class="table-wrap">
-    <table role="grid" aria-label="Actor dataset">
+  <div class="data-cards" id="data-cards" aria-label="Actor cards"></div>
+
+  <div class="data-table-wrap">
+    <table class="data-table" role="grid" aria-label="Actor dataset">
       <thead>
         <tr>
           <th data-sort="name">Actor <span class="sort"></span></th>
-          <th data-sort="category">Category <span class="sort"></span></th>
+          <th class="col-category" data-sort="category">Category <span class="sort"></span></th>
           <th data-sort="Cultural">Cultural <span class="sort"></span></th>
           <th data-sort="Economic">Economic <span class="sort"></span></th>
           <th data-sort="Military">Military <span class="sort"></span></th>
@@ -398,12 +51,8 @@ footer a {
       <tbody id="tbody"></tbody>
     </table>
   </div>
-
-  <footer>
-    <p>Data version <strong>v{{VERSION}}</strong> · <a href="index.html">Back to the Compass</a> · <a href="https://github.com/earlution/6-axis-compass/tree/main/data/actors" target="_blank" rel="noopener">Browse raw JSON on GitHub</a></p>
-  </footer>
 </div>
-
+</div>
 <script>
 // ACTOR_DATA and ACTOR_GROUPS will be injected by build.js
 const ACTORS = __ACTORS || [];
@@ -411,6 +60,7 @@ const AXES = ['Cultural','Economic','Military','Sovereignty','Governance','Class
 
 let currentSort = { col: 'name', dir: 'asc' };
 let expandedRow = null;
+let expandedCard = null;
 let groupOrder = [];
 
 function loadGroupOrder() {
@@ -456,20 +106,70 @@ function groupActors(actors) {
   return groups;
 }
 
-function render(groups) {
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
+function buildDetailHtml(actor) {
+  const meta = actor._actorMeta || {};
+  const scoreMeta = actor._scoreMeta || {};
+  const jsonUrl = `https://github.com/earlution/6-axis-compass/blob/main/data/actors/${meta.slug || ''}.json`;
+  const date = meta.lastUpdated ? new Date(meta.lastUpdated).toLocaleDateString('en-GB') : '';
 
-  let totalActors = 0;
-  for (const g of groups) totalActors += g.actors.length;
+  const axisDetails = AXES.map(ax => {
+    const sm = scoreMeta[ax] || {};
+    const rationale = escapeHtml(sm.rationale || '');
+    const sources = (sm.sources || []).map(s =>
+      `<li><a href="${escapeHtml(s.url || '#')}" target="_blank" rel="noopener">${escapeHtml(s.title || s.type || 'Source')}</a></li>`
+    ).join('') || '<li>No sources on file.</li>';
+    let dualRegHtml = '';
+    if (actor.dualRegister) {
+      const declared = actor.dualRegister.declared?.[ax];
+      const structural = actor.dualRegister.structural?.[ax];
+      const delta = actor.dualRegister.delta?.[ax];
+      const conf = actor.dualRegister.confidence?.[ax];
+      if (declared !== undefined && structural !== undefined) {
+        const deltaStr = delta >= 0 ? '+' + delta.toFixed(1) : delta.toFixed(1);
+        dualRegHtml = `<p class="rationale" style="margin-top:0.3rem;">Declared: ${declared.toFixed(1)} · Structural: ${structural.toFixed(1)} · Delta: ${deltaStr}${conf ? ` (${(conf.declared * 100).toFixed(0)}% / ${(conf.structural * 100).toFixed(0)}%)` : ''}</p>`;
+      }
+    }
+    return `
+      <div class="detail-group">
+        <h4>${ax} — ${actor.scores[ax]?.toFixed(1)}</h4>
+        <p class="rationale">${rationale}</p>
+        ${dualRegHtml}
+        <ul class="source-list">${sources}</ul>
+      </div>
+    `;
+  }).join('');
 
-  if (totalActors === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty">No actors match your search.</td></tr>';
-    document.getElementById('count').textContent = '0 actors';
-    return;
+  let dualRegMetaHtml = '';
+  if (actor.dualRegister) {
+    const dr = actor.dualRegister;
+    dualRegMetaHtml = `
+      <div class="detail-group">
+        <h4>Dual-Register</h4>
+        <p>Protocol: ${escapeHtml(dr.protocol || '')}</p>
+        <p>Period: ${escapeHtml(dr.period || '')}</p>
+        <p>Status: ${escapeHtml(dr.status || '')}</p>
+      </div>
+    `;
   }
 
-  document.getElementById('count').textContent = `${totalActors} actor${totalActors !== 1 ? 's' : ''}`;
+  return `
+    <div class="detail-panel">
+      <div class="detail-group">
+        <h4>Metadata</h4>
+        <p>Version: ${escapeHtml(meta.version || '')}</p>
+        <p>Last updated: ${date}</p>
+        <p>Curator: ${escapeHtml(meta.curator || '')}</p>
+        <p><a href="${jsonUrl}" target="_blank" rel="noopener">View raw JSON ↗</a></p>
+      </div>
+      ${dualRegMetaHtml}
+      ${axisDetails}
+    </div>
+  `;
+}
+
+function renderTable(groups) {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
 
   groups.forEach((group, groupIndex) => {
     const header = document.createElement('tr');
@@ -509,7 +209,7 @@ function render(groups) {
     const label = document.createElement('span');
     label.textContent = `${group.name} `;
     const count = document.createElement('span');
-    count.style.cssText = 'color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;';
+    count.style.cssText = 'color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0;';
     count.textContent = `(${group.actors.length})`;
     label.appendChild(count);
 
@@ -523,43 +223,80 @@ function render(groups) {
     for (const actor of group.actors) {
       const meta = actor._actorMeta || {};
       const scoreMeta = actor._scoreMeta || {};
-
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>
-          <div class="actor-name">
+          <div class="data-actor-name">
             <span class="color-dot" style="background:${actor.color}"></span>
             ${escapeHtml(actor.name)}
           </div>
         </td>
-        <td>${escapeHtml(meta.category || '')}</td>
+        <td class="col-category">${escapeHtml(meta.category || '')}</td>
         ${AXES.map(ax => {
           const conf = scoreMeta[ax]?.confidence || 'medium';
-          return `<td class="score">
+          return `<td class="data-score">
             ${actor.scores[ax]?.toFixed(1)}
             <span class="conf conf-${conf}">${conf.replace('-',' ')}</span>
           </td>`;
         }).join('')}
       `;
-
-      tr.addEventListener('click', () => toggleDetail(tr, actor));
+      tr.addEventListener('click', () => toggleTableDetail(tr, actor));
       tbody.appendChild(tr);
     }
   });
 }
 
-function refresh() {
-  const q = document.getElementById('search').value;
-  const filtered = filterActors(ACTORS, q);
-  const sorted = sortActors(filtered, currentSort.col, currentSort.dir);
-  const grouped = groupActors(sorted);
-  render(grouped);
+function renderCards(groups) {
+  const container = document.getElementById('data-cards');
+  container.innerHTML = '';
+
+  groups.forEach((group, groupIndex) => {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'data-card-group';
+    groupEl.innerHTML = `<span>${group.name} (${group.actors.length})</span>`;
+    container.appendChild(groupEl);
+
+    group.actors.forEach(actor => {
+      const meta = actor._actorMeta || {};
+      const card = document.createElement('article');
+      card.className = 'data-card';
+      card.dataset.actor = actor.name;
+
+      const topAxes = AXES.slice(0, 6);
+      card.innerHTML = `
+        <div class="data-card__header">
+          <div class="data-actor-name">
+            <span class="color-dot" style="background:${actor.color}"></span>
+            ${escapeHtml(actor.name)}
+          </div>
+          <span class="conf conf-medium">${escapeHtml(meta.category || '')}</span>
+        </div>
+        <div class="data-card__scores">
+          ${topAxes.map(ax => `
+            <div class="data-card__score-item">
+              <span>${ax.slice(0, 3)}</span>
+              <span class="data-card__score-val">${actor.scores[ax]?.toFixed(1)}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="data-card__detail">${buildDetailHtml(actor)}</div>
+      `;
+
+      card.querySelector('.data-card__header').addEventListener('click', () => toggleCardDetail(card));
+      container.appendChild(card);
+    });
+  });
 }
 
-function toggleDetail(tr, actor) {
-  const meta = actor._actorMeta || {};
-  const scoreMeta = actor._scoreMeta || {};
+function toggleCardDetail(card) {
+  if (expandedCard && expandedCard !== card) {
+    expandedCard.classList.remove('is-expanded');
+  }
+  const open = card.classList.toggle('is-expanded');
+  expandedCard = open ? card : null;
+}
 
+function toggleTableDetail(tr, actor) {
   if (expandedRow && expandedRow !== tr) {
     const existing = expandedRow.nextElementSibling;
     if (existing && existing.classList.contains('detail')) existing.remove();
@@ -579,80 +316,33 @@ function toggleDetail(tr, actor) {
 
   const detail = document.createElement('tr');
   detail.className = 'detail';
+  detail.innerHTML = `<td colspan="8">${buildDetailHtml(actor)}</td>`;
+  tr.after(detail);
+}
 
-  const jsonUrl = `https://github.com/earlution/6-axis-compass/blob/main/data/actors/${meta.slug || ''}.json`;
-  const date = meta.lastUpdated ? new Date(meta.lastUpdated).toLocaleDateString('en-GB') : '';
+function render(groups) {
+  let totalActors = 0;
+  for (const g of groups) totalActors += g.actors.length;
 
-  const axisDetails = AXES.map(ax => {
-    const sm = scoreMeta[ax] || {};
-    const rationale = escapeHtml(sm.rationale || '');
-    const sources = (sm.sources || []).map(s =>
-      `<li><a href="${escapeHtml(s.url || '#')}" target="_blank" rel="noopener">${escapeHtml(s.title || s.type || 'Source')}</a></li>`
-    ).join('') || '<li>No sources on file.</li>';
-    let dualRegHtml = '';
-    if (actor.dualRegister) {
-      const declared = actor.dualRegister.declared?.[ax];
-      const structural = actor.dualRegister.structural?.[ax];
-      const delta = actor.dualRegister.delta?.[ax];
-      const conf = actor.dualRegister.confidence?.[ax];
-      if (declared !== undefined && structural !== undefined) {
-        const declaredStr = declared.toFixed(1);
-        const structuralStr = structural.toFixed(1);
-        const deltaStr = delta >= 0 ? '+' + delta.toFixed(1) : delta.toFixed(1);
-        const declaredConf = conf?.declared ? ` (${(conf.declared * 100).toFixed(0)}%)` : '';
-        const structuralConf = conf?.structural ? ` (${(conf.structural * 100).toFixed(0)}%)` : '';
-        dualRegHtml = `
-          <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;">
-            Declared: ${declaredStr}${declaredConf} · Structural: ${structuralStr}${structuralConf} · Delta: ${deltaStr}
-          </p>
-        `;
-      }
-    }
-    return `
-      <div class="detail-group">
-        <h4>${ax} — ${actor.scores[ax]?.toFixed(1)}</h4>
-        <p class="rationale">${rationale}</p>
-        ${dualRegHtml}
-        <ul class="source-list">${sources}</ul>
-      </div>
-    `;
-  }).join('');
-
-  let dualRegMetaHtml = '';
-  if (actor.dualRegister) {
-    const dr = actor.dualRegister;
-    const confInfo = dr.confidence ? Object.entries(dr.confidence).map(([ax, c]) => {
-      return `${ax}: declared ${(c.declared * 100).toFixed(0)}%, structural ${(c.structural * 100).toFixed(0)}%`;
-    }).join('; ') : '';
-    dualRegMetaHtml = `
-      <div class="detail-group">
-        <h4>Dual-Register</h4>
-        <p>Protocol: ${escapeHtml(dr.protocol || '')}</p>
-        <p>Period: ${escapeHtml(dr.period || '')}</p>
-        <p>Status: ${escapeHtml(dr.status || '')}</p>
-        <p>Evidence quality: ${escapeHtml(dr.evidenceQuality || '')}</p>
-        ${confInfo ? `<p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.3rem;">${escapeHtml(confInfo)}</p>` : ''}
-      </div>
-    `;
+  if (totalActors === 0) {
+    document.getElementById('tbody').innerHTML = '<tr><td colspan="8" class="data-empty">No actors match your search.</td></tr>';
+    document.getElementById('data-cards').innerHTML = '<p class="data-empty">No actors match your search.</p>';
+    document.getElementById('count').textContent = '0 actors';
+    return;
   }
 
-  detail.innerHTML = `
-    <td colspan="8">
-      <div class="detail-panel">
-        <div class="detail-group">
-          <h4>Metadata</h4>
-          <p>Version: ${escapeHtml(meta.version || '')}</p>
-          <p>Last updated: ${date}</p>
-          <p>Curator: ${escapeHtml(meta.curator || '')}</p>
-          <p><a href="${jsonUrl}" target="_blank" rel="noopener">View raw JSON ↗</a></p>
-        </div>
-        ${dualRegMetaHtml}
-        ${axisDetails}
-      </div>
-    </td>
-  `;
+  document.getElementById('count').textContent = `${totalActors} actor${totalActors !== 1 ? 's' : ''}`;
+  renderTable(groups);
+  renderCards(groups);
+}
 
-  tr.after(detail);
+function refresh() {
+  expandedRow = null;
+  expandedCard = null;
+  const q = document.getElementById('search').value;
+  const filtered = filterActors(ACTORS, q);
+  const sorted = sortActors(filtered, currentSort.col, currentSort.dir);
+  render(groupActors(sorted));
 }
 
 function escapeHtml(str) {
@@ -689,26 +379,23 @@ function filterActors(actors, q) {
   });
 }
 
-// Init
 loadGroupOrder();
 refresh();
 
-// Sort clicks
-document.querySelectorAll('th[data-sort]').forEach(th => {
+document.querySelectorAll('.data-table th[data-sort]').forEach(th => {
   th.addEventListener('click', () => {
     const col = th.dataset.sort;
     const dir = currentSort.col === col && currentSort.dir === 'asc' ? 'desc' : 'asc';
     currentSort = { col, dir };
-
-    document.querySelectorAll('th').forEach(t => t.classList.remove('asc','desc'));
+    document.querySelectorAll('.data-table th').forEach(t => t.classList.remove('asc','desc'));
     th.classList.add(dir);
-
     refresh();
   });
 });
 
-// Search
 document.getElementById('search').addEventListener('input', () => refresh());
+
+initChrome({ page: 'dataset', version: '{{VERSION}}' });
 </script>
 </body>
 </html>

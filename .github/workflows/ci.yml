@@ -19,7 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: node scripts/build.js
+      - run: npm install
+      - run: npm run build
       - run: node tests/quiz.test.js
       - name: Verify dist/index.html exists and is self-contained
         run: |
@@ -32,7 +33,6 @@ jobs:
           ! grep -qE '^\s*import\s' dist/shop.html
           # Allow PWA manifest and apple-touch-icon links (local files only)
           ! grep -qE '<link[^>]*href="https?://' dist/index.html
-      - run: npm install
       - run: npm run generate-artifacts
       - name: Verify paper artifacts
         run: |
@@ -58,7 +58,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: node scripts/build.js
+      - run: npm install
+      - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

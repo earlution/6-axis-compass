@@ -2,23 +2,28 @@ import { ACTOR_GROUPS, AXIS_META, ACTORS, AXES, getEffectiveScores } from './dat
 import { drawRadar } from './chart.js';
 import { t } from './i18n.js';
 import { buildMerchPreviewHTML, initMerchCarousel, renderMerchRadarChart } from './merch.js';
+import { initResponsiveAccordions } from './chrome.js';
 
 export function renderIntro(container, { onStart, onUpload } = {}) {
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-intro" role="region" aria-label="${t('intro.eyebrow')}" tabindex="-1">
-        <p class="eyebrow">${t('intro.eyebrow')}</p>
-        <h1 class="intro-title">${t('intro.title')}</h1>
-        <p class="intro-body">${t('intro.body')}</p>
-        <p class="intro-meta">${t('intro.meta')}</p>
-        <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
-        <div class="intro-upload">
-          <label class="intro-file-label">
-            ${t('intro.uploadLabel')}
-            <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
-          </label>
+        <div class="intro-hero">
+          <p class="eyebrow">${t('intro.eyebrow')}</p>
+          <h1 class="intro-title">${t('intro.title')}</h1>
+          <p class="intro-body">${t('intro.body')}</p>
+          <p class="intro-meta">${t('intro.meta')}</p>
+          <div class="intro-actions">
+            <button class="btn btn-primary" id="btn-start">${t('intro.begin')}</button>
+            <div class="intro-upload">
+              <label class="intro-file-label">
+                ${t('intro.uploadLabel')}
+                <input type="file" class="intro-file-input" id="intro-file-upload" accept=".json,.xml">
+              </label>
+            </div>
+          </div>
+          <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
         </div>
-        <p class="intro-disclaimer">${t('intro.disclaimer')}</p>
       </div>
     </div>
   `;
@@ -32,14 +37,16 @@ export function renderQuiz(container, { question, progress, stepLabel, axis, onA
   container.innerHTML = `
     <div class="wrap">
       <div class="screen active" id="s-quiz" role="region" aria-label="${t('quiz.back').replace('← ', '')}" tabindex="-1">
-        <div class="progress-wrap">
-          <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
-          <span class="progress-label">${stepLabel}</span>
+        <div class="quiz-sticky-top">
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="prog" style="width:${progress}%"></div></div>
+            <span class="progress-label">${stepLabel}</span>
+          </div>
         </div>
         <p class="axis-tag">${t('quiz.axisTag', { axis: t('axis.' + axis) })}</p>
         <p class="q-text">${question.text}</p>
         <div class="responses" id="responses" role="radiogroup" aria-label="${t('response.stronglyAgree')} – ${t('response.stronglyDisagree')}"></div>
-        <div style="margin-top:1.25rem;height:32px;display:flex;align-items:center;">
+        <div class="quiz-back-row">
           <button class="btn-text" id="back-btn" style="visibility:${canGoBack ? 'visible' : 'hidden'}">${t('quiz.back')}</button>
         </div>
       </div>
@@ -88,6 +95,10 @@ export function renderQuiz(container, { question, progress, stepLabel, axis, onA
     } else if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       buttons[idx].click();
+      return;
+    } else if (e.key >= '1' && e.key <= '5') {
+      e.preventDefault();
+      buttons[5 - parseInt(e.key, 10)].click();
       return;
     }
     if (next !== idx) {
@@ -154,88 +165,107 @@ export function renderResults(container, {
             ${onBuyMerch ? `<div id="merch-preview-mount"></div>` : ''}
           </div>
           <div class="content-pane">
-            <div class="actor-groups" id="actor-groups"></div>
+            <div class="actor-scroll">
+              <div class="actor-groups" id="actor-groups"></div>
+            </div>
             <a class="data-link" href="data.html">Browse the full actor dataset &rarr;</a>
             <div class="score-bars" id="score-bars"></div>
             <hr class="divider">
-            <div class="config-section">
-              <p class="config-heading">${t('config.language')}</p>
-              <div class="config-row">
-                <select class="config-btn" id="lang-select" style="background:transparent;color:inherit;border:1px solid var(--border2);padding:0.5rem 0.75rem;border-radius:6px;">
-                  <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
-                </select>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('config.theme')}</p>
-              <div class="config-row">
-                <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
-                <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.orientation')}</p>
-              <div class="config-row">
-                <button class="config-btn ${orientation === 'spatial' ? 'active' : ''}" id="btn-orient-spatial">${t('results.spatialMap')}</button>
-                <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
-                <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.register')}</p>
-              <div class="config-row">
-                <button class="config-btn ${register === 'primary' ? 'active' : ''}" id="btn-reg-primary">${t('results.primary')}</button>
-                <button class="config-btn ${register === 'declared' ? 'active' : ''}" id="btn-reg-declared">${t('results.declared')}</button>
-                <button class="config-btn ${register === 'structural' ? 'active' : ''}" id="btn-reg-structural">${t('results.structural')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.download')}</p>
-              <div class="config-row">
-                <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
-                <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
-                <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.share')}</p>
-              <div class="config-row">
-                <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.addCustomActor')}</p>
-              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:0.5rem;">
-                <input type="text" id="ca-name" placeholder="${t('results.actorName')}" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:6px 10px;border-radius:2px;font-family:inherit;font-size:13px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <label style="font-size:12px;color:rgba(232,228,218,0.5);">${t('results.actorColor')}</label>
-                  <input type="color" id="ca-color" value="#c8a84b" style="width:32px;height:24px;border:none;background:none;cursor:pointer;">
-                </div>
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
-                  ${AXES.map(ax => `
-                    <div style="display:flex;flex-direction:column;gap:2px;">
-                      <label style="font-size:10px;color:rgba(232,228,218,0.4);">${t('axis.' + ax)}</label>
-                      <input type="number" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0" style="background:transparent;color:inherit;border:0.5px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:2px;font-family:inherit;font-size:12px;">
+            <div class="config-panel config-panel--grid">
+              <details class="config-accordion">
+                <summary>${t('config.settings')}</summary>
+                <div class="config-accordion__body">
+                  <div class="config-section">
+                    <p class="config-heading">${t('config.language')}</p>
+                    <div class="config-row">
+                      <select class="config-select" id="lang-select">
+                        <option value="en" ${language === 'en' ? 'selected' : ''}>English</option>
+                      </select>
                     </div>
-                  `).join('')}
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('config.theme')}</p>
+                    <div class="config-row config-row--segmented">
+                      <button class="config-btn ${theme === 'dark' ? 'active' : ''}" id="btn-theme-dark">${t('results.dark')}</button>
+                      <button class="config-btn ${theme === 'light' ? 'active' : ''}" id="btn-theme-light">${t('results.light')}</button>
+                    </div>
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.orientation')}</p>
+                    <div class="config-row">
+                      <button class="config-btn ${orientation === 'spatial' ? 'active' : ''}" id="btn-orient-spatial">${t('results.spatialMap')}</button>
+                      <button class="config-btn ${orientation === 'flat' ? 'active' : ''}" id="btn-orient-flat">${t('results.edgeUp')}</button>
+                      <button class="config-btn ${orientation === 'pointy' ? 'active' : ''}" id="btn-orient-pointy">${t('results.vertexUp')}</button>
+                    </div>
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.register')}</p>
+                    <div class="config-row config-row--segmented">
+                      <button class="config-btn ${register === 'primary' ? 'active' : ''}" id="btn-reg-primary">${t('results.primary')}</button>
+                      <button class="config-btn ${register === 'declared' ? 'active' : ''}" id="btn-reg-declared">${t('results.declared')}</button>
+                      <button class="config-btn ${register === 'structural' ? 'active' : ''}" id="btn-reg-structural">${t('results.structural')}</button>
+                    </div>
+                  </div>
                 </div>
-                <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
-              </div>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.compareSaved')}</p>
-              <div class="config-row">
-                <label class="config-file-label">
-                  ${t('results.uploadLabel')}
-                  <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
-                </label>
-                <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
-              </div>
-              <p class="config-note">${t('results.uploadNote')}</p>
-            </div>
-            <div class="config-section">
-              <p class="config-heading">${t('results.axisOrder')}</p>
-              <div class="axis-list" id="axis-list"></div>
+              </details>
+              <details class="config-accordion">
+                <summary>${t('results.download')} &amp; ${t('results.share')}</summary>
+                <div class="config-accordion__body">
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.download')}</p>
+                    <div class="config-row">
+                      <button class="config-btn" id="btn-dl-png">${t('results.imagePng')}</button>
+                      <button class="config-btn" id="btn-dl-json">${t('results.dataJson')}</button>
+                      <button class="config-btn" id="btn-dl-xml">${t('results.dataXml')}</button>
+                    </div>
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.share')}</p>
+                    <div class="config-row">
+                      <button class="config-btn" id="btn-copy-link">${t('results.copyLink')}</button>
+                    </div>
+                  </div>
+                </div>
+              </details>
+              <details class="config-accordion">
+                <summary>${t('results.advanced')}</summary>
+                <div class="config-accordion__body">
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.addCustomActor')}</p>
+                    <div class="custom-actor-form">
+                      <input type="text" class="form-input" id="ca-name" placeholder="${t('results.actorName')}">
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <label class="form-label">${t('results.actorColor')}</label>
+                        <input type="color" id="ca-color" value="#c8a84b" style="width:44px;height:44px;border:none;background:none;cursor:pointer;">
+                      </div>
+                      <div class="form-grid-3">
+                        ${AXES.map(ax => `
+                          <div class="form-field">
+                            <label class="form-label">${t('axis.' + ax)}</label>
+                            <input type="number" class="form-input form-input--sm" id="ca-${ax}" min="0" max="10" step="0.1" value="5.0">
+                          </div>
+                        `).join('')}
+                      </div>
+                      <button class="config-btn" id="btn-add-actor" style="align-self:flex-start;">${t('results.add')}</button>
+                    </div>
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.compareSaved')}</p>
+                    <div class="config-row">
+                      <label class="config-file-label">
+                        ${t('results.uploadLabel')}
+                        <input type="file" class="config-file-input" id="file-upload" accept=".json,.xml">
+                      </label>
+                      <button class="config-btn" id="btn-clear-upload" style="display:${uploadedMap ? '' : 'none'};color:rgba(180,120,220,0.7);">${t('results.clear')}</button>
+                    </div>
+                    <p class="config-note">${t('results.uploadNote')}</p>
+                  </div>
+                  <div class="config-section">
+                    <p class="config-heading">${t('results.axisOrder')}</p>
+                    <div class="axis-list" id="axis-list"></div>
+                  </div>
+                </div>
+              </details>
             </div>
             <hr class="divider">
             <p class="footer-note">${t('results.footer')}</p>
@@ -245,6 +275,8 @@ export function renderResults(container, {
       </div>
     </div>
   `;
+
+  initResponsiveAccordions(container);
 
   const svg = document.getElementById('radar');
   drawRadar(svg, {
