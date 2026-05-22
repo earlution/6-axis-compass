@@ -19,11 +19,23 @@ export function buyButtonLabel(garmentId) {
   return t('merch.buyGarment', { garment: getGarmentLabel(garmentId) });
 }
 
+function escapeHtmlAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 export function buildMockupHTML(garmentId, garmentColor) {
   const src = garmentImagePath(garmentId, garmentColor);
+  const safeGarmentId = escapeHtmlAttr(garmentId);
+  const safeGarmentColor = escapeHtmlAttr(garmentColor);
+  const safeSrc = escapeHtmlAttr(src);
   return `
-    <div class="merch-mockup-frame" data-garment="${garmentId}" data-color="${garmentColor}">
-      <img class="merch-garment-img" src="${src}" alt="" aria-hidden="true">
+    <div class="merch-mockup-frame" data-garment="${safeGarmentId}" data-color="${safeGarmentColor}">
+      <img class="merch-garment-img" src="${safeSrc}" alt="" aria-hidden="true">
       <div class="merch-chart-overlay">
         <svg id="radar-merch" class="merch-radar-svg" width="320" height="320" viewBox="0 0 320 320" aria-hidden="true"></svg>
       </div>
