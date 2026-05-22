@@ -6,6 +6,9 @@ on:
   repository_dispatch:
     types: [paper-revised, generate-radar, upload-asset]
 
+permissions:
+  contents: read
+
 jobs:
   generate-and-upload:
     runs-on: ubuntu-latest
