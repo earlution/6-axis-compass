@@ -87,7 +87,7 @@ Copy `.env.example` to `.env.local` if you need non-default ports or legacy auth
 | `GET /api/axes` | Public | Canonical axis order and pole labels |
 | `GET /api/openapi.json` | Public | OpenAPI 3.1 document |
 
-Set `API_PUBLIC_READ=false` to require `Authorization: Bearer $API_SECRET` on read routes (legacy v1.x). Private write (`ADMIN_SECRET`, `POST /api/admin/*`) is **Phase 2** — see [`docs.repo-sync/feature-request-public-private-api-v0.1.0.md`](docs.repo-sync/feature-request-public-private-api-v0.1.0.md).
+Set `API_PUBLIC_READ=false` to require `Authorization: Bearer $API_SECRET` on read routes (legacy v1.x). Private write (`ADMIN_SECRET`, `POST /api/admin/*`) is **Phase 2** — see [`docs/feature-request-public-private-api-v0.1.0.md`](docs/feature-request-public-private-api-v0.1.0.md).
 
 | Variable | Default | Role |
 |----------|---------|------|
@@ -104,7 +104,7 @@ curl -sS -X POST http://localhost:3000/api/chart \
   -o comparison.png
 ```
 
-Paper-style actor-only PNG: [`docs.repo-sync/examples/api/chart-public-read.sh`](docs.repo-sync/examples/api/chart-public-read.sh).
+Paper-style actor-only PNG: [`docs/examples/api/chart-public-read.sh`](docs/examples/api/chart-public-read.sh).
 
 Full trust zones, limits, CORS, errors, and cURL recipes: [`API.md`](./API.md).
 
@@ -154,11 +154,11 @@ Custom apparel flow (Printful-ready UI, **checkout stubbed**): results → garme
 | `dist/shop.html` | Shop configurator (same styles as main app) |
 | `dist/assets/merch/` | Placeholder garment mockup SVGs |
 
-**Demo locally:** `npm run build` then serve `dist/` (see [`docs.repo-sync/merch-prototype.md`](./docs.repo-sync/merch-prototype.md)).
+**Demo locally:** `npm run build` then serve `dist/` (see [`docs/merch-prototype.md`](./docs/merch-prototype.md)).
 
 - **v3 hash** on shop URLs carries scores, comparisons (actor slugs), garment, colour, and chart ink theme.
 - **sessionStorage** draft preserves custom actors and uploaded maps.
-- Future Printful/Stripe wiring: [`docs.repo-sync/merch-printful-integration.md`](./docs.repo-sync/merch-printful-integration.md).
+- Future Printful/Stripe wiring: [`docs/merch-printful-integration.md`](./docs/merch-printful-integration.md).
 
 Tagged releases for this prototype use `merch-prototype-v*` (see git tags).
 
@@ -287,22 +287,20 @@ Source types: `manifesto`, `legislation`, `vote`, `policy`, `speech`, `book`, `a
 
 ## Documentation and Google Drive
 
-**Git is canonical** for releases. Day-to-day docs live on Google Drive (**`6-Axis Compass`**, mearsruari account):
+**`docs/` is git-tracked and canonical** — always commit this directory.
 
-| Path | Role |
-|------|------|
-| **`google-drive/`** | Symlink → Drive project folder; **edit here** |
-| **`docs.repo-sync/`** | Git release mirror — `bash scripts/sync-docs-to-git.sh` before commit |
-| **`docs/`** | **Deprecated** — see [`docs/DEPRECATED.md`](docs/DEPRECATED.md) |
-| **`google-drive/handoff/for-common-enemy/`** | Outbound package for common-enemy |
+**`docs-google-drive/`** symlinks to Google Drive **`6-Axis Compass`** (gitignored). It is infrastructure for keeping the repo and Claude Desktop in sync; you normally do not edit it directly.
 
 ```bash
-bash scripts/link-google-drive-staging.sh
-bash scripts/consolidate-docs-to-drive.sh   # one-time / maintenance merge
-bash scripts/sync-docs-to-git.sh            # Drive → docs.repo-sync/
+bash scripts/link-docs-google-drive.sh     # once per machine
+bash scripts/sync-docs-from-drive.sh       # Drive → docs/ (before commit)
+bash scripts/sync-docs-to-drive.sh         # docs/ → Drive (after repo edits)
+git add docs/ && git commit
 ```
 
-See [`docs.repo-sync/staging/README.md`](docs.repo-sync/staging/README.md). common-enemy mirror: Drive **`A Common Enemy/docs/`**.
+Drive-only paths (not synced into git): `handoff/`, `_meta/`, `archive/` under the Drive folder.
+
+common-enemy: separate Drive **`A Common Enemy`**; outbound handoff at **`docs-google-drive/handoff/for-common-enemy/`**.
 
 ## License
 

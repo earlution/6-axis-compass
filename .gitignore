@@ -3,7 +3,8 @@ node_modules/
 *.log
 .env
 .env.local
-# Google Drive workspace (symlink at repo root)
-google-drive/
+# Google Drive mount (symlink → Drive "6-Axis Compass/") — not git
+/docs-google-drive
+docs-google-drive/
 docs.repo-backup-*/
 .staging-config/

@@ -1,0 +1,30 @@
+# Six-Axis Compass — documentation
+
+**`docs/` in this repo is the canonical source of truth** (git-tracked).
+
+Google Drive folder **`6-Axis Compass`** is mounted at **`docs-google-drive/`** (gitignored). You usually ignore that path — it exists so Cursor and Claude Desktop stay aligned without manually copying files.
+
+## Sync
+
+| Direction | When | Command |
+|-----------|------|---------|
+| Drive → git | Edited on Drive / Claude Desktop | `bash scripts/sync-docs-from-drive.sh` |
+| git → Drive | Edited in repo / Cursor | `bash scripts/sync-docs-to-drive.sh` |
+
+Then commit `docs/` as usual.
+
+```bash
+bash scripts/link-docs-google-drive.sh   # once per machine
+```
+
+## On Drive only (not in git)
+
+These live under `docs-google-drive/` but are excluded from git sync:
+
+- `handoff/for-common-enemy/` — outbound coordination for [common-enemy](https://github.com/earlution/common-enemy)
+- `_meta/` — manifests, inbox
+- `archive/` — legacy exports
+
+## Cross-repo
+
+common-enemy working tree: Drive **`A Common Enemy`** (separate folder).
